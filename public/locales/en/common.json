@@ -1,0 +1,26 @@
+{
+    "app": {
+      "name": "MOSIAC Store",
+      "tagline": "Discover Vietnam's beauty through fashion"
+    },
+    "nav": {
+      "home": "Home",
+      "products": "Products",
+      "regions": "Regions",
+      "about": "About us",
+      "contact": "Contact"
+    },
+    "actions": {
+      "login": "Login",
+      "register": "Register",
+      "logout": "Logout",
+      "search": "Search",
+      "add_to_cart": "Add to cart",
+      "view": "View",
+      "buy_now": "Buy now"
+    },
+    "theme": {
+      "dark": "Dark mode",
+      "light": "Light mode"
+    }
+  }

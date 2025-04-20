@@ -1,0 +1,26 @@
+{
+    "app": {
+      "name": "MOSIAC Store",
+      "tagline": "Khám phá vẻ đẹp Việt Nam qua thời trang"
+    },
+    "nav": {
+      "home": "Trang chủ",
+      "products": "Sản phẩm",
+      "regions": "Vùng miền",
+      "about": "Về chúng tôi",
+      "contact": "Liên hệ"
+    },
+    "actions": {
+      "login": "Đăng nhập",
+      "register": "Đăng ký",
+      "logout": "Đăng xuất",
+      "search": "Tìm kiếm",
+      "add_to_cart": "Thêm vào giỏ",
+      "view": "Xem",
+      "buy_now": "Mua ngay"
+    },
+    "theme": {
+      "dark": "Chế độ tối",
+      "light": "Chế độ sáng"
+    }
+  }
