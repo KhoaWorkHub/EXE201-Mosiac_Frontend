@@ -22,7 +22,7 @@ i18n
       caches: ['localStorage', 'cookie'],
     },
     defaultNS: 'common',
-    ns: ['common', 'auth', 'product', 'cart', 'checkout'],
+    ns: ['common', 'auth', 'product', 'cart', 'checkout', 'admin'],
   });
 
 export default i18n;

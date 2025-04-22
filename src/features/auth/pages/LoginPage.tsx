@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Layout, Card, Typography } from 'antd';
-import { useLocation, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector, useAppDispatch } from '@/store/hooks';
-import { setCredentials } from '@/store/slices/authSlice';
-import { AuthService } from '@/services/auth.service';
+import { useAppSelector } from '@/store/hooks';
+// import { setCredentials } from '@/store/slices/authSlice';
+// import { AuthService } from '@/services/auth.service';
 import LoginForm from '../components/LoginForm';
 import LanguageSelector from '@/components/common/LanguageSelector';
 import ThemeToggle from '@/components/common/ThemeToggle';
@@ -44,23 +44,23 @@ const AnimatedPatterns = () => (
 
 const LoginPage: React.FC = () => {
   const { t } = useTranslation(['auth', 'common']);
-  const dispatch = useAppDispatch();
-  const location = useLocation();
+  // const dispatch = useAppDispatch();
+  // const location = useLocation();
   const navigate = useNavigate();
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   // Handle redirect after OAuth login
-  useEffect(() => {
-    if (location.pathname === '/oauth2/redirect') {
-      const urlParams = new URLSearchParams(location.search);
-      const authResponse = AuthService.handleOAuth2Redirect(urlParams);
+  // useEffect(() => {
+  //   if (location.pathname === '/oauth2/redirect') {
+  //     const urlParams = new URLSearchParams(location.search);
+  //     const authResponse = AuthService.handleOAuth2Redirect(urlParams);
       
-      if (authResponse) {
-        dispatch(setCredentials(authResponse));
-        navigate('/');
-      }
-    }
-  }, [location, dispatch, navigate]);
+  //     if (authResponse) {
+  //       dispatch(setCredentials(authResponse));
+  //       navigate('/');
+  //     }
+  //   }
+  // }, [location, dispatch, navigate]);
 
   // If already authenticated, redirect to home page
   useEffect(() => {

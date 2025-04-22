@@ -11,7 +11,8 @@ import {
   AppstoreOutlined,
   EnvironmentOutlined,
   InfoCircleOutlined,
-  PhoneOutlined
+  PhoneOutlined,
+  SettingOutlined
 } from '@ant-design/icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +22,7 @@ import ThemeToggle from '../common/ThemeToggle';
 import LanguageSelector from '../common/LanguageSelector';
 import { MenuProps } from 'antd';
 import { motion, AnimatePresence } from 'framer-motion';
+import { UserRole } from '@/types/auth.types';
 
 const { Header, Content, Footer } = Layout;
 
@@ -84,6 +86,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       danger: true,
     },
   ];
+
+  if (user?.role === UserRole.ADMIN) {
+    userMenuItems.unshift({
+      key: 'admin',
+      icon: <SettingOutlined />, 
+      label: <Link to="/admin">{t('nav.admin')}</Link>,
+    });
+  }
 
   // Search panel animation
   const searchVariants = {
