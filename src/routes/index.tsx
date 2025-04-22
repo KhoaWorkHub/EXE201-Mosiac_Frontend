@@ -1,11 +1,14 @@
+// src/routes/index.tsx (cập nhật)
 import React, { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Spin } from 'antd';
 import { useAppSelector } from '@/store/hooks';
+import OAuth2RedirectHandler from '@/features/auth/components/OAuth2RedirectHandler';
 
 // Lazy loading pages
 const LoginPage = lazy(() => import('../features/auth/pages/LoginPage'));
 const HomePage = lazy(() => import('../features/home/pages/HomePage'));
+const AdminRoutes = lazy(() => import('../admin/routes'));
 
 // Component for 404 page
 const NotFound = () => (
@@ -19,6 +22,13 @@ const NotFound = () => (
 const LoadingFallback = () => (
   <div className="flex items-center justify-center min-h-screen">
     <Spin size="large" />
+  </div>
+);
+
+const UnauthorizedPage = () => (
+  <div className="h-screen flex items-center justify-center flex-col">
+    <h1 className="text-3xl font-bold">403 - Unauthorized</h1>
+    <p className="mt-2">You don't have permission to access this page.</p>
   </div>
 );
 
@@ -43,7 +53,12 @@ const AppRoutes: React.FC = () => {
               <LoginPage />
           } 
         />
-        <Route path="/oauth2/redirect" element={<LoginPage />} />
+        <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />        
+        {/* Admin routes */}
+        <Route path="/admin/*" element={<AdminRoutes />} />
+        
+        {/* Unauthorized route */}
+        <Route path="/unauthorized" element={<UnauthorizedPage />} />
         
         {/* 404 route */}
         <Route path="/404" element={<NotFound />} />
