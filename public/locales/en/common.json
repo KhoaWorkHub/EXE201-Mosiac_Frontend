@@ -1,26 +1,192 @@
 {
-    "app": {
-      "name": "MOSIAC Store",
-      "tagline": "Discover Vietnam's beauty through fashion"
+  "app": {
+    "name": "MOSIAC Store",
+    "tagline": "Discover Vietnam's beauty through fashion"
+  },
+  "brand": {
+    "name": "MOSIAC"
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "regions": "Regions",
+    "about": "About us",
+    "contact": "Contact",
+    "profile": "My Profile",
+    "orders": "My Orders",
+    "wishlist": "My Wishlist",
+    "new_arrivals": "New Arrivals",
+    "bestsellers": "Bestsellers",
+    "sale": "Sale",
+    "our_story": "Our Story",
+    "artisans": "Artisans",
+    "sustainability": "Sustainability",
+    "faq": "FAQ",
+    "shipping": "Shipping",
+    "returns": "Returns",
+    "size_guide": "Size Guide",
+    "privacy_policy": "Privacy Policy",
+    "collections": "Collections"
+  },
+  "actions": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "search": "Search",
+    "add_to_cart": "Add to cart",
+    "view": "View",
+    "buy_now": "Buy now",
+    "shop_now": "Shop Now",
+    "explore": "Explore",
+    "learn_more": "Learn More",
+    "read_more": "Read More",
+    "subscribe": "Subscribe",
+    "view_all": "View All",
+    "explore_collection": "Explore Collection"
+  },
+  "theme": {
+    "title": "Appearance",
+    "dark": "Dark mode",
+    "light": "Light mode"
+  },
+  "language": {
+    "title": "Language"
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search for products, regions, etc.",
+    "recent": "Recent Searches",
+    "popular": "Popular Searches",
+    "no_results": "No results found",
+    "suggestions": "Suggestions"
+  },
+  "footer": {
+    "description": "At MOSIAC, we celebrate Vietnam's rich cultural heritage through authentic fashion and handcrafted goods.",
+    "rights": "All rights reserved",
+    "shop": "Shop",
+    "about": "About",
+    "customer_service": "Customer Service",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "cookies": "Cookie Policy",
+    "newsletter": "Newsletter",
+    "social": "Social Media"
+  },
+    "hero": {
+      "slide1": {
+        "title": "WEAR YOUR STORY, SHINE YOUR GLORY",
+        "description": "Discover authentic Vietnamese fashion crafted with passion and tradition, bringing together the best of Vietnam's regional styles."
+      },
+      "slide2": {
+        "title": "TRADITION MEETS MODERN ELEGANCE",
+        "description": "Each piece tells a story of Vietnam's rich cultural heritage, reimagined for the contemporary world."
+      }
     },
-    "nav": {
-      "home": "Home",
-      "products": "Products",
-      "regions": "Regions",
-      "about": "About us",
-      "contact": "Contact"
+    "features": {
+      "craftsmanship": {
+        "title": "Authentic Craftsmanship",
+        "description": "Handcrafted by skilled artisans across Vietnam"
+      },
+      "shipping": {
+        "title": "Free Shipping",
+        "description": "On all orders above $50"
+      },
+      "returns": {
+        "title": "Easy Returns",
+        "description": "30-day hassle-free return policy"
+      },
+      "sustainable": {
+        "title": "Sustainable Practices",
+        "description": "Eco-friendly materials and production"
+      },
+      "quality": {
+        "title": "Premium Quality",
+        "description": "Authentic Vietnamese craftsmanship"
+      },
+      "flash_sales": {
+        "title": "Flash Sales",
+        "description": "New deals every week"
+      },
+      "support": {
+        "title": "24/7 Support",
+        "description": "Always here to help"
+      }
     },
-    "actions": {
-      "login": "Login",
-      "register": "Register",
-      "logout": "Logout",
-      "search": "Search",
-      "add_to_cart": "Add to cart",
-      "view": "View",
-      "buy_now": "Buy now"
+    "sections": {
+      "featured_products": {
+        "title": "Featured Products",
+        "subtitle": "Discover our most popular items"
+      },
+      "categories": {
+        "title": "Shop by Category",
+        "subtitle": "Find your perfect style from our curated collections"
+      },
+      "regions": {
+        "title": "Explore Regional Collections",
+        "subtitle": "Discover unique styles from different regions of Vietnam"
+      },
+      "testimonials": {
+        "title": "What Our Customers Say",
+        "subtitle": "Don't just take our word for it"
+      }
     },
-    "theme": {
-      "dark": "Dark mode",
-      "light": "Light mode"
+    "categories": {
+      "womens": {
+        "name": "Women's Fashion"
+      },
+      "mens": {
+        "name": "Men's Collection"
+      },
+      "accessories": {
+        "name": "Accessories"
+      },
+      "home": {
+        "name": "Home Decor"
+      },
+      "items": "items"
+    },
+    "regions": {
+      "north": {
+        "name": "Northern Vietnam",
+        "description": "Discover traditional craftsmanship from the mountainous regions of Northern Vietnam."
+      },
+      "central": {
+        "name": "Central Vietnam",
+        "description": "Explore the imperial designs inspired by the ancient capital of Hue and central provinces."
+      },
+      "south": {
+        "name": "Southern Vietnam",
+        "description": "Experience the vibrant colors and patterns from the Mekong Delta and southern provinces."
+      }
+    },
+    "special_offer": {
+      "label": "Limited Time Offer",
+      "title": "30% OFF on All Ao Dai Collection",
+      "description": "Experience the elegance of Vietnam's national dress. Our new collection features both traditional and modern designs suitable for all occasions.",
+      "button": "Shop The Collection",
+      "image_alt": "Special Offer - Ao Dai Collection",
+      "countdown": {
+        "days": "DAYS",
+        "hours": "HOURS",
+        "mins": "MINS",
+        "secs": "SECS"
+      }
+    },
+    "testimonials": {
+      "1": {
+        "text": "The quality of the fabrics is exceptional. I love my Ao Dai, it makes me feel connected to Vietnam's beautiful culture even though I'm thousands of miles away."
+      },
+      "2": {
+        "text": "Fast shipping and the items look exactly like the photos. The attention to detail in their embroidery work is impressive."
+      },
+      "3": {
+        "text": "As a Vietnamese abroad, Mosiac helps me stay connected to my roots. Their modern takes on traditional designs are both authentic and fashionable."
+      }
+    },
+    "newsletter": {
+      "title": "Join Our Newsletter",
+      "description": "Subscribe to our newsletter to receive special offers, exclusive discounts, and updates on new arrivals.",
+      "placeholder": "Your email address",
+      "button": "Subscribe"
     }
-  }
+}

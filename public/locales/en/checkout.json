@@ -1,0 +1,59 @@
+{
+    "checkout": {
+      "title": "Checkout",
+      "shipping_address": "Shipping Address",
+      "payment_method": "Payment Method",
+      "order_summary": "Order Summary",
+      "subtotal": "Subtotal",
+      "shipping": "Shipping",
+      "tax": "Tax",
+      "total": "Total",
+      "place_order": "Place Order",
+      "return_to_cart": "Return to Cart"
+    },
+    "shipping": {
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "address": "Address",
+      "apartment": "Apartment, suite, etc. (optional)",
+      "city": "City",
+      "state": "State/Province",
+      "postal_code": "Postal Code",
+      "country": "Country",
+      "phone": "Phone",
+      "save_information": "Save this information for next time",
+      "shipping_method": "Shipping Method",
+      "standard": "Standard Shipping",
+      "express": "Express Shipping",
+      "free_shipping": "Free Shipping",
+      "days": "days"
+    },
+    "payment": {
+      "credit_card": "Credit Card",
+      "paypal": "PayPal",
+      "card_number": "Card Number",
+      "name_on_card": "Name on Card",
+      "expiry_date": "Expiry Date",
+      "cvv": "CVV",
+      "billing_address": "Billing Address",
+      "same_as_shipping": "Same as shipping address"
+    },
+    "confirmation": {
+      "title": "Order Confirmation",
+      "thank_you": "Thank you for your order!",
+      "order_number": "Order Number",
+      "confirmation_email": "A confirmation email has been sent to",
+      "shipping_info": "Shipping Information",
+      "payment_info": "Payment Information",
+      "continue_shopping": "Continue Shopping",
+      "view_order": "View Order"
+    },
+    "validation": {
+      "required": "This field is required",
+      "invalid_email": "Please enter a valid email",
+      "invalid_phone": "Please enter a valid phone number",
+      "invalid_card": "Please enter a valid card number",
+      "invalid_cvv": "Please enter a valid CVV",
+      "invalid_expiry": "Please enter a valid expiry date"
+    }
+  }

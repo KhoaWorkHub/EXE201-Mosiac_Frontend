@@ -1,26 +1,192 @@
 {
-    "app": {
-      "name": "MOSIAC Store",
-      "tagline": "Khám phá vẻ đẹp Việt Nam qua thời trang"
+  "app": {
+    "name": "MOSIAC Store",
+    "tagline": "Khám phá vẻ đẹp Việt Nam qua thời trang"
+  },
+  "brand": {
+    "name": "MOSIAC"
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "products": "Sản phẩm",
+    "regions": "Vùng miền",
+    "about": "Về chúng tôi",
+    "contact": "Liên hệ",
+    "profile": "Hồ sơ của tôi",
+    "orders": "Đơn hàng của tôi",
+    "wishlist": "Danh sách yêu thích",
+    "new_arrivals": "Hàng mới về",
+    "bestsellers": "Bán chạy nhất",
+    "sale": "Khuyến mãi",
+    "our_story": "Câu chuyện của chúng tôi",
+    "artisans": "Nghệ nhân",
+    "sustainability": "Phát triển bền vững",
+    "faq": "Câu hỏi thường gặp",
+    "shipping": "Vận chuyển",
+    "returns": "Đổi trả",
+    "size_guide": "Hướng dẫn kích thước",
+    "privacy_policy": "Chính sách bảo mật",
+    "collections": "Bộ sưu tập"
+  },
+  "actions": {
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "logout": "Đăng xuất",
+    "search": "Tìm kiếm",
+    "add_to_cart": "Thêm vào giỏ",
+    "view": "Xem",
+    "buy_now": "Mua ngay",
+    "shop_now": "Mua sắm ngay",
+    "explore": "Khám phá",
+    "learn_more": "Tìm hiểu thêm",
+    "read_more": "Đọc thêm",
+    "subscribe": "Đăng ký",
+    "view_all": "Xem Tất Cả",
+    "explore_collection": "Khám Phá Bộ Sưu Tập"
+  },
+  "theme": {
+    "title": "Giao diện",
+    "dark": "Chế độ tối",
+    "light": "Chế độ sáng"
+  },
+  "language": {
+    "title": "Ngôn ngữ"
+  },
+  "search": {
+    "title": "Tìm kiếm",
+    "placeholder": "Tìm kiếm sản phẩm, vùng miền, v.v.",
+    "recent": "Tìm kiếm gần đây",
+    "popular": "Tìm kiếm phổ biến",
+    "no_results": "Không tìm thấy kết quả",
+    "suggestions": "Gợi ý"
+  },
+  "footer": {
+    "description": "Tại MOSIAC, chúng tôi tôn vinh di sản văn hóa phong phú của Việt Nam thông qua thời trang đích thực và hàng thủ công.",
+    "rights": "Đã đăng ký bản quyền",
+    "shop": "Cửa hàng",
+    "about": "Về chúng tôi",
+    "customer_service": "Dịch vụ khách hàng",
+    "terms": "Điều khoản dịch vụ",
+    "privacy": "Chính sách bảo mật",
+    "cookies": "Chính sách cookie",
+    "newsletter": "Bản tin",
+    "social": "Mạng xã hội"
+  },
+    "hero": {
+      "slide1": {
+        "title": "KHOÁC LÊN MÌNH CÂU CHUYỆN, TỎA SÁNG VẺ ĐẸP",
+        "description": "Khám phá thời trang Việt Nam chính thống được chế tác với niềm đam mê và truyền thống, kết hợp phong cách đặc trưng từ các vùng miền Việt Nam."
+      },
+      "slide2": {
+        "title": "TRUYỀN THỐNG GẶP GỠ SỰ THANH LỊCH HIỆN ĐẠI",
+        "description": "Mỗi sản phẩm kể một câu chuyện về di sản văn hóa phong phú của Việt Nam, được tái hiện cho thế giới đương đại."
+      }
     },
-    "nav": {
-      "home": "Trang chủ",
-      "products": "Sản phẩm",
-      "regions": "Vùng miền",
-      "about": "Về chúng tôi",
-      "contact": "Liên hệ"
+    "features": {
+      "craftsmanship": {
+        "title": "Thủ Công Chính Thống",
+        "description": "Được chế tác thủ công bởi các nghệ nhân tài hoa khắp Việt Nam"
+      },
+      "shipping": {
+        "title": "Miễn Phí Vận Chuyển",
+        "description": "Cho tất cả đơn hàng trên $50"
+      },
+      "returns": {
+        "title": "Dễ Dàng Đổi Trả",
+        "description": "Chính sách đổi trả không phiền hà trong 30 ngày"
+      },
+      "sustainable": {
+        "title": "Thực Hành Bền Vững",
+        "description": "Vật liệu và sản xuất thân thiện với môi trường"
+      },
+      "quality": {
+        "title": "Chất Lượng Cao Cấp",
+        "description": "Thủ công chính thống Việt Nam"
+      },
+      "flash_sales": {
+        "title": "Khuyến Mãi Nhanh",
+        "description": "Ưu đãi mới mỗi tuần"
+      },
+      "support": {
+        "title": "Hỗ Trợ 24/7",
+        "description": "Luôn sẵn sàng trợ giúp"
+      }
     },
-    "actions": {
-      "login": "Đăng nhập",
-      "register": "Đăng ký",
-      "logout": "Đăng xuất",
-      "search": "Tìm kiếm",
-      "add_to_cart": "Thêm vào giỏ",
-      "view": "Xem",
-      "buy_now": "Mua ngay"
+    "sections": {
+      "featured_products": {
+        "title": "Sản Phẩm Nổi Bật",
+        "subtitle": "Khám phá những sản phẩm phổ biến nhất của chúng tôi"
+      },
+      "categories": {
+        "title": "Mua Sắm Theo Danh Mục",
+        "subtitle": "Tìm phong cách hoàn hảo từ bộ sưu tập được tuyển chọn của chúng tôi"
+      },
+      "regions": {
+        "title": "Khám Phá Bộ Sưu Tập Theo Vùng Miền",
+        "subtitle": "Khám phá phong cách độc đáo từ các vùng miền khác nhau của Việt Nam"
+      },
+      "testimonials": {
+        "title": "Khách Hàng Nói Gì",
+        "subtitle": "Đừng chỉ tin vào lời chúng tôi"
+      }
     },
-    "theme": {
-      "dark": "Chế độ tối",
-      "light": "Chế độ sáng"
+    "categories": {
+      "womens": {
+        "name": "Thời Trang Nữ"
+      },
+      "mens": {
+        "name": "Bộ Sưu Tập Nam"
+      },
+      "accessories": {
+        "name": "Phụ Kiện"
+      },
+      "home": {
+        "name": "Trang Trí Nhà Cửa"
+      },
+      "items": "sản phẩm"
+    },
+    "regions": {
+      "north": {
+        "name": "Miền Bắc Việt Nam",
+        "description": "Khám phá nghề thủ công truyền thống từ vùng núi phía Bắc Việt Nam."
+      },
+      "central": {
+        "name": "Miền Trung Việt Nam",
+        "description": "Khám phá các thiết kế hoàng gia lấy cảm hứng từ kinh đô cổ Huế và các tỉnh miền Trung."
+      },
+      "south": {
+        "name": "Miền Nam Việt Nam",
+        "description": "Trải nghiệm màu sắc và họa tiết sống động từ đồng bằng sông Cửu Long và các tỉnh phía Nam."
+      }
+    },
+    "special_offer": {
+      "label": "Ưu Đãi Có Hạn",
+      "title": "Giảm 30% Cho Tất Cả Bộ Sưu Tập Áo Dài",
+      "description": "Trải nghiệm vẻ đẹp thanh lịch của trang phục truyền thống Việt Nam. Bộ sưu tập mới của chúng tôi có cả thiết kế truyền thống và hiện đại phù hợp cho mọi dịp.",
+      "button": "Mua Bộ Sưu Tập",
+      "image_alt": "Ưu đãi đặc biệt - Bộ sưu tập Áo Dài",
+      "countdown": {
+        "days": "NGÀY",
+        "hours": "GIỜ",
+        "mins": "PHÚT",
+        "secs": "GIÂY"
+      }
+    },
+    "testimonials": {
+      "1": {
+        "text": "Chất lượng vải rất tuyệt vời. Tôi yêu chiếc Áo Dài của mình, nó giúp tôi cảm thấy gắn kết với nền văn hóa tuyệt đẹp của Việt Nam dù tôi ở cách xa hàng ngàn dặm."
+      },
+      "2": {
+        "text": "Giao hàng nhanh và các món hàng trông giống hệt như trong ảnh. Sự chú ý đến chi tiết trong công việc thêu của họ thật ấn tượng."
+      },
+      "3": {
+        "text": "Là một người Việt ở nước ngoài, Mosiac giúp tôi giữ kết nối với nguồn cội. Những biến tấu hiện đại của họ trên các thiết kế truyền thống vừa chính thống vừa thời trang."
+      }
+    },
+    "newsletter": {
+      "title": "Đăng Ký Nhận Bản Tin",
+      "description": "Đăng ký nhận bản tin để nhận các ưu đãi đặc biệt, giảm giá độc quyền và cập nhật về hàng mới về.",
+      "placeholder": "Địa chỉ email của bạn",
+      "button": "Đăng Ký"
     }
-  }
+}

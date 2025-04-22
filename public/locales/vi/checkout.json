@@ -1,0 +1,59 @@
+{
+    "checkout": {
+      "title": "Thanh toán",
+      "shipping_address": "Địa chỉ giao hàng",
+      "payment_method": "Phương thức thanh toán",
+      "order_summary": "Tóm tắt đơn hàng",
+      "subtotal": "Tạm tính",
+      "shipping": "Phí vận chuyển",
+      "tax": "Thuế",
+      "total": "Tổng cộng",
+      "place_order": "Đặt hàng",
+      "return_to_cart": "Quay lại giỏ hàng"
+    },
+    "shipping": {
+      "first_name": "Tên",
+      "last_name": "Họ",
+      "address": "Địa chỉ",
+      "apartment": "Căn hộ, phòng, v.v. (tùy chọn)",
+      "city": "Thành phố",
+      "state": "Tỉnh/Thành phố",
+      "postal_code": "Mã bưu điện",
+      "country": "Quốc gia",
+      "phone": "Điện thoại",
+      "save_information": "Lưu thông tin này cho lần sau",
+      "shipping_method": "Phương thức vận chuyển",
+      "standard": "Vận chuyển tiêu chuẩn",
+      "express": "Vận chuyển nhanh",
+      "free_shipping": "Miễn phí vận chuyển",
+      "days": "ngày"
+    },
+    "payment": {
+      "credit_card": "Thẻ tín dụng",
+      "paypal": "PayPal",
+      "card_number": "Số thẻ",
+      "name_on_card": "Tên trên thẻ",
+      "expiry_date": "Ngày hết hạn",
+      "cvv": "CVV",
+      "billing_address": "Địa chỉ thanh toán",
+      "same_as_shipping": "Giống địa chỉ giao hàng"
+    },
+    "confirmation": {
+      "title": "Xác nhận đơn hàng",
+      "thank_you": "Cảm ơn bạn đã đặt hàng!",
+      "order_number": "Mã đơn hàng",
+      "confirmation_email": "Email xác nhận đã được gửi đến",
+      "shipping_info": "Thông tin vận chuyển",
+      "payment_info": "Thông tin thanh toán",
+      "continue_shopping": "Tiếp tục mua sắm",
+      "view_order": "Xem đơn hàng"
+    },
+    "validation": {
+      "required": "Trường này là bắt buộc",
+      "invalid_email": "Vui lòng nhập email hợp lệ",
+      "invalid_phone": "Vui lòng nhập số điện thoại hợp lệ",
+      "invalid_card": "Vui lòng nhập số thẻ hợp lệ",
+      "invalid_cvv": "Vui lòng nhập mã CVV hợp lệ",
+      "invalid_expiry": "Vui lòng nhập ngày hết hạn hợp lệ"
+    }
+  }

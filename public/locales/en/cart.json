@@ -1,0 +1,30 @@
+{
+    "cart": {
+      "title": "Shopping Cart",
+      "empty": "Your cart is empty",
+      "start_shopping": "Start Shopping",
+      "item": "item",
+      "items": "items",
+      "remove": "Remove",
+      "subtotal": "Subtotal",
+      "shipping": "Shipping",
+      "tax": "Tax",
+      "total": "Total",
+      "checkout": "Proceed to Checkout",
+      "continue_shopping": "Continue Shopping"
+    },
+    "wishlist": {
+      "title": "Wishlist",
+      "empty": "Your wishlist is empty",
+      "start_adding": "Start adding items to your wishlist",
+      "move_to_cart": "Move to Cart",
+      "remove": "Remove"
+    },
+    "notifications": {
+      "item_added": "Item added to cart",
+      "item_removed": "Item removed from cart",
+      "cart_updated": "Cart updated",
+      "added_to_wishlist": "Added to wishlist",
+      "removed_from_wishlist": "Removed from wishlist"
+    }
+  }

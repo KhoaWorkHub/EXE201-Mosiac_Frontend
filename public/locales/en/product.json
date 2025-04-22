@@ -1,0 +1,52 @@
+{
+    "filters": {
+      "sort_by": "Sort by",
+      "newest": "Newest",
+      "price_low_high": "Price: Low to High",
+      "price_high_low": "Price: High to Low",
+      "popularity": "Popularity",
+      "rating": "Rating",
+      "filter": "Filter",
+      "price_range": "Price Range",
+      "categories": "Categories",
+      "regions": "Regions",
+      "colors": "Colors",
+      "sizes": "Sizes",
+      "apply": "Apply",
+      "clear": "Clear"
+    },
+    "product_card": {
+      "new": "New",
+      "sold_out": "Sold Out",
+      "sale": "Sale",
+      "off": "OFF"
+    },
+    "product_details": {
+      "description": "Description",
+      "reviews": "Reviews",
+      "size_guide": "Size Guide",
+      "shipping": "Shipping & Returns",
+      "quantity": "Quantity",
+      "in_stock": "In Stock",
+      "limited_stock": "Limited Stock",
+      "out_of_stock": "Out of Stock",
+      "add_to_cart": "Add to Cart",
+      "buy_now": "Buy Now",
+      "add_to_wishlist": "Add to Wishlist",
+      "share": "Share"
+    },
+    "categories": {
+      "all": "All Products",
+      "womens": "Women's Fashion",
+      "mens": "Men's Fashion",
+      "accessories": "Accessories",
+      "home_decor": "Home Decor",
+      "souvenirs": "Souvenirs"
+    },
+    "regions": {
+      "north": "Northern Vietnam",
+      "central": "Central Vietnam",
+      "south": "Southern Vietnam",
+      "highlands": "Central Highlands"
+    }
+  }
