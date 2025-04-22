@@ -1,0 +1,52 @@
+{
+    "filters": {
+      "sort_by": "Sắp xếp theo",
+      "newest": "Mới nhất",
+      "price_low_high": "Giá: Thấp đến Cao",
+      "price_high_low": "Giá: Cao đến Thấp",
+      "popularity": "Phổ biến",
+      "rating": "Đánh giá",
+      "filter": "Lọc",
+      "price_range": "Khoảng giá",
+      "categories": "Danh mục",
+      "regions": "Vùng miền",
+      "colors": "Màu sắc",
+      "sizes": "Kích thước",
+      "apply": "Áp dụng",
+      "clear": "Xóa bộ lọc"
+    },
+    "product_card": {
+      "new": "Mới",
+      "sold_out": "Hết hàng",
+      "sale": "Giảm giá",
+      "off": "giảm"
+    },
+    "product_details": {
+      "description": "Mô tả",
+      "reviews": "Đánh giá",
+      "size_guide": "Hướng dẫn kích thước",
+      "shipping": "Vận chuyển & Đổi trả",
+      "quantity": "Số lượng",
+      "in_stock": "Còn hàng",
+      "limited_stock": "Hàng sắp hết",
+      "out_of_stock": "Hết hàng",
+      "add_to_cart": "Thêm vào giỏ",
+      "buy_now": "Mua ngay",
+      "add_to_wishlist": "Thêm vào danh sách yêu thích",
+      "share": "Chia sẻ"
+    },
+    "categories": {
+      "all": "Tất cả sản phẩm",
+      "womens": "Thời trang nữ",
+      "mens": "Thời trang nam",
+      "accessories": "Phụ kiện",
+      "home_decor": "Trang trí nhà cửa",
+      "souvenirs": "Quà lưu niệm"
+    },
+    "regions": {
+      "north": "Miền Bắc",
+      "central": "Miền Trung",
+      "south": "Miền Nam",
+      "highlands": "Tây Nguyên"
+    }
+  }
