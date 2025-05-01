@@ -81,7 +81,7 @@ export const AuthService = {
           id: payload.id || payload.sub,
           email: payload.email,
           fullName: payload.fullName || payload.name || 'User',
-          role: (payload.role as UserRole) || UserRole.CUSTOMER,
+          role: (payload.role || payload.authorities || payload.roles || payload.authority) as UserRole,
         }
       };
       
