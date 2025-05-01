@@ -205,7 +205,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                       ? 'text-gray-800 dark:text-white' 
                       : 'text-white dark:text-gray-200'
                   }`}>
-                    {user?.id?.split(' ')[0]}
+                    {user?.fullName}
                   </span>
                 </div>
               </Dropdown>
