@@ -29,7 +29,7 @@ const AdminRoutes: React.FC = () => {
           
           <Route path="/regions" element={<RegionList />} />
           <Route path="/regions/new" element={<RegionForm />} />
-          <Route path="/regions/edit/:id" element={<RegionForm />} />
+          <Route path="/regions/:id" element={<RegionForm />} />
           
           <Route path="*" element={<Navigate to="/admin" replace />} />
         </Routes>

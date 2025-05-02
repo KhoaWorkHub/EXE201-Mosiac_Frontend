@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
+import { StorageService } from "./storage.service";
 
 const API_URL = import.meta.env.VITE_API_URL || "/api";
 const TIMEOUT = 30000;
@@ -6,18 +7,21 @@ const TIMEOUT = 30000;
 const api: AxiosInstance = axios.create({
   baseURL: API_URL,
   timeout: TIMEOUT,
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  },
 });
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("access_token");
+    const token = StorageService.getItem<string>("access_token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    // Chỉ đặt Content-Type khi không phải FormData
+    if (!(config.data instanceof FormData)) {
+      config.headers["Content-Type"] = "application/json";
+      config.headers.Accept = "application/json";
+    }
+
     return config;
   },
   (error) => Promise.reject(error)
