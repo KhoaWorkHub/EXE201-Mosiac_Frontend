@@ -11,6 +11,7 @@ import RegionForm from './pages/regions/RegionForm';
 import AdminDashboard from './pages/dashboard/AdminDashboard';
 import ProductList from './pages/products/ProductList';
 import ProductForm from './pages/products/ProductForm';
+import CategoryDetail from './pages/categories/CategoryDetail';
 
 const AdminRoutes: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const AdminRoutes: React.FC = () => {
           <Route path="/categories" element={<CategoryList />} />
           <Route path="/categories/new" element={<CategoryForm />} />
           <Route path="/categories/edit/:id" element={<CategoryForm />} />
+          <Route path="/categories/:id" element={<CategoryDetail />} />
           
           <Route path="/regions" element={<RegionList />} />
           <Route path="/regions/new" element={<RegionForm />} />

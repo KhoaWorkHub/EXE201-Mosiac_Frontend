@@ -64,9 +64,19 @@
   },
   "categories": {
     "title": "Categories",
+    "description": "Manage product categories to organize your store",
+    "details": "Category Details",
     "add": "Add Category",
     "edit": "Edit Category",
+    "info_tab": "Information",
+    "products_tab": "Products",
+    "subcategories": "Subcategories",
     "delete_confirm": "Are you sure you want to delete this category?",
+    "delete_confirm_title": "Delete Category",
+    "delete_permanent": "This action cannot be undone",
+    "delete_warning": "Deleting a category can affect products",
+    "delete_warning_desc": "This category may be associated with products. Deleting it could impact how these products are categorized.",
+    "delete_cascade_warning": "Products associated with this category will remain but will no longer be linked to any category.",
     "delete_success": "Category deleted successfully",
     "delete_error": "Failed to delete category",
     "create_success": "Category created successfully",
@@ -74,6 +84,12 @@
     "update_success": "Category updated successfully",
     "update_error": "Failed to update category",
     "fetch_error": "Failed to fetch categories",
+    "image_upload_success": "Image uploaded successfully",
+    "image_upload_error": "Failed to upload image",
+    "image_delete_success": "Image deleted successfully",
+    "image_delete_error": "Failed to delete image",
+    "primary_image_set": "Primary image set successfully",
+    "primary_image_error": "Failed to set primary image",
     "active": "Active",
     "inactive": "Inactive",
     "status": "Status",
@@ -82,10 +98,41 @@
     "image": "Image",
     "name": "Name",
     "slug": "Slug",
-    "description": "Description",
     "parent": "Parent Category",
     "select_parent": "Select Parent Category",
-    "display_order": "Display Order"
+    "display_order": "Display Order",
+    "created_at": "Created At",
+    "updated_at": "Updated At",
+    "id": "ID",
+    "no_categories": "No categories found",
+    "no_results": "No matching categories found",
+    "no_description": "No description provided for this category",
+    "no_image": "No image available",
+    "image_preview": "Category Image Preview",
+    "name_placeholder": "Enter category name",
+    "slug_placeholder": "category-slug",
+    "description_placeholder": "Describe this category...",
+    "name_tooltip": "Name of the category as it will appear to customers",
+    "slug_info": "Used in URLs. Auto-generated from name if left empty",
+    "description_tooltip": "A detailed description of the category",
+    "display_order_tooltip": "Determines the order in which categories appear",
+    "status_tooltip": "Only active categories will be visible on the site",
+    "image_hint": "Recommended size: 800x800px. Max file size: 2MB.",
+    "delete_category": "Delete this category",
+    "view_products": "View Products in Category",
+    "view_on_site": "View on Site",
+    "total_products": "Total Products",
+    "total_views": "Total Views",
+    "total_subcategories": "Total Subcategories",
+    "products_info": "Products Statistics",
+    "products_description": "These statistics show the performance of products associated with this category.",
+    "help_title": "Category Tips",
+    "help_slug_title": "About Slugs",
+    "help_slug_text": "Slugs are used in URLs to identify this category. Use only lowercase letters, numbers, and hyphens.",
+    "help_parent_title": "Parent Categories",
+    "help_parent_text": "Setting a parent category creates a hierarchy. Customers can navigate through categories to find products.",
+    "help_display_title": "Display Order",
+    "help_display_text": "Lower values appear first. Use this to control the order categories appear in menus and listings."
   },
   "regions": {
     "title": "Regions",
@@ -156,7 +203,7 @@
     "quick_actions": "Quick Actions",
     "not_found": "Region not found",
     "linked_products": "Linked Products",
-    "products": "products",
+    "products": "Products",
     "total_products": "Total Products",
     "total_views": "Total Views",
     "total_orders": "Orders",
@@ -166,11 +213,29 @@
     "export_title": "Export Region Data",
     "export_description": "Export this region's data in various formats for reporting or backup purposes."
   },
+  "confirm_leave": {
+    "title": "Unsaved Changes",
+    "message": "You have unsaved changes. Are you sure you want to leave?",
+    "ok": "Leave Page",
+    "cancel": "Stay on Page"
+  },
+  "danger_zone": "Danger Zone",
+  "danger_zone_description": "Actions in this section cannot be undone",
+  "quick_actions": "Quick Actions",
+  "pagination": {
+    "total_items": "{{total}} items"
+  },
   "sort": {
     "name_asc": "Name (A-Z)",
     "name_desc": "Name (Z-A)",
     "newest": "Newest First",
-    "oldest": "Oldest First"
+    "oldest": "Oldest First",
+    "asc": "Ascending",
+    "desc": "Descending"
+  },
+  "view": {
+    "table": "Table View",
+    "grid": "Grid View"
   },
   "actions": {
     "edit": "Edit",
@@ -204,12 +269,5 @@
     "category_required": "Category is required",
     "image_only": "You can only upload image files!",
     "image_size": "Image must be smaller than 2MB!"
-  },
-  "view": {
-    "table": "Table View",
-    "grid": "Grid View"
-  },
-  "pagination": {
-    "total_items": "{{total}} mục"
   }
 }
