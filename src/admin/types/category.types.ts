@@ -1,4 +1,5 @@
 export interface CategoryResponse {
+    children: [];
     id: string;
     name: string;
     slug: string;
@@ -19,4 +20,5 @@ export interface CategoryResponse {
     imageUrl?: string;
     displayOrder?: number;
     active: boolean;
+    file?: File; 
   }
