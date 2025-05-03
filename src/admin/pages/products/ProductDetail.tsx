@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Card, Typography, Button, Tag, Descriptions, Skeleton, Divider, Tooltip, 
+  Card, Typography, Button, Tag, Descriptions, Skeleton, Tooltip, 
   Breadcrumb, Tabs, Statistic, Badge, Alert, Modal, List, Image,
-  Table, notification, Popconfirm, Carousel,
-  Empty, 
+  Table, notification, Popconfirm, Carousel, Empty, Row, Col, message,
 } from 'antd';
 import { 
   EditOutlined, DeleteOutlined, ArrowLeftOutlined, EyeOutlined, 
@@ -58,7 +57,6 @@ const ProductDetail: React.FC = () => {
     if (id) {
       fetchProduct(id);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   
   const fetchProduct = async (productId: string) => {
@@ -203,38 +201,6 @@ const ProductDetail: React.FC = () => {
     return dayjs(dateString).format('LL LT');
   };
   
-  if (loading) {
-    return (
-      <div className="space-y-6">
-        <Skeleton active paragraph={{ rows: 1 }} />
-        <Card>
-          <Skeleton active avatar paragraph={{ rows: 6 }} />
-        </Card>
-      </div>
-    );
-  }
-  
-  if (!product) {
-    return (
-      <Card className="text-center py-12">
-        <Alert
-          type="error"
-          message={t('admin:products.not_found')}
-          description={t('admin:products.not_found_description')}
-          className="mb-4 max-w-md mx-auto"
-        />
-        <Button
-          type="primary"
-          onClick={() => navigate('/admin/products')}
-        >
-          {t('admin:actions.back_to_list')}
-        </Button>
-      </Card>
-    );
-  }
-  
-  // Find primary image
-  
   // Variant columns for table
   const variantColumns = [
     {
@@ -301,6 +267,117 @@ const ProductDetail: React.FC = () => {
       ),
     },
   ];
+  
+  // Enhanced image gallery
+  const renderImageGallery = () => {
+    if (!product?.images || product.images.length === 0) {
+      return (
+        <div className="flex items-center justify-center h-96 bg-gray-100 dark:bg-gray-800 rounded-lg">
+          <Empty 
+            description={t('admin:products.no_images')}
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+          >
+            <Button 
+              type="primary" 
+              icon={<PlusOutlined />}
+              onClick={handleEdit}
+            >
+              {t('admin:products.add_images')}
+            </Button>
+          </Empty>
+        </div>
+      );
+    }
+
+    return (
+      <div className="space-y-4">
+        <Carousel 
+          autoplay
+          dots
+          className="rounded-lg overflow-hidden shadow-lg"
+        >
+          {product.images.map((image) => (
+            <div key={image.id} className="h-96 relative">
+              <Image
+                src={image.imageUrl}
+                alt={image.altText || product.name}
+                className="w-full h-full object-cover"
+                preview={{
+                  mask: <div className="flex items-center gap-2">
+                    <EyeOutlined /> {t('admin:actions.view')}
+                  </div>
+                }}
+              />
+              {image.isPrimary && (
+                <Badge
+                  className="absolute top-4 right-4"
+                  count={t('admin:products.primary_image')}
+                  style={{ backgroundColor: '#52c41a' }}
+                />
+              )}
+            </div>
+          ))}
+        </Carousel>
+        
+        {/* Thumbnail gallery */}
+        <div className="grid grid-cols-4 md:grid-cols-6 gap-2">
+          {product.images.map((image) => (
+            <div 
+              key={image.id}
+              className={`relative cursor-pointer rounded-md overflow-hidden ${
+                image.isPrimary ? 'ring-2 ring-primary' : ''
+              }`}
+            >
+              <Image
+                src={image.imageUrl}
+                alt={image.altText || product.name}
+                className="w-full h-20 object-cover"
+                preview={{
+                  src: image.imageUrl,
+                  mask: <EyeOutlined className="text-white" />
+                }}
+              />
+              {image.isPrimary && (
+                <div className="absolute top-1 right-1">
+                  <StarFilled className="text-yellow-400" />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+  
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <Skeleton active paragraph={{ rows: 1 }} />
+        <Card>
+          <Skeleton active avatar paragraph={{ rows: 6 }} />
+        </Card>
+      </div>
+    );
+  }
+  
+  if (!product) {
+    return (
+      <Card className="text-center py-12">
+        <Alert
+          type="error"
+          message={t('admin:products.not_found')}
+          description={t('admin:products.not_found_description')}
+          className="mb-4 max-w-md mx-auto"
+        />
+        <Button
+          type="primary"
+          onClick={() => navigate('/admin/products')}
+        >
+          {t('admin:actions.back_to_list')}
+        </Button>
+      </Card>
+    );
+  }
   
   return (
     <motion.div
@@ -395,244 +472,144 @@ const ProductDetail: React.FC = () => {
                 }
                 key="info"
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Product Images */}
-                  <div className="md:col-span-2">
-                    {product.images && product.images.length > 0 ? (
-                      <div className="overflow-hidden rounded-lg">
-                        <Carousel 
-                          dots 
-                          autoplay={false} 
-                          className="overflow-hidden rounded-lg product-carousel"
-                        >
-                          {product.images.map((image) => (
-                            <div key={image.id} className="relative">
-                              <div 
-                                className="h-80 bg-gray-100 dark:bg-gray-700 cursor-pointer"
-                                onClick={() => showImagePreview(image.imageUrl)}
-                              >
-                                <img
-                                  src={image.imageUrl}
-                                  alt={image.altText || product.name}
-                                  className="w-full h-full object-contain"
-                                />
-                              </div>
-                              {image.isPrimary && (
-                                <Badge
-                                  className="absolute top-2 right-2"
-                                  count={t('admin:products.primary_image')}
-                                  style={{ backgroundColor: '#52c41a' }}
-                                />
-                              )}
-                            </div>
-                          ))}
-                        </Carousel>
-                        
-                        <div className="grid grid-cols-4 gap-2 mt-2">
-                          {product.images.map((image) => (
-                            <div 
-                              key={image.id} 
-                              className="h-20 rounded-md overflow-hidden border-2 hover:border-primary cursor-pointer transition-all duration-300"
-                              style={{
-                                borderColor: image.isPrimary ? '#1890ff' : 'transparent'
-                              }}
-                              onClick={() => showImagePreview(image.imageUrl)}
-                            >
-                              <img
-                                src={image.imageUrl}
-                                alt={image.altText || product.name}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-center justify-center p-12 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                        <PictureOutlined style={{ fontSize: 48 }} className="text-gray-400 mb-4" />
-                        <Text className="text-gray-500 dark:text-gray-400">
-                          {t('admin:products.no_images')}
-                        </Text>
-                        <Button 
-                          type="primary" 
-                          icon={<PlusOutlined />}
-                          className="mt-4"
-                          onClick={handleEdit}
-                        >
-                          {t('admin:products.add_images')}
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Product Basic Info */}
-                  <div>
-                    <Title level={4} className="dark:text-white mb-4">
-                      {t('admin:products.basic_info')}
-                    </Title>
-                    
-                    <Descriptions 
-                      bordered 
-                      column={1} 
-                      className="product-details-table"
-                      size="small"
-                    >
-                      <Descriptions.Item label={t('admin:products.id')}>
-                        <Text copyable>{product.id}</Text>
-                      </Descriptions.Item>
-                      
-                      <Descriptions.Item label={t('admin:products.sku')}>
-                        {product.sku || '-'}
-                      </Descriptions.Item>
-                      
-                      <Descriptions.Item label={t('admin:products.category')}>
-                        {product.category ? (
-                          <Tag color="blue" icon={<TagsOutlined />}>
-                            {product.category.name}
-                          </Tag>
-                        ) : '-'}
-                      </Descriptions.Item>
-                      
-                      <Descriptions.Item label={t('admin:products.region')}>
-                        {product.region ? (
-                          <Tag color="green" icon={<EnvironmentOutlined />}>
-                            {product.region.name}
-                          </Tag>
-                        ) : '-'}
-                      </Descriptions.Item>
-                      
-                      <Descriptions.Item label={t('admin:products.price')}>
-                        <div className="flex items-center">
-                          <DollarOutlined className="mr-1 text-primary" />
-                          <Text strong className="text-primary">
-                            {formatCurrency(Number(product.price))}
-                          </Text>
-                          {product.originalPrice && Number(product.originalPrice) > Number(product.price) && (
-                            <Text delete className="text-gray-400 ml-2">
-                              {formatCurrency(Number(product.originalPrice))}
-                            </Text>
-                          )}
-                        </div>
-                      </Descriptions.Item>
-                      
-                      <Descriptions.Item label={t('admin:products.stock')}>
-                        <Tag color={
-                          (product.stockQuantity || 0) > 10 ? 'success' : 
-                          (product.stockQuantity || 0) > 0 ? 'warning' : 'error'
-                        }>
-                          {product.stockQuantity || 0}
-                        </Tag>
-                      </Descriptions.Item>
-                      
-                      <Descriptions.Item label={t('admin:products.status')}>
-                        {product.active ? (
-                          <Badge
-                            status="success"
-                            text={
-                              <span className="flex items-center">
-                                <CheckCircleOutlined className="mr-1 text-green-500" />
-                                {t('admin:products.active')}
-                              </span>
-                            }
-                          />
-                        ) : (
-                          <Badge
-                            status="error"
-                            text={
-                              <span className="flex items-center">
-                                <CloseCircleOutlined className="mr-1 text-red-500" />
-                                {t('admin:products.inactive')}
-                              </span>
-                            }
-                          />
-                        )}
-                      </Descriptions.Item>
-                      
-                      <Descriptions.Item label={t('admin:products.featured')}>
-                        {product.featured ? (
-                          <Badge
-                            status="warning"
-                            text={
-                              <span className="flex items-center">
-                                <StarFilled className="mr-1 text-yellow-500" />
-                                {t('admin:products.featured')}
-                              </span>
-                            }
-                          />
-                        ) : (
-                          <Badge
-                            status="default"
-                            text={
-                              <span className="flex items-center">
-                                <StarOutlined className="mr-1 text-gray-500" />
-                                {t('admin:products.not_featured')}
-                              </span>
-                            }
-                          />
-                        )}
-                      </Descriptions.Item>
-                      
-                      <Descriptions.Item label={t('admin:products.view_count')}>
-                        <div className="flex items-center">
-                          <EyeOutlined className="mr-1 text-blue-500" />
-                          <Text>{product.viewCount || 0}</Text>
-                        </div>
-                      </Descriptions.Item>
-                    </Descriptions>
-                  </div>
-                  
-                  {/* Product Dates */}
-                  <div>
-                    <Title level={4} className="dark:text-white mb-4">
-                      {t('admin:products.timestamps')}
-                    </Title>
-                    
-                    <Descriptions 
-                      bordered 
-                      column={1}
-                      size="small"
-                      className="product-details-table"
-                    >
-                      <Descriptions.Item label={t('admin:products.created_at')}>
-                        <span className="flex items-center">
-                          <ClockCircleOutlined className="mr-1 text-gray-500" />
-                          {formatDate(product.createdAt)}
-                        </span>
-                      </Descriptions.Item>
-                      
-                      <Descriptions.Item label={t('admin:products.updated_at')}>
-                        <span className="flex items-center">
-                          <ClockCircleOutlined className="mr-1 text-gray-500" />
-                          {formatDate(product.updatedAt)}
-                        </span>
-                      </Descriptions.Item>
-                    </Descriptions>
-                    
-                    {/* QR code if available */}
-                    {product.qrCode && (
-                      <div className="mt-4">
-                        <Title level={5} className="dark:text-white mb-2">
-                          {t('admin:products.qr_code')}
-                        </Title>
-                        <div className="p-4 bg-white rounded-lg max-w-xs mx-auto">
-                          <img 
-                            src={product.qrCode.qrImageUrl} 
-                            alt="QR Code"
-                            className="w-full" 
-                          />
-                          <div className="mt-2 text-center text-sm text-gray-500">
-                            {product.qrCode.qrData}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                {/* Enhanced image gallery section */}
+                <div className="mb-8">
+                  <Title level={4} className="mb-4">
+                    {t('admin:products.images')}
+                  </Title>
+                  {renderImageGallery()}
                 </div>
                 
-                <Divider />
+                {/* Product Basic Info */}
+                <Row gutter={[16, 16]}>
+                  <Col xs={24} md={12}>
+                    <Card className="shadow-sm">
+                      <Title level={4} className="dark:text-white mb-4">
+                        {t('admin:products.basic_info')}
+                      </Title>
+                      
+                      <Descriptions 
+                        bordered 
+                        column={1} 
+                        className="product-details-table"
+                        size="small"
+                      >
+                        <Descriptions.Item label={t('admin:products.id')}>
+                          <Text copyable>{product.id}</Text>
+                        </Descriptions.Item>
+                        
+                        <Descriptions.Item label={t('admin:products.sku')}>
+                          {product.sku || '-'}
+                        </Descriptions.Item>
+                        
+                        <Descriptions.Item label={t('admin:products.category')}>
+                          {product.category ? (
+                            <Tag color="blue" icon={<TagsOutlined />}>
+                              {product.category.name}
+                            </Tag>
+                          ) : '-'}
+                        </Descriptions.Item>
+                        
+                        <Descriptions.Item label={t('admin:products.region')}>
+                          {product.region ? (
+                            <Tag color="green" icon={<EnvironmentOutlined />}>
+                              {product.region.name}
+                            </Tag>
+                          ) : '-'}
+                        </Descriptions.Item>
+                      </Descriptions>
+                    </Card>
+                  </Col>
+                  
+                  <Col xs={24} md={12}>
+                    <Card className="shadow-sm">
+                      <Title level={4} className="dark:text-white mb-4">
+                        {t('admin:products.pricing_stock')}
+                      </Title>
+                      
+                      <Descriptions 
+                        bordered 
+                        column={1} 
+                        className="product-details-table"
+                        size="small"
+                      >
+                        <Descriptions.Item label={t('admin:products.price')}>
+                          <div className="flex items-center">
+                            <DollarOutlined className="mr-1 text-primary" />
+                            <Text strong className="text-primary">
+                              {formatCurrency(Number(product.price))}
+                            </Text>
+                            {product.originalPrice && Number(product.originalPrice) > Number(product.price) && (
+                              <Text delete className="text-gray-400 ml-2">
+                                {formatCurrency(Number(product.originalPrice))}
+                              </Text>
+                            )}
+                          </div>
+                        </Descriptions.Item>
+                        
+                        <Descriptions.Item label={t('admin:products.stock')}>
+                          <Tag color={
+                            (product.stockQuantity || 0) > 10 ? 'success' : 
+                            (product.stockQuantity || 0) > 0 ? 'warning' : 'error'
+                          }>
+                            {product.stockQuantity || 0}
+                          </Tag>
+                        </Descriptions.Item>
+                        
+                        <Descriptions.Item label={t('admin:products.status')}>
+                          {product.active ? (
+                            <Badge
+                              status="success"
+                              text={
+                                <span className="flex items-center">
+                                  <CheckCircleOutlined className="mr-1 text-green-500" />
+                                  {t('admin:products.active')}
+                                </span>
+                              }
+                            />
+                          ) : (
+                            <Badge
+                              status="error"
+                              text={
+                                <span className="flex items-center">
+                                  <CloseCircleOutlined className="mr-1 text-red-500" />
+                                  {t('admin:products.inactive')}
+                                </span>
+                              }
+                            />
+                          )}
+                        </Descriptions.Item>
+                        
+                        <Descriptions.Item label={t('admin:products.featured')}>
+                          {product.featured ? (
+                            <Badge
+                              status="warning"
+                              text={
+                                <span className="flex items-center">
+                                  <StarFilled className="mr-1 text-yellow-500" />
+                                  {t('admin:products.featured')}
+                                </span>
+                              }
+                            />
+                          ) : (
+                            <Badge
+                              status="default"
+                              text={
+                                <span className="flex items-center">
+                                  <StarOutlined className="mr-1 text-gray-500" />
+                                  {t('admin:products.not_featured')}
+                                </span>
+                              }
+                            />
+                          )}
+                        </Descriptions.Item>
+                      </Descriptions>
+                    </Card>
+                  </Col>
+                </Row>
                 
                 {/* Description */}
-                <div className="mt-6">
+                <Card className="mt-4 shadow-sm">
                   <Title level={4} className="dark:text-white mb-4">
                     {t('admin:products.description')}
                   </Title>
@@ -649,19 +626,18 @@ const ProductDetail: React.FC = () => {
                       showIcon
                     />
                   )}
-                </div>
-                
-                {/* Short Description */}
-                {product.shortDescription && (
-                  <div className="mt-6">
-                    <Title level={4} className="dark:text-white mb-4">
-                      {t('admin:products.short_description')}
-                    </Title>
-                    <Paragraph className="dark:text-gray-300">
-                      {product.shortDescription}
-                    </Paragraph>
-                  </div>
-                )}
+                  
+                  {product.shortDescription && (
+                    <div className="mt-6">
+                      <Title level={5} className="dark:text-white mb-2">
+                        {t('admin:products.short_description')}
+                      </Title>
+                      <Paragraph className="dark:text-gray-300">
+                        {product.shortDescription}
+                      </Paragraph>
+                    </div>
+                  )}
+                </Card>
               </TabPane>
               
               {/* Variants Tab */}
@@ -924,69 +900,69 @@ const ProductDetail: React.FC = () => {
               </div>
             </Card>
             
-            {/* Related Info Card */}
+            {/* Product Dates */}
             <Card
               title={
                 <Text strong className="dark:text-white flex items-center">
-                  <InfoCircleOutlined className="mr-2" />
-                  {t('admin:products.related_info')}
+                  <ClockCircleOutlined className="mr-2" />
+                  {t('admin:products.timestamps')}
                 </Text>
               }
               className="shadow-sm dark:bg-gray-800"
             >
-              <div className="space-y-4">
-                {product.category && (
-                  <div>
-                    <Text strong className="dark:text-white block mb-1">
-                      {t('admin:products.category')}:
-                    </Text>
-                    <Link to={`/admin/categories/${product.category.id}`}>
-                      <Button 
-                        type="default" 
-                        icon={<TagsOutlined />}
-                        block
-                      >
-                        {product.category.name}
-                      </Button>
-                    </Link>
-                  </div>
-                )}
+              <Descriptions 
+                bordered 
+                column={1}
+                size="small"
+                className="product-details-table"
+              >
+                <Descriptions.Item label={t('admin:products.created_at')}>
+                  <span className="flex items-center">
+                    <ClockCircleOutlined className="mr-1 text-gray-500" />
+                    {formatDate(product.createdAt)}
+                  </span>
+                </Descriptions.Item>
                 
-                {product.region && (
-                  <div>
-                    <Text strong className="dark:text-white block mb-1">
-                      {t('admin:products.region')}:
-                    </Text>
-                    <Link to={`/admin/regions/${product.region.id}`}>
-                      <Button 
-                        type="default" 
-                        icon={<EnvironmentOutlined />}
-                        block
-                      >
-                        {product.region.name}
-                      </Button>
-                    </Link>
-                  </div>
-                )}
-                
-                {product.qrCode && (
-                  <div>
-                    <Text strong className="dark:text-white block mb-1">
-                      {t('admin:products.qr_code')}:
-                    </Text>
-                    <Link to={product.qrCode.redirectUrl} target="_blank">
-                      <Button 
-                        type="default" 
-                        icon={<QrcodeOutlined />}
-                        block
-                      >
-                        {t('admin:products.view_qr_page')}
-                      </Button>
-                    </Link>
-                  </div>
-                )}
-              </div>
+                <Descriptions.Item label={t('admin:products.updated_at')}>
+                  <span className="flex items-center">
+                    <ClockCircleOutlined className="mr-1 text-gray-500" />
+                    {formatDate(product.updatedAt)}
+                  </span>
+                </Descriptions.Item>
+              </Descriptions>
             </Card>
+            
+            {/* QR code if available */}
+            {product.qrCode && (
+              <Card
+                title={
+                  <Text strong className="dark:text-white flex items-center">
+                    <QrcodeOutlined className="mr-2" />
+                    {t('admin:products.qr_code')}
+                  </Text>
+                }
+                className="shadow-sm dark:bg-gray-800"
+              >
+                <div className="p-4 bg-white rounded-lg text-center">
+                  <img 
+                    src={product.qrCode.qrImageUrl} 
+                    alt="QR Code"
+                    className="w-32 h-32 mx-auto" 
+                  />
+                  <div className="mt-2 text-sm text-gray-500">
+                    {product.qrCode.qrData}
+                  </div>
+                  <Button 
+                    type="primary" 
+                    icon={<LinkOutlined />}
+                    className="mt-4"
+                    onClick={() => window.open(product.qrCode?.redirectUrl, '_blank')}
+                  >
+                    {t('admin:products.view_qr_page')}
+                  </Button>
+                </div>
+              </Card>
+            )}
             
             {/* Share Card */}
             <Card
@@ -1004,9 +980,7 @@ const ProductDetail: React.FC = () => {
                 block
                 onClick={() => {
                   navigator.clipboard.writeText(window.location.href);
-                  notification.success({
-                    message: t('admin:products.link_copied'),
-                  });
+                  message.success(t('admin:products.link_copied'));
                 }}
               >
                 {t('admin:products.copy_link')}
