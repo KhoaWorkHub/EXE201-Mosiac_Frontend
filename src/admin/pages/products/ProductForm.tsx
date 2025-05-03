@@ -1,11 +1,14 @@
+// src/admin/pages/products/ProductForm.tsx
 import React, { useState, useEffect } from 'react';
 import { 
   Form, Input, InputNumber, Select, Switch, Button, Upload, Card, message, 
-  notification, Tabs, Space, Table, Popconfirm, Divider, Row, Col, Typography
+  notification, Tabs, Space, Table, Popconfirm, Modal, Typography,
+  Row, Col, Tooltip, 
 } from 'antd';
 import { 
-  ArrowLeftOutlined, SaveOutlined, PlusOutlined,
-  DeleteOutlined, EditOutlined, LoadingOutlined
+  ArrowLeftOutlined, SaveOutlined, DeleteOutlined, 
+  EditOutlined, LoadingOutlined, CloudUploadOutlined, EyeOutlined,
+  StarOutlined, StarFilled
 } from '@ant-design/icons';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -20,15 +23,24 @@ import {
   ProductVariantRequest,
   ProductVariantResponse,
 } from '@/admin/types';
-import { RcFile } from 'antd/es/upload';
+import { motion, AnimatePresence } from 'framer-motion';
+import { RcFile, UploadFile } from 'antd/es/upload';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import type { UploadFileStatus } from 'antd/es/upload/interface';
 
 const { Option } = Select;
 const { TabPane } = Tabs;
+const { Title } = Typography;
 
 // Available sizes for variants
 const SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
+
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+};
 
 const ProductForm: React.FC = () => {
   const { t } = useTranslation(['admin', 'common']);
@@ -42,13 +54,16 @@ const ProductForm: React.FC = () => {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [categories, setCategories] = useState<CategoryResponse[]>([]);
   const [regions, setRegions] = useState<RegionResponse[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [imageFileList, setImageFileList] = useState<any[]>([]);
-  const [uploadLoading, setUploadLoading] = useState<boolean>(false);
+  const [imageFileList, setImageFileList] = useState<UploadFile[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [uploadLoading, _setUploadLoading] = useState<boolean>(false);
   const [product, setProduct] = useState<ProductResponse | null>(null);
   const [variants, setVariants] = useState<ProductVariantResponse[]>([]);
   const [editingVariant, setEditingVariant] = useState<ProductVariantResponse | null>(null);
   const [activeTab, setActiveTab] = useState<string>('basic');
+  const [previewVisible, setPreviewVisible] = useState<boolean>(false);
+  const [previewImage, setPreviewImage] = useState<string>('');
+  const [previewTitle, setPreviewTitle] = useState<string>('');
   
   const isEditing = !!id;
   
@@ -93,11 +108,11 @@ const ProductForm: React.FC = () => {
             const fileList = productResponse.images.map((image, index) => ({
               uid: image.id || `-${index}`,
               name: `image-${index}.jpg`,
-              status: 'done',
+              status: 'done' as UploadFileStatus,
               url: image.imageUrl,
               imageId: image.id,
               isPrimary: image.isPrimary,
-            }));
+            })) as UploadFile[];
             setImageFileList(fileList);
           }
         }
@@ -114,12 +129,6 @@ const ProductForm: React.FC = () => {
     fetchInitialData();
   }, [id, form, isEditing, t]);
   
-  // Handle image upload change
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleUploadChange = ({ fileList }: any) => {
-    setImageFileList(fileList);
-  };
-  
   // Validate image before upload
   const beforeUpload = (file: RcFile) => {
     const isImage = file.type.startsWith('image/');
@@ -130,102 +139,98 @@ const ProductForm: React.FC = () => {
     if (!isLt2M) {
       message.error(t('admin:validation.image_size'));
     }
-    return isImage && isLt2M;
+    return false; // Prevent automatic upload
   };
   
-  // Handle image upload
-  const handleUploadImage = async () => {
-    if (!isEditing || !id || !imageFileList.length) return;
+  // Enhanced image upload handler
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleImageUpload = async (options: any) => {
+    const { onSuccess, onError, file, onProgress } = options;
     
-    const newFiles = imageFileList.filter(file => file.originFileObj);
-    if (newFiles.length === 0) return;
-    
-    setUploadLoading(true);
     try {
-      const files = newFiles.map(file => file.originFileObj);
+      // Simulate progress
+      onProgress({ percent: 30 });
+      
+      if (!isEditing || !id) {
+        message.warning(t('admin:products.save_product_first'));
+        onError(new Error('Product not saved'));
+        return;
+      }
+      
+      onProgress({ percent: 60 });
+      
       const uploadedImages = await AdminProductService.uploadProductImages(
         id,
-        files,
+        [file],
         'Product Image',
-        false
+        imageFileList.length === 0 // First image is primary
       );
       
-      // Update fileList with new image IDs and URLs
-      const updatedFileList = imageFileList.map(file => {
-        if (file.originFileObj) {
-          const uploadedImage = uploadedImages.find(
-            img => img.imageUrl.includes(file.name) || img.imageUrl.endsWith(file.name)
-          );
-          if (uploadedImage) {
-            return {
-              ...file,
-              status: 'done',
-              url: uploadedImage.imageUrl,
-              imageId: uploadedImage.id,
-              originFileObj: undefined,
-            };
-          }
-        }
-        return file;
-      });
+      onProgress({ percent: 100 });
+      onSuccess(uploadedImages[0], file);
       
-      setImageFileList(updatedFileList);
+      // Refresh product to get updated images
+      const updatedProduct = await AdminProductService.getProductById(id);
+      setProduct(updatedProduct);
+      
       message.success(t('admin:products.image_upload_success'));
-      
-      // Refresh product data
-      if (id) {
-        const refreshedProduct = await AdminProductService.getProductById(id);
-        setProduct(refreshedProduct);
-      }
     } catch (error) {
-      notification.error({
-        message: t('admin:products.image_upload_error'),
-        description: error instanceof Error ? error.message : 'Unknown error',
-      });
-    } finally {
-      setUploadLoading(false);
+      onError(error);
+      message.error(t('admin:products.image_upload_error'));
     }
+  };
+  
+  // Convert file to base64 for preview
+  const getBase64 = (file: RcFile): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+  
+  // Image preview handler
+  const handlePreview = async (file: UploadFile) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj as RcFile);
+    }
+    
+    setPreviewImage(file.url || (file.preview as string));
+    setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
+    setPreviewVisible(true);
   };
   
   // Handle image removal
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleRemoveImage = async (file: any) => {
-    if (file.imageId && isEditing) {
-      try {
-        await AdminProductService.deleteProductImage(file.imageId);
-        message.success(t('admin:products.image_delete_success'));
-        return true;
-      } catch (error) {
-        notification.error({
-          message: t('admin:products.image_delete_error'),
-          description: error instanceof Error ? error.message : 'Unknown error',
-        });
-        return false;
+  const handleDeleteImage = async (imageId: string) => {
+    try {
+      await AdminProductService.deleteProductImage(imageId);
+      message.success(t('admin:products.image_delete_success'));
+      if (id) {
+        const updatedProduct = await AdminProductService.getProductById(id);
+        setProduct(updatedProduct);
       }
+    } catch (error) {
+      notification.error({
+        message: t('admin:products.image_delete_error'),
+        description: error instanceof Error ? error.message : 'Unknown error',
+      });
     }
-    return true;
   };
   
   // Set primary image
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const setPrimaryImage = async (file: any) => {
-    if (!isEditing || !id || !file.imageId) return;
+  const handleSetPrimaryImage = async (imageId: string) => {
+    if (!isEditing || !id) return;
     
     try {
-      // Update image to be primary in the backend
-      // This is usually a separate API call, but for now we're just updating the local state
-      const updatedFileList = imageFileList.map(item => ({
-        ...item,
-        isPrimary: item.uid === file.uid,
-      }));
+      await AdminProductService.setPrimaryImage(id, imageId);
+      message.success(t('admin:products.primary_image_success'));
       
-      setImageFileList(updatedFileList);
-      message.success(t('admin:products.primary_image_set'));
+      // Refresh product data
+      const updatedProduct = await AdminProductService.getProductById(id);
+      setProduct(updatedProduct);
     } catch (error) {
-      notification.error({
-        message: t('admin:products.primary_image_error'),
-        description: error instanceof Error ? error.message : 'Unknown error',
-      });
+      message.error(t('admin:products.primary_image_error'));
     }
   };
   
@@ -261,11 +266,6 @@ const ProductForm: React.FC = () => {
         // Navigate to edit mode with the new ID
         navigate(`/admin/products/edit/${savedProduct.id}`);
         return; // Return early to prevent further processing in create mode
-      }
-      
-      // If we have new images to upload, do it now
-      if (imageFileList.some(file => file.originFileObj) && savedProduct.id) {
-        await handleUploadImage();
       }
       
       // Update product state
@@ -449,12 +449,15 @@ const ProductForm: React.FC = () => {
     },
   ];
   
-  // Define upload button
   const uploadButton = (
-    <div>
-      {uploadLoading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>{t('admin:actions.upload')}</div>
-    </div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="flex flex-col items-center justify-center p-4"
+    >
+      {uploadLoading ? <LoadingOutlined /> : <CloudUploadOutlined className="text-3xl" />}
+      <div className="mt-2 text-sm">{t('admin:actions.upload')}</div>
+    </motion.div>
   );
   
   if (loading) {
@@ -466,11 +469,17 @@ const ProductForm: React.FC = () => {
   }
   
   return (
-    <div className="space-y-6">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={fadeInUp}
+      className="space-y-6"
+    >
+      {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold dark:text-white">
+        <Title level={2} className="mb-0 dark:text-white">
           {isEditing ? t('admin:products.edit') : t('admin:products.add')}
-        </h1>
+        </Title>
         <Button
           icon={<ArrowLeftOutlined />}
           onClick={() => navigate('/admin/products')}
@@ -479,417 +488,476 @@ const ProductForm: React.FC = () => {
         </Button>
       </div>
       
-      <Tabs 
-        activeKey={activeTab} 
-        onChange={setActiveTab}
-        className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm"
-      >
-        <TabPane tab={t('admin:products.basic_info')} key="basic">
-          <Form
-            form={form}
-            layout="vertical"
-            onFinish={onFinish}
-            initialValues={{
-              active: true,
-              featured: false,
-              stockQuantity: 0,
-              price: 0,
-            }}
-            className="mt-4"
-          >
-            <Row gutter={16}>
-              <Col xs={24} lg={12}>
-                <Form.Item
-                  name="name"
-                  label={t('admin:products.name')}
-                  rules={[
-                    { required: true, message: t('admin:validation.name_required') }
-                  ]}
-                >
-                  <Input 
-                    onBlur={() => {
-                      if (!isEditing) generateSlug();
-                    }}
-                  />
-                </Form.Item>
-              </Col>
-              
-              <Col xs={24} lg={12}>
-                <Form.Item
-                  name="slug"
-                  label={t('admin:products.slug')}
-                  rules={[
-                    { required: true, message: t('admin:validation.slug_required') }
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
-              </Col>
-              
-              <Col xs={24} lg={8}>
-                <Form.Item
-                  name="categoryId"
-                  label={t('admin:products.category')}
-                  rules={[
-                    { required: true, message: t('admin:validation.category_required') }
-                  ]}
-                >
-                  <Select placeholder={t('admin:products.select_category')}>
-                    {categories.map(category => (
-                      <Option key={category.id} value={category.id}>
-                        {category.name}
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-              
-              <Col xs={24} lg={8}>
-                <Form.Item
-                  name="regionId"
-                  label={t('admin:products.region')}
-                  rules={[
-                    { required: true, message: t('admin:validation.region_required') }
-                  ]}
-                >
-                  <Select placeholder={t('admin:products.select_region')}>
-                    {regions.map(region => (
-                      <Option key={region.id} value={region.id}>
-                        {region.name}
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-              
-              <Col xs={24} lg={8}>
-                <Form.Item
-                  name="sku"
-                  label="SKU"
-                >
-                  <Input />
-                </Form.Item>
-              </Col>
-              
-              <Col xs={24} md={8}>
-                <Form.Item
-                  name="price"
-                  label={t('admin:products.price')}
-                  rules={[
-                    { required: true, message: t('admin:validation.price_required') },
-                    { type: 'number', min: 0, message: t('admin:validation.price_positive') }
-                  ]}
-                >
-                  <InputNumber
-                    style={{ width: '100%' }}
-                    formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                    parser={value => value!.replace(/\$\s?|(,*)/g, '')}
-                  />
-                </Form.Item>
-              </Col>
-              
-              <Col xs={24} md={8}>
-                <Form.Item
-                  name="originalPrice"
-                  label={t('admin:products.original_price')}
-                >
-                  <InputNumber
-                    style={{ width: '100%' }}
-                    formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                    parser={value => value!.replace(/\$\s?|(,*)/g, '')}
-                  />
-                </Form.Item>
-              </Col>
-              
-              <Col xs={24} md={8}>
-                <Form.Item
-                  name="stockQuantity"
-                  label={t('admin:products.stock')}
-                  rules={[
-                    { type: 'number', min: 0, message: t('admin:validation.quantity_positive') }
-                  ]}
-                >
-                  <InputNumber style={{ width: '100%' }} />
-                </Form.Item>
-              </Col>
-              
-              <Col xs={24}>
-                <Form.Item
-                  name="shortDescription"
-                  label={t('admin:products.short_description')}
-                >
-                  <Input.TextArea rows={2} />
-                </Form.Item>
-              </Col>
-              
-              <Col xs={24}>
-                <Form.Item
-                  name="description"
-                  label={t('admin:products.description')}
-                >
-                  <ReactQuill
-                    theme="snow"
-                    modules={{
-                      toolbar: [
-                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                        ['bold', 'italic', 'underline', 'strike'],
-                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                        [{ 'color': [] }, { 'background': [] }],
-                        ['link', 'image'],
-                        ['clean']
-                      ],
-                    }}
-                  />
-                </Form.Item>
-              </Col>
-              
-              <Col xs={12} md={6}>
-                <Form.Item
-                  name="active"
-                  label={t('admin:products.status')}
-                  valuePropName="checked"
-                >
-                  <Switch />
-                </Form.Item>
-              </Col>
-              
-              <Col xs={12} md={6}>
-                <Form.Item
-                  name="featured"
-                  label={t('admin:products.featured')}
-                  valuePropName="checked"
-                >
-                  <Switch />
-                </Form.Item>
-              </Col>
-            </Row>
-            
-            <div className="flex justify-end mt-6 space-x-2">
-              <Button
-                onClick={() => navigate('/admin/products')}
-                disabled={submitting}
-              >
-                {t('admin:actions.cancel')}
-              </Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-                loading={submitting}
-                icon={<SaveOutlined />}
-              >
-                {t('admin:actions.save')}
-              </Button>
-            </div>
-          </Form>
-        </TabPane>
-        
-        {isEditing && (
-          <TabPane tab={t('admin:products.images')} key="images">
-            <div className="mt-4">
-              <Typography.Paragraph className="text-gray-600 dark:text-gray-300 mb-6">
-                {t('admin:products.image_hint')}
-              </Typography.Paragraph>
-              
-              <Upload
-                listType="picture-card"
-                fileList={imageFileList}
-                onChange={handleUploadChange}
-                beforeUpload={beforeUpload}
-                onRemove={handleRemoveImage}
-                customRequest={({ onSuccess }) => {
-                  if (onSuccess) onSuccess('ok');
-                }}
-                multiple
-              >
-                {uploadButton}
-              </Upload>
-              
-              {imageFileList.length > 0 && (
-                <div className="mt-4 space-y-4">
-                  <Divider>{t('admin:products.manage_images')}</Divider>
-                  
-                  <Table
-                    dataSource={imageFileList}
-                    rowKey="uid"
-                    pagination={false}
-                    size="small"
-                    columns={[
-                      {
-                        title: t('admin:products.image'),
-                        dataIndex: 'url',
-                        key: 'image',
-                        render: (url, record) => (
-                          <img 
-                            src={url || URL.createObjectURL(record.originFileObj)} 
-                            alt="product" 
-                            className="w-20 h-20 object-cover"
-                          />
-                        ),
-                      },
-                      {
-                        title: t('admin:products.primary'),
-                        dataIndex: 'isPrimary',
-                        key: 'isPrimary',
-                        render: (isPrimary, record) => (
-                          <Switch 
-                            checked={isPrimary}
-                            onChange={() => setPrimaryImage(record)}
-                            disabled={!record.imageId} // Only allow for saved images
-                          />
-                        ),
-                      },
-                      {
-                        title: t('admin:products.actions'),
-                        key: 'action',
-                        render: (_, record) => (
-                          <Space>
-                            <Button
-                              danger
-                              size="small"
-                              onClick={() => handleRemoveImage(record)}
-                              icon={<DeleteOutlined />}
-                            >
-                              {t('admin:actions.remove')}
-                            </Button>
-                          </Space>
-                        ),
-                      },
-                    ]}
-                  />
-                  
-                  {imageFileList.some(file => file.originFileObj) && (
-                    <div className="flex justify-end">
-                      <Button
-                        type="primary"
-                        onClick={handleUploadImage}
-                        loading={uploadLoading}
-                      >
-                        {t('admin:products.upload_images')}
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          </TabPane>
-        )}
-        
-        {isEditing && (
-          <TabPane tab={t('admin:products.variants')} key="variants">
-            <div className="mt-4">
+      <Card className="shadow-sm dark:bg-gray-800">
+        <Tabs 
+          activeKey={activeTab} 
+          onChange={setActiveTab} 
+          defaultActiveKey="basic" 
+          className="overflow-visible"
+        >
+          {/* Basic Info Tab */}
+          <TabPane tab={t('admin:products.basic_info')} key="basic">
+            <Form
+              form={form}
+              layout="vertical"
+              onFinish={onFinish}
+              initialValues={{
+                active: true,
+                featured: false,
+                stockQuantity: 0,
+                price: 0,
+              }}
+              className="mt-4"
+            >
               <Row gutter={16}>
                 <Col xs={24} lg={12}>
-                  <Card title={t('admin:products.add_variant')} className="mb-6">
-                    <Form
-                      form={variantForm}
-                      layout="vertical"
-                    >
-                      <Form.Item
-                        name="size"
-                        label={t('common:size')}
-                        rules={[
-                          { required: true, message: t('admin:validation.size_required') }
-                        ]}
-                      >
-                        <Select placeholder={t('admin:products.select_size')}>
-                          {SIZES.map(size => (
-                            <Option key={size} value={size}>{size}</Option>
-                          ))}
-                        </Select>
-                      </Form.Item>
-                      
-                      <Form.Item
-                        name="color"
-                        label={t('common:color')}
-                        rules={[
-                          { required: true, message: t('admin:validation.color_required') }
-                        ]}
-                      >
-                        <Input />
-                      </Form.Item>
-                      
-                      <Form.Item
-                        name="priceAdjustment"
-                        label={t('admin:products.price_adjustment')}
-                        initialValue={0}
-                      >
-                        <InputNumber
-                          style={{ width: '100%' }}
-                          formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                          parser={value => value!.replace(/\$\s?|(,*)/g, '')}
-                        />
-                      </Form.Item>
-                      
-                      <Form.Item
-                        name="stockQuantity"
-                        label={t('admin:products.stock')}
-                        initialValue={0}
-                        rules={[
-                          { type: 'number', min: 0, message: t('admin:validation.quantity_positive') }
-                        ]}
-                      >
-                        <InputNumber style={{ width: '100%' }} />
-                      </Form.Item>
-                      
-                      <Form.Item
-                        name="skuVariant"
-                        label="SKU"
-                      >
-                        <Input />
-                      </Form.Item>
-                      
-                      <Form.Item
-                        name="active"
-                        label={t('admin:products.status')}
-                        valuePropName="checked"
-                        initialValue={true}
-                      >
-                        <Switch />
-                      </Form.Item>
-                      
-                      <div className="flex justify-end space-x-2">
-                        {editingVariant && (
-                          <Button onClick={handleCancelEditVariant}>
-                            {t('admin:actions.cancel')}
-                          </Button>
-                        )}
-                        <Button
-                          type="primary"
-                          onClick={handleAddVariant}
-                        >
-                          {editingVariant 
-                            ? t('admin:actions.update') 
-                            : t('admin:actions.add')
-                          }
-                        </Button>
-                      </div>
-                    </Form>
-                  </Card>
+                  <Form.Item
+                    name="name"
+                    label={t('admin:products.name')}
+                    rules={[
+                      { required: true, message: t('admin:validation.name_required') }
+                    ]}
+                  >
+                    <Input 
+                      onBlur={() => {
+                        if (!isEditing) generateSlug();
+                      }}
+                    />
+                  </Form.Item>
                 </Col>
                 
                 <Col xs={24} lg={12}>
-                  <Card title={t('admin:products.variant_list')} className="mb-6">
-                    {variants.length > 0 ? (
-                      <Table
-                        dataSource={variants}
-                        columns={variantColumns}
-                        rowKey="id"
-                        pagination={false}
-                        size="small"
-                      />
-                    ) : (
-                      <div className="text-center py-8 text-gray-500">
-                        {t('admin:products.no_variants')}
-                      </div>
-                    )}
-                  </Card>
+                  <Form.Item
+                    name="slug"
+                    label={t('admin:products.slug')}
+                    rules={[
+                      { required: true, message: t('admin:validation.slug_required') }
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                </Col>
+                
+                <Col xs={24} lg={8}>
+                  <Form.Item
+                    name="categoryId"
+                    label={t('admin:products.category')}
+                    rules={[
+                      { required: true, message: t('admin:validation.category_required') }
+                    ]}
+                  >
+                    <Select placeholder={t('admin:products.select_category')}>
+                      {categories.map(category => (
+                        <Option key={category.id} value={category.id}>
+                          {category.name}
+                        </Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
+                
+                <Col xs={24} lg={8}>
+                  <Form.Item
+                    name="regionId"
+                    label={t('admin:products.region')}
+                    rules={[
+                      { required: true, message: t('admin:validation.region_required') }
+                    ]}
+                  >
+                    <Select placeholder={t('admin:products.select_region')}>
+                      {regions.map(region => (
+                        <Option key={region.id} value={region.id}>
+                          {region.name}
+                        </Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
+                
+                <Col xs={24} lg={8}>
+                  <Form.Item
+                    name="sku"
+                    label="SKU"
+                  >
+                    <Input />
+                  </Form.Item>
+                </Col>
+                
+                <Col xs={24} md={8}>
+                  <Form.Item
+                    name="price"
+                    label={t('admin:products.price')}
+                    rules={[
+                      { required: true, message: t('admin:validation.price_required') },
+                      { type: 'number', min: 0, message: t('admin:validation.price_positive') }
+                    ]}
+                  >
+                    <InputNumber
+                      style={{ width: '100%' }}
+                      formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      parser={value => value!.replace(/\$\s?|(,*)/g, '')}
+                    />
+                  </Form.Item>
+                </Col>
+                
+                <Col xs={24} md={8}>
+                  <Form.Item
+                    name="originalPrice"
+                    label={t('admin:products.original_price')}
+                  >
+                    <InputNumber
+                      style={{ width: '100%' }}
+                      formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      parser={value => value!.replace(/\$\s?|(,*)/g, '')}
+                    />
+                  </Form.Item>
+                </Col>
+                
+                <Col xs={24} md={8}>
+                  <Form.Item
+                    name="stockQuantity"
+                    label={t('admin:products.stock')}
+                    rules={[
+                      { type: 'number', min: 0, message: t('admin:validation.quantity_positive') }
+                    ]}
+                  >
+                    <InputNumber style={{ width: '100%' }} />
+                  </Form.Item>
+                </Col>
+                
+                <Col xs={24}>
+                  <Form.Item
+                    name="shortDescription"
+                    label={t('admin:products.short_description')}
+                  >
+                    <Input.TextArea rows={2} />
+                  </Form.Item>
+                </Col>
+                
+                <Col xs={24}>
+                  <Form.Item
+                    name="description"
+                    label={t('admin:products.description')}
+                  >
+                    <ReactQuill
+                      theme="snow"
+                      modules={{
+                        toolbar: [
+                          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                          ['bold', 'italic', 'underline', 'strike'],
+                          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                          [{ 'color': [] }, { 'background': [] }],
+                          ['link', 'image'],
+                          ['clean']
+                        ],
+                      }}
+                    />
+                  </Form.Item>
+                </Col>
+                
+                <Col xs={12} md={6}>
+                  <Form.Item
+                    name="active"
+                    label={t('admin:products.status')}
+                    valuePropName="checked"
+                  >
+                    <Switch />
+                  </Form.Item>
+                </Col>
+                
+                <Col xs={12} md={6}>
+                  <Form.Item
+                    name="featured"
+                    label={t('admin:products.featured')}
+                    valuePropName="checked"
+                  >
+                    <Switch />
+                  </Form.Item>
                 </Col>
               </Row>
-            </div>
+              
+              <div className="flex justify-end mt-6 space-x-2">
+                <Button
+                  onClick={() => navigate('/admin/products')}
+                  disabled={submitting}
+                >
+                  {t('admin:actions.cancel')}
+                </Button>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  loading={submitting}
+                  icon={<SaveOutlined />}
+                >
+                  {t('admin:actions.save')}
+                </Button>
+              </div>
+            </Form>
           </TabPane>
-        )}
-      </Tabs>
-    </div>
+          
+          {/* Images Tab - Enhanced */}
+          {isEditing && (
+            <TabPane 
+              tab={
+                <Space>
+                  <CloudUploadOutlined />
+                  {t('admin:products.images')}
+                  {product?.images?.length ? (
+                    <span className="ml-2 px-2 py-1 bg-primary text-white rounded-full text-xs">
+                      {product.images.length}
+                    </span>
+                  ) : null}
+                </Space>
+              } 
+              key="images"
+            >
+              <div className="space-y-6">
+                <Typography.Paragraph className="text-gray-600 dark:text-gray-300">
+                  {t('admin:products.image_hint')}
+                </Typography.Paragraph>
+                
+                <Upload
+                  listType="picture-card"
+                  fileList={imageFileList}
+                  onPreview={handlePreview}
+                  beforeUpload={beforeUpload}
+                  customRequest={handleImageUpload}
+                  multiple
+                  className="upload-list-inline"
+                >
+                  {imageFileList.length >= 8 ? null : uploadButton}
+                </Upload>
+                
+                {product?.images && product.images.length > 0 && (
+                  <div className="mt-8">
+                    <Title level={4} className="mb-4">
+                      {t('admin:products.manage_images')}
+                    </Title>
+                    
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                      <AnimatePresence>
+                        {product.images.map((image) => (
+                          <motion.div
+                            key={image.id}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            className="relative group"
+                          >
+                            <Card
+                              hoverable
+                              cover={
+                                <div className="h-48 overflow-hidden">
+                                  <img
+                                    alt={image.altText || product.name}
+                                    src={image.imageUrl}
+                                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                                  />
+                                </div>
+                              }
+                              className={`${image.isPrimary ? 'ring-2 ring-primary ring-offset-2' : ''}`}
+                            >
+                              <div className="absolute top-2 right-2 flex gap-2">
+                                {image.isPrimary && (
+                                  <Tooltip title={t('admin:products.primary_image')}>
+                                    <StarFilled className="text-yellow-400 text-xl" />
+                                  </Tooltip>
+                                )}
+                              </div>
+                              
+                              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity duration-300 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100">
+                                <Tooltip title={t('admin:actions.view')}>
+                                  <Button
+                                    type="primary"
+                                    shape="circle"
+                                    icon={<EyeOutlined />}
+                                    onClick={() => {
+                                      setPreviewImage(image.imageUrl);
+                                      setPreviewVisible(true);
+                                    }}
+                                  />
+                                </Tooltip>
+                                
+                                {!image.isPrimary && (
+                                  <Tooltip title={t('admin:products.set_as_primary')}>
+                                    <Button
+                                      type="primary"
+                                      shape="circle"
+                                      icon={<StarOutlined />}
+                                      onClick={() => handleSetPrimaryImage(image.id)}
+                                    />
+                                  </Tooltip>
+                                )}
+                                
+                                <Popconfirm
+                                  title={t('admin:products.image_delete_confirm')}
+                                  onConfirm={() => handleDeleteImage(image.id)}
+                                  okText={t('admin:actions.yes')}
+                                  cancelText={t('admin:actions.no')}
+                                >
+                                  <Tooltip title={t('admin:actions.delete')}>
+                                    <Button
+                                      danger
+                                      shape="circle"
+                                      icon={<DeleteOutlined />}
+                                    />
+                                  </Tooltip>
+                                </Popconfirm>
+                              </div>
+                            </Card>
+                          </motion.div>
+                        ))}
+                      </AnimatePresence>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </TabPane>
+          )}
+          
+          {/* Variants Tab */}
+          {isEditing && (
+            <TabPane tab={t('admin:products.variants')} key="variants">
+              <div className="mt-4">
+                <Row gutter={16}>
+                  <Col xs={24} lg={12}>
+                    <Card title={t('admin:products.add_variant')} className="mb-6">
+                      <Form
+                        form={variantForm}
+                        layout="vertical"
+                      >
+                        <Form.Item
+                          name="size"
+                          label={t('common:size')}
+                          rules={[
+                            { required: true, message: t('admin:validation.size_required') }
+                          ]}
+                        >
+                          <Select placeholder={t('admin:products.select_size')}>
+                            {SIZES.map(size => (
+                              <Option key={size} value={size}>{size}</Option>
+                            ))}
+                          </Select>
+                        </Form.Item>
+                        
+                        <Form.Item
+                          name="color"
+                          label={t('common:color')}
+                        >
+                          <Input />
+                        </Form.Item>
+                        
+                        <Form.Item
+                          name="priceAdjustment"
+                          label={t('admin:products.price_adjustment')}
+                          initialValue={0}
+                        >
+                          <InputNumber
+                            style={{ width: '100%' }}
+                            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            parser={value => value!.replace(/\$\s?|(,*)/g, '')}
+                          />
+                        </Form.Item>
+                        
+                        <Form.Item
+                          name="stockQuantity"
+                          label={t('admin:products.stock')}
+                          initialValue={0}
+                          rules={[
+                            { type: 'number', min: 0, message: t('admin:validation.quantity_positive') }
+                          ]}
+                        >
+                          <InputNumber style={{ width: '100%' }} />
+                        </Form.Item>
+                        
+                        <Form.Item
+                          name="skuVariant"
+                          label="SKU"
+                        >
+                          <Input />
+                        </Form.Item>
+                        
+                        <Form.Item
+                          name="active"
+                          label={t('admin:products.status')}
+                          valuePropName="checked"
+                          initialValue={true}
+                        >
+                          <Switch />
+                        </Form.Item>
+                        
+                        <div className="flex justify-end space-x-2">
+                          {editingVariant && (
+                            <Button onClick={handleCancelEditVariant}>
+                              {t('admin:actions.cancel')}
+                            </Button>
+                          )}
+                          <Button
+                            type="primary"
+                            onClick={handleAddVariant}
+                          >
+                            {editingVariant 
+                              ? t('admin:actions.update') 
+                              : t('admin:actions.add')
+                            }
+                          </Button>
+                        </div>
+                      </Form>
+                    </Card>
+                  </Col>
+                  
+                  <Col xs={24} lg={12}>
+                    <Card title={t('admin:products.variant_list')} className="mb-6">
+                      {variants.length > 0 ? (
+                        <Table
+                          dataSource={variants}
+                          columns={variantColumns}
+                          rowKey="id"
+                          pagination={false}
+                          size="small"
+                        />
+                      ) : (
+                        <div className="text-center py-8 text-gray-500">
+                          {t('admin:products.no_variants')}
+                        </div>
+                      )}
+                    </Card>
+                  </Col>
+                </Row>
+              </div>
+            </TabPane>
+          )}
+        </Tabs>
+      </Card>
+      
+      {/* Image Preview Modal */}
+      <Modal
+        open={previewVisible}
+        title={previewTitle}
+        footer={null}
+        onCancel={() => setPreviewVisible(false)}
+        width={800}
+      >
+        <img alt="preview" style={{ width: '100%' }} src={previewImage} />
+      </Modal>
+      
+      {/* Add custom styles */}
+      <style>{`
+        .upload-list-inline .ant-upload-list-item {
+          float: left;
+          width: 200px;
+          margin-right: 8px;
+        }
+        
+        .upload-list-inline .ant-upload-animate-enter {
+          animation-name: uploadAnimateInlineIn;
+        }
+        
+        .upload-list-inline .ant-upload-animate-leave {
+          animation-name: uploadAnimateInlineOut;
+        }
+      `}</style>
+    </motion.div>
   );
 };
 
