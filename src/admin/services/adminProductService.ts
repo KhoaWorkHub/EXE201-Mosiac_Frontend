@@ -122,5 +122,34 @@ export const AdminProductService = {
   deleteProductVariant: async (variantId: string): Promise<ApiResponse> => {
     const response = await api.delete<ApiResponse>(`/api/v1/admin/products/variants/${variantId}`);
     return response.data;
+  },
+
+  getProductBySlug: async (slug: string): Promise<ProductResponse> => {
+    const response = await api.get<ProductResponse>(`/api/v1/products/slug/${slug}`);
+    return response.data;
+  },
+  
+  getFeaturedProducts: async (
+    page = 0, 
+    size = 10
+  ): Promise<PageResponse<ProductResponse>> => {
+    const response = await api.get<PageResponse<ProductResponse>>(
+      `/api/v1/products/featured?page=${page}&size=${size}`
+    );
+    return response.data;
+  },
+  
+  updateProductStatus: async (id: string, active: boolean): Promise<ProductResponse> => {
+    const response = await api.patch<ProductResponse>(
+      `/api/v1/admin/products/${id}/status?active=${active}`
+    );
+    return response.data;
+  },
+  
+  setPrimaryImage: async (productId: string, imageId: string): Promise<ApiResponse> => {
+    const response = await api.put<ApiResponse>(
+      `/api/v1/admin/products/${productId}/images/${imageId}/primary`
+    );
+    return response.data;
   }
 };
