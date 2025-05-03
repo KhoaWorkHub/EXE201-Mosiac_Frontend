@@ -60,7 +60,20 @@
     "select_size": "Select Size",
     "select_category": "Select Category",
     "select_region": "Select Region",
-    "image_hint": "Recommended size: 800x800px. Max file size: 2MB."
+    "image_hint": "Recommended size: 800x800px. Max file size: 2MB.",
+    "deactivate_success": "Product deactivated successfully",
+    "activate_success": "Product activated successfully",
+    "status_error": "Failed to update product status",
+    "primary_image_success": "Primary image set successfully",
+    "primary_image_error": "Failed to set primary image",
+    "set_as_primary": "Set as primary",
+    "deactivate": "Deactivate",
+    "activate": "Activate",
+    "share": "Share",
+    "copy_link": "Copy link",
+    "link_copied": "Link copied to clipboard",
+    "related_info": "Related Information",
+    "view_qr_page": "View QR Page"
   },
   "categories": {
     "title": "Categories",

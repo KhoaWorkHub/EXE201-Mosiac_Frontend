@@ -3,7 +3,7 @@ import {
   Card, Typography, Button, Tag, Descriptions, Skeleton, Divider, Tooltip, 
   Breadcrumb, Tabs, Statistic, Badge, Alert, Modal, List, Image,
   Table, notification, Popconfirm, Carousel,
-  Empty
+  Empty, 
 } from 'antd';
 import { 
   EditOutlined, DeleteOutlined, ArrowLeftOutlined, EyeOutlined, 
@@ -11,7 +11,7 @@ import {
   CheckCircleOutlined, CloseCircleOutlined, StarOutlined, StarFilled,
   ShoppingOutlined, TagsOutlined, EnvironmentOutlined, DollarOutlined,
   BarChartOutlined, AppstoreOutlined, SyncOutlined, QrcodeOutlined,
-  PlusOutlined
+  PlusOutlined, ShareAltOutlined
 } from '@ant-design/icons';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -58,6 +58,7 @@ const ProductDetail: React.FC = () => {
     if (id) {
       fetchProduct(id);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   
   const fetchProduct = async (productId: string) => {
@@ -115,6 +116,44 @@ const ProductDetail: React.FC = () => {
     } catch (error) {
       notification.error({
         message: t('admin:products.feature_error'),
+        description: error instanceof Error ? error.message : 'Unknown error',
+      });
+    }
+  };
+  
+  const handleToggleStatus = async () => {
+    if (!product || !id) return;
+    
+    try {
+      const updatedProduct = await AdminProductService.updateProductStatus(
+        id, !product.active
+      );
+      setProduct(updatedProduct);
+      notification.success({
+        message: product.active 
+          ? t('admin:products.deactivate_success') 
+          : t('admin:products.activate_success'),
+      });
+    } catch (error) {
+      notification.error({
+        message: t('admin:products.status_error'),
+        description: error instanceof Error ? error.message : 'Unknown error',
+      });
+    }
+  };
+  
+  const handleSetPrimaryImage = async (imageId: string) => {
+    if (!product || !id) return;
+    
+    try {
+      await AdminProductService.setPrimaryImage(id, imageId);
+      fetchProduct(id); // Refresh product data
+      notification.success({
+        message: t('admin:products.primary_image_success'),
+      });
+    } catch (error) {
+      notification.error({
+        message: t('admin:products.primary_image_error'),
         description: error instanceof Error ? error.message : 'Unknown error',
       });
     }
@@ -195,7 +234,6 @@ const ProductDetail: React.FC = () => {
   }
   
   // Find primary image
-//   const primaryImage = product.images?.find(img => img.isPrimary) || product.images?.[0];
   
   // Variant columns for table
   const variantColumns = [
@@ -699,6 +737,14 @@ const ProductDetail: React.FC = () => {
                             <Tooltip title={t('admin:actions.view')}>
                               <EyeOutlined key="view" onClick={() => showImagePreview(image.imageUrl)} />
                             </Tooltip>,
+                            <Tooltip title={t('admin:products.set_as_primary')}>
+                              <Button
+                                type="text"
+                                icon={<StarOutlined />}
+                                onClick={() => handleSetPrimaryImage(image.id)}
+                                disabled={image.isPrimary}
+                              />
+                            </Tooltip>,
                             <Popconfirm
                               title={t('admin:products.image_delete_confirm')}
                               onConfirm={() => handleDeleteImage(image.id)}
@@ -848,6 +894,17 @@ const ProductDetail: React.FC = () => {
                 </Button>
                 
                 <Button
+                  type={product.active ? 'default' : 'primary'}
+                  icon={product.active ? <CloseCircleOutlined /> : <CheckCircleOutlined />}
+                  block
+                  onClick={handleToggleStatus}
+                >
+                  {product.active 
+                    ? t('admin:products.deactivate') 
+                    : t('admin:products.activate')}
+                </Button>
+                
+                <Button
                   type="default"
                   icon={<SyncOutlined />}
                   block
@@ -929,6 +986,31 @@ const ProductDetail: React.FC = () => {
                   </div>
                 )}
               </div>
+            </Card>
+            
+            {/* Share Card */}
+            <Card
+              title={
+                <Text strong className="dark:text-white flex items-center">
+                  <ShareAltOutlined className="mr-2" />
+                  {t('admin:products.share')}
+                </Text>
+              }
+              className="shadow-sm dark:bg-gray-800"
+            >
+              <Button 
+                type="default" 
+                icon={<LinkOutlined />}
+                block
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  notification.success({
+                    message: t('admin:products.link_copied'),
+                  });
+                }}
+              >
+                {t('admin:products.copy_link')}
+              </Button>
             </Card>
             
             {/* Danger zone card */}

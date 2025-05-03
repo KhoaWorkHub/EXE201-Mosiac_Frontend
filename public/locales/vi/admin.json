@@ -60,7 +60,20 @@
     "select_size": "Chọn kích cỡ",
     "select_category": "Chọn danh mục",
     "select_region": "Chọn vùng miền",
-    "image_hint": "Kích thước đề xuất: 800x800px. Kích thước tối đa: 2MB."
+    "image_hint": "Kích thước đề xuất: 800x800px. Kích thước tối đa: 2MB.",
+    "deactivate_success": "Đã hủy kích hoạt sản phẩm",
+    "activate_success": "Đã kích hoạt sản phẩm",
+    "status_error": "Cập nhật trạng thái thất bại",
+    "primary_image_success": "Đã đặt ảnh chính thành công",
+    "primary_image_error": "Không thể đặt ảnh chính",
+    "set_as_primary": "Đặt làm ảnh chính",
+    "deactivate": "Hủy kích hoạt",
+    "activate": "Kích hoạt",
+    "share": "Chia sẻ",
+    "copy_link": "Sao chép liên kết",
+    "link_copied": "Đã sao chép liên kết",
+    "related_info": "Thông tin liên quan",
+    "view_qr_page": "Xem trang QR"
   },
   "categories": {
     "title": "Danh mục",
