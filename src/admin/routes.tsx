@@ -12,6 +12,7 @@ import AdminDashboard from './pages/dashboard/AdminDashboard';
 import ProductList from './pages/products/ProductList';
 import ProductForm from './pages/products/ProductForm';
 import CategoryDetail from './pages/categories/CategoryDetail';
+import ProductDetail from './pages/products/ProductDetail';
 
 const AdminRoutes: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const AdminRoutes: React.FC = () => {
           <Route path="/products" element={<ProductList />} />
           <Route path="/products/new" element={<ProductForm />} />
           <Route path="/products/edit/:id" element={<ProductForm />} />
+          <Route path="products/:id" element={<ProductDetail />} />
           
           <Route path="/categories" element={<CategoryList />} />
           <Route path="/categories/new" element={<CategoryForm />} />

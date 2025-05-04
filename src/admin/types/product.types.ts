@@ -14,7 +14,7 @@ export interface ProductRequest {
   }
   
   export interface ProductVariantRequest {
-    size: 'S' | 'M' | 'L' | 'XL' | 'XXL';
+    size: string;
     color?: string;
     priceAdjustment?: number;
     stockQuantity?: number;
@@ -59,7 +59,7 @@ export interface ProductRequest {
   
   export interface ProductVariantResponse {
     id: string;
-    size: 'S' | 'M' | 'L' | 'XL' | 'XXL';
+    size: string;
     color?: string;
     priceAdjustment: number;
     stockQuantity?: number;

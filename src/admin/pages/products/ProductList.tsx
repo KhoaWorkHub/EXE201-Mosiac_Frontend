@@ -507,7 +507,6 @@ const ProductList: React.FC = () => {
                     <CSVLink 
                       data={csvData} 
                       filename="products_export.csv"
-                      className="ant-dropdown-menu-item"
                     >
                       <ExportOutlined /> {t('admin:actions.export_csv')}
                     </CSVLink>
@@ -586,7 +585,7 @@ const ProductList: React.FC = () => {
             <Radio.Group 
               value={viewMode} 
               onChange={e => setViewMode(e.target.value)}
-              className="bg-gray-100 dark:bg-gray-700 rounded-md p-1"
+              className="bg-gray-100 dark:bg-gray-700 rounded-md p-[-0.75rem]"
             >
               <Radio.Button value="grid" className="rounded-l-md">
                 <AppstoreOutlined />
