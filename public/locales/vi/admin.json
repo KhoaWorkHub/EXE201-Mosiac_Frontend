@@ -125,12 +125,29 @@
     "sku": "Mã SKU",
     "primary": "Chính",
     "feature": "Nổi bật",
-    "unfeature": "Bỏ nổi bật"
+    "unfeature": "Bỏ nổi bật",
+    "all_products": "Tất cả sản phẩm",
+    "active_products": "Sản phẩm hoạt động",
+    "featured_products": "Sản phẩm nổi bật",
+    "inactive_products": "Sản phẩm không hoạt động",
+    "price_low_high": "Giá: Thấp đến Cao",
+    "price_high_low": "Giá: Cao đến Thấp",
+    "stock_asc": "Kho hàng: Thấp đến Cao",
+    "stock_desc": "Kho hàng: Cao đến Thấp",
+    "inStock": "Còn hàng",
+    "lowStock": "Sắp hết hàng",
+    "outOfStock": "Hết hàng",
+    "price_range": "Khoảng giá",
+    "stock_status": "Trạng thái kho",
+    "any_stock": "Bất kỳ trạng thái kho",
+    "items": "mục",
+    "search": "Tìm kiếm",
+    "advanced_filters": "Bộ lọc nâng cao"
   },
   "categories": {
     "title": "Danh mục",
     "description": "Quản lý các danh mục sản phẩm để tổ chức cửa hàng của bạn",
-    "details":"Chi tiết thể loại",
+    "details": "Chi tiết thể loại",
     "add": "Thêm danh mục",
     "edit": "Chỉnh sửa danh mục",
     "info_tab": "Thông tin",
@@ -282,7 +299,8 @@
     "newest": "Mới nhất trước",
     "oldest": "Cũ nhất trước",
     "asc": "Tăng dần",
-    "desc": "Giảm dần"
+    "desc": "Giảm dần",
+    "sort_by": "Sắp xếp theo"
   },
   "view": {
     "table": "Xem dạng bảng",
@@ -307,7 +325,13 @@
     "export_json": "Xuất dạng JSON",
     "export_csv": "Xuất dạng CSV",
     "export_excel": "Xuất dạng Excel",
-    "toggle_status": "Đổi trạng thái"
+    "toggle_status": "Đổi trạng thái",
+    "export_error": "Xuất dữ liệu thất bại",
+    "export": "Xuất dữ liệu",
+    "filter": "Lọc",
+    "clear_all": "Xóa tất cả",
+    "apply": "Áp dụng",
+    "reset": "Đặt lại"
   },
   "validation": {
     "name_required": "Tên là bắt buộc",

@@ -125,7 +125,24 @@
     "sku": "SKU",
     "primary": "Primary",
     "feature": "Feature",
-    "unfeature": "Unfeature"
+    "unfeature": "Unfeature",
+    "all_products": "All Products",
+    "active_products": "Active Products",
+    "featured_products": "Featured Products",
+    "inactive_products": "Inactive Products",
+    "price_low_high": "Price: Low to High",
+    "price_high_low": "Price: High to Low",
+    "stock_asc": "Stock: Low to High",
+    "stock_desc": "Stock: High to Low",
+    "inStock": "In Stock",
+    "lowStock": "Low Stock",
+    "outOfStock": "Out of Stock",
+    "price_range": "Price Range",
+    "stock_status": "Stock Status",
+    "any_stock": "Any Stock",
+    "items": "items",
+    "search": "Search",
+    "advanced_filters": "Advanced Filters"
   },
   "categories": {
     "title": "Categories",
@@ -296,7 +313,8 @@
     "newest": "Newest First",
     "oldest": "Oldest First",
     "asc": "Ascending",
-    "desc": "Descending"
+    "desc": "Descending",
+    "sort_by": "Sort By"
   },
   "view": {
     "table": "Table View",
@@ -321,7 +339,13 @@
     "export_json": "Export as JSON",
     "export_csv": "Export as CSV",
     "export_excel": "Export as Excel",
-    "toggle_status": "Toggle Status"
+    "toggle_status": "Toggle Status",
+    "export_error": "Export failed",
+    "export": "Export",
+    "filter": "Filter",
+    "clear_all": "Clear All",
+    "apply": "Apply",
+    "reset": "Reset"
   },
   "validation": {
     "name_required": "Name is required",
