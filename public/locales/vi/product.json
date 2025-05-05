@@ -1,52 +1,80 @@
 {
-    "filters": {
-      "sort_by": "Sắp xếp theo",
-      "newest": "Mới nhất",
-      "price_low_high": "Giá: Thấp đến Cao",
-      "price_high_low": "Giá: Cao đến Thấp",
-      "popularity": "Phổ biến",
-      "rating": "Đánh giá",
-      "filter": "Lọc",
-      "price_range": "Khoảng giá",
-      "categories": "Danh mục",
-      "regions": "Vùng miền",
-      "colors": "Màu sắc",
-      "sizes": "Kích thước",
-      "apply": "Áp dụng",
-      "clear": "Xóa bộ lọc"
-    },
-    "product_card": {
-      "new": "Mới",
-      "sold_out": "Hết hàng",
-      "sale": "Giảm giá",
-      "off": "giảm"
-    },
-    "product_details": {
-      "description": "Mô tả",
-      "reviews": "Đánh giá",
-      "size_guide": "Hướng dẫn kích thước",
-      "shipping": "Vận chuyển & Đổi trả",
-      "quantity": "Số lượng",
-      "in_stock": "Còn hàng",
-      "limited_stock": "Hàng sắp hết",
-      "out_of_stock": "Hết hàng",
-      "add_to_cart": "Thêm vào giỏ",
-      "buy_now": "Mua ngay",
-      "add_to_wishlist": "Thêm vào danh sách yêu thích",
-      "share": "Chia sẻ"
-    },
-    "categories": {
-      "all": "Tất cả sản phẩm",
-      "womens": "Thời trang nữ",
-      "mens": "Thời trang nam",
-      "accessories": "Phụ kiện",
-      "home_decor": "Trang trí nhà cửa",
-      "souvenirs": "Quà lưu niệm"
-    },
-    "regions": {
-      "north": "Miền Bắc",
-      "central": "Miền Trung",
-      "south": "Miền Nam",
-      "highlands": "Tây Nguyên"
-    }
-  }
+  "filters": {
+    "sort_by": "Sắp xếp theo",
+    "newest": "Mới nhất",
+    "price_low_high": "Giá: Thấp đến Cao",
+    "price_high_low": "Giá: Cao đến Thấp",
+    "popularity": "Phổ biến",
+    "rating": "Đánh giá",
+    "filter": "Lọc",
+    "price_range": "Khoảng giá",
+    "categories": "Danh mục",
+    "regions": "Vùng miền",
+    "colors": "Màu sắc",
+    "sizes": "Kích thước",
+    "apply": "Áp dụng",
+    "clear": "Xóa bộ lọc",
+    "clear_all": "Xóa tất cả",
+    "featured_only": "Chỉ sản phẩm nổi bật",
+    "in_stock_only": "Chỉ còn hàng",
+    "special": "Bộ lọc đặc biệt"
+  },
+  "product_card": {
+    "new": "Mới",
+    "sold_out": "Hết hàng",
+    "sale": "Giảm giá",
+    "off": "giảm"
+  },
+  "product_details": {
+    "description": "Mô tả",
+    "reviews": "Đánh giá",
+    "size_guide": "Hướng dẫn kích thước",
+    "shipping": "Vận chuyển & Đổi trả",
+    "quantity": "Số lượng",
+    "in_stock": "Còn hàng",
+    "limited_stock": "Hàng sắp hết",
+    "out_of_stock": "Hết hàng",
+    "left_in_stock": "sản phẩm còn lại",
+    "add_to_cart": "Thêm vào giỏ",
+    "buy_now": "Mua ngay",
+    "add_to_wishlist": "Thêm vào danh sách yêu thích",
+    "share": "Chia sẻ",
+    "reset_variant": "Đặt lại",
+    "variants": "Biến thể",
+    "related_products": "Sản phẩm liên quan",
+    "scan_for_authenticity": "Quét để xác thực",
+    "scan_instructions": "Quét mã QR này để xác minh tính xác thực của sản phẩm",
+    "shipping_info": "Thông tin vận chuyển",
+    "shipping_text": "Chúng tôi cung cấp vận chuyển toàn cầu cho tất cả đơn hàng. Vận chuyển tiêu chuẩn mất 3-5 ngày làm việc cho đơn hàng trong nước và 7-14 ngày làm việc cho đơn hàng quốc tế. Các tùy chọn vận chuyển nhanh có sẵn khi thanh toán.",
+    "returns_info": "Đổi trả & Hoàn tiền",
+    "returns_text": "Chúng tôi cung cấp chính sách đổi trả trong vòng 30 ngày cho tất cả các sản phẩm chưa sử dụng và không bị hư hỏng. Vui lòng liên hệ với đội ngũ dịch vụ khách hàng của chúng tôi để bắt đầu đổi trả hoặc hoàn tiền.",
+    "no_description": "Không có mô tả chi tiết cho sản phẩm này.",
+    "no_reviews": "Chưa có đánh giá nào cho sản phẩm này.",
+    "recently_viewed": "Đã xem gần đây"
+  },
+  "categories": {
+    "all": "Tất cả sản phẩm",
+    "womens": "Thời trang nữ",
+    "mens": "Thời trang nam",
+    "accessories": "Phụ kiện",
+    "home_decor": "Trang trí nhà cửa",
+    "souvenirs": "Quà lưu niệm"
+  },
+  "regions": {
+    "north": "Miền Bắc",
+    "central": "Miền Trung",
+    "south": "Miền Nam",
+    "highlands": "Tây Nguyên"
+  },
+  "active_filters": "Bộ lọc đang kích hoạt",
+  "search": "Tìm kiếm",
+  "category": "Danh mục",
+  "region": "Vùng miền",
+  "price": "Giá",
+  "featured": "Nổi bật",
+  "in_stock": "Còn hàng",
+  "search_results_for": "Kết quả tìm kiếm cho \"{keyword}\"",
+  "products_found": "sản phẩm được tìm thấy",
+  "no_products_found": "Không tìm thấy sản phẩm nào. Hãy thử điều chỉnh bộ lọc của bạn.",
+  "product_not_found": "Không Tìm Thấy Sản Phẩm"
+}
