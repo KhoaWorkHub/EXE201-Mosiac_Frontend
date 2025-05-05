@@ -28,6 +28,7 @@
     "quill": "^2.0.3",
     "react": "^19.0.0",
     "react-csv": "^2.2.2",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.56.0",
     "react-i18next": "^15.4.1",

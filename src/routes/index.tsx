@@ -1,13 +1,14 @@
-// src/routes/index.tsx (cập nhật)
 import React, { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Spin } from 'antd';
 import { useAppSelector } from '@/store/hooks';
 import OAuth2RedirectHandler from '@/features/auth/components/OAuth2RedirectHandler';
+import Loading from '@/components/common/Loading';
 
 // Lazy loading pages
 const LoginPage = lazy(() => import('../features/auth/pages/LoginPage'));
 const HomePage = lazy(() => import('../features/home/pages/HomePage'));
+const ProductDetailPage = lazy(() => import('../features/products/pages/ProductDetailPage'));
+const ProductsPage = lazy(() => import('../features/products/pages/ProductsPage'));
 const AdminRoutes = lazy(() => import('../admin/routes'));
 
 // Component for 404 page
@@ -20,9 +21,7 @@ const NotFound = () => (
 
 // Loading component
 const LoadingFallback = () => (
-  <div className="flex items-center justify-center min-h-screen">
-    <Spin size="large" />
-  </div>
+  <Loading fullScreen message="Loading page..." />
 );
 
 const UnauthorizedPage = () => (
@@ -44,6 +43,10 @@ const AppRoutes: React.FC = () => {
           element={<HomePage />}
         />
         
+        {/* Products routes */}
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/products/:slug" element={<ProductDetailPage />} />
+        
         {/* Authentication routes */}
         <Route 
           path="/login" 
@@ -54,6 +57,7 @@ const AppRoutes: React.FC = () => {
           } 
         />
         <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />        
+        
         {/* Admin routes */}
         <Route path="/admin/*" element={<AdminRoutes />} />
         

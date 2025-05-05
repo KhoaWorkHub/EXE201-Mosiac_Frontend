@@ -1,56 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Typography, Carousel, Rate, Card, Tag } from 'antd';
-import { ArrowRightOutlined, ShoppingOutlined, FireOutlined, GiftOutlined } from '@ant-design/icons';
+import { Button, Typography, Carousel, Rate, message } from 'antd';
+import { ArrowRightOutlined, FireOutlined, GiftOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
 import MainLayout from '@/components/layout/MainLayout';
 import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { fetchFeaturedProducts, fetchLatestProducts } from '@/store/slices/productSlice';
+import ProductCarousel from '@/features/products/components/ProductCarousel';
+import ProductsGrid from '@/features/products/components/ProductsGrid';
+import type { ProductResponse } from '@/types/product.types';
 
 const { Title, Text, Paragraph } = Typography;
-
-// Sample product data
-const featuredProducts = [
-  {
-    id: 1,
-    name: 'Bạc Ninh Traditional Shirt',
-    price: 49.99,
-    discountPrice: 39.99,
-    rating: 4.5,
-    image: 'https://images.unsplash.com/photo-1523381294911-8d3cead13475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHZpZXRuYW1lc2UlMjBjbG90aGluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60',
-    isNew: true,
-    region: 'north'
-  },
-  {
-    id: 2,
-    name: 'Modern Ao Dai',
-    price: 89.99,
-    discountPrice: 89.99,
-    rating: 5,
-    image: 'https://images.unsplash.com/photo-1523380677598-64d85d4f4598?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YW8lMjBkYWl8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60',
-    isNew: false,
-    region: 'central'
-  },
-  {
-    id: 3,
-    name: 'Indigo Handwoven Scarf',
-    price: 34.99,
-    discountPrice: 29.99,
-    rating: 4,
-    image: 'https://images.unsplash.com/photo-1513094735237-8f2714d57c13?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHNjYXJmfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60',
-    isNew: true,
-    region: 'highlands'
-  },
-  {
-    id: 4,
-    name: 'Palm Leaf Hat',
-    price: 24.99,
-    discountPrice: 24.99,
-    rating: 4.5,
-    image: 'https://images.unsplash.com/photo-1582791694770-cbdc9dda338f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dmlldG5hbWVzZSUyMGhhdHxlbnwwfHwwfHx8MA%3D&auto=format&fit=crop&w=500&q=60',
-    isNew: false,
-    region: 'south'
-  }
-];
 
 // Categories
 const categories = [
@@ -144,64 +105,17 @@ const staggerContainer = {
   }
 };
 
-// Product Card Component
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ProductCard: React.FC<{product: any}> = ({ product }) => {
-  const { t } = useTranslation(['product', 'common']);
-  
-  return (
-    <motion.div variants={fadeInUp}>
-      <Card 
-        hoverable
-        className="overflow-hidden rounded-lg border-gray-200 h-full"
-        cover={
-          <div className="relative overflow-hidden h-64">
-            <img 
-              alt={product.name} 
-              src={product.image} 
-              className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-            />
-            {product.isNew && (
-              <span className="absolute top-3 left-3 bg-primary text-white text-xs px-2 py-1 rounded">
-                {t('product:product_card.new')}
-              </span>
-            )}
-            {product.discountPrice < product.price && (
-              <span className="absolute top-3 right-3 bg-red-500 text-white text-xs px-2 py-1 rounded">
-                {Math.round((1 - product.discountPrice / product.price) * 100)}% {t('product:product_card.off')}
-              </span>
-            )}
-          </div>
-        }
-        bodyStyle={{ padding: '16px' }}
-      >
-        <Tag color="default" className="mb-2">{t(`product:regions.${product.region}`)}</Tag>
-        <Title level={5} className="mb-1 text-gray-800 dark:text-gray-100">{product.name}</Title>
-        <div className="flex items-center mb-2">
-        <Rate disabled defaultValue={product.rating} style={{ fontSize: '12px' }} />
-        <span className="text-xs text-gray-500 ml-1">({product.rating})</span>
-        </div>
-        <div className="flex items-center justify-between">
-          <div>
-            {product.discountPrice < product.price ? (
-              <div className="flex items-center">
-                <Text className="text-primary font-bold">${product.discountPrice}</Text>
-                <Text className="text-gray-400 line-through text-sm ml-2">${product.price}</Text>
-              </div>
-            ) : (
-              <Text className="text-primary font-bold">${product.price}</Text>
-            )}
-          </div>
-          <Button type="primary" shape="circle" icon={<ShoppingOutlined />} size="small" title={t('common:actions.add_to_cart')} />
-        </div>
-      </Card>
-    </motion.div>
-  );
-};
-
 // Category Card Component
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const CategoryCard: React.FC<{category: any}> = ({ category }) => {
+interface CategoryCardProps {
+  category: {
+    id: string;
+    image: string;
+    count: number;
+    url: string;
+  };
+}
+
+const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
   const { t } = useTranslation(['common']);
   
   return (
@@ -227,8 +141,17 @@ const CategoryCard: React.FC<{category: any}> = ({ category }) => {
 };
 
 // Testimonial Card Component
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const TestimonialCard: React.FC<{testimonial: any}> = ({ testimonial }) => {
+interface TestimonialCardProps {
+  testimonial: {
+    id: number;
+    name: string;
+    location: string;
+    avatar: string;
+    rating: number;
+  };
+}
+
+const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
   const { t } = useTranslation(['common']);
   
   return (
@@ -256,10 +179,36 @@ const TestimonialCard: React.FC<{testimonial: any}> = ({ testimonial }) => {
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation(['common', 'product']);
+  const dispatch = useAppDispatch();
+  const { 
+    latestProducts, 
+    featuredProducts, 
+    loading 
+  } = useAppSelector(state => state.products);
+  
+  useEffect(() => {
+    // Fetch latest products (6 products)
+    dispatch(fetchLatestProducts({ size: 6 }));
+    
+    // Fetch featured products (6 products)
+    dispatch(fetchFeaturedProducts({ size: 6 }));
+  }, [dispatch]);
+  
+  // Handle add to cart
+  const handleAddToCart = (product: ProductResponse) => {
+    // Will implement actual cart functionality later
+    message.success(`${product.name} added to cart!`);
+  };
+  
+  // Handle add to wishlist
+  const handleAddToWishlist = (product: ProductResponse) => {
+    // Will implement actual wishlist functionality later
+    message.success(`${product.name} added to wishlist!`);
+  };
   
   return (
     <MainLayout>
-      {/* Hero Section */}
+      {/* Hero Section with Latest Products Carousel */}
       <section className="relative">
         <Carousel autoplay effect="fade" className="hero-carousel">
           <div>
@@ -278,12 +227,16 @@ const HomePage: React.FC = () => {
                   <Paragraph className="text-gray-200 text-lg mb-8">
                     {t('common:hero.slide1.description')}
                   </Paragraph>
-                  <Button type="primary" size="large" className="mr-4">
-                    {t('common:actions.shop_now')} <ArrowRightOutlined />
-                  </Button>
-                  <Button size="large">
-                    {t('common:nav.collections')}
-                  </Button>
+                  <Link to="/products">
+                    <Button type="primary" size="large" className="mr-4">
+                      {t('common:actions.shop_now')} <ArrowRightOutlined />
+                    </Button>
+                  </Link>
+                  <Link to="/collections">
+                    <Button size="large">
+                      {t('common:nav.collections')}
+                    </Button>
+                  </Link>
                 </motion.div>
               </div>
             </div>
@@ -299,12 +252,16 @@ const HomePage: React.FC = () => {
                   <Paragraph className="text-gray-200 text-lg mb-8">
                     {t('common:hero.slide2.description')}
                   </Paragraph>
-                  <Button type="primary" size="large" className="mr-4">
-                    {t('common:nav.new_arrivals')} <ArrowRightOutlined />
-                  </Button>
-                  <Button size="large">
-                    {t('common:nav.about')}
-                  </Button>
+                  <Link to="/products?sort=createdAt,desc">
+                    <Button type="primary" size="large" className="mr-4">
+                      {t('common:nav.new_arrivals')} <ArrowRightOutlined />
+                    </Button>
+                  </Link>
+                  <Link to="/about">
+                    <Button size="large">
+                      {t('common:nav.about')}
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -366,32 +323,31 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured Products Section */}
+      {/* Latest Products Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
             <div>
-              <Title level={2} className="mb-2 dark:text-white">{t('common:sections.featured_products.title')}</Title>
-              <Text className="text-gray-600 dark:text-gray-400">{t('common:sections.featured_products.subtitle')}</Text>
+              <Title level={2} className="mb-2 dark:text-white">{t('common:nav.new_arrivals')}</Title>
+              <Text className="text-gray-600 dark:text-gray-400">
+                {t('common:sections.featured_products.subtitle')}
+              </Text>
             </div>
-            <Link to="/products">
+            <Link to="/products?sort=createdAt,desc">
               <Button type="link" className="font-semibold">
                 {t('common:actions.view_all')} <ArrowRightOutlined />
               </Button>
             </Link>
           </div>
           
-          <motion.div 
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-          >
-            {featuredProducts.map(product => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </motion.div>
+          <ProductCarousel 
+            products={latestProducts} 
+            loading={loading}
+            autoplay={true}
+            slidesToShow={4}
+            onAddToCart={handleAddToCart}
+            onAddToWishlist={handleAddToWishlist}
+          />
         </div>
       </section>
 
@@ -414,6 +370,31 @@ const HomePage: React.FC = () => {
               <CategoryCard key={index} category={category} />
             ))}
           </motion.div>
+        </div>
+      </section>
+
+      {/* Featured Products Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center mb-8">
+            <div>
+              <Title level={2} className="mb-2 dark:text-white">{t('common:sections.featured_products.title')}</Title>
+              <Text className="text-gray-600 dark:text-gray-400">{t('common:sections.featured_products.subtitle')}</Text>
+            </div>
+            <Link to="/products?featured=true">
+              <Button type="link" className="font-semibold">
+                {t('common:actions.view_all')} <ArrowRightOutlined />
+              </Button>
+            </Link>
+          </div>
+          
+          <ProductsGrid 
+            products={featuredProducts} 
+            loading={loading}
+            cols={4}
+            onAddToCart={handleAddToCart}
+            onAddToWishlist={handleAddToWishlist}
+          />
         </div>
       </section>
 
@@ -472,9 +453,11 @@ const HomePage: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <Button size="large" className="bg-white text-primary hover:bg-gray-100 border-white">
-                    {t('common:special_offer.button')} <ArrowRightOutlined />
-                  </Button>
+                  <Link to="/products?category=aodai">
+                    <Button size="large" className="bg-white text-primary hover:bg-gray-100 border-white">
+                      {t('common:special_offer.button')} <ArrowRightOutlined />
+                    </Button>
+                  </Link>
                 </motion.div>
               </div>
             </div>

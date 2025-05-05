@@ -1,52 +1,80 @@
 {
-    "filters": {
-      "sort_by": "Sort by",
-      "newest": "Newest",
-      "price_low_high": "Price: Low to High",
-      "price_high_low": "Price: High to Low",
-      "popularity": "Popularity",
-      "rating": "Rating",
-      "filter": "Filter",
-      "price_range": "Price Range",
-      "categories": "Categories",
-      "regions": "Regions",
-      "colors": "Colors",
-      "sizes": "Sizes",
-      "apply": "Apply",
-      "clear": "Clear"
-    },
-    "product_card": {
-      "new": "New",
-      "sold_out": "Sold Out",
-      "sale": "Sale",
-      "off": "OFF"
-    },
-    "product_details": {
-      "description": "Description",
-      "reviews": "Reviews",
-      "size_guide": "Size Guide",
-      "shipping": "Shipping & Returns",
-      "quantity": "Quantity",
-      "in_stock": "In Stock",
-      "limited_stock": "Limited Stock",
-      "out_of_stock": "Out of Stock",
-      "add_to_cart": "Add to Cart",
-      "buy_now": "Buy Now",
-      "add_to_wishlist": "Add to Wishlist",
-      "share": "Share"
-    },
-    "categories": {
-      "all": "All Products",
-      "womens": "Women's Fashion",
-      "mens": "Men's Fashion",
-      "accessories": "Accessories",
-      "home_decor": "Home Decor",
-      "souvenirs": "Souvenirs"
-    },
-    "regions": {
-      "north": "Northern Vietnam",
-      "central": "Central Vietnam",
-      "south": "Southern Vietnam",
-      "highlands": "Central Highlands"
-    }
-  }
+  "filters": {
+    "sort_by": "Sort by",
+    "newest": "Newest",
+    "price_low_high": "Price: Low to High",
+    "price_high_low": "Price: High to Low",
+    "popularity": "Popularity",
+    "rating": "Rating",
+    "filter": "Filter",
+    "price_range": "Price Range",
+    "categories": "Categories",
+    "regions": "Regions",
+    "colors": "Colors",
+    "sizes": "Sizes",
+    "apply": "Apply",
+    "clear": "Clear",
+    "clear_all": "Clear All",
+    "featured_only": "Featured Only",
+    "in_stock_only": "In Stock Only",
+    "special": "Special Filters"
+  },
+  "product_card": {
+    "new": "New",
+    "sold_out": "Sold Out",
+    "sale": "Sale",
+    "off": "OFF"
+  },
+  "product_details": {
+    "description": "Description",
+    "reviews": "Reviews",
+    "size_guide": "Size Guide",
+    "shipping": "Shipping & Returns",
+    "quantity": "Quantity",
+    "in_stock": "In Stock",
+    "limited_stock": "Limited Stock",
+    "out_of_stock": "Out of Stock",
+    "left_in_stock": "left in stock",
+    "add_to_cart": "Add to Cart",
+    "buy_now": "Buy Now",
+    "add_to_wishlist": "Add to Wishlist",
+    "share": "Share",
+    "reset_variant": "Reset",
+    "variants": "Variants",
+    "related_products": "Related Products",
+    "scan_for_authenticity": "Scan for Authenticity",
+    "scan_instructions": "Scan this QR code to verify this product's authenticity",
+    "shipping_info": "Shipping Information",
+    "shipping_text": "We offer worldwide shipping on all orders. Standard shipping takes 3-5 business days for domestic orders and 7-14 business days for international orders. Express shipping options are available at checkout.",
+    "returns_info": "Returns & Exchanges",
+    "returns_text": "We offer a 30-day return policy for all unused and undamaged items. Please contact our customer service team to initiate a return or exchange.",
+    "no_description": "No detailed description available for this product.",
+    "no_reviews": "No reviews yet for this product.",
+    "recently_viewed": "Recently Viewed"
+  },
+  "categories": {
+    "all": "All Products",
+    "womens": "Women's Fashion",
+    "mens": "Men's Fashion",
+    "accessories": "Accessories",
+    "home_decor": "Home Decor",
+    "souvenirs": "Souvenirs"
+  },
+  "regions": {
+    "north": "Northern Vietnam",
+    "central": "Central Vietnam",
+    "south": "Southern Vietnam",
+    "highlands": "Central Highlands"
+  },
+  "active_filters": "Active Filters",
+  "search": "Search",
+  "category": "Category",
+  "region": "Region",
+  "price": "Price",
+  "featured": "Featured",
+  "in_stock": "In Stock",
+  "search_results_for": "Search Results for \"{keyword}\"",
+  "products_found": "products found",
+  "no_products_found": "No products found. Try adjusting your filters.",
+  "product_not_found": "Product Not Found"
+}
