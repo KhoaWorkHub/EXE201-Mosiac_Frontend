@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+// src/components/cart/CartButton.tsx
+import React, { useEffect, useMemo } from 'react';
 import { Button, Badge, Popover, Empty, Spin, Divider } from 'antd';
 import { ShoppingCartOutlined, DeleteOutlined, RightOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
@@ -21,6 +22,16 @@ const CartButton: React.FC<CartButtonProps> = ({ className = '' }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
+  // Calculate total items in cart manually (since API returns totalItems as null)
+  const totalItemsCount = useMemo(() => {
+    if (!cart || !cart.items || cart.items.length === 0) {
+      return 0;
+    }
+    
+    // Sum up the quantity of all items in cart
+    return cart.items.reduce((total, item) => total + item.quantity, 0);
+  }, [cart]);
+  
   const handleRemoveItem = async (itemId: string, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -32,11 +43,11 @@ const CartButton: React.FC<CartButtonProps> = ({ className = '' }) => {
       <div className="mb-3">
         <h3 className="text-lg font-semibold dark:text-white flex items-center">
           {t('cart:cart.title')} 
-          {cart?.totalItems ? (
+          {totalItemsCount > 0 && (
             <span className="text-sm font-normal ml-2">
-              ({cart.totalItems} {cart.totalItems === 1 ? t('cart:cart.item') : t('cart:cart.items')})
+              ({totalItemsCount} {totalItemsCount === 1 ? t('cart:cart.item') : t('cart:cart.items')})
             </span>
-          ) : null}
+          )}
         </h3>
       </div>
       
@@ -44,7 +55,7 @@ const CartButton: React.FC<CartButtonProps> = ({ className = '' }) => {
         <div className="py-4 flex justify-center">
           <Spin size="small" />
         </div>
-      ) : !cart || cart.items.length === 0 ? (
+      ) : !cart || !cart.items || cart.items.length === 0 ? (
         <Empty 
           image={Empty.PRESENTED_IMAGE_SIMPLE} 
           description={t('cart:cart.empty')}
@@ -63,13 +74,13 @@ const CartButton: React.FC<CartButtonProps> = ({ className = '' }) => {
                 <div className="flex items-center py-2 border-b dark:border-gray-700">
                   <div className="w-12 h-12 overflow-hidden rounded mr-3">
                     <img 
-                      src={item.productImage} 
+                      src={item.productImage || '/placeholder-product.jpg'} 
                       alt={item.productName} 
                       className="w-full h-full object-cover" 
                     />
                   </div>
                   <div className="flex-1">
-                    <Link to={`/products/${item.productId}`} className="text-sm font-medium dark:text-white hover:text-primary dark:hover:text-primary truncate block">
+                    <Link to={`/products/${item.productSlug}`} className="text-sm font-medium dark:text-white hover:text-primary dark:hover:text-primary truncate block">
                       {item.productName}
                     </Link>
                     <div className="flex justify-between items-center mt-1">
@@ -105,7 +116,9 @@ const CartButton: React.FC<CartButtonProps> = ({ className = '' }) => {
           
           <div className="flex justify-between font-medium mb-3">
             <span className="dark:text-white">{t('cart:cart.subtotal')}</span>
-            <span className="text-primary">{formatCurrency(cart.totalAmount)}</span>
+            <span className="text-primary">
+              {formatCurrency(cart.totalAmount || cart.items.reduce((total, item) => total + item.subtotal, 0))}
+            </span>
           </div>
           
           <div className="flex flex-col gap-2">
@@ -135,7 +148,13 @@ const CartButton: React.FC<CartButtonProps> = ({ className = '' }) => {
       arrow={{ pointAtCenter: true }}
       overlayClassName="cart-popover"
     >
-      <Badge count={cart?.totalItems || 0} showZero={false} size="small" className={className}>
+      <Badge 
+        count={totalItemsCount} 
+        showZero={false} 
+        size="small" 
+        className={className}
+        offset={[-2, 6]}
+      >
         <Button 
           type="text" 
           icon={<ShoppingCartOutlined className="text-xl" />}
