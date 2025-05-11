@@ -1,7 +1,6 @@
 import React, { ReactNode, useState, useEffect } from 'react';
-import { Layout, Menu, Avatar, Dropdown, Badge, Button, Drawer } from 'antd';
+import { Layout, Menu, Avatar, Dropdown, Button, Drawer } from 'antd';
 import { 
-  ShoppingCartOutlined, 
   UserOutlined, 
   MenuOutlined, 
   HeartOutlined,
@@ -12,7 +11,8 @@ import {
   EnvironmentOutlined,
   InfoCircleOutlined,
   PhoneOutlined,
-  SettingOutlined
+  SettingOutlined,
+  ShoppingCartOutlined
 } from '@ant-design/icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +20,7 @@ import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { logout } from '@/store/slices/authSlice';
 import ThemeToggle from '../common/ThemeToggle';
 import LanguageSelector from '../common/LanguageSelector';
+import CartButton from  '@/components/cart/CardButton';
 import { MenuProps } from 'antd';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UserRole } from '@/types/auth.types';
@@ -182,19 +183,13 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               <LanguageSelector />
             </div>
             
-            <Link to="/cart">
-              <Badge count={0} showZero={false}>
-                <Button 
-                  type="text" 
-                  icon={<ShoppingCartOutlined className="text-xl" />} 
-                  className={`hover:bg-transparent ${
-                    scrolled 
-                      ? 'text-gray-800 dark:text-white hover:text-primary dark:hover:text-primary' 
-                      : 'text-white dark:text-gray-200 hover:text-gray-300 dark:hover:text-gray-300'
-                  }`}
-                />
-              </Badge>
-            </Link>
+            {/* Cart Button */}
+            <CartButton 
+              className={scrolled 
+                ? 'text-gray-800 dark:text-white hover:text-primary dark:hover:text-primary' 
+                : 'text-white dark:text-gray-200 hover:text-gray-300 dark:hover:text-gray-300'
+              } 
+            />
 
             {isAuthenticated ? (
               <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">

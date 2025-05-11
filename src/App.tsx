@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { store } from './store';
 import AppRoutes from './routes';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
+import { CartProvider } from './contexts/CartContext';
 import './locales/i18n';
 import './index.css';
 
@@ -46,7 +47,9 @@ const App: React.FC = () => {
         <ThemeProvider>
           <BrowserRouter>
             <AntdConfigProvider>
-              <AppRoutes />
+              <CartProvider>
+                <AppRoutes />
+              </CartProvider>
             </AntdConfigProvider>
           </BrowserRouter>
         </ThemeProvider>
