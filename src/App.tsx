@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ConfigProvider, theme } from 'antd';
@@ -6,7 +6,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { store } from './store';
 import AppRoutes from './routes';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
-import { CartProvider } from './contexts/CartContext';
+import { CartProvider, useCart } from './contexts/CartContext';
+import CartNotification from '@/components/cart/CartNotfication';
 import './locales/i18n';
 import './index.css';
 
@@ -40,6 +41,31 @@ const AntdConfigProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   );
 };
 
+const GlobalCartNotification: React.FC = () => {
+  const { lastAddedProduct, lastAddedQuantity, resetLastAdded } = useCart();
+  const [showNotification, setShowNotification] = useState(false);
+  
+  useEffect(() => {
+    if (lastAddedProduct) {
+      setShowNotification(true);
+    }
+  }, [lastAddedProduct]);
+  
+  const handleClose = () => {
+    setShowNotification(false);
+    resetLastAdded();
+  };
+  
+  return (
+    <CartNotification 
+      open={showNotification}
+      onClose={handleClose}
+      product={lastAddedProduct}
+      quantity={lastAddedQuantity}
+    />
+  );
+};
+
 const App: React.FC = () => {
   return (
     <Provider store={store}>
@@ -49,6 +75,7 @@ const App: React.FC = () => {
             <AntdConfigProvider>
               <CartProvider>
                 <AppRoutes />
+                <GlobalCartNotification />
               </CartProvider>
             </AntdConfigProvider>
           </BrowserRouter>

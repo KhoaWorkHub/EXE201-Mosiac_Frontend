@@ -59,7 +59,12 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       setSuccess(true);
       setTimeout(() => setSuccess(false), 2000);
       
-      // Show notification with product details
+      // Emit the onSuccess callback which will trigger the CartNotification in parent component
+      if (onSuccess) {
+        onSuccess();
+      }
+      
+      // Also show a mini notification for immediate feedback
       notification.success({
         message: t('cart:notifications.item_added'),
         description: (
@@ -79,10 +84,6 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
         placement: 'bottomRight',
         duration: 3,
       });
-      
-      if (onSuccess) {
-        onSuccess();
-      }
     } catch (error) {
       console.error('Failed to add to cart:', error);
       notification.error({
