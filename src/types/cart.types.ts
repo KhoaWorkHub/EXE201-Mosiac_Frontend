@@ -9,6 +9,7 @@ export interface CartItemRequest {
 export interface CartItemResponse {
   id: UUID;
   productId: UUID;
+  productSlug: string;
   productName: string;
   productImage: string;
   variantId?: UUID;
