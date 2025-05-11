@@ -9,6 +9,7 @@ const LoginPage = lazy(() => import('../features/auth/pages/LoginPage'));
 const HomePage = lazy(() => import('../features/home/pages/HomePage'));
 const ProductDetailPage = lazy(() => import('../features/products/pages/ProductDetailPage'));
 const ProductsPage = lazy(() => import('../features/products/pages/ProductsPage'));
+const CartPage = lazy(() => import('../features/cart/pages/CartPage'));
 const AdminRoutes = lazy(() => import('../admin/routes'));
 
 // Component for 404 page
@@ -46,6 +47,9 @@ const AppRoutes: React.FC = () => {
         {/* Products routes */}
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/products/:slug" element={<ProductDetailPage />} />
+        
+        {/* Cart routes */}
+        <Route path="/cart" element={<CartPage />} />
         
         {/* Authentication routes */}
         <Route 
