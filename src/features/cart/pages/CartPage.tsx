@@ -142,8 +142,8 @@ const CartPage: React.FC = () => {
                       title={t('cart:cart.clear_cart')}
                       description={t('cart:cart.clear_confirm')}
                       onConfirm={handleClearCart}
-                      okText={t('common:actions.yes')}
-                      cancelText={t('common:actions.no')}
+                      okText={t('actions.yes')}
+                      cancelText={t('actions.no')}
                       placement="topRight"
                     >
                       <Button 

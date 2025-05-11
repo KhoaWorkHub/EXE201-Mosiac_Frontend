@@ -33,13 +33,18 @@
     "removed_from_wishlist": "Đã xóa khỏi danh sách yêu thích",
     "added": "Đã thêm!",
     "error_adding": "Không thể thêm sản phẩm vào giỏ hàng",
-    "cart_cleared": "Đã xóa tất cả sản phẩm trong giỏ hàng"
+    "cart_cleared": "Đã xóa tất cả sản phẩm trong giỏ hàng",
+    "max_quantity_reached": "Đã đạt số lượng tối đa có sẵn",
+    "quantity_exceeds_stock": "Số lượng vượt quá hàng có sẵn",
+    "quantity_update_success": "Cập nhật số lượng thành công",
+    "only_x_in_stock": "Chỉ còn {{count}} sản phẩm trong kho"
   },
   "product_details": {
     "quantity": "Số lượng",
     "per_unit": "mỗi đơn vị",
     "view": "Xem sản phẩm",
-    "out_of_stock": "Hết hàng"
+    "out_of_stock": "Hết hàng",
+    "remaining_stock": "Còn {{count}} sản phẩm trong kho"
   },
   "actions": {
     "view_cart": "Xem giỏ hàng",
