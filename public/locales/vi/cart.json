@@ -5,6 +5,7 @@
     "start_shopping": "Bắt đầu mua sắm",
     "item": "sản phẩm",
     "items": "sản phẩm",
+    "in_cart": "trong giỏ hàng",
     "remove": "Xóa",
     "subtotal": "Tạm tính",
     "shipping": "Phí vận chuyển",
@@ -14,7 +15,8 @@
     "continue_shopping": "Tiếp tục mua sắm",
     "summary": "Tóm tắt đơn hàng",
     "clear_cart": "Xóa giỏ hàng",
-    "clear_confirm": "Bạn có chắc chắn muốn xóa tất cả sản phẩm khỏi giỏ hàng?"
+    "clear_confirm": "Bạn có chắc chắn muốn xóa tất cả sản phẩm khỏi giỏ hàng?",
+    "view_cart": "Xem giỏ hàng"
   },
   "wishlist": {
     "title": "Danh sách yêu thích",
@@ -32,5 +34,19 @@
     "added": "Đã thêm!",
     "error_adding": "Không thể thêm sản phẩm vào giỏ hàng",
     "cart_cleared": "Đã xóa tất cả sản phẩm trong giỏ hàng"
+  },
+  "product_details": {
+    "quantity": "Số lượng",
+    "per_unit": "mỗi đơn vị",
+    "view": "Xem sản phẩm",
+    "out_of_stock": "Hết hàng"
+  },
+  "actions": {
+    "view_cart": "Xem giỏ hàng",
+    "add_to_cart": "Thêm vào giỏ hàng",
+    "yes": "Có",
+    "no": "Không",
+    "more": "thêm",
+    "continue_shopping": "Tiếp tục mua sắm"
   }
 }

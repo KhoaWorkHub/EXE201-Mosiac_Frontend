@@ -116,7 +116,7 @@ const CartNotification: React.FC<CartNotificationProps> = ({
             <div className="flex justify-between items-center">
               <Text className="dark:text-gray-300">
                 <Badge count={quantity} size="small" className="mr-2" />
-                {t('cart:cart.items')} {t('common:in_cart')}
+                {t('cart:cart.items')} {t('cart:cart.in_cart')}
               </Text>
             </div>
           </div>
@@ -129,7 +129,7 @@ const CartNotification: React.FC<CartNotificationProps> = ({
               className="flex items-center justify-center"
             >
               <Link to="/cart" className="flex items-center justify-center w-full">
-                {t('common:actions.view_cart')}
+                {t('actions.view_cart')}
               </Link>
             </Button>
             <Button
@@ -146,7 +146,7 @@ const CartNotification: React.FC<CartNotificationProps> = ({
 
           <div className="mt-6 text-center">
             <Button type="link" onClick={onClose}>
-              {t('common:actions.continue_shopping')}
+              {t('actions.continue_shopping')}
             </Button>
           </div>
         </div>

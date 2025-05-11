@@ -50,7 +50,7 @@ const CartItem: React.FC<CartItemProps> = ({
         <div className="flex flex-col sm:flex-row">
           {/* Product Image */}
           <div className="w-full sm:w-32 h-32 flex-shrink-0 bg-gray-50 dark:bg-gray-700 overflow-hidden">
-            <Link to={`/products/${item.productId}`}>
+            <Link to={`/products/${item.productSlug}`}>
               <motion.div
                 whileHover={{ scale: 1.1 }}
                 className="w-full h-full"
@@ -89,7 +89,7 @@ const CartItem: React.FC<CartItemProps> = ({
                 
                 {/* Unit price display */}
                 <p className="text-xs text-gray-500 dark:text-gray-400 ml-2">
-                  {t("product:product_details.per_unit")}
+                  {t("product_details.per_unit")}
                 </p>
               </div>
             </div>
@@ -98,7 +98,7 @@ const CartItem: React.FC<CartItemProps> = ({
             <div className="mt-4 sm:mt-0 flex flex-col sm:flex-row sm:items-center">
               <div className="flex items-center">
                 <span className="mr-3 dark:text-white text-sm">
-                  {t("product:product_details.quantity")}:
+                  {t("product_details.quantity")}:
                 </span>
                 <InputNumber
                   min={1}
@@ -113,7 +113,7 @@ const CartItem: React.FC<CartItemProps> = ({
               {/* Actions */}
               <div className="mt-2 sm:mt-0 sm:ml-4 flex items-center">
                 <Tooltip title={`${t("product:product_details.view")}`}>
-                  <Link to={`/products/${item.productId}`}>
+                  <Link to={`/products/${item.productSlug}`}>
                     <Button
                       type="text"
                       icon={<LinkOutlined />}

@@ -111,7 +111,7 @@ const CartButton: React.FC<CartButtonProps> = ({ className = '' }) => {
           <div className="flex flex-col gap-2">
             <Link to="/cart">
               <Button type="primary" block className="flex items-center justify-center">
-                {t('common:actions.view_cart')}
+                {t('actions.view_cart')}
                 <RightOutlined className="ml-1" />
               </Button>
             </Link>
