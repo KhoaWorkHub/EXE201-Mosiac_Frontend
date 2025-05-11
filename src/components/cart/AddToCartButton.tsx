@@ -49,11 +49,11 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
     }
     
     try {
-        await addToCart({
-            productId: product.id as UUID,
-            variantId: variant?.id as UUID | undefined,
-            quantity,
-          });
+      await addToCart({
+        productId: product.id as UUID,
+        variantId: variant?.id as UUID | undefined,
+        quantity,
+      });
       
       // Visual feedback
       setSuccess(true);
@@ -86,7 +86,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
     } catch (error) {
       console.error('Failed to add to cart:', error);
       notification.error({
-        message: 'Error',
+        message: t('cart:notifications.error_adding'),
         description: 'Failed to add item to cart',
         placement: 'bottomRight',
       });

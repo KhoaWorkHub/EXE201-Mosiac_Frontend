@@ -4,6 +4,7 @@ import { CartService } from '@/services/cart.service';
 import { useAppSelector } from '@/store/hooks';
 import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { StorageService } from '@/services/storage.service';
 
 // Action types
 type CartAction = 
@@ -185,19 +186,30 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
       message.error('Failed to clear cart');
     }
   };
+  useEffect(() => {
+    if (isAuthenticated) {
+      mergeGuestCart();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
   
   // Merge guest cart with user cart after login
   const mergeGuestCart = async () => {
     if (!isAuthenticated) return;
     
+    const guestId = StorageService.getItem<string>('guest_id');
+    if (!guestId) return;
+    
     try {
       const mergedCart = await CartService.mergeGuestCart();
       dispatch({ type: 'MERGE_CART_SUCCESS', payload: mergedCart });
+      // Clear the guest ID after successful merge
+      StorageService.removeItem('guest_id');
     } catch (error) {
       console.error('Error merging carts:', error);
     }
   };
-  
+
   return (
     <CartContext.Provider
       value={{
