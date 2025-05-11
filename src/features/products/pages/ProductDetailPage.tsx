@@ -94,28 +94,9 @@ const ProductDetailPage: React.FC = () => {
   };
 
   // Handle add to cart
-  const handleAddToCart = async () => {
-    if (!currentProduct) return;
-
-    if (!isInStock()) {
-      message.error(t("product:product_details.out_of_stock"));
-      return;
-    }
-
-    try {
-      // Start animation
-      setShowAnimation(true);
-
-      // Add to cart in the backend
-      await addToCart({
-        productId: currentProduct.id as UUID,
-        variantId: selectedVariant?.id as UUID | undefined,
-        quantity,
-      });
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-      message.error(t("cart:notifications.error_adding"));
-    }
+  const handleAddToCart = () => {
+    // Only trigger the animation, no cart API call
+    setShowAnimation(true);
   };
 
   // Handle animation complete
@@ -124,10 +105,26 @@ const ProductDetailPage: React.FC = () => {
   };
 
   // Handle buy now
-  const handleBuyNow = async () => {
-    await handleAddToCart();
+const handleBuyNow = async () => {
+  if (!currentProduct) return;
+  
+  if (!isInStock()) {
+    message.error(t("product:product_details.out_of_stock"));
+    return;
+  }
+  
+  try {
+    await addToCart({
+      productId: currentProduct.id as UUID,
+      variantId: selectedVariant?.id as UUID | undefined,
+      quantity,
+    });
     navigate("/checkout");
-  };
+  } catch (error) {
+    console.error("Error adding to cart:", error);
+    message.error(t('cart:notifications.error_adding'));
+  }
+};
 
   // Handle wishlist toggle
   const handleWishlistToggle = () => {

@@ -101,11 +101,14 @@ export const CartService = {
     const guestId = StorageService.getItem<string>('guest_id');
     
     if (!guestId) {
-      throw new Error('No guest ID available');
+      // If no guest ID, just get the current cart
+      return CartService.getCart();
     }
     
     try {
-      const response = await api.post<CartResponse>(`${CART_URL}/merge`, null, { params: { guestId } });
+      const response = await api.post<CartResponse>(`${CART_URL}/merge`, null, { 
+        params: { guestId } 
+      });
       
       // Clear guest ID after successful merge
       StorageService.removeItem('guest_id');
@@ -113,7 +116,8 @@ export const CartService = {
       return response.data;
     } catch (error) {
       console.error('Error merging guest cart:', error);
-      throw error;
+      // If merge fails, still try to get the current cart
+      return CartService.getCart();
     }
   }
 };

@@ -10,6 +10,8 @@ import { fetchFeaturedProducts, fetchLatestProducts } from '@/store/slices/produ
 import ProductCarousel from '@/features/products/components/ProductCarousel';
 import ProductsGrid from '@/features/products/components/ProductsGrid';
 import type { ProductResponse } from '@/types/product.types';
+import { useCart } from '@/contexts/CartContext';
+import type { UUID } from 'crypto';
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -195,9 +197,20 @@ const HomePage: React.FC = () => {
   }, [dispatch]);
   
   // Handle add to cart
-  const handleAddToCart = (product: ProductResponse) => {
-    // Will implement actual cart functionality later
-    message.success(`${product.name} added to cart!`);
+  const { addToCart } = useCart();
+
+  const handleAddToCart = async (product: ProductResponse) => {
+    try {
+      await addToCart({
+        productId: product.id as UUID,
+        quantity: 1,
+      });
+      // Keep the message as a visual confirmation
+      message.success(`${product.name} added to cart!`);
+    } catch (error) {
+      console.error('Failed to add to cart:', error);
+      message.error(t('cart:notifications.error_adding'));
+    }
   };
   
   // Handle add to wishlist

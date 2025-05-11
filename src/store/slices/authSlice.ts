@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { AuthService } from '@/services/auth.service';
 import { AuthenticationRequest, AuthenticationResponse, UserDto } from '@/types/auth.types';
+import { CartService } from '@/services/cart.service';
+import { StorageService } from '@/services/storage.service';
 
 interface AuthState {
   user: UserDto | null;
@@ -22,6 +24,19 @@ export const login = createAsyncThunk(
     try {
       const response = await AuthService.login(credentials);
       AuthService.saveTokens(response);
+      
+      // After successful login, check if there's a guest cart to merge
+      const guestId = StorageService.getItem<string>('guest_id');
+      if (guestId) {
+        try {
+          // Attempt to merge the guest cart
+          await CartService.mergeGuestCart();
+        } catch (mergeError) {
+          console.error('Error merging carts:', mergeError);
+          // Continue even if merge fails - the user is still logged in
+        }
+      }
+      
       return response;
     } catch (error: unknown) {
       if (error instanceof Error) {

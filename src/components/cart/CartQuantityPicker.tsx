@@ -34,8 +34,14 @@ const CartQuantityPicker: React.FC<CartQuantityPickerProps> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(e.target.value, 10);
-    if (!isNaN(newValue) && newValue >= min && newValue <= max && !disabled) {
-      onChange(newValue);
+    if (!isNaN(newValue)) {
+      if (newValue < min) {
+        onChange(min);
+      } else if (newValue > max) {
+        onChange(max); // Enforce max limit
+      } else if (!disabled) {
+        onChange(newValue);
+      }
     }
   };
 

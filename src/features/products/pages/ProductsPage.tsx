@@ -31,6 +31,8 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchProducts, setFilters, resetFilters } from '@/store/slices/productSlice';
 import ProductsGrid from '../components/ProductsGrid';
 import type { ProductResponse } from '@/types/product.types';
+import { useCart } from '@/contexts/CartContext';
+import type { UUID } from 'crypto';
 
 const { Title, Text } = Typography;
 const { Panel } = Collapse;
@@ -214,9 +216,21 @@ const ProductsPage: React.FC = () => {
     updateURLParams(updatedFilters);
   };
   
-  // Handle add to cart (placeholder)
-  const handleAddToCart = (product: ProductResponse) => {
-    message.success(`${product.name} added to cart!`);
+  const { addToCart } = useCart();
+  
+  // Handle add to cart
+  const handleAddToCart = async (product: ProductResponse) => {
+    try {
+      await addToCart({
+        productId: product.id as UUID,
+        quantity: 1,
+      });
+      // Keep the message as a visual confirmation
+      message.success(`${product.name} added to cart!`);
+    } catch (error) {
+      console.error('Failed to add to cart:', error);
+      message.error(t('cart:notifications.error_adding'));
+    }
   };
   
   // Handle add to wishlist (placeholder)
