@@ -12,6 +12,7 @@ import { message } from "antd";
 import { useTranslation } from "react-i18next";
 import { StorageService } from "@/services/storage.service";
 import type { ProductResponse } from "@/types/product.types";
+import type { UUID } from "crypto";
 
 // Action types
 type CartAction =
@@ -36,7 +37,8 @@ type CartAction =
   | { type: "CLEAR_CART_SUCCESS" }
   | { type: "CLEAR_CART_FAILURE"; payload: string }
   | { type: "MERGE_CART_SUCCESS"; payload: CartResponse }
-  | { type: "RESET_LAST_ADDED" };
+  | { type: "RESET_LAST_ADDED" }
+  | { type: "CHECK_STOCK_QUANTITY"; productId: UUID; variantId?: UUID; stockQty: number };
 
 interface CartContextProps {
   state: CartState;
@@ -52,6 +54,9 @@ interface CartContextProps {
   lastAddedProduct: ProductResponse | null;
   lastAddedQuantity: number;
   resetLastAdded: () => void;
+  canAddToCart: (productId: UUID, variantId?: UUID, qty?: number) => boolean;
+  getCartItemQuantity: (productId: UUID, variantId?: UUID) => number;
+  getItemStockRemaining: (productId: UUID, variantId?: UUID) => number;
 }
 
 // State type
@@ -64,6 +69,7 @@ interface CartState {
   itemBeingRemoved: string | null;
   lastAddedProduct: ProductResponse | null;
   lastAddedQuantity: number;
+  stockQuantities: Record<string, number>; // productId-variantId -> quantity available
 }
 
 // Initial state
@@ -76,6 +82,12 @@ const initialState: CartState = {
   itemBeingRemoved: null,
   lastAddedProduct: null,
   lastAddedQuantity: 0,
+  stockQuantities: {},
+};
+
+// Helper for creating composite keys for product-variant combinations
+const getStockKey = (productId: UUID, variantId?: UUID): string => {
+  return `${productId}${variantId ? `-${variantId}` : ''}`;
 };
 
 // Reducer
@@ -126,22 +138,22 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 
     case "MERGE_CART_SUCCESS":
       return { ...state, cart: action.payload };
+    
+    case "CHECK_STOCK_QUANTITY": {
+      const key = getStockKey(action.productId, action.variantId);
+      return {
+        ...state,
+        stockQuantities: {
+          ...state.stockQuantities,
+          [key]: action.stockQty
+        }
+      };
+    }
 
     default:
       return state;
   }
 };
-
-// Context
-interface CartContextProps {
-  state: CartState;
-  fetchCart: () => Promise<void>;
-  addToCart: (item: CartItemRequest, productDetails?: ProductResponse) => Promise<void>;
-  updateQuantity: (itemId: string, quantity: number) => Promise<void>;
-  removeItem: (itemId: string) => Promise<void>;
-  clearCart: () => Promise<void>;
-  mergeGuestCart: () => Promise<void>;
-}
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
 
@@ -172,9 +184,75 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     }
   };
 
+  // Check if more of a product can be added to cart
+  const canAddToCart = (productId: UUID, variantId?: UUID, qty = 1): boolean => {
+    const key = getStockKey(productId, variantId);
+    const stockQty = state.stockQuantities[key] || 0;
+    
+    // If we don't have stock info, assume we can add
+    if (stockQty === 0 && !Object.keys(state.stockQuantities).includes(key)) {
+      return true;
+    }
+    
+    // Get current quantity in cart
+    const cartQty = getCartItemQuantity(productId, variantId);
+    
+    // Check if adding qty would exceed stock
+    return cartQty + qty <= stockQty;
+  };
+  
+  // Get current quantity of an item in cart
+  const getCartItemQuantity = (productId: UUID, variantId?: UUID): number => {
+    if (!state.cart || !state.cart.items) return 0;
+    
+    const cartItem = state.cart.items.find(item => {
+      if (variantId) {
+        return item.productId === productId && item.variantId === variantId;
+      }
+      return item.productId === productId && !item.variantId;
+    });
+    
+    return cartItem?.quantity || 0;
+  };
+  
+  // Get remaining stock for a product
+  const getItemStockRemaining = (productId: UUID, variantId?: UUID): number => {
+    const key = getStockKey(productId, variantId);
+    const stockQty = state.stockQuantities[key] || 0;
+    const cartQty = getCartItemQuantity(productId, variantId);
+    
+    return Math.max(0, stockQty - cartQty);
+  };
+
   // Add item to cart
-// Add item to cart
-const addToCart = async (item: CartItemRequest, productDetails?: ProductResponse) => {
+  const addToCart = async (item: CartItemRequest, productDetails?: ProductResponse) => {
+    // Check stock quantities before adding
+    if (productDetails) {
+      // Determine stock quantity from product or variant
+      let stockQty = productDetails.stockQuantity || 0;
+      if (item.variantId && productDetails.variants) {
+        const variant = productDetails.variants.find(v => v.id === item.variantId);
+        if (variant) {
+          stockQty = variant.stockQuantity;
+        }
+      }
+      
+      // Store stock quantity for future reference
+      dispatch({
+        type: "CHECK_STOCK_QUANTITY",
+        productId: item.productId,
+        variantId: item.variantId,
+        stockQty
+      });
+      
+      // Check if adding would exceed stock
+      const currentQty = getCartItemQuantity(item.productId, item.variantId);
+      if (currentQty + item.quantity > stockQty) {
+        message.warning(t('notifications.quantity_exceeds_stock'));
+        return;
+      }
+    }
+    
     dispatch({ type: 'ADD_TO_CART_REQUEST' });
     try {
       const updatedCart = await CartService.addItemToCart(item);
@@ -185,8 +263,6 @@ const addToCart = async (item: CartItemRequest, productDetails?: ProductResponse
         quantity: item.quantity
       });
       
-      // No longer show message here as we'll use the notification component
-      // instead of a simple message
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       dispatch({ type: 'ADD_TO_CART_FAILURE', payload: 'Failed to add item to cart' });
@@ -201,6 +277,19 @@ const addToCart = async (item: CartItemRequest, productDetails?: ProductResponse
 
   // Update item quantity
   const updateQuantity = async (itemId: string, quantity: number) => {
+    // Find the cart item to get product info
+    const cartItem = state.cart?.items.find(item => item.id === itemId);
+    if (cartItem) {
+      // Check against stock quantity
+      const key = getStockKey(cartItem.productId, cartItem.variantId);
+      const stockQty = state.stockQuantities[key];
+      
+      if (stockQty !== undefined && quantity > stockQty) {
+        message.warning(t('notifications.quantity_exceeds_stock'));
+        return;
+      }
+    }
+    
     dispatch({ type: "UPDATE_QUANTITY_REQUEST", payload: itemId });
     try {
       const updatedCart = await CartService.updateCartItemQuantity(
@@ -286,6 +375,9 @@ const addToCart = async (item: CartItemRequest, productDetails?: ProductResponse
         lastAddedProduct: state.lastAddedProduct,
         lastAddedQuantity: state.lastAddedQuantity,
         resetLastAdded,
+        canAddToCart,
+        getCartItemQuantity,
+        getItemStockRemaining
       }}
     >
       {children}

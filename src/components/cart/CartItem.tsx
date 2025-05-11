@@ -1,15 +1,19 @@
-import React from "react";
-import { Card, Button, InputNumber, Popconfirm, Tooltip } from "antd";
+import React, { useState, useEffect } from "react";
+import { Card, Button, Popconfirm, Tooltip, message } from "antd";
 import {
   DeleteOutlined,
   ExclamationCircleOutlined,
   LinkOutlined,
+  InfoCircleOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { CartItemResponse } from "@/types/cart.types";
 import { formatCurrency } from "@/utils/formatters";
+import CartQuantityPicker from "./CartQuantityPicker";
+import { useCart } from '@/contexts/CartContext';
+import type { UUID } from 'crypto';
 
 interface CartItemProps {
   item: CartItemResponse;
@@ -27,11 +31,50 @@ const CartItem: React.FC<CartItemProps> = ({
   isRemoving = false,
 }) => {
   const { t } = useTranslation(["cart", "product"]);
+  const { state, getItemStockRemaining } = useCart();
+  const [stockLimit, setStockLimit] = useState<number>(99);
+  const [showStockWarning, setShowStockWarning] = useState(false);
+  
+  // Determine max quantity available from stock
+  useEffect(() => {
+    const remaining = getItemStockRemaining(
+      item.productId as UUID, 
+      item.variantId as UUID | undefined
+    );
+    
+    // If we have stock info, use it as limit
+    if (remaining > 0) {
+      setStockLimit(remaining + item.quantity); // Add current quantity since it's already counted in cart
+    } else {
+      // Otherwise try to get stock info from the product directly
+      // This is a fallback in case stock wasn't tracked yet
+      const stockInfo = state.stockQuantities[`${item.productId}${item.variantId ? `-${item.variantId}` : ''}`];
+      if (stockInfo) {
+        setStockLimit(stockInfo);
+      }
+    }
+  }, [item, state.stockQuantities, getItemStockRemaining]);
+  
+  // Show warning when quantity is close to stock limit
+  useEffect(() => {
+    if (stockLimit && item.quantity >= stockLimit - 1) {
+      setShowStockWarning(true);
+    } else {
+      setShowStockWarning(false);
+    }
+  }, [item.quantity, stockLimit]);
 
   const handleQuantityChange = (value: number | null) => {
-    if (value && value > 0) {
-      onQuantityChange(item.id, value);
+    if (!value || value <= 0) return;
+    
+    // Check against stock limit
+    if (stockLimit && value > stockLimit) {
+      message.warning(t('cart:notifications.quantity_exceeds_stock'));
+      onQuantityChange(item.id, stockLimit);
+      return;
     }
+    
+    onQuantityChange(item.id, value);
   };
 
   return (
@@ -92,6 +135,23 @@ const CartItem: React.FC<CartItemProps> = ({
                   {t("product_details.per_unit")}
                 </p>
               </div>
+              
+              {/* Stock warning */}
+              <AnimatePresence>
+                {showStockWarning && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="mt-2"
+                  >
+                    <p className="text-xs text-yellow-500 flex items-center">
+                      <InfoCircleOutlined className="mr-1" />
+                      {t('cart:notifications.only_x_in_stock', { count: stockLimit })}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Quantity Control */}
@@ -100,19 +160,19 @@ const CartItem: React.FC<CartItemProps> = ({
                 <span className="mr-3 dark:text-white text-sm">
                   {t("product_details.quantity")}:
                 </span>
-                <InputNumber
-                  min={1}
-                  max={99}
+                <CartQuantityPicker
                   value={item.quantity}
+                  min={1}
+                  max={stockLimit}
                   onChange={handleQuantityChange}
-                  className="w-16"
                   disabled={loading}
+                  showStockWarning={item.quantity >= stockLimit - 2}
                 />
               </div>
 
               {/* Actions */}
               <div className="mt-2 sm:mt-0 sm:ml-4 flex items-center">
-                <Tooltip title={`${t("product:product_details.view")}`}>
+                <Tooltip title={`${t("product_details.view")}`}>
                   <Link to={`/products/${item.productSlug}`}>
                     <Button
                       type="text"
@@ -128,8 +188,8 @@ const CartItem: React.FC<CartItemProps> = ({
                     item.productName
                   }"?`}
                   onConfirm={() => onRemove(item.id)}
-                  okText={t("common:actions.yes")}
-                  cancelText={t("common:actions.no")}
+                  okText={t("actions.yes")}
+                  cancelText={t("actions.no")}
                   placement="topRight"
                   icon={<ExclamationCircleOutlined style={{ color: "red" }} />}
                 >
@@ -160,6 +220,16 @@ const CartItem: React.FC<CartItemProps> = ({
             {formatCurrency(item.subtotal)}
           </motion.span>
         </div>
+        
+        {/* Stock limit indicator for items at max capacity */}
+        {item.quantity === stockLimit && (
+          <div className="bg-yellow-50 dark:bg-yellow-900/20 p-2 text-center border-t border-yellow-100 dark:border-yellow-800">
+            <span className="text-xs text-yellow-700 dark:text-yellow-500 flex items-center justify-center">
+              <InfoCircleOutlined className="mr-1" />
+              {t('cart:notifications.max_quantity_reached')}
+            </span>
+          </div>
+        )}
       </Card>
     </motion.div>
   );

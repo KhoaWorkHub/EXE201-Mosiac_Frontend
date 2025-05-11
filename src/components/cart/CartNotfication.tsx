@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Drawer, Typography, Button, Badge } from 'antd';
-import { CheckCircleFilled, RightOutlined } from '@ant-design/icons';
+import { Drawer, Typography, Button, Badge, Tag } from 'antd';
+import { CheckCircleFilled, RightOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { formatCurrency } from '@/utils/formatters';
+import { useCart } from '@/contexts/CartContext';
 import type { ProductResponse } from '@/types/product.types';
+import type { UUID } from 'crypto';
 
 const { Title, Text } = Typography;
 
@@ -24,6 +26,10 @@ const CartNotification: React.FC<CartNotificationProps> = ({
 }) => {
   const { t } = useTranslation(['cart', 'common']);
   const [isClosing, setIsClosing] = useState(false);
+  const { getCartItemQuantity, getItemStockRemaining } = useCart();
+  const [totalInCart, setTotalInCart] = useState(0);
+  const [stockRemaining, setStockRemaining] = useState(0);
+  const [isAtMaxStock, setIsAtMaxStock] = useState(false);
 
   // Close the notification after 5 seconds
   useEffect(() => {
@@ -39,6 +45,22 @@ const CartNotification: React.FC<CartNotificationProps> = ({
       return () => clearTimeout(timer);
     }
   }, [open, onClose]);
+  
+  // Calculate cart quantities and remaining stock
+  useEffect(() => {
+    if (product) {
+      // Get current quantity in cart (after this addition)
+      const inCart = getCartItemQuantity(product.id as UUID);
+      setTotalInCart(inCart);
+      
+      // Get remaining stock
+      const remaining = getItemStockRemaining(product.id as UUID);
+      setStockRemaining(remaining);
+      
+      // Check if we're at max stock
+      setIsAtMaxStock(remaining === 0);
+    }
+  }, [product, getCartItemQuantity, getItemStockRemaining]);
 
   if (!product) return null;
 
@@ -103,6 +125,19 @@ const CartNotification: React.FC<CartNotificationProps> = ({
                   {formatCurrency(product.price)}
                 </Text>
               </div>
+              
+              {/* Stock status */}
+              {isAtMaxStock ? (
+                <Tag color="warning" className="mt-2 flex items-center w-max">
+                  <InfoCircleOutlined className="mr-1" />
+                  {t('cart:notifications.max_quantity_reached')}
+                </Tag>
+              ) : stockRemaining <= 3 ? (
+                <Tag color="warning" className="mt-2 flex items-center w-max">
+                  <InfoCircleOutlined className="mr-1" />
+                  {t('cart:notifications.only_x_in_stock', { count: stockRemaining })}
+                </Tag>
+              ) : null}
             </div>
           </div>
 
@@ -115,9 +150,15 @@ const CartNotification: React.FC<CartNotificationProps> = ({
             </div>
             <div className="flex justify-between items-center">
               <Text className="dark:text-gray-300">
-                <Badge count={quantity} size="small" className="mr-2" />
+                <Badge count={totalInCart} size="small" className="mr-2" />
                 {t('cart:cart.items')} {t('cart:cart.in_cart')}
               </Text>
+              
+              {isAtMaxStock && (
+                <Tag color="warning" className="text-sm">
+                  {t('cart:notifications.max_quantity_reached')}
+                </Tag>
+              )}
             </div>
           </div>
 

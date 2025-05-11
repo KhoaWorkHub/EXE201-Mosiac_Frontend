@@ -33,13 +33,18 @@
     "removed_from_wishlist": "Removed from wishlist",
     "added": "Added!",
     "error_adding": "Failed to add item to cart",
-    "cart_cleared": "Cart has been cleared"
+    "cart_cleared": "Cart has been cleared",
+    "max_quantity_reached": "Maximum available quantity reached",
+    "quantity_exceeds_stock": "Quantity exceeds available stock",
+    "quantity_update_success": "Quantity updated successfully",
+    "only_x_in_stock": "Only {{count}} items in stock"
   },
   "product_details": {
     "quantity": "Quantity",
     "per_unit": "per unit",
     "view": "View product",
-    "out_of_stock": "Out of stock"
+    "out_of_stock": "Out of stock",
+    "remaining_stock": "{{count}} remaining in stock"
   },
   "actions": {
     "view_cart": "View Cart",
