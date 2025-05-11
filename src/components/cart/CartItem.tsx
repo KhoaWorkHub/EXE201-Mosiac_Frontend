@@ -41,20 +41,26 @@ const CartItem: React.FC<CartItemProps> = ({
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
       layout
+      whileHover={{ scale: 1.01 }}
     >
       <Card
-        className="mb-4 overflow-hidden bg-gray-50 dark:bg-gray-700 border-0 shadow-sm"
+        className="mb-4 overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all"
         bodyStyle={{ padding: 0 }}
       >
         <div className="flex flex-col sm:flex-row">
           {/* Product Image */}
-          <div className="w-full sm:w-32 h-32 flex-shrink-0 bg-white dark:bg-gray-800">
+          <div className="w-full sm:w-32 h-32 flex-shrink-0 bg-gray-50 dark:bg-gray-700 overflow-hidden">
             <Link to={`/products/${item.productId}`}>
-              <img
-                src={item.productImage}
-                alt={item.productName}
-                className="w-full h-full object-cover"
-              />
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                className="w-full h-full"
+              >
+                <img
+                  src={item.productImage || '/placeholder-product.jpg'}
+                  alt={item.productName}
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
             </Link>
           </div>
 
@@ -76,13 +82,20 @@ const CartItem: React.FC<CartItemProps> = ({
                 </p>
               )}
 
-              <p className="text-primary font-semibold">
-                {formatCurrency(item.price)}
-              </p>
+              <div className="flex items-center">
+                <p className="text-primary font-semibold">
+                  {formatCurrency(item.price)}
+                </p>
+                
+                {/* Unit price display */}
+                <p className="text-xs text-gray-500 dark:text-gray-400 ml-2">
+                  {t("product:product_details.per_unit")}
+                </p>
+              </div>
             </div>
 
             {/* Quantity Control */}
-            <div className="mt-4 sm:mt-0 flex items-center">
+            <div className="mt-4 sm:mt-0 flex flex-col sm:flex-row sm:items-center">
               <div className="flex items-center">
                 <span className="mr-3 dark:text-white text-sm">
                   {t("product:product_details.quantity")}:
@@ -98,7 +111,7 @@ const CartItem: React.FC<CartItemProps> = ({
               </div>
 
               {/* Actions */}
-              <div className="ml-4 flex items-center">
+              <div className="mt-2 sm:mt-0 sm:ml-4 flex items-center">
                 <Tooltip title={`${t("product:product_details.view")}`}>
                   <Link to={`/products/${item.productId}`}>
                     <Button
@@ -132,14 +145,20 @@ const CartItem: React.FC<CartItemProps> = ({
           </div>
         </div>
 
-        {/* Subtotal */}
-        <div className="bg-white dark:bg-gray-800 p-3 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center">
-          <span className="text-gray-500 dark:text-gray-400">
+        {/* Subtotal with colored background to emphasize */}
+        <div className="bg-gray-50 dark:bg-gray-700 p-3 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center">
+          <span className="text-gray-600 dark:text-gray-300 font-medium">
             {t("cart:cart.subtotal")}
           </span>
-          <span className="text-lg font-medium dark:text-white">
+          <motion.span 
+            className="text-lg font-medium text-primary"
+            key={item.subtotal}
+            initial={{ scale: 1.2 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             {formatCurrency(item.subtotal)}
-          </span>
+          </motion.span>
         </div>
       </Card>
     </motion.div>

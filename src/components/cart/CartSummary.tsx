@@ -46,7 +46,12 @@ const CartSummary: React.FC<CartSummaryProps> = ({
   }
 
   // Calculate totals - in a real app, these might come from the backend
-  const subtotal = cart.totalAmount;
+  const calculateSubtotal = () => {
+    if (!cart || !cart.items || cart.items.length === 0) return 0;
+    return cart.items.reduce((sum, item) => sum + item.subtotal, 0);
+  };
+  
+  const subtotal = cart.totalAmount ?? calculateSubtotal();
   const shipping = 0; // Example, replace with actual calculation
   const tax = 0; // Example, replace with actual calculation
   const total = subtotal + shipping + tax;

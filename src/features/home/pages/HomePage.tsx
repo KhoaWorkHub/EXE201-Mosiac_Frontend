@@ -204,9 +204,8 @@ const HomePage: React.FC = () => {
       await addToCart({
         productId: product.id as UUID,
         quantity: 1,
-      });
-      // Keep the message as a visual confirmation
-      message.success(`${product.name} added to cart!`);
+      }, product);
+      // The notification will be shown by the CartNotification component
     } catch (error) {
       console.error('Failed to add to cart:', error);
       message.error(t('cart:notifications.error_adding'));

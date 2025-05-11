@@ -219,19 +219,18 @@ const ProductsPage: React.FC = () => {
   const { addToCart } = useCart();
   
   // Handle add to cart
-  const handleAddToCart = async (product: ProductResponse) => {
-    try {
-      await addToCart({
-        productId: product.id as UUID,
-        quantity: 1,
-      });
-      // Keep the message as a visual confirmation
-      message.success(`${product.name} added to cart!`);
-    } catch (error) {
-      console.error('Failed to add to cart:', error);
-      message.error(t('cart:notifications.error_adding'));
-    }
-  };
+const handleAddToCart = async (product: ProductResponse) => {
+  try {
+    await addToCart({
+      productId: product.id as UUID,
+      quantity: 1,
+    }, product);
+    // The notification will be shown by the CartNotification component
+  } catch (error) {
+    console.error('Failed to add to cart:', error);
+    message.error(t('cart:notifications.error_adding'));
+  }
+};
   
   // Handle add to wishlist (placeholder)
   const handleAddToWishlist = (product: ProductResponse) => {
