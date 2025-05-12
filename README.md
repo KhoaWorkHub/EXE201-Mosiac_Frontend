@@ -1,55 +1,32 @@
-# React + TypeScript + Vite
+Mosiac Frontend
+Mosiac Frontend là ứng dụng React xây dựng với TypeScript và Vite, sử dụng các công nghệ hiện đại như Ant Design, Redux Toolkit, và i18next. Dự án được đóng gói bằng Docker để dễ dàng triển khai.
+Yêu Cầu Hệ Thống
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Node.js v18.x trở lên (khuyến nghị sử dụng Node.js 20.x)
+Bun v1.x (để thay thế npm/yarn cho tốc độ nhanh hơn)
+Docker và Docker Compose (nếu sử dụng phương pháp triển khai Docker)
 
-Currently, two official plugins are available:
+Cài Đặt và Chạy Dự Án
+Phương Pháp 1: Sử dụng Bun (Khuyến nghị cho Phát triển)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Cài đặt Bun
 
-## Expanding the ESLint configuration
+bash# MacOS, Linux, hoặc WSL
+curl -fsSL https://bun.sh/install | bash
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# Windows (thông qua PowerShell)
+powershell -c "irm bun.sh/install.ps1 | iex"
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Clone dự án
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+bashgit clone <repository-url>
+cd mosiac-frontend
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Cài đặt dependencies
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
-# EXE201-Mosiac_Frontend
+bashbun install
+
+Chạy môi trường phát triển
+
+bashbun run dev
+Ứng dụng sẽ chạy tại http://localhost:5173
