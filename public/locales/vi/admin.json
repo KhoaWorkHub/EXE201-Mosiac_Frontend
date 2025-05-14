@@ -11,7 +11,8 @@
     "categories": "Danh mục",
     "regions": "Vùng miền",
     "campaigns": "Chiến dịch",
-    "orders": "Đơn hàng"
+    "orders": "Đơn hàng",
+    "qrcodes": "Mã QR"
   },
   "dashboard": {
     "title": "Tổng quan",
@@ -339,5 +340,46 @@
     "slug_format": "Đường dẫn chỉ được chứa chữ cái thường, số và dấu gạch ngang",
     "image_only": "Bạn chỉ có thể tải lên tệp hình ảnh!",
     "image_size": "Kích thước hình ảnh phải nhỏ hơn 2MB!"
-  }
+  },
+  "qrcodes": {
+  "title": "Mã QR",
+  "description": "Quản lý mã QR cho sản phẩm của bạn",
+  "info": "Theo dõi và phân tích lượt quét mã QR cho sản phẩm",
+  "create": "Tạo mã QR",
+  "create_description": "Tạo mã QR mới cho sản phẩm của bạn",
+  "edit": "Chỉnh sửa mã QR",
+  "edit_description": "Chỉnh sửa mã QR hiện có",
+  "search_placeholder": "Tìm theo URL hoặc mô tả",
+  "no_qrcodes": "Không tìm thấy mã QR nào",
+  "no_results": "Không có mã QR nào khớp với tìm kiếm của bạn",
+  "redirect_url": "URL chuyển hướng",
+  "redirect_url_tooltip": "URL mà người dùng sẽ được chuyển đến khi quét mã QR",
+  "qr_data": "Dữ liệu mã QR",
+  "status": "Trạng thái",
+  "status_tooltip": "Mã QR đang hoạt động có thể được quét, mã không hoạt động thì không thể",
+  "active": "Đang hoạt động",
+  "inactive": "Không hoạt động",
+  "scan_count": "Số lượt quét",
+  "tracking_info": "Thông tin theo dõi mã QR",
+  "tracking_description": "Mã QR sẽ theo dõi lượt quét của người dùng bao gồm vị trí, thiết bị và thời gian để phân tích.",
+  "select_product": "Chọn sản phẩm",
+  "select_product_placeholder": "Chọn một sản phẩm",
+  "select_product_tooltip": "Sản phẩm sẽ được liên kết với mã QR này",
+  "generate": "Tạo mã QR",
+  "delete_confirm": "Bạn có chắc chắn muốn xóa mã QR này không?",
+  "analytics_title": "Phân tích mã QR",
+  "preview_title": "Xem trước mã QR",
+  "view_analytics": "Xem phân tích",
+  "help_title": "Hướng dẫn sử dụng mã QR",
+  "help_description": "Mã QR giúp kết nối sản phẩm vật lý với trải nghiệm kỹ thuật số",
+  "tips_title": "Mẹo để mã QR hiệu quả",
+  "tip_1": "Đặt mã QR ở vị trí dễ nhìn, dễ tiếp cận trên sản phẩm",
+  "tip_2": "Đảm bảo trang đích thân thiện với thiết bị di động để có trải nghiệm tốt nhất",
+  "tip_3": "Cân nhắc thêm lời kêu gọi hành động gần mã QR để khuyến khích quét",
+  "benefits_title": "Lợi ích của mã QR",
+  "benefit_1": "Theo dõi mức độ tương tác với sản phẩm",
+  "benefit_2": "Cung cấp thêm nội dung kỹ thuật số cho khách hàng",
+  "benefit_3": "Thu thập dữ liệu tiếp thị có giá trị",
+  "benefit_4": "Tạo trải nghiệm tương tác cho khách hàng"
+}
 }

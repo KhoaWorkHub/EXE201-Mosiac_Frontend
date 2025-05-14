@@ -14,6 +14,7 @@ import {
   CloseOutlined,
   MenuOutlined,
   SettingOutlined,
+  QrcodeOutlined,
 } from '@ant-design/icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -66,6 +67,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     { key: '/admin/products', icon: <ShoppingOutlined />, label: t('admin:sidebar.products') },
     { key: '/admin/categories', icon: <AppstoreOutlined />, label: t('admin:sidebar.categories') },
     { key: '/admin/regions', icon: <EnvironmentOutlined />, label: t('admin:sidebar.regions') },
+    { key: '/admin/qrcodes', icon: <QrcodeOutlined />, label: t('admin:sidebar.qrcodes') },
   ];
   
   const userMenuItems: MenuProps['items'] = [
