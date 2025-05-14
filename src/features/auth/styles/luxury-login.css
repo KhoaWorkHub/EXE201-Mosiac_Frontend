@@ -1,0 +1,218 @@
+/* Luxury Login Page Styles */
+
+/* Import font chữ sang trọng */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@100;200;300;400;500&display=swap');
+
+/* Biến CSS toàn cục */
+:root {
+  --primary-color: #005c4e;
+  --primary-light: #007c6a;
+  --primary-dark: #004a3f;
+  --gold: #d4af37;
+  --gold-light: #f9e8a0;
+  --silver: #c0c0c0;
+  --animation-curve: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Font chữ sang trọng */
+.font-serif {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.font-sans {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Styles cho trang login */
+.luxury-login {
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.03em;
+}
+
+/* Gold accent elements */
+.luxury-accent {
+  position: relative;
+}
+
+.luxury-accent::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 1px;
+  background-color: var(--gold);
+  transition: width 0.5s var(--animation-curve);
+}
+
+.luxury-accent:hover::after {
+  width: 60px;
+}
+
+/* Hover effect cho nút login */
+.luxury-button {
+  overflow: hidden;
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.luxury-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: all 0.6s ease;
+}
+
+.luxury-button:hover::before {
+  left: 100%;
+}
+
+/* Hiệu ứng lấp lánh cho background */
+@keyframes shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.luxury-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0)
+  );
+  background-size: 200% 100%;
+  animation: shimmer 4s infinite;
+}
+
+/* Hiệu ứng mờ dần vào cho background images */
+.luxury-bg-image {
+  transition: opacity 1.5s ease, transform 6s ease;
+}
+
+.luxury-bg-image.active {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+/* Đặc biệt cho dark mode */
+.dark .luxury-text {
+  color: #f0f0f0;
+}
+
+.dark .luxury-button {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+/* Tạo hiệu ứng ánh sáng mịn cho button */
+.luxury-glow {
+  box-shadow: 0 0 15px rgba(0, 92, 78, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.luxury-glow:hover {
+  box-shadow: 0 0 25px rgba(0, 92, 78, 0.4);
+}
+
+/* Hiệu ứng phản chiếu cho logo */
+.logo-reflection {
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-reflection::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  animation: reflectionAnimation 4s infinite ease-in-out;
+}
+
+@keyframes reflectionAnimation {
+  0% {
+    transform: rotate(30deg) translateX(-100%);
+  }
+  50% {
+    transform: rotate(30deg) translateX(100%);
+  }
+  100% {
+    transform: rotate(30deg) translateX(100%);
+  }
+}
+
+/* Chỉ báo trang */
+.page-indicator {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin: 0 4px;
+  transition: all 0.3s ease;
+}
+
+.indicator-dot.active {
+  width: 24px;
+  border-radius: 4px;
+  background-color: var(--primary-color);
+}
+
+/* Animation cho tin nhắn thương hiệu */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.brand-message {
+  animation: fadeInUp 0.8s forwards;
+}
+
+/* Hiệu ứng chuyển đổi nút */
+.btn-transition {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-transition:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-transition:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
