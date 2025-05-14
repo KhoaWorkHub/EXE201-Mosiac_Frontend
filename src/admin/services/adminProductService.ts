@@ -8,6 +8,7 @@ import {
   PageResponse,
   ApiResponse
 } from '@/admin/types';
+import type { QRCodeRequest, QRScanResponse } from '../types/qrcode.types';
 
 export const AdminProductService = {
   getAllProducts: async (
@@ -150,6 +151,26 @@ export const AdminProductService = {
     const response = await api.put<ApiResponse>(
       `/api/v1/admin/products/${productId}/images/${imageId}/primary`
     );
+    return response.data;
+  },
+
+  generateQRCode: async (productId: string, request: QRCodeRequest): Promise<ProductResponse> => {
+    const response = await api.post<ProductResponse>(`/api/v1/admin/products/${productId}/qrcode`, request);
+    return response.data;
+  },
+  
+  updateQRCode: async (productId: string, request: QRCodeRequest): Promise<ProductResponse> => {
+    const response = await api.put<ProductResponse>(`/api/v1/admin/products/${productId}/qrcode`, request);
+    return response.data;
+  },
+  
+  deleteQRCode: async (productId: string): Promise<ApiResponse> => {
+    const response = await api.delete<ApiResponse>(`/api/v1/admin/products/${productId}/qrcode`);
+    return response.data;
+  },
+  
+  getQRCodeScans: async (qrCodeId: string): Promise<QRScanResponse[]> => {
+    const response = await api.get<QRScanResponse[]>(`/api/v1/admin/qrcodes/${qrCodeId}/scans`);
     return response.data;
   }
 };

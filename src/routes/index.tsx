@@ -1,16 +1,23 @@
-import React, { lazy, Suspense } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAppSelector } from '@/store/hooks';
-import OAuth2RedirectHandler from '@/features/auth/components/OAuth2RedirectHandler';
-import Loading from '@/components/common/Loading';
+import React, { lazy, Suspense } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useAppSelector } from "@/store/hooks";
+import OAuth2RedirectHandler from "@/features/auth/components/OAuth2RedirectHandler";
+import Loading from "@/components/common/Loading";
+import QRCodeLandingPage from "@/features/qrcode/pages/QRCodeLandingPage";
 
 // Lazy loading pages
-const LuxuryLoginPage = lazy(() => import('../features/auth/pages/LuxuryLoginPage'));
-const HomePage = lazy(() => import('../features/home/pages/HomePage'));
-const ProductDetailPage = lazy(() => import('../features/products/pages/ProductDetailPage'));
-const ProductsPage = lazy(() => import('../features/products/pages/ProductsPage'));
-const CartPage = lazy(() => import('../features/cart/pages/CartPage'));
-const AdminRoutes = lazy(() => import('../admin/routes'));
+const LuxuryLoginPage = lazy(
+  () => import("../features/auth/pages/LuxuryLoginPage")
+);
+const HomePage = lazy(() => import("../features/home/pages/HomePage"));
+const ProductDetailPage = lazy(
+  () => import("../features/products/pages/ProductDetailPage")
+);
+const ProductsPage = lazy(
+  () => import("../features/products/pages/ProductsPage")
+);
+const CartPage = lazy(() => import("../features/cart/pages/CartPage"));
+const AdminRoutes = lazy(() => import("../admin/routes"));
 
 // Custom loader for luxury pages
 const LuxuryLoadingFallback = () => (
@@ -25,9 +32,7 @@ const LuxuryLoadingFallback = () => (
 );
 
 // Loading component for other pages
-const LoadingFallback = () => (
-  <Loading fullScreen message="Loading page..." />
-);
+const LoadingFallback = () => <Loading fullScreen message="Loading page..." />;
 
 // Component for 404 page
 const NotFound = () => (
@@ -45,88 +50,91 @@ const UnauthorizedPage = () => (
 );
 
 const AppRoutes: React.FC = () => {
-  const { isAuthenticated } = useAppSelector(state => state.auth);
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   return (
     <Routes>
       {/* Authentication routes with custom loader */}
-      <Route 
-        path="/login" 
+      <Route
+        path="/login"
         element={
           isAuthenticated ? (
-            <Navigate to="/" replace /> 
+            <Navigate to="/" replace />
           ) : (
             <Suspense fallback={<LuxuryLoadingFallback />}>
               <LuxuryLoginPage />
             </Suspense>
           )
-        } 
+        }
       />
       <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
-      
+
       {/* Main routes with standard loader */}
-      <Route 
-        path="/" 
+      <Route
+        path="/"
         element={
           <Suspense fallback={<LoadingFallback />}>
             <HomePage />
           </Suspense>
-        } 
+        }
       />
-      <Route 
-        path="/products" 
+      <Route
+        path="/products"
         element={
           <Suspense fallback={<LoadingFallback />}>
             <ProductsPage />
           </Suspense>
-        } 
+        }
       />
-      <Route 
-        path="/products/:slug" 
+      <Route
+        path="/products/:slug"
         element={
           <Suspense fallback={<LoadingFallback />}>
             <ProductDetailPage />
           </Suspense>
-        } 
+        }
       />
-      <Route 
-        path="/cart" 
+      <Route
+        path="/cart"
         element={
           <Suspense fallback={<LoadingFallback />}>
             <CartPage />
           </Suspense>
-        } 
+        }
       />
-      <Route 
-        path="/admin/*" 
+      <Route
+        path="/qr/:qrId"
+        element={
+          <Suspense fallback={<LoadingFallback />}>
+            <QRCodeLandingPage />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/admin/*"
         element={
           <Suspense fallback={<LoadingFallback />}>
             <AdminRoutes />
           </Suspense>
-        } 
+        }
       />
-      <Route 
-        path="/unauthorized" 
+      <Route
+        path="/unauthorized"
         element={
           <Suspense fallback={<LoadingFallback />}>
             <UnauthorizedPage />
           </Suspense>
-        } 
+        }
       />
-      <Route 
-        path="/404" 
+      <Route
+        path="/404"
         element={
           <Suspense fallback={<LoadingFallback />}>
             <NotFound />
           </Suspense>
-        } 
+        }
       />
-      <Route 
-        path="*" 
-        element={
-          <Navigate to="/404" replace />
-        } 
-      />
+      <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
   );
 };
