@@ -13,6 +13,8 @@ import ProductList from './pages/products/ProductList';
 import ProductForm from './pages/products/ProductForm';
 import CategoryDetail from './pages/categories/CategoryDetail';
 import ProductDetail from './pages/products/ProductDetail';
+import QRCodeList from './pages/qrcodes/QRCodeList';
+import QRCodeForm from './pages/qrcodes/QRCodeForm';
 
 const AdminRoutes: React.FC = () => {
   return (
@@ -34,6 +36,9 @@ const AdminRoutes: React.FC = () => {
           <Route path="/regions" element={<RegionList />} />
           <Route path="/regions/new" element={<RegionForm />} />
           <Route path="/regions/:id" element={<RegionForm />} />
+
+          <Route path="/qrcodes" element={<QRCodeList />} />
+          <Route path="/qrcodes/new" element={<QRCodeForm />} />
           
           <Route path="*" element={<Navigate to="/admin" replace />} />
         </Routes>
