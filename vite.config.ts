@@ -4,8 +4,8 @@ import path from 'path';
 
 export default defineConfig(({ mode }) => {
   // Always use EC2 endpoint for testing
-  //const apiEndpoint = 'http://54.169.96.88'; // Remove mode-based switching for now 
-  const apiEndpoint = 'http://localhost:8080';
+  const apiEndpoint = 'http://54.169.96.88'; // Remove mode-based switching for now 
+  //const apiEndpoint = 'http://localhost:8080';
 
   console.log(`Using API endpoint: ${apiEndpoint} in ${mode} mode`);
 
