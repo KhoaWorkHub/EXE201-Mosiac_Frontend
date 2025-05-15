@@ -5,9 +5,9 @@ import { Card, Typography, Button, Spin, Result, Divider } from 'antd';
 import { QrcodeOutlined, ShoppingCartOutlined, LinkOutlined, MobileOutlined, ScanOutlined } from '@ant-design/icons';
 import MainLayout from '@/components/layout/MainLayout';
 import { useTranslation } from 'react-i18next';
-import api from '@/services/api';
+//import api from '@/services/api';
 
-const { Title, Text, Paragraph } = Typography;
+const { Title, Paragraph } = Typography;
 
 const QRCodeLandingPage: React.FC = () => {
   const { t } = useTranslation(['product', 'common']);
@@ -17,23 +17,22 @@ const QRCodeLandingPage: React.FC = () => {
   
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [productInfo, setProductInfo] = useState<any>(null);
+  //const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
+  //const [productInfo, setProductInfo] = useState<any>(null);
   const [showAROption, setShowAROption] = useState(false);
   
   useEffect(() => {
     // Get user's location for analytics (simplified)
-    const getUserLocation = async () => {
-      try {
-        const response = await fetch('https://geolocation-db.com/json/');
-        const data = await response.json();
-        return data.country_name || 'Unknown';
-      } catch (error) {
-        console.error('Error getting location:', error);
-        return 'Unknown';
-      }
-    };
+    // const getUserLocation = async () => {
+    //   try {
+    //     const response = await fetch('https://geolocation-db.com/json/');
+    //     const data = await response.json();
+    //     return data.country_name || 'Unknown';
+    //   } catch (error) {
+    //     console.error('Error getting location:', error);
+    //     return 'Unknown';
+    //   }
+    // };
     
     const scanQRCode = async () => {
       if (!qrId) {
@@ -46,20 +45,20 @@ const QRCodeLandingPage: React.FC = () => {
         setLoading(true);
         
         // Get user location
-        const location = await getUserLocation();
+        //const location = await getUserLocation();
         
         // Record QR code scan
-        const response = await api.post(`/products/qrcode/${qrId}/scan`, null, {
-          params: {
-            ipAddress: '127.0.0.1', // This would be handled on server side in production
-            userAgent: navigator.userAgent,
-            location: location
-          }
-        });
+        // const response = await api.post(`/products/qrcode/${qrId}/scan`, null, {
+        //   params: {
+        //     ipAddress: '127.0.0.1', // This would be handled on server side in production
+        //     userAgent: navigator.userAgent,
+        //     location: location
+        //   }
+        // });
         
         // Set redirect URL and product info
-        setRedirectUrl(response.data.redirectUrl);
-        setProductInfo(response.data.productInfo || null);
+        // setRedirectUrl(response.data.redirectUrl);
+        // setProductInfo(response.data.productInfo || null);
         
         // Check if AR is available for this product
         // In a real app, this would be determined by the server response
@@ -87,13 +86,13 @@ const QRCodeLandingPage: React.FC = () => {
   };
   
   // Navigate to product page
-  const handleViewProduct = () => {
-    if (redirectUrl) {
-      window.location.href = redirectUrl;
-    } else {
-      navigate('/products');
-    }
-  };
+  // const handleViewProduct = () => {
+  //   if (redirectUrl) {
+  //     window.location.href = redirectUrl;
+  //   } else {
+  //     navigate('/products');
+  //   }
+  // };
   
   // Launch AR experience
   const handleLaunchAR = () => {
@@ -161,7 +160,7 @@ const QRCodeLandingPage: React.FC = () => {
                 {t('product:qrcode.valid_qrcode')}
               </Title>
               
-              {productInfo && (
+              {/* {productInfo && (
                 <div className="mb-4">
                   <img 
                     src={productInfo.image || '/placeholder-product.jpg'} 
@@ -181,7 +180,7 @@ const QRCodeLandingPage: React.FC = () => {
                 {productInfo
                   ? t('product:qrcode.product_scanned')
                   : t('product:qrcode.redirecting')}
-              </Paragraph>
+              </Paragraph> */}
             </div>
             
             {/* AR Feature Section */}
@@ -217,7 +216,7 @@ const QRCodeLandingPage: React.FC = () => {
                 type="primary" 
                 size="large" 
                 icon={<LinkOutlined />}
-                onClick={handleViewProduct}
+                //onClick={handleViewProduct}
                 className="mb-2 w-full"
               >
                 {t('product:qrcode.continue_to_product')}
