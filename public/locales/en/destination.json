@@ -1,0 +1,270 @@
+{
+  "destination": {
+    "tabs": {
+      "overview": "Overview",
+      "attractions": "Attractions",
+      "food_and_drink": "Food & Drink",
+      "shopping": "Shopping",
+      "getting_around": "Getting Around"
+    },
+    "vietnam": "Vietnam",
+    "central_vietnam": "Central Vietnam",
+    "about": "About",
+    "location": "Location",
+    "suggested_duration": "Suggested Duration",
+    "tips": "Tips",
+    "map": {
+      "title": "Da Nang Map",
+      "description": "Explore the major attractions of Da Nang with this interactive map. Click on the markers to learn more about each location."
+    },
+    "photo_gallery": {
+      "title": "Da Nang Photo Gallery",
+      "description": "Explore the beauty of Da Nang through our curated collection of stunning photographs"
+    },
+    "recommendations": {
+      "title": "Recommendations",
+      "description": "Explore our expert recommendations to make the most of your visit to Da Nang",
+      "view_details": "View Details",
+      "highlight": "Highlight",
+      "types": {
+        "itinerary": "Itinerary",
+        "hotel": "Accommodation",
+        "food": "Culinary"
+      }
+    },
+    "attractions": {
+      "tips": {
+        "1": "Visit early in the morning to avoid crowds",
+        "2": "Wear comfortable shoes and bring water",
+        "3": "Check weather conditions before visiting outdoor attractions"
+      }
+    },
+    "weather": {
+      "loading": "Loading weather information...",
+      "humidity": "Humidity",
+      "wind": "Wind"
+    },
+    "cta": {
+      "title": "Ready to Experience Da Nang?",
+      "description": "Discover the beauty, culture, and amazing experiences waiting for you in Da Nang. Restart the tour guide or share this guide with friends planning their trip.",
+      "restart_tour": "Restart Tour Guide"
+    },
+    "tour_guide": {
+      "title": "Da Nang Tour Guide",
+      "subtitle": "Follow this step-by-step guide to discover the best of Da Nang",
+      "steps": {
+        "welcome": {
+          "title": "Welcome",
+          "description": "Introduction to Da Nang",
+          "content": "Welcome to Da Nang, the vibrant coastal city in central Vietnam! This tour guide will introduce you to the city's highlights, from stunning beaches to historical landmarks, mouthwatering cuisine, and more. Follow along to discover the best of Da Nang."
+        },
+        "attractions": {
+          "title": "Attractions",
+          "description": "Must-visit places",
+          "highlight": "The Golden Bridge",
+          "content": "Da Nang is home to many remarkable attractions. Don't miss the iconic Golden Bridge at Ba Na Hills, the stunning Marble Mountains, the pristine My Khe Beach (named by American soldiers during the Vietnam War), and the Dragon Bridge that breathes fire and water on weekends!"
+        },
+        "food": {
+          "title": "Local Cuisine",
+          "description": "Culinary delights",
+          "content": "Da Nang's cuisine is a highlight of any visit. Try Mi Quang (turmeric noodles with pork, shrimp, and herbs), Banh Xeo (savory crispy pancakes), and fresh seafood from the nearby East Sea. The city also has excellent coffee culture and street food markets."
+        },
+        "shopping": {
+          "title": "Shopping",
+          "description": "Markets and souvenirs",
+          "content": "For shopping enthusiasts, Da Nang offers various options from traditional markets to modern malls. Visit Han Market for local products, Con Market for souvenirs, or head to Vincom Plaza for international brands. Don't forget to pick up some local handicrafts as mementos of your trip."
+        },
+        "transport": {
+          "title": "Getting Around",
+          "description": "Transportation options",
+          "content": "Getting around Da Nang is relatively easy. You can rent a motorbike for flexibility, take taxis or Grab (Southeast Asian Uber), or use public buses for longer distances. The city is also bike-friendly with many rental shops available.",
+          "options": {
+            "0": "Motorbike Rental",
+            "1": "Taxi/Grab",
+            "2": "Public Bus",
+            "3": "Bicycle"
+          }
+        },
+        "conclusion": {
+          "title": "Enjoy Your Visit",
+          "description": "Final tips and advice",
+          "content_title": "You're ready to explore Da Nang!",
+          "content": "Now that you know the essentials about Da Nang, you're ready to enjoy this beautiful city. Remember to experience the sunrise at My Khe Beach, visit the Dragon Bridge on weekend evenings for the fire show, and take a day trip to nearby Hoi An Ancient Town. Enjoy your journey!"
+        }
+      }
+    },
+    "danang": {
+      "overview": {
+        "title": "Da Nang - The Heart of Central Vietnam",
+        "region": "Central Vietnam",
+        "intro": "Da Nang is Vietnam's third-largest city and the urban center of Central Vietnam. Situated on the coast of the East Sea at the mouth of the Han River, this rapidly developing city combines stunning natural beauty with modern urban life. With long stretches of pristine beaches, mountainous backdrops, historical sites, and a growing food scene, Da Nang has something for every traveler.",
+        "why_visit": {
+          "title": "Why Visit Da Nang?",
+          "reasons": {
+            "0": "Breathtaking natural scenery including beaches, mountains, and the iconic Golden Bridge",
+            "1": "Delicious regional cuisine with unique flavors and fresh seafood",
+            "2": "Perfect base for exploring nearby UNESCO World Heritage sites like Hoi An and Hue",
+            "3": "Modern city infrastructure with great accommodations and amenities",
+            "4": "Friendly locals and a safe environment for international travelers"
+          }
+        },
+        "best_time": {
+          "title": "Best Time to Visit",
+          "description": "The best time to visit Da Nang is between February and May when the weather is pleasantly warm and rainfall is minimal. The rainy season typically runs from September to December, while June to August brings hot temperatures but is still a good time to enjoy the beaches. The city hosts the International Fireworks Festival in June, which is a spectacular event worth planning your trip around."
+        },
+        "cultural_significance": {
+          "title": "Cultural Significance",
+          "description": "Da Nang has a rich history as a crucial port city and was a strategic location during the Vietnam War. Today, it blends traditional Vietnamese culture with modern influences, creating a unique atmosphere. The city is home to museums, temples, and cultural sites that showcase its heritage, while its rapid development symbolizes Vietnam's economic growth and future aspirations."
+        },
+        "quick_facts": {
+          "location": "Location",
+          "location_value": "Central Vietnam, east coast",
+          "time_zone": "Time Zone",
+          "time_zone_value": "GMT+7 (Vietnam Standard Time)",
+          "population": "Population",
+          "population_value": "Approx. 1.2 million"
+        }
+      },
+      "attractions": {
+        "title": "Must-Visit Attractions in Da Nang",
+        "intro": "Da Nang is home to numerous natural wonders, architectural marvels, and cultural sites. From the iconic Golden Bridge to pristine beaches and ancient mountains, these attractions showcase the city's diverse appeal."
+      },
+      "food": {
+        "title": "Culinary Delights of Da Nang",
+        "intro": "Da Nang's cuisine is a flavorful blend of Central Vietnamese specialties, featuring fresh seafood, bold spices, and unique local dishes that you won't find elsewhere in Vietnam.",
+        "dishes": {
+          "0": {
+            "name": "Mi Quang",
+            "description": "A turmeric-infused noodle dish with pork, shrimp, herbs, peanuts, and rice crackers - Da Nang's signature dish.",
+            "where_to_try": "Ba Vi Restaurant"
+          },
+          "1": {
+            "name": "Banh Xeo",
+            "description": "Crispy savory pancakes filled with pork, shrimp, and bean sprouts, wrapped in rice paper with herbs.",
+            "where_to_try": "Madam Xeo"
+          },
+          "2": {
+            "name": "Bun Cha Ca",
+            "description": "Fish cake noodle soup with a light, flavorful broth and various toppings, perfect for breakfast.",
+            "where_to_try": "Bun Cha Ca 109"
+          },
+          "3": {
+            "name": "Seafood",
+            "description": "Fresh catches from the East Sea, from prawns and crabs to various fish species, often grilled or in hot pots.",
+            "where_to_try": "Tam's Pub and Surf Shop"
+          }
+        },
+        "restaurants": {
+          "title": "Top Restaurants",
+          "list": {
+            "0": {
+              "name": "Madame Lan",
+              "rating": "4.5/5",
+              "description": "Refined Vietnamese cuisine in a beautiful restored French villa setting.",
+              "address": "4 Bach Dang Street, Hai Chau District"
+            },
+            "1": {
+              "name": "Tran Restaurant",
+              "rating": "4.7/5",
+              "description": "Family-run restaurant famous for authentic local dishes at reasonable prices.",
+              "address": "120 Hoang Dieu Street, Hai Chau District"
+            },
+            "2": {
+              "name": "La Maison 1888",
+              "rating": "4.9/5",
+              "description": "World-class French cuisine by Pierre Gagnaire in a colonial-style mansion.",
+              "address": "InterContinental Danang Sun Peninsula Resort"
+            }
+          }
+        }
+      },
+      "shopping": {
+        "title": "Shopping in Da Nang",
+        "intro": "From traditional markets to modern malls and artisan boutiques, Da Nang offers diverse shopping experiences for visitors looking for souvenirs, handicrafts, or everyday necessities.",
+        "places": {
+          "0": {
+            "name": "Han Market",
+            "description": "A traditional market in the city center offering local foods, textiles, and souvenirs. A great place to experience local commerce and find authentic items.",
+            "location": "119 Tran Phu Street, Hai Chau District",
+            "hours": "06:00 - 19:00, daily"
+          },
+          "1": {
+            "name": "Vincom Plaza",
+            "description": "Modern shopping mall with international brands, restaurants, and a cinema. Perfect for those seeking air-conditioned comfort and familiar stores.",
+            "location": "910A Ngo Quyen Street, An Hai Bac Ward",
+            "hours": "09:30 - 22:00, daily"
+          },
+          "2": {
+            "name": "Con Market",
+            "description": "Huge local market with over 2,000 stalls selling everything from food to clothing and souvenirs. Known for competitive prices.",
+            "location": "290 Hung Vuong Street, Hai Chau District",
+            "hours": "06:00 - 19:00, daily"
+          },
+          "3": {
+            "name": "Non Nuoc Stone Carving Village",
+            "description": "Traditional village at the foot of Marble Mountains where artisans create beautiful stone sculptures and artifacts.",
+            "location": "Ngu Hanh Son District",
+            "hours": "08:00 - 18:00, daily"
+          }
+        },
+        "souvenirs": {
+          "title": "Best Souvenirs",
+          "items": {
+            "0": {
+              "name": "Marble Crafts",
+              "description": "Handcrafted items from the famous Marble Mountains, ranging from small figurines to elaborate sculptures."
+            },
+            "1": {
+              "name": "Vietnamese Coffee",
+              "description": "Locally grown coffee beans or traditional Vietnamese coffee filters (phin) make perfect gifts for coffee lovers."
+            },
+            "2": {
+              "name": "Hand-Painted Silk",
+              "description": "Beautiful silk items including scarves, paintings, and clothing featuring traditional Vietnamese motifs."
+            }
+          }
+        }
+      },
+      "transport": {
+        "title": "Getting Around Da Nang",
+        "intro": "Da Nang is a relatively compact city with several transportation options to help you explore efficiently. From renting your own wheels to using public transport, here's how to navigate the city.",
+        "options": {
+          "0": {
+            "name": "Motorbike Rental",
+            "description": "The most popular and flexible way to explore Da Nang. Rentals are affordable (around $5-10/day) and widely available throughout the city.",
+            "cost": "Budget",
+            "convenience": "High Flexibility"
+          },
+          "1": {
+            "name": "Taxi & Ride-hailing Apps",
+            "description": "Grab is the most popular ride-hailing app, offering affordable and convenient transportation. Traditional taxis are also available and generally reliable.",
+            "cost": "Moderate",
+            "convenience": "Convenient"
+          },
+          "2": {
+            "name": "Public Buses",
+            "description": "Da Nang has a growing bus network covering major areas of the city. Buses are clean, air-conditioned, and very affordable, though less convenient for tourists.",
+            "cost": "Very Cheap",
+            "convenience": "Limited"
+          },
+          "3": {
+            "name": "Bicycle Rental",
+            "description": "A green and healthy way to explore the city, especially along the beach roads. Many hotels offer bicycle rentals to their guests.",
+            "cost": "Budget",
+            "convenience": "Moderate"
+          }
+        },
+        "tips": {
+          "title": "Transportation Tips",
+          "list": {
+            "0": "Download the Grab app before your trip for reliable and transparent pricing",
+            "1": "Always wear a helmet when riding a motorbike (it's the law and for your safety)",
+            "2": "Consider hiring a private driver for day trips to Hoi An, Hue, or Ba Na Hills",
+            "3": "The city center is walkable in cooler months, especially along the Han River",
+            "4": "Road rules are loosely followed - be extra cautious when crossing streets or driving"
+          }
+        }
+      }
+    }
+  }
+}
