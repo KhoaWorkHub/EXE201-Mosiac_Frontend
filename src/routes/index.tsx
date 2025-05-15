@@ -19,6 +19,11 @@ const ProductsPage = lazy(
 const CartPage = lazy(() => import("../features/cart/pages/CartPage"));
 const AdminRoutes = lazy(() => import("../admin/routes"));
 
+// Destination Guide Pages
+const DaNangGuidePage = lazy(
+  () => import("../features/destination/pages/DaNangGuidePage")
+);
+
 // Custom loader for luxury pages
 const LuxuryLoadingFallback = () => (
   <div className="h-screen w-full flex flex-col items-center justify-center bg-black">
@@ -110,6 +115,17 @@ const AppRoutes: React.FC = () => {
           </Suspense>
         }
       />
+      
+      {/* Destination Guide Routes */}
+      <Route
+        path="/destinations/danang"
+        element={
+          <Suspense fallback={<LoadingFallback />}>
+            <DaNangGuidePage />
+          </Suspense>
+        }
+      />
+      
       <Route
         path="/admin/*"
         element={
