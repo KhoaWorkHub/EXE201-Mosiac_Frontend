@@ -13,6 +13,8 @@
     "@ant-design/colors": "^8.0.0",
     "@ant-design/icons": "^6.0.0",
     "@hookform/resolvers": "^5.0.1",
+    "@react-three/drei": "^10.0.7",
+    "@react-three/postprocessing": "^3.0.4",
     "@reduxjs/toolkit": "^2.7.0",
     "@types/react-csv": "^1.1.10",
     "@types/xlsx": "^0.0.36",
@@ -39,10 +41,13 @@
     "react-quill": "^2.0.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.5.1",
+    "react-three-fiber": "^6.0.13",
     "recharts": "^2.15.3",
     "slugify": "^1.6.6",
+    "three": "^0.176.0",
     "xlsx": "^0.18.5",
-    "zod": "^3.24.3"
+    "zod": "^3.24.3",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
@@ -51,6 +56,7 @@
     "@types/node": "^22.14.1",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+    "@types/three": "^0.176.0",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.22.0",

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Card, Typography, Button, Spin, Result } from 'antd';
-import { QrcodeOutlined, ShoppingCartOutlined, LinkOutlined } from '@ant-design/icons';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Card, Typography, Button, Spin, Result, Divider } from 'antd';
+import { QrcodeOutlined, ShoppingCartOutlined, LinkOutlined, MobileOutlined, ScanOutlined } from '@ant-design/icons';
 import MainLayout from '@/components/layout/MainLayout';
 import { useTranslation } from 'react-i18next';
 import api from '@/services/api';
@@ -13,10 +13,14 @@ const QRCodeLandingPage: React.FC = () => {
   const { t } = useTranslation(['product', 'common']);
   const { qrId } = useParams<Record<string, string | undefined>>();
   const navigate = useNavigate();
+  const location = useLocation();
   
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [productInfo, setProductInfo] = useState<any>(null);
+  const [showAROption, setShowAROption] = useState(false);
   
   useEffect(() => {
     // Get user's location for analytics (simplified)
@@ -53,24 +57,48 @@ const QRCodeLandingPage: React.FC = () => {
           }
         });
         
-        // Set redirect URL
+        // Set redirect URL and product info
         setRedirectUrl(response.data.redirectUrl);
+        setProductInfo(response.data.productInfo || null);
         
-        // Auto-redirect after 2 seconds
-        setTimeout(() => {
-          window.location.href = response.data.redirectUrl;
-        }, 2000);
+        // Check if AR is available for this product
+        // In a real app, this would be determined by the server response
+        setShowAROption(true);
         
+        setLoading(false);
       } catch (error) {
         console.error('Error scanning QR code:', error);
         setError(t('product:qrcode.error_scanning'));
-      } finally {
         setLoading(false);
       }
     };
     
     scanQRCode();
   }, [qrId, t]);
+  
+  // Check if AR is supported on this device
+  const isARSupported = () => {
+    // Basic check for AR support - in a real app we'd do more thorough detection
+    return (
+      'mediaDevices' in navigator &&
+      'getUserMedia' in navigator.mediaDevices &&
+      (window.isSecureContext || window.location.protocol === 'https:')
+    );
+  };
+  
+  // Navigate to product page
+  const handleViewProduct = () => {
+    if (redirectUrl) {
+      window.location.href = redirectUrl;
+    } else {
+      navigate('/products');
+    }
+  };
+  
+  // Launch AR experience
+  const handleLaunchAR = () => {
+    navigate(`/ar/${qrId}`, { state: { from: location.pathname } });
+  };
   
   if (loading) {
     return (
@@ -119,7 +147,7 @@ const QRCodeLandingPage: React.FC = () => {
   
   return (
     <MainLayout>
-      <div className="flex justify-center items-center min-h-[60vh]">
+      <div className="flex justify-center items-center min-h-[60vh] py-8 px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -132,40 +160,78 @@ const QRCodeLandingPage: React.FC = () => {
               <Title level={2} className="text-primary">
                 {t('product:qrcode.valid_qrcode')}
               </Title>
+              
+              {productInfo && (
+                <div className="mb-4">
+                  <img 
+                    src={productInfo.image || '/placeholder-product.jpg'} 
+                    alt={productInfo.name || 'Product'} 
+                    className="w-32 h-32 object-cover mx-auto mb-3 rounded-lg"
+                  />
+                  <Title level={4} className="mb-1">
+                    {productInfo.name || 'Traditional Vietnamese Clothing'}
+                  </Title>
+                  <Text className="text-gray-500">
+                    {productInfo.region || 'Da Nang, Vietnam'}
+                  </Text>
+                </div>
+              )}
+              
               <Paragraph>
-                {t('product:qrcode.redirecting')}
+                {productInfo
+                  ? t('product:qrcode.product_scanned')
+                  : t('product:qrcode.redirecting')}
               </Paragraph>
             </div>
             
-            <div className="text-center mb-6">
-              <Spin />
-              <Text className="block mt-2 text-gray-500">
-                {t('product:qrcode.auto_redirect')}
-              </Text>
-            </div>
-            
-            {redirectUrl && (
-              <div className="text-center">
-                <Button 
-                  type="primary" 
-                  size="large" 
-                  icon={<LinkOutlined />}
-                  onClick={() => window.location.href = redirectUrl}
-                  className="mb-2 w-full"
-                >
-                  {t('product:qrcode.continue_to_product')}
-                </Button>
-                
-                <Button
-                  size="large"
-                  icon={<ShoppingCartOutlined />}
-                  onClick={() => navigate('/products')}
-                  className="w-full"
-                >
-                  {t('common:nav.products')}
-                </Button>
-              </div>
+            {/* AR Feature Section */}
+            {showAROption && isARSupported() && (
+              <>
+                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg mb-6">
+                  <div className="flex items-center mb-3">
+                    <MobileOutlined className="text-2xl text-primary mr-3" />
+                    <Title level={4} className="m-0">
+                      {t('product:qrcode.ar_experience')}
+                    </Title>
+                  </div>
+                  <Paragraph className="mb-4">
+                    Experience this traditional clothing in augmented reality! See detailed cultural patterns and discover their meaning.
+                  </Paragraph>
+                  <Button 
+                    type="primary" 
+                    size="large" 
+                    block
+                    icon={<ScanOutlined />}
+                    onClick={handleLaunchAR}
+                    className="bg-primary mb-2"
+                  >
+                    Launch AR Experience
+                  </Button>
+                </div>
+                <Divider>{t('product:qrcode.or')}</Divider>
+              </>
             )}
+            
+            <div className="text-center">
+              <Button 
+                type="primary" 
+                size="large" 
+                icon={<LinkOutlined />}
+                onClick={handleViewProduct}
+                className="mb-2 w-full"
+              >
+                {t('product:qrcode.continue_to_product')}
+              </Button>
+              
+              <Button
+                size="large"
+                icon={<ShoppingCartOutlined />}
+                onClick={() => navigate('/products')}
+                className="w-full"
+              >
+                {t('common:nav.products')}
+              </Button>
+            </div>
           </Card>
         </motion.div>
       </div>
