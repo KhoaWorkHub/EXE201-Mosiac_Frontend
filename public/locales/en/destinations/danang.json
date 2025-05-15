@@ -1,0 +1,372 @@
+{
+    "destinations/danang": {
+      "region": "Central Vietnam",
+      "hero": {
+        "title": "Da Nang: Gem of Central Vietnam",
+        "subtitle": "Where mountains, seas, and rich culture meet modernity",
+        "cta": "Explore Now"
+      },
+      "share": {
+        "title": "Explore Da Nang With Me",
+        "text": "Check out this amazing guide to Da Nang, Vietnam!",
+        "copied": "Link copied to clipboard!",
+        "cancelled": "Share cancelled",
+        "error": "Failed to share. Please try again."
+      },
+      "intro": {
+        "title": "Discover the Beauty of Da Nang",
+        "paragraph1": "Nestled in the heart of Central Vietnam, Da Nang serves not only as a bridge between the country's north and south but also as a harmonious blend of tradition and modernity. You'll immediately feel the warmth of friendly smiles and the hospitality of locals as you set foot in this beautiful city.",
+        "paragraph2": "From stunning stretches of pristine beaches with white sand and crystal-clear waters to majestic mountains and flavorful local cuisine, Da Nang offers the perfect travel experience for every visitor. Join us as we explore the very best this city has to offer.",
+        "highlights": {
+          "location": {
+            "title": "Strategic Location",
+            "description": "Situated between Hue and Hoi An, a gateway to Central Vietnam"
+          },
+          "attractions": {
+            "title": "Iconic Attractions",
+            "description": "From the magical Golden Bridge to the breathtaking My Khe Beach"
+          },
+          "cuisine": {
+            "title": "Unique Cuisine",
+            "description": "Discover local flavors with Mi Quang noodles and fresh seafood"
+          }
+        }
+      },
+      "attractions": {
+        "title": "Must-Visit Attractions",
+        "intro": "Da Nang proudly boasts world-famous landmarks, from unique architectural wonders to natural marvels that have captivated travelers from around the globe.",
+        "golden_bridge": {
+          "title": "Golden Bridge",
+          "subtitle": "Hands of Time",
+          "description": "This 150-meter bridge has gained worldwide fame for its unique design featuring two massive stone hands supporting a golden strip of fabric. Situated at 1,400 meters above sea level, the Golden Bridge offers visitors a 360° view of the breathtaking natural surroundings.",
+          "story": {
+            "title": "The Story",
+            "content": "Walking on the Golden Bridge is not merely traversing a functional structure but experiencing a work of art. The hands are designed to look as if they've been weathered for hundreds of years, cradling a delicate golden thread - symbolizing the connection between humans and nature, between past and present."
+          }
+        },
+        "marble_mountains": {
+          "title": "Marble Mountains",
+          "description": "A complex of five limestone mountains named after the five elements: Metal, Wood, Water, Fire, and Earth. With mysterious caves, ancient temples, and stunning panoramic views from the summits, this is a spiritual and mesmerizing destination not to be missed."
+        },
+        "my_khe_beach": {
+          "title": "My Khe Beach",
+          "description": "Named by Forbes magazine as one of the most beautiful beaches on the planet, My Khe features soft white sand, crystal-clear blue waters, and swaying coconut palms, making it an ideal paradise for every visitor."
+        }
+      },
+      "cuisine": {
+        "title": "Flavors of Da Nang",
+        "intro": "Da Nang cuisine is a sophisticated blend of Central Vietnamese flavors, characterized by bold spiciness and depth, yet maintaining subtlety and refinement. Each dish carries its own story and the soul of this region.",
+        "mi_quang": {
+          "title": "Mi Quang",
+          "subtitle": "The Soul of Da Nang Cuisine",
+          "description": "Mi Quang is the signature dish you cannot miss when visiting Da Nang. With thick, chewy rice noodles dyed yellow with turmeric, served with a rich bone broth, pork, shrimp, quail eggs, peanuts, rice crackers, and a variety of fresh herbs.",
+          "story": {
+            "title": "A Tale of Flavor",
+            "content": "Each bowl of Mi Quang tells a story about Central Vietnam - where people carefully balance every drop of broth, harmonize sweet-salty-sour-spicy flavors, and garnish vividly with various herbs. This isn't just a meal but a cultural heritage passed down through generations."
+          }
+        },
+        "banh_xeo": {
+          "title": "Banh Xeo",
+          "short_description": "Central-style savory pancakes that are smaller, crispier, and packed with shrimp, pork, and bean sprouts."
+        },
+        "seafood": {
+          "title": "Fresh Seafood",
+          "short_description": "From tamarind crab to banana leaf-wrapped grilled fish, fresh seafood is Da Nang's pride."
+        },
+        "coffee": {
+          "title": "Specialty Coffee",
+          "short_description": "Unique coffee culture featuring egg coffee, coconut coffee, and traditional iced coffee."
+        }
+      },
+      "culture": {
+        "title": "Cultural Soul",
+        "intro": "Da Nang is not just a resort destination but rich in cultural identity, a meeting place of various civilizations and the cradle of unique cultural traits.",
+        "champa": {
+          "title": "Champa Heritage",
+          "image_caption": "Museum of Cham Sculpture - Preserving Cham artistic masterpieces",
+          "paragraph1": "The ancient Champa Kingdom has left a profound mark on Da Nang. The Museum of Cham Sculpture, established in 1915, currently houses the world's largest collection of Cham artifacts with nearly 2,000 items.",
+          "paragraph2": "The exquisite sculptures in sandstone and terracotta reflect the rich religious life, Hindu and Buddhist deities. Champa art harmoniously combines human beauty and nature, creating a distinctive and recognizable artistic style."
+        },
+        "festivals": {
+          "title": "Vibrant Festivals",
+          "short_description": "International fireworks festival and traditional celebrations create a lively atmosphere year-round."
+        },
+        "arts": {
+          "title": "Local Arts",
+          "short_description": "Explore traditional crafts, the Non Nuoc stone carving village, and folk music."
+        },
+        "traditions": {
+          "title": "Customs & Beliefs",
+          "short_description": "Learn about spiritual life, ancestor worship, and traditional ceremonies."
+        }
+      },
+      "travel": {
+        "title": "Travel Information",
+        "intro": "Prepare for your Da Nang trip with practical information about transportation, accommodation, and the ideal time to explore this beautiful city.",
+        "transportation": {
+          "title": "Getting Around",
+          "motorbike": {
+            "title": "Motorbike",
+            "description": "The most popular and flexible way to explore Da Nang. Rentals cost around 100,000-150,000 VND/day."
+          },
+          "taxi": {
+            "title": "Taxi & Grab",
+            "description": "Convenient and readily available, reasonably priced for short trips around the city."
+          },
+          "bus": {
+            "title": "Public Bus",
+            "description": "Growing network of buses connecting major tourist spots throughout the city."
+          },
+          "bicycle": {
+            "title": "Bicycle",
+            "description": "Eco-friendly option ideal for exploring coastal routes."
+          }
+        },
+        "accommodation": {
+          "title": "Where to Stay",
+          "luxury": {
+            "title": "Luxury Hotels & Resorts",
+            "description": "Along My Khe Beach and Son Tra Peninsula, find numerous international-class resorts with full amenities.",
+            "price_range": "80-400 USD/night"
+          },
+          "midrange": {
+            "title": "Mid-range Hotels",
+            "description": "City center and along Pham Van Dong street offer many reasonably priced options.",
+            "price_range": "30-80 USD/night"
+          },
+          "budget": {
+            "title": "Guesthouses & Hostels",
+            "description": "Areas near Han Market and Bach Dang street have many budget options for travelers.",
+            "price_range": "8-30 USD/night"
+          }
+        },
+        "seasons": {
+          "title": "Travel Seasons",
+          "description": "Da Nang has a tropical monsoon climate, divided into two distinct seasons: dry and rainy. Choosing the right time to visit will ensure you have the best experience.",
+          "dry": {
+            "title": "Dry Season (February - August)",
+            "description": "Warm sunny weather, little rain, ideal for beach activities and city exploration."
+          },
+          "rainy": {
+            "title": "Rainy Season (September - January)",
+            "description": "Frequent rain, occasional typhoons, but lush landscapes and typically lower prices."
+          },
+          "best_time": "Best Time to Visit Da Nang",
+          "recommendation": "February to May is the ideal time to explore Da Nang with mild weather and minimal rainfall.",
+          "months": {
+            "jan": "Jan",
+            "feb": "Feb",
+            "mar": "Mar",
+            "apr": "Apr",
+            "may": "May",
+            "jun": "Jun",
+            "jul": "Jul",
+            "aug": "Aug",
+            "sep": "Sep",
+            "oct": "Oct",
+            "nov": "Nov",
+            "dec": "Dec"
+          }
+        }
+      },
+      "tips": {
+        "title": "Helpful Tips",
+        "intro": "Enhance your Da Nang experience with practical advice from locals and travel experts.",
+        "safety": {
+          "title": "Safety",
+          "items": {
+            "0": "Da Nang is one of Vietnam's safest cities, but still maintain awareness of basic security concerns.",
+            "1": "Carry a photocopy of your passport and keep the original in your hotel's safe.",
+            "2": "Be cautious when swimming, especially during monsoon season when waves can be strong, and only swim in areas with lifeguards."
+          }
+        },
+        "etiquette": {
+          "title": "Culture & Etiquette",
+          "items": {
+            "0": "Dress modestly when visiting temples and religious sites.",
+            "1": "Remove your shoes when entering locals' homes or religious spaces.",
+            "2": "Tipping is not common in Vietnam but is appreciated in upscale tourism services."
+          }
+        },
+        "money": {
+          "title": "Currency & Costs",
+          "items": {
+            "0": "Exchange money at banks or gold shops for the best rates, avoid airport exchanges.",
+            "1": "International credit cards are widely accepted at hotels and upscale restaurants, but carry cash for small transactions.",
+            "2": "Negotiate prices when shopping at local markets, but always maintain a respectful attitude."
+          }
+        },
+        "insider": {
+          "title": "Local Perspective",
+          "local_name": "Nguyen Thi Huong",
+          "local_occupation": "Tour Guide & Blogger",
+          "quote": "Da Nang is the city where I was born and raised. What I love most is how the city blends natural beauty with modern development, while still maintaining its unique cultural identity.",
+          "secret_spots": {
+            "title": "Hidden Gems",
+            "items": {
+              "0": "Bai Rang - a small beach between Da Nang and Hoi An, unknown to most tourists but stunningly beautiful.",
+              "1": "Dinh Ban Co Cafe - panoramic city views from a height that few tourists know about.",
+              "2": "Helio Night Market - not just great food but a place to experience the vibrant local nightlife."
+            }
+          }
+        }
+      },
+      "cta": {
+        "title": "Ready for Your Da Nang Adventure?",
+        "description": "Da Nang awaits with its breathtaking natural beauty, excellent cuisine, and friendly people. Plan your trip today!",
+        "restart": "Rediscover from Start",
+        "share": "Share This Guide"
+      },
+      "buttons": {
+        "explore_interactive": "Explore Interactive",
+        "discover_more": "Discover More",
+        "learn_more": "Learn More",
+        "see_all_attractions": "See All Attractions",
+        "see_all_cuisine": "See All Cuisine",
+        "see_all_tips": "See All Tips",
+        "read_more": "Read More"
+      },
+      "guides": {
+        "welcome": {
+          "title": "Welcome to Da Nang",
+          "subtitle": "Discover Vietnam's most livable city",
+          "steps": {
+            "0": {
+              "title": "Welcome",
+              "content": "Welcome to Da Nang - the precious gem of Central Vietnam! This city is renowned for its breathtaking natural landscapes, from pristine white-sand beaches to majestic mountains and lush green valleys."
+            },
+            "1": {
+              "title": "Key Features",
+              "content": "Da Nang is a perfect blend of natural beauty and modern architecture. The city is famous for its fire-breathing Dragon Bridge on weekends, the Golden Bridge with giant hands, and beautiful beaches like My Khe, named by Forbes as one of the most beautiful beaches on the planet."
+            },
+            "2": {
+              "title": "Ready to Explore",
+              "subtitle": "Are you ready for the adventure?",
+              "content": "Join us as we explore the very best of Da Nang - from exquisite cuisine to must-visit attractions and helpful tips from locals."
+            }
+          }
+        },
+        "golden_bridge": {
+          "title": "Golden Bridge - Wonder in the Clouds",
+          "subtitle": "Explore Da Nang's new icon",
+          "steps": {
+            "0": {
+              "title": "Architectural Marvel",
+              "content": "The Golden Bridge is one of Vietnam's most famous attractions, inaugurated in 2018. This 150-meter bridge with its unique design of two giant hands supporting a curved golden strip creates an unforgettable impression."
+            },
+            "1": {
+              "title": "Unique Experience",
+              "content": "Walking on the Golden Bridge is a must-do experience when visiting Da Nang. From 1,400 meters above sea level, visitors can admire the panoramic view of Ba Na Hills' majestic mountains and blue sky. On clear days, the view extends all the way to Da Nang city and the sea."
+            },
+            "2": {
+              "title": "Practical Information",
+              "location_title": "Location",
+              "location": "The Golden Bridge is located within Sun World Ba Na Hills, about 35km from Da Nang city center.",
+              "hours_title": "Opening Hours",
+              "hours": "07:30 - 21:30 daily. It's recommended to arrive early in the morning or late afternoon to avoid crowds.",
+              "fee_title": "Entrance Fee",
+              "fee": "Sun World Ba Na Hills ticket (including Golden Bridge): 850,000 VND/adult, 700,000 VND/child (1.0-1.4m), free for children under 1m."
+            }
+          }
+        },
+        "mi_quang": {
+          "title": "Mi Quang - Soul of Da Nang Cuisine",
+          "subtitle": "Discover Central Vietnam's signature flavor",
+          "steps": {
+            "0": {
+              "title": "A Tale of Flavor",
+              "content": "Mi Quang is not just a dish but a cultural symbol of Quang Nam - Da Nang people. This dish originated from Quang Nam province, created from the delicate combination of local ingredients and cooking techniques passed down through generations."
+            },
+            "1": {
+              "title": "Signature Ingredients",
+              "ingredients": {
+                "noodles": {
+                  "name": "Noodles",
+                  "description": "Flat, thick, and chewy rice noodles, lightly dyed yellow with turmeric."
+                },
+                "broth": {
+                  "name": "Broth",
+                  "description": "Rich, concentrated broth made from pork bones, shrimp, and spices, less than in pho or bun dishes."
+                },
+                "toppings": {
+                  "name": "Toppings",
+                  "description": "Pork, shrimp, quail eggs, cha (Vietnamese pork sausage), and sometimes chicken or beef."
+                },
+                "garnish": {
+                  "name": "Condiments & Herbs",
+                  "description": "Roasted peanuts, crispy rice crackers, chili, lime, and various herbs."
+                }
+              }
+            },
+            "2": {
+              "title": "Best Places to Try",
+              "places": {
+                "0": {
+                  "name": "Mi Quang Ba Mua",
+                  "address": "19 Tran Binh Trong St., Hai Chau District",
+                  "description": "Long-established restaurant with traditional recipe and rich broth."
+                },
+                "1": {
+                  "name": "Mi Quang Ong Hai",
+                  "address": "152 Le Dinh Duong St., Hai Chau District",
+                  "description": "Famous for abundant seafood toppings and special sauce."
+                },
+                "2": {
+                  "name": "Mi Quang 1A",
+                  "address": "1A Hai Phong St., Hai Chau District",
+                  "description": "Spacious venue, good for large groups, with various topping options."
+                }
+              }
+            }
+          }
+        },
+        "transportation": {
+          "title": "Getting Around Da Nang",
+          "subtitle": "Guide to convenient and budget-friendly transportation",
+          "steps": {
+            "0": {
+              "title": "Overview",
+              "content": "Da Nang has a relatively well-developed transportation system and is easy to navigate. The city is well-planned with wide streets and less congestion compared to other major Vietnamese cities. This is one of the reasons Da Nang is known as a 'livable city'."
+            },
+            "1": {
+              "title": "Ride-hailing Apps",
+              "app_title": "Grab - Most Popular App",
+              "grab_description": "Grab is the most popular ride-hailing app in Da Nang, offering motorbike and car services with transparent pricing and convenience.",
+              "content": "Besides Grab, you can also use other apps like Be or Gojek. Make sure to download these apps before arriving in Vietnam and connect to mobile data or Wi-Fi to use them."
+            },
+            "2": {
+              "title": "Vehicle Rentals",
+              "rentals": {
+                "0": {
+                  "name": "Tigit Motorbikes",
+                  "address": "144 Ly Tu Trong St., Hai Chau District"
+                },
+                "1": {
+                  "name": "Danang Motorbike Rental",
+                  "address": "169 Nguyen Van Linh St., Hai Chau District"
+                },
+                "2": {
+                  "name": "BM Bike Rental",
+                  "address": "7 An Thuong 28 St., Ngu Hanh Son District"
+                }
+              }
+            }
+          }
+        },
+        "default": {
+          "title": "Explore Da Nang",
+          "subtitle": "An interactive guide to Vietnam's most livable city",
+          "steps": {
+            "0": {
+              "title": "Welcome",
+              "content": "Welcome to this interactive guide to Da Nang! This beautiful city is located in Central Vietnam, famous for its stunning beaches, rich cuisine, and harmonious blend of nature and modern urban development."
+            },
+            "1": {
+              "title": "Discover",
+              "content": "Explore the attractions, delicious food, and unique culture of Da Nang through our detailed guide. From the famous Golden Bridge to the beautiful beaches and exquisite cuisine, Da Nang has plenty for you to experience."
+            }
+          }
+        }
+      }
+    }
+  }

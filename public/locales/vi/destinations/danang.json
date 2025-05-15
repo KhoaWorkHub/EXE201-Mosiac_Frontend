@@ -1,0 +1,372 @@
+{
+    "destinations/danang": {
+      "region": "Miền Trung Việt Nam",
+      "hero": {
+        "title": "Đà Nẵng: Viên Ngọc Của Miền Trung",
+        "subtitle": "Nơi núi non, biển xanh và văn hóa phong phú gặp gỡ hiện đại",
+        "cta": "Khám Phá Ngay"
+      },
+      "share": {
+        "title": "Khám Phá Đà Nẵng Cùng Tôi",
+        "text": "Hãy khám phá vẻ đẹp tuyệt vời của Đà Nẵng qua hướng dẫn này!",
+        "copied": "Đã sao chép liên kết!",
+        "cancelled": "Đã hủy chia sẻ",
+        "error": "Không thể chia sẻ. Vui lòng thử lại."
+      },
+      "intro": {
+        "title": "Khám Phá Vẻ Đẹp Của Đà Nẵng",
+        "paragraph1": "Nằm giữa lòng miền Trung Việt Nam, Đà Nẵng không chỉ là cây cầu nối giữa phía Bắc và phía Nam đất nước, mà còn là điểm giao thoa giữa truyền thống và hiện đại. Bạn sẽ cảm nhận ngay sự ấm áp từ những nụ cười thân thiện và lòng hiếu khách của người dân nơi đây khi đặt chân đến thành phố xinh đẹp này.",
+        "paragraph2": "Từ những bãi biển tuyệt đẹp kéo dài với cát trắng mịn và nước biển trong xanh, đến những dãy núi hùng vĩ và những món ăn địa phương đầy hương vị, Đà Nẵng mang đến trải nghiệm du lịch hoàn hảo cho mọi du khách. Hãy cùng chúng tôi khám phá những điều tuyệt vời nhất mà thành phố này mang lại.",
+        "highlights": {
+          "location": {
+            "title": "Vị Trí Đặc Biệt",
+            "description": "Nằm giữa Huế và Hội An, là cửa ngõ đến với miền Trung Việt Nam"
+          },
+          "attractions": {
+            "title": "Điểm Đến Nổi Bật",
+            "description": "Từ Cầu Vàng kỳ diệu đến bãi biển Mỹ Khê tuyệt đẹp"
+          },
+          "cuisine": {
+            "title": "Ẩm Thực Độc Đáo",
+            "description": "Khám phá hương vị địa phương với mì Quảng và hải sản tươi ngon"
+          }
+        }
+      },
+      "attractions": {
+        "title": "Những Điểm Đến Không Thể Bỏ Qua",
+        "intro": "Đà Nẵng tự hào với những điểm tham quan nổi tiếng thế giới, từ kiến trúc độc đáo đến những kỳ quan thiên nhiên tuyệt đẹp đã làm say lòng biết bao du khách.",
+        "golden_bridge": {
+          "title": "Cầu Vàng",
+          "subtitle": "Đôi Bàn Tay Nâng Đỡ Thời Gian",
+          "description": "Cây cầu dài 150m nổi tiếng thế giới với thiết kế độc đáo gồm hai bàn tay khổng lồ nâng đỡ dải lụa vàng uốn lượn. Nằm ở độ cao 1.400m trên mực nước biển, Cầu Vàng mang đến cho du khách tầm nhìn 360° của khung cảnh thiên nhiên tuyệt đẹp xung quanh.",
+          "story": {
+            "title": "Câu Chuyện",
+            "content": "Khi bước đi trên Cầu Vàng, bạn không chỉ đang đi trên một cây cầu bình thường mà đang trải nghiệm một tác phẩm nghệ thuật. Đôi bàn tay được thiết kế trông như thể chúng đã phong hóa hàng trăm năm, đang nâng niu một sợi chỉ vàng tinh tế - biểu tượng cho sự kết nối giữa con người và thiên nhiên, giữa quá khứ và hiện tại."
+          }
+        },
+        "marble_mountains": {
+          "title": "Ngũ Hành Sơn",
+          "description": "Khu phức hợp gồm năm ngọn núi đá vôi với tên gọi theo ngũ hành: Kim, Mộc, Thủy, Hỏa và Thổ. Với những hang động thần bí, đền chùa cổ kính và tầm nhìn toàn cảnh tuyệt đẹp từ đỉnh núi, đây là điểm đến linh thiêng và đẹp mê hoặc phải ghé thăm."
+        },
+        "my_khe_beach": {
+          "title": "Biển Mỹ Khê",
+          "description": "Được tạp chí Forbes bình chọn là một trong những bãi biển đẹp nhất hành tinh, Mỹ Khê với cát trắng mịn, nước biển xanh trong vắt và hàng dừa nghiêng mình là thiên đường nghỉ dưỡng lý tưởng cho mọi du khách."
+        }
+      },
+      "cuisine": {
+        "title": "Hương Vị Đà Nẵng",
+        "intro": "Ẩm thực Đà Nẵng là sự kết hợp tinh tế của hương vị miền Trung, với đặc trưng cay nồng, đậm đà nhưng không kém phần tinh tế. Mỗi món ăn đều mang trong mình câu chuyện và linh hồn của vùng đất này.",
+        "mi_quang": {
+          "title": "Mì Quảng",
+          "subtitle": "Linh Hồn Ẩm Thực Đà Nẵng",
+          "description": "Mì Quảng là món ăn đặc trưng không thể bỏ qua khi đến Đà Nẵng. Với sợi mì dày, dai được làm từ gạo và nhuộm màu vàng nghệ, ăn kèm với nước dùng đậm đà từ xương hầm, thịt heo, tôm, chả, lạc rang, bánh tráng và rau sống đa dạng.",
+          "story": {
+            "title": "Câu Chuyện Hương Vị",
+            "content": "Mỗi tô mì Quảng kể một câu chuyện về mảnh đất miền Trung - nơi người dân chắt chiu từng giọt nước dùng, cân đối hương vị giữa ngọt-mặn-chua-cay, và trang trí rực rỡ với đủ loại rau thơm. Đây không chỉ là món ăn mà còn là di sản văn hóa được truyền từ đời này qua đời khác."
+          }
+        },
+        "banh_xeo": {
+          "title": "Bánh Xèo",
+          "short_description": "Bánh xèo miền Trung với kích thước nhỏ nhắn, giòn rụm, nhân đầy ắp tôm thịt và giá đỗ."
+        },
+        "seafood": {
+          "title": "Hải Sản Tươi",
+          "short_description": "Từ ghẹ rang me đến cá nướng lá chuối, hải sản tươi ngon là niềm tự hào của Đà Nẵng."
+        },
+        "coffee": {
+          "title": "Cà phê Đặc biệt",
+          "short_description": "Văn hóa cà phê độc đáo với cà phê trứng, cà phê dừa và cà phê đá truyền thống."
+        }
+      },
+      "culture": {
+        "title": "Linh Hồn Văn Hóa",
+        "intro": "Đà Nẵng không chỉ là điểm đến nghỉ dưỡng mà còn giàu bản sắc văn hóa, là nơi giao thoa của nhiều nền văn minh và là cái nôi của những nét văn hóa độc đáo.",
+        "champa": {
+          "title": "Di Sản Chăm Pa",
+          "image_caption": "Bảo tàng Điêu khắc Chăm - Nơi lưu giữ những kiệt tác nghệ thuật Chăm",
+          "paragraph1": "Vương quốc Chăm Pa cổ đại đã để lại dấu ấn sâu đậm tại Đà Nẵng. Bảo tàng Điêu khắc Chăm, được thành lập từ năm 1915, hiện đang lưu giữ bộ sưu tập lớn nhất các hiện vật nghệ thuật Chăm trên thế giới với gần 2000 hiện vật.",
+          "paragraph2": "Những tác phẩm điêu khắc tinh xảo trên đá sa thạch và đất nung phản ánh đời sống tín ngưỡng phong phú, các vị thần trong Ấn Độ giáo và Phật giáo. Nghệ thuật Chăm Pa là sự kết hợp hài hòa giữa nét đẹp của con người và thiên nhiên, tạo nên phong cách nghệ thuật độc đáo và dễ nhận biết."
+        },
+        "festivals": {
+          "title": "Lễ Hội Đặc Sắc",
+          "short_description": "Lễ hội pháo hoa quốc tế và các lễ hội truyền thống mang đến không khí sôi động quanh năm."
+        },
+        "arts": {
+          "title": "Nghệ Thuật Địa Phương",
+          "short_description": "Khám phá nghề thủ công truyền thống, làng nghề điêu khắc đá Non Nước và âm nhạc dân gian."
+        },
+        "traditions": {
+          "title": "Phong Tục & Tín Ngưỡng",
+          "short_description": "Tìm hiểu về đời sống tâm linh, tín ngưỡng thờ cúng tổ tiên và các nghi lễ truyền thống."
+        }
+      },
+      "travel": {
+        "title": "Thông Tin Du Lịch",
+        "intro": "Chuẩn bị cho chuyến đi Đà Nẵng của bạn với những thông tin thiết thực về phương tiện di chuyển, nơi ở và thời điểm lý tưởng để khám phá thành phố xinh đẹp này.",
+        "transportation": {
+          "title": "Phương Tiện Di Chuyển",
+          "motorbike": {
+            "title": "Xe Máy",
+            "description": "Phương tiện phổ biến và linh hoạt nhất để khám phá Đà Nẵng. Giá thuê khoảng 100.000-150.000 VND/ngày."
+          },
+          "taxi": {
+            "title": "Taxi & Grab",
+            "description": "Tiện lợi và dễ tìm, giá cả hợp lý cho các chuyến đi ngắn trong thành phố."
+          },
+          "bus": {
+            "title": "Xe Buýt Công Cộng",
+            "description": "Mạng lưới xe buýt ngày càng phát triển, kết nối các điểm du lịch chính trong thành phố."
+          },
+          "bicycle": {
+            "title": "Xe Đạp",
+            "description": "Phương tiện thân thiện với môi trường, lý tưởng để khám phá các tuyến đường ven biển."
+          }
+        },
+        "accommodation": {
+          "title": "Lưu Trú",
+          "luxury": {
+            "title": "Khách sạn & Resort Cao cấp",
+            "description": "Dọc bãi biển Mỹ Khê và Bán đảo Sơn Trà có nhiều resort đẳng cấp quốc tế với đầy đủ tiện nghi.",
+            "price_range": "2,000,000 - 10,000,000 VND/đêm"
+          },
+          "midrange": {
+            "title": "Khách sạn Tầm trung",
+            "description": "Khu vực trung tâm thành phố và dọc đường Phạm Văn Đồng có nhiều lựa chọn giá cả phải chăng.",
+            "price_range": "700,000 - 2,000,000 VND/đêm"
+          },
+          "budget": {
+            "title": "Nhà nghỉ & Hostel",
+            "description": "Các khu vực gần chợ Hàn và đường Bạch Đằng có nhiều lựa chọn tiết kiệm cho du khách.",
+            "price_range": "200,000 - 700,000 VND/đêm"
+          }
+        },
+        "seasons": {
+          "title": "Mùa Du Lịch",
+          "description": "Đà Nẵng có khí hậu nhiệt đới gió mùa, chia thành hai mùa rõ rệt: mùa khô và mùa mưa. Lựa chọn thời điểm du lịch phù hợp sẽ giúp bạn có trải nghiệm tuyệt vời nhất.",
+          "dry": {
+            "title": "Mùa Khô (Tháng 2 - Tháng 8)",
+            "description": "Thời tiết nắng ấm, ít mưa, lý tưởng cho các hoạt động bãi biển và khám phá thành phố."
+          },
+          "rainy": {
+            "title": "Mùa Mưa (Tháng 9 - Tháng 1)",
+            "description": "Mưa nhiều, đôi khi có bão, nhưng cảnh quan xanh tươi và giá cả thường thấp hơn."
+          },
+          "best_time": "Thời Điểm Lý Tưởng Để Đến Đà Nẵng",
+          "recommendation": "Tháng 2 đến tháng 5 là thời điểm lý tưởng nhất để khám phá Đà Nẵng với thời tiết ôn hòa và ít mưa.",
+          "months": {
+            "jan": "Th.1",
+            "feb": "Th.2",
+            "mar": "Th.3",
+            "apr": "Th.4",
+            "may": "Th.5",
+            "jun": "Th.6",
+            "jul": "Th.7",
+            "aug": "Th.8",
+            "sep": "Th.9",
+            "oct": "Th.10",
+            "nov": "Th.11",
+            "dec": "Th.12"
+          }
+        }
+      },
+      "tips": {
+        "title": "Lời Khuyên Hữu Ích",
+        "intro": "Tận hưởng chuyến đi Đà Nẵng trọn vẹn với những lời khuyên thiết thực từ người dân địa phương và các chuyên gia du lịch.",
+        "safety": {
+          "title": "An Toàn",
+          "items": {
+            "0": "Đà Nẵng là một trong những thành phố an toàn nhất Việt Nam, tuy nhiên vẫn nên cảnh giác với các vấn đề an ninh cơ bản.",
+            "1": "Mang theo bản sao hộ chiếu và để bản gốc trong két an toàn của khách sạn.",
+            "2": "Thận trọng khi tắm biển, đặc biệt vào mùa gió mùa khi có sóng lớn, và chỉ bơi ở những khu vực có người cứu hộ."
+          }
+        },
+        "etiquette": {
+          "title": "Văn Hóa & Cư Xử",
+          "items": {
+            "0": "Ăn mặc kín đáo khi thăm các đền chùa và thánh địa tôn giáo.",
+            "1": "Cởi giày dép khi vào nhà của người dân địa phương hoặc các không gian tôn giáo.",
+            "2": "Việc đưa tiền tip không phổ biến ở Việt Nam, nhưng được đánh giá cao trong các dịch vụ du lịch cao cấp."
+          }
+        },
+        "money": {
+          "title": "Tiền Tệ & Chi Phí",
+          "items": {
+            "0": "Đổi tiền tại các ngân hàng hoặc cửa hàng vàng bạc để có tỷ giá tốt nhất, tránh đổi ở sân bay.",
+            "1": "Các thẻ tín dụng quốc tế được chấp nhận rộng rãi tại các khách sạn và nhà hàng cao cấp, nhưng nên mang theo tiền mặt cho các giao dịch nhỏ.",
+            "2": "Thương lượng giá khi mua sắm tại các chợ địa phương, nhưng luôn giữ thái độ tôn trọng."
+          }
+        },
+        "insider": {
+          "title": "Góc Nhìn Người Địa Phương",
+          "local_name": "Nguyễn Thị Hương",
+          "local_occupation": "Hướng dẫn viên du lịch & Blogger",
+          "quote": "Đà Nẵng là thành phố tôi sinh ra và lớn lên. Điều tôi yêu thích nhất là cách thành phố này hòa trộn giữa nét đẹp tự nhiên và sự phát triển hiện đại, nhưng vẫn giữ được bản sắc văn hóa độc đáo của mình.",
+          "secret_spots": {
+            "title": "Điểm Đến Bí Mật",
+            "items": {
+              "0": "Bãi Rạng - bãi biển nhỏ xinh nằm giữa Đà Nẵng và Hội An, ít du khách biết đến nhưng cảnh đẹp tuyệt vời.",
+              "1": "Quán cà phê Đỉnh Bàn Cờ - nơi ngắm toàn cảnh thành phố từ trên cao mà ít du khách biết đến.",
+              "2": "Chợ đêm Helio - không chỉ có đồ ăn ngon mà còn là nơi để trải nghiệm cuộc sống đêm sôi động của người dân địa phương."
+            }
+          }
+        }
+      },
+      "cta": {
+        "title": "Sẵn Sàng Cho Chuyến Phiêu Lưu Đà Nẵng?",
+        "description": "Đà Nẵng đang chờ đón bạn với vẻ đẹp tự nhiên choáng ngợp, ẩm thực tuyệt vời và con người thân thiện. Hãy lên kế hoạch cho chuyến đi của bạn ngay hôm nay!",
+        "restart": "Khám Phá Lại Từ Đầu",
+        "share": "Chia Sẻ Hướng Dẫn Này"
+      },
+      "buttons": {
+        "explore_interactive": "Khám Phá Tương Tác",
+        "discover_more": "Tìm Hiểu Thêm",
+        "learn_more": "Tìm Hiểu Thêm",
+        "see_all_attractions": "Xem Tất Cả Điểm Tham Quan",
+        "see_all_cuisine": "Xem Tất Cả Món Ăn",
+        "see_all_tips": "Xem Tất Cả Lời Khuyên",
+        "read_more": "Đọc Thêm"
+      },
+      "guides": {
+        "welcome": {
+          "title": "Chào Mừng Đến Đà Nẵng",
+          "subtitle": "Khám phá thành phố đáng sống nhất Việt Nam",
+          "steps": {
+            "0": {
+              "title": "Chào Mừng",
+              "content": "Chào mừng bạn đến với Đà Nẵng - viên ngọc quý của miền Trung Việt Nam! Thành phố này nổi tiếng với cảnh quan thiên nhiên tuyệt đẹp, từ những bãi biển cát trắng mịn đến những ngọn núi hùng vĩ và thung lũng xanh tươi."
+            },
+            "1": {
+              "title": "Nét Đặc Trưng",
+              "content": "Đà Nẵng là sự kết hợp hoàn hảo giữa vẻ đẹp tự nhiên và kiến trúc hiện đại. Thành phố này nổi tiếng với Cầu Rồng phun lửa và nước vào cuối tuần, Cầu Vàng với đôi bàn tay khổng lồ, và những bãi biển tuyệt đẹp như Mỹ Khê được Forbes bình chọn là một trong những bãi biển đẹp nhất hành tinh."
+            },
+            "2": {
+              "title": "Sẵn Sàng Khám Phá",
+              "subtitle": "Bạn đã sẵn sàng cho chuyến phiêu lưu?",
+              "content": "Hãy cùng chúng tôi khám phá những điều tuyệt vời nhất về Đà Nẵng - từ ẩm thực đặc sắc đến các điểm tham quan không thể bỏ qua và những lời khuyên hữu ích từ người dân địa phương."
+            }
+          }
+        },
+        "golden_bridge": {
+          "title": "Cầu Vàng - Kỳ Quan Trên Mây",
+          "subtitle": "Khám phá biểu tượng mới của Đà Nẵng",
+          "steps": {
+            "0": {
+              "title": "Kiệt Tác Kiến Trúc",
+              "content": "Cầu Vàng là một trong những điểm tham quan nổi tiếng nhất Việt Nam, được khánh thành vào năm 2018. Cây cầu dài 150m với thiết kế độc đáo gồm hai bàn tay khổng lồ nâng đỡ dải lụa vàng uốn lượn, tạo nên hình ảnh ấn tượng khó quên."
+            },
+            "1": {
+              "title": "Trải Nghiệm Độc Đáo",
+              "content": "Đi bộ trên Cầu Vàng là trải nghiệm không thể bỏ qua khi đến Đà Nẵng. Từ độ cao 1.400m trên mực nước biển, du khách có thể chiêm ngưỡng toàn cảnh núi non Bà Nà hùng vĩ và bầu trời xanh ngát. Vào những ngày đẹp trời, tầm nhìn có thể vươn xa đến tận thành phố Đà Nẵng và biển cả."
+            },
+            "2": {
+              "title": "Thông Tin Thực Tế",
+              "location_title": "Vị Trí",
+              "location": "Cầu Vàng nằm trong khuôn viên Sun World Bà Nà Hills, cách trung tâm Đà Nẵng khoảng 35km.",
+              "hours_title": "Giờ Mở Cửa",
+              "hours": "07:30 - 21:30 hàng ngày. Nên đến sớm vào buổi sáng hoặc chiều muộn để tránh đông đúc.",
+              "fee_title": "Phí Tham Quan",
+              "fee": "Vé vào Sun World Bà Nà Hills (bao gồm Cầu Vàng): 850.000 VND/người lớn, 700.000 VND/trẻ em (1.0-1.4m), miễn phí cho trẻ em dưới 1m."
+            }
+          }
+        },
+        "mi_quang": {
+          "title": "Mì Quảng - Linh Hồn Ẩm Thực Đà Nẵng",
+          "subtitle": "Khám phá hương vị đặc trưng của miền Trung",
+          "steps": {
+            "0": {
+              "title": "Câu Chuyện Hương Vị",
+              "content": "Mì Quảng không chỉ là món ăn mà còn là biểu tượng văn hóa của người dân Quảng Nam - Đà Nẵng. Món ăn này có nguồn gốc từ vùng đất Quảng Nam, được tạo nên từ sự kết hợp tinh tế của các nguyên liệu địa phương và kỹ thuật nấu nướng được truyền từ nhiều thế hệ."
+            },
+            "1": {
+              "title": "Nguyên Liệu Đặc Trưng",
+              "ingredients": {
+                "noodles": {
+                  "name": "Sợi Mì",
+                  "description": "Sợi mì dẹt, dày và dai được làm từ gạo, nhuộm vàng nhẹ với nghệ."
+                },
+                "broth": {
+                  "name": "Nước Dùng",
+                  "description": "Nước dùng đặc, được nấu từ xương heo, tôm và gia vị, ít hơn các món phở hay bún."
+                },
+                "toppings": {
+                  "name": "Nhân",
+                  "description": "Thịt heo, tôm, trứng cút, chả và đôi khi có thịt gà hoặc thịt bò."
+                },
+                "garnish": {
+                  "name": "Gia Vị & Rau Sống",
+                  "description": "Đậu phộng rang, bánh tráng giòn, ớt, chanh và nhiều loại rau thơm."
+                }
+              }
+            },
+            "2": {
+              "title": "Những Quán Ngon Nhất",
+              "places": {
+                "0": {
+                  "name": "Mì Quảng Bà Mua",
+                  "address": "19 Trần Bình Trọng, Q. Hải Châu",
+                  "description": "Quán lâu đời với công thức truyền thống và nước dùng đậm đà."
+                },
+                "1": {
+                  "name": "Mì Quảng Ông Hai",
+                  "address": "152 Lê Đình Dương, Q. Hải Châu",
+                  "description": "Nổi tiếng với phần topping hải sản phong phú và nước sốt đặc biệt."
+                },
+                "2": {
+                  "name": "Mì Quảng 1A",
+                  "address": "1A Hải Phòng, Q. Hải Châu",
+                  "description": "Không gian rộng rãi, hợp với nhóm đông, có nhiều lựa chọn topping."
+                }
+              }
+            }
+          }
+        },
+        "transportation": {
+          "title": "Di Chuyển Trong Đà Nẵng",
+          "subtitle": "Hướng dẫn di chuyển thuận tiện và tiết kiệm",
+          "steps": {
+            "0": {
+              "title": "Tổng Quan",
+              "content": "Đà Nẵng có hệ thống giao thông khá phát triển và dễ dàng di chuyển. Thành phố có quy hoạch tốt với đường phố rộng rãi và ít tắc nghẽn so với các thành phố lớn khác của Việt Nam. Đây là một trong những lý do Đà Nẵng được mệnh danh là 'thành phố đáng sống'."
+            },
+            "1": {
+              "title": "Ứng Dụng Gọi Xe",
+              "app_title": "Grab - Ứng dụng phổ biến nhất",
+              "grab_description": "Grab là ứng dụng gọi xe phổ biến nhất tại Đà Nẵng, cung cấp dịch vụ xe máy và ô tô với giá cả minh bạch và thuận tiện.",
+              "content": "Ngoài Grab, bạn cũng có thể sử dụng các ứng dụng khác như Be hay Gojek. Đảm bảo tải các ứng dụng này trước khi đến Việt Nam và kết nối với mạng di động hoặc Wi-Fi để sử dụng."
+            },
+            "2": {
+              "title": "Thuê Xe",
+              "rentals": {
+                "0": {
+                  "name": "Tigit Motorbikes",
+                  "address": "144 Lý Tự Trọng, Quận Hải Châu"
+                },
+                "1": {
+                  "name": "Danang Motorbike Rental",
+                  "address": "169 Nguyễn Văn Linh, Quận Hải Châu"
+                },
+                "2": {
+                  "name": "BM Bike Rental",
+                  "address": "7 An Thượng 28, Quận Ngũ Hành Sơn"
+                }
+              }
+            }
+          }
+        },
+        "default": {
+          "title": "Khám Phá Đà Nẵng",
+          "subtitle": "Hướng dẫn tương tác về thành phố đáng sống nhất Việt Nam",
+          "steps": {
+            "0": {
+              "title": "Chào Mừng",
+              "content": "Chào mừng bạn đến với hướng dẫn tương tác về Đà Nẵng! Thành phố xinh đẹp này nằm giữa miền Trung Việt Nam, nổi tiếng với bãi biển tuyệt đẹp, ẩm thực phong phú và sự kết hợp hài hòa giữa thiên nhiên và đô thị hiện đại."
+            },
+            "1": {
+              "title": "Khám Phá",
+              "content": "Hãy khám phá các điểm tham quan, món ăn ngon và văn hóa độc đáo của Đà Nẵng thông qua hướng dẫn chi tiết của chúng tôi. Từ Cầu Vàng nổi tiếng đến các bãi biển tuyệt đẹp và ẩm thực đặc sắc, Đà Nẵng có rất nhiều điều để bạn trải nghiệm."
+            }
+          }
+        }
+      }
+    }
+  }
