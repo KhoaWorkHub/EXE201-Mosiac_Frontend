@@ -130,7 +130,7 @@ const QRAnalytics: React.FC<QRAnalyticsProps> = ({ qrCodeId }) => {
   
   // Prepare data for device chart
   const prepareDeviceData = () => {
-    // Simple device detection - would be more sophisticated in production
+    // Simple device detection based on user agent
     const deviceData = filteredScans.reduce((acc, scan) => {
       let device = 'Unknown';
       
@@ -242,7 +242,7 @@ const QRAnalytics: React.FC<QRAnalyticsProps> = ({ qrCodeId }) => {
         display: false
       },
       tooltip: {
-        mode: 'index' as const, // Use as const to specify the exact string literal type
+        mode: 'index' as const,
         intersect: false
       }
     },
