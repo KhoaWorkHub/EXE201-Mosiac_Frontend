@@ -40,6 +40,10 @@ import AddToCartAnimation from "@/components/cart/AddToCartAnimation";
 import { useCart } from "@/contexts/CartContext";
 import type { ProductVariantResponse } from "@/types/product.types";
 import type { UUID } from "crypto";
+import ARViewButton, {
+  ARHelpButton,
+} from "@/features/ar/components/ARViewButton";
+
 const { Title, Text, Paragraph } = Typography;
 const { TabPane } = Tabs;
 
@@ -105,26 +109,26 @@ const ProductDetailPage: React.FC = () => {
   };
 
   // Handle buy now
-const handleBuyNow = async () => {
-  if (!currentProduct) return;
-  
-  if (!isInStock()) {
-    message.error(t("product:product_details.out_of_stock"));
-    return;
-  }
-  
-  try {
-    await addToCart({
-      productId: currentProduct.id as UUID,
-      variantId: selectedVariant?.id as UUID | undefined,
-      quantity,
-    });
-    navigate("/checkout");
-  } catch (error) {
-    console.error("Error adding to cart:", error);
-    message.error(t('cart:notifications.error_adding'));
-  }
-};
+  const handleBuyNow = async () => {
+    if (!currentProduct) return;
+
+    if (!isInStock()) {
+      message.error(t("product:product_details.out_of_stock"));
+      return;
+    }
+
+    try {
+      await addToCart({
+        productId: currentProduct.id as UUID,
+        variantId: selectedVariant?.id as UUID | undefined,
+        quantity,
+      });
+      navigate("/checkout");
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      message.error(t("cart:notifications.error_adding"));
+    }
+  };
 
   // Handle wishlist toggle
   const handleWishlistToggle = () => {
@@ -368,12 +372,17 @@ const handleBuyNow = async () => {
             <Col xs={24} lg={12} className="p-6 lg:p-8">
               {/* Product Title */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                className="relative mb-12 flex flex-col items-center"
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 1, delay: 0.2 }}
               >
-                <Title level={2} className="mb-2 dark:text-white">
+                <Title
+                  level={2}
+                  className="mb-2 dark:text-white flex items-center"
+                >
                   {currentProduct.name}
+                  {currentProduct.region && <ARHelpButton />}
                 </Title>
               </motion.div>
 
@@ -596,6 +605,16 @@ const handleBuyNow = async () => {
                 >
                   {t("common:actions.buy_now")}
                 </Button>
+
+                {/* Add AR Button here */}
+                {currentProduct.region && (
+                  <ARViewButton
+                    productId={currentProduct.id}
+                    region={currentProduct.region.name.toLowerCase()}
+                    size="large"
+                    className="flex items-center"
+                  />
+                )}
 
                 <Button
                   type="default"

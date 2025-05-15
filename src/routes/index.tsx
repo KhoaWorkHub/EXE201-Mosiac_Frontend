@@ -19,6 +19,11 @@ const ProductsPage = lazy(
 const CartPage = lazy(() => import("../features/cart/pages/CartPage"));
 const AdminRoutes = lazy(() => import("../admin/routes"));
 
+// AR Experience pages
+const ARExperiencePage = lazy(
+  () => import("../features/ar/pages/ARExperiencePage")
+);
+
 // Custom loader for luxury pages
 const LuxuryLoadingFallback = () => (
   <div className="h-screen w-full flex flex-col items-center justify-center bg-black">
@@ -33,6 +38,17 @@ const LuxuryLoadingFallback = () => (
 
 // Loading component for other pages
 const LoadingFallback = () => <Loading fullScreen message="Loading page..." />;
+
+// Custom loader for AR experience
+const ARLoadingFallback = () => (
+  <div className="h-screen w-full flex flex-col items-center justify-center bg-black">
+    <div className="text-center">
+      <div className="w-16 h-16 border-t-4 border-primary border-solid rounded-full animate-spin mx-auto"></div>
+      <p className="mt-4 text-white">Loading AR Experience...</p>
+      <p className="text-gray-400 text-sm mt-2">Preparing 3D models and AR tracking</p>
+    </div>
+  </div>
+);
 
 // Component for 404 page
 const NotFound = () => (
@@ -110,6 +126,17 @@ const AppRoutes: React.FC = () => {
           </Suspense>
         }
       />
+      
+      {/* AR Experience Routes */}
+      <Route
+        path="/ar/:qrId"
+        element={
+          <Suspense fallback={<ARLoadingFallback />}>
+            <ARExperiencePage />
+          </Suspense>
+        }
+      />
+      
       <Route
         path="/admin/*"
         element={
