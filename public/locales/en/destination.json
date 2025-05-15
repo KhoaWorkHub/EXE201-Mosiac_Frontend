@@ -1,18 +1,22 @@
 {
-    "loading": "Loading your experience...",
-    "scroll_down": "Scroll down",
-    "buttons": {
-      "previous": "Previous",
-      "next": "Next",
-      "finish": "Finish",
-      "close": "Close",
-      "share": "Share"
+  "tour_guide": {
+    "skip": "Skip tour",
+    "next": "Next",
+    "start_exploring": "Start exploring",
+    "step_indicator": "STEP {{current}} OF {{total}}",
+    "steps_title": {
+      "welcome": "Welcome to Da Nang",
+      "nature": "Breathtaking Natural Beauty",
+      "cuisine": "A Feast for Your Senses",
+      "culture": "Cultural Tapestry",
+      "journey": "Your Journey Awaits"
     },
-    "tabs": {
-      "overview": "Overview",
-      "attractions": "Attractions",
-      "food_and_drink": "Food & Drink",
-      "shopping": "Shopping",
-      "getting_around": "Getting Around"
+    "steps_content": {
+      "welcome": "Let me take you on a journey through the soul of Central Vietnam. Da Nang isn't just a destination; it's an experience that will captivate your heart and awaken your senses.",
+      "nature": "From the pristine beaches with soft white sand to the mystical Marble Mountains, Da Nang's landscape is a harmony of sea, mountains, and sky that changes with every hour of the day.",
+      "cuisine": "The distinctive flavors of Mi Quang noodles, the aromatic coffee culture, and fresh seafood embody Da Nang's culinary soul - each dish tells the story of this coastal paradise.",
+      "culture": "Witness the blending of ancient Champa heritage with modern Vietnamese life. Every temple, festival, and tradition here is a thread in Da Nang's rich cultural fabric.",
+      "journey": "Throughout your Da Nang experience, look for 'Explore Interactive' buttons to dive deeper into specific elements. Are you ready to discover the gem of Central Vietnam?"
     }
   }
+}

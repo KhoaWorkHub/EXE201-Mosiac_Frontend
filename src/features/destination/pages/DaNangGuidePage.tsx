@@ -18,6 +18,7 @@ import InteractiveGuide from '../components/InteractiveGuide';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import WeatherWidget from '../components/WeatherWidget';
 import { useParallaxScrolling } from '../hooks/useParallaxScrolling';
+import ImmersiveTourGuide from '../components/ImmersiveTourGuide';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -49,6 +50,7 @@ const EnhancedDaNangGuidePage: React.FC = () => {
   }
   
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+  const [showTourGuide, setShowTourGuide] = useState(true);
   
   // Refs for each section to track visibility
   const introRef = useRef<HTMLDivElement>(null);
@@ -167,6 +169,14 @@ const EnhancedDaNangGuidePage: React.FC = () => {
         .then(() => message.success(t('destinations/danang:share.copied')))
         .catch(() => message.error(t('destinations/danang:share.error')));
     }
+  };
+  
+  const handleTourComplete = () => {
+    setShowTourGuide(false);
+  };
+  
+  const handleTourSkip = () => {
+    setShowTourGuide(false);
   };
   
   if (loading) {
@@ -1021,6 +1031,17 @@ const EnhancedDaNangGuidePage: React.FC = () => {
           </motion.div>
         </div>
       </section>
+      
+      {/* Immersive Tour Guide */}
+      <AnimatePresence>
+        {showTourGuide && (
+          <ImmersiveTourGuide 
+            onComplete={handleTourComplete} 
+            onSkip={handleTourSkip}
+            sectionRefs={sectionRefs as unknown as Record<string, React.RefObject<HTMLElement>>}
+          />
+        )}
+      </AnimatePresence>
       
       {/* Interactive Guide Modal */}
       <AnimatePresence>

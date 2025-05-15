@@ -1,19 +1,22 @@
 {
-    "loading": "Đang tải trải nghiệm của bạn...",
-    "scroll_down": "Cuộn xuống",
-    "buttons": {
-      "previous": "Trước",
-      "next": "Tiếp",
-      "finish": "Hoàn tất",
-      "close": "Đóng",
-      "share": "Chia sẻ"
+  "tour_guide": {
+    "skip": "Bỏ qua hành trình",
+    "next": "Tiếp theo",
+    "start_exploring": "Bắt đầu khám phá",
+    "step_indicator": "BƯỚC {{current}} TRONG {{total}}",
+    "steps_title": {
+      "welcome": "Chào mừng đến với Đà Nẵng",
+      "nature": "Vẻ đẹp thiên nhiên hùng vĩ",
+      "cuisine": "Bữa tiệc của giác quan",
+      "culture": "Bức tranh văn hóa",
+      "journey": "Hành trình đang chờ đón bạn"
     },
-    "tabs": {
-      "overview": "Tổng quan",
-      "attractions": "Điểm tham quan",
-      "food_and_drink": "Ăn uống",
-      "shopping": "Mua sắm",
-      "getting_around": "Di chuyển"
+    "steps_content": {
+      "welcome": "Hãy để tôi đưa bạn vào hành trình khám phá tâm hồn miền Trung Việt Nam. Đà Nẵng không chỉ là một điểm đến – mà là một trải nghiệm khiến bạn say mê và đánh thức mọi giác quan.",
+      "nature": "Từ những bãi biển hoang sơ với cát trắng mịn đến những ngọn núi Ngũ Hành huyền bí, cảnh quan Đà Nẵng là sự hòa quyện giữa biển, núi và trời – thay đổi theo từng khoảnh khắc trong ngày.",
+      "cuisine": "Hương vị đặc trưng của mì Quảng, văn hóa cà phê thơm nồng, và hải sản tươi sống là hiện thân của ẩm thực Đà Nẵng – mỗi món ăn đều kể một câu chuyện về thiên đường ven biển này.",
+      "culture": "Chứng kiến sự giao thoa giữa di sản Chăm cổ xưa và nhịp sống hiện đại của người Việt. Mỗi ngôi chùa, lễ hội và phong tục ở đây là một sợi chỉ trong tấm thảm văn hóa rực rỡ của Đà Nẵng.",
+      "journey": "Trong suốt chuyến khám phá Đà Nẵng, hãy tìm các nút 'Khám phá tương tác' để đào sâu vào từng yếu tố. Bạn đã sẵn sàng khám phá viên ngọc của miền Trung Việt Nam chưa?"
     }
   }
-  
+}

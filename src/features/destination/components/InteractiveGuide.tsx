@@ -409,17 +409,54 @@ const InteractiveGuide: React.FC<InteractiveGuideProps> = ({ guideId, onClose })
 
   const steps = getSteps();
 
-  // Animation variants
+  // Animation variants with enhanced animations
   const modalVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.9 }
+    hidden: { opacity: 0, scale: 0.95, y: 10 },
+    visible: { 
+      opacity: 1, 
+      scale: 1, 
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 30
+      }
+    },
+    exit: { 
+      opacity: 0, 
+      scale: 0.95, 
+      y: 10,
+      transition: {
+        duration: 0.25
+      }
+    }
   };
 
   const contentVariants = {
-    enter: { opacity: 0, x: 20 },
-    center: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -20 }
+    enter: { 
+      opacity: 0, 
+      x: 20,
+      transition: {
+        duration: 0.3
+      }
+    },
+    center: { 
+      opacity: 1, 
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 25,
+        duration: 0.5
+      }
+    },
+    exit: { 
+      opacity: 0, 
+      x: -20,
+      transition: {
+        duration: 0.3
+      }
+    }
   };
 
   return (
@@ -439,6 +476,9 @@ const InteractiveGuide: React.FC<InteractiveGuideProps> = ({ guideId, onClose })
             animate="visible"
             exit="exit"
             onClick={(e) => e.stopPropagation()}
+            style={{
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+            }}
           >
             <button
               className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors z-10"
@@ -476,7 +516,14 @@ const InteractiveGuide: React.FC<InteractiveGuideProps> = ({ guideId, onClose })
               </Steps>
             </div>
 
-            <Card className="mt-6 mb-6">
+            <Card 
+              className="mt-6 mb-6 overflow-hidden relative"
+              bordered={false}
+              style={{ 
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)", 
+                borderRadius: "12px" 
+              }}
+            >
               <div className="min-h-[200px]">
                 <AnimatePresence mode="wait">
                   <motion.div
