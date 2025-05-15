@@ -7,7 +7,7 @@ import MainLayout from '@/components/layout/MainLayout';
 import { useTranslation } from 'react-i18next';
 //import api from '@/services/api';
 
-const { Title, Text, Paragraph } = Typography;
+const { Title, Paragraph } = Typography;
 
 const QRCodeLandingPage: React.FC = () => {
   const { t } = useTranslation(['product', 'common']);
@@ -18,7 +18,6 @@ const QRCodeLandingPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   //const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   //const [productInfo, setProductInfo] = useState<any>(null);
   const [showAROption, setShowAROption] = useState(false);
   
