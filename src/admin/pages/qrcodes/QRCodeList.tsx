@@ -5,7 +5,6 @@ import {
   Button, 
   Input, 
   Space, 
-  Tag, 
   Tooltip, 
   Popconfirm, 
   message, 
@@ -27,11 +26,12 @@ import {
   DownloadOutlined,
   ScanOutlined
 } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { QRCodeResponse } from '@/admin/types/qrcode.types';
 import { motion } from 'framer-motion';
 import QRAnalytics from './QRAnalytics';
+import { AdminProductService } from '@/admin/services/adminProductService';
+import type { ProductResponse } from '@/admin/types';
 
 const { Title, Text } = Typography;
 
@@ -40,14 +40,14 @@ const QRCodeList: React.FC = () => {
   const navigate = useNavigate();
   
   // State
-  const [qrCodes, setQRCodes] = useState<QRCodeResponse[]>([]);
+  const [products, setProducts] = useState<ProductResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchText, setSearchText] = useState<string>('');
-  const [selectedQRCode, setSelectedQRCode] = useState<QRCodeResponse | null>(null);
+  const [selectedQRCode, setSelectedQRCode] = useState<ProductResponse['qrCode'] | null>(null);
   const [analyticsVisible, setAnalyticsVisible] = useState<boolean>(false);
   const [previewVisible, setPreviewVisible] = useState<boolean>(false);
   
-  // Fetch QR codes
+  // Fetch QR codes (products with QR codes)
   useEffect(() => {
     fetchQRCodes();
   }, []);
@@ -55,86 +55,55 @@ const QRCodeList: React.FC = () => {
   const fetchQRCodes = async () => {
     setLoading(true);
     try {
-      // This is a mock implementation - in a real app, you would need to implement
-      // a method in AdminProductService to fetch all QR codes
-      // For now, we'll simulate fetching data with a timeout
-      setTimeout(() => {
-        // Mock data for demonstration
-        const mockData: QRCodeResponse[] = [
-          {
-            id: '1',
-            qrImageUrl: 'https://via.placeholder.com/150',
-            qrData: 'https://example.com/qr/1',
-            redirectUrl: 'https://example.com/products/ao-dai-traditional',
-            active: true,
-            scanCount: 245
-          },
-          {
-            id: '2',
-            qrImageUrl: 'https://via.placeholder.com/150',
-            qrData: 'https://example.com/qr/2',
-            redirectUrl: 'https://example.com/products/vietnamese-craft',
-            active: true,
-            scanCount: 187
-          },
-          {
-            id: '3',
-            qrImageUrl: 'https://via.placeholder.com/150',
-            qrData: 'https://example.com/qr/3',
-            redirectUrl: 'https://example.com/products/handmade-jewelry',
-            active: false,
-            scanCount: 32
-          }
-        ];
-        
-        setQRCodes(mockData);
-        setLoading(false);
-      }, 1000);
+      // Fetch all products and filter those with QR codes
+      const response = await AdminProductService.getAllProducts(0, 100);
+      const productsWithQRCodes = response.content.filter(product => product.qrCode);
+      setProducts(productsWithQRCodes);
     } catch (error) {
       console.error('Error fetching QR codes:', error);
-      message.error('Failed to fetch QR codes');
+      message.error(t('admin:qrcodes.fetch_error'));
+    } finally {
       setLoading(false);
     }
   };
   
-  // Filter QR codes based on search text
-  const filteredQRCodes = searchText
-    ? qrCodes.filter(qr => 
-        qr.redirectUrl.toLowerCase().includes(searchText.toLowerCase()) ||
-        qr.qrData.toLowerCase().includes(searchText.toLowerCase())
+  // Filter products based on search text
+  const filteredProducts = searchText
+    ? products.filter(product => 
+        product.qrCode?.redirectUrl.toLowerCase().includes(searchText.toLowerCase()) ||
+        product.name.toLowerCase().includes(searchText.toLowerCase())
       )
-    : qrCodes;
+    : products;
   
   // Handle QR code deletion
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (productId: string) => {
     try {
-      // In a real app, you would call a method like:
-      // await AdminProductService.deleteQRCode(id);
-      
-      message.success('QR code deleted successfully');
-      
-      // Update the list after deletion
-      setQRCodes(qrCodes.filter(qr => qr.id !== id));
+      await AdminProductService.deleteQRCode(productId);
+      message.success(t('admin:qrcodes.delete_success'));
+      // Refresh the list
+      fetchQRCodes();
     } catch (error) {
       console.error('Error deleting QR code:', error);
-      message.error('Failed to delete QR code');
+      message.error(t('admin:qrcodes.delete_error'));
     }
   };
   
   // Handle view analytics
-  const handleViewAnalytics = (qrCode: QRCodeResponse) => {
+  // Handle view analytics
+  const handleViewAnalytics = (qrCode: ProductResponse['qrCode']) => {
     setSelectedQRCode(qrCode);
     setAnalyticsVisible(true);
   };
-  
   // Handle preview
-  const handlePreview = (qrCode: QRCodeResponse) => {
+  const handlePreview = (qrCode: ProductResponse['qrCode']) => {
     setSelectedQRCode(qrCode);
     setPreviewVisible(true);
   };
   
   // Handle download QR code
-  const handleDownload = (qrCode: QRCodeResponse) => {
+  const handleDownload = (qrCode: ProductResponse['qrCode']) => {
+    if (!qrCode || !qrCode.qrImageUrl) return;
+    
     // Create a link element to download the image
     const link = document.createElement('a');
     link.href = qrCode.qrImageUrl;
@@ -143,24 +112,38 @@ const QRCodeList: React.FC = () => {
     link.click();
     document.body.removeChild(link);
     
-    message.success('QR code downloaded');
+    message.success(t('admin:qrcodes.download_success'));
   };
   
   // Table columns
   const columns = [
     {
       title: 'QR Code',
-      dataIndex: 'qrImageUrl',
+      dataIndex: 'qrCode',
       key: 'qrImage',
-      render: (url: string) => (
+      render: (qrCode: ProductResponse['qrCode']) => (
         <div className="w-16 h-16 flex items-center justify-center">
-          <img src={url} alt="QR Code" className="max-w-full max-h-full" />
+          <img 
+            src={qrCode?.qrImageUrl} 
+            alt="QR Code" 
+            className="max-w-full max-h-full" 
+          />
         </div>
       ),
     },
     {
+      title: t('admin:products.name'),
+      dataIndex: 'name',
+      key: 'name',
+      render: (name: string, record: ProductResponse) => (
+        <Link to={`/admin/products/${record.id}`}>
+          {name}
+        </Link>
+      ),
+    },
+    {
       title: t('admin:qrcodes.redirect_url'),
-      dataIndex: 'redirectUrl',
+      dataIndex: ['qrCode', 'redirectUrl'],
       key: 'redirectUrl',
       render: (url: string) => (
         <Tooltip title={url}>
@@ -172,32 +155,24 @@ const QRCodeList: React.FC = () => {
       ),
     },
     {
-      title: t('admin:qrcodes.status'),
-      dataIndex: 'active',
-      key: 'active',
-      render: (active: boolean) => (
-        <Tag color={active ? 'success' : 'error'}>
-          {active ? t('admin:qrcodes.active') : t('admin:qrcodes.inactive')}
-        </Tag>
-      ),
-    },
-    {
       title: t('admin:qrcodes.scan_count'),
-      dataIndex: 'scanCount',
+      dataIndex: ['qrCode', 'scanCount'],
       key: 'scanCount',
-      sorter: (a: QRCodeResponse, b: QRCodeResponse) => (a.scanCount || 0) - (b.scanCount || 0),
+      sorter: (a: ProductResponse, b: ProductResponse) => 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ((a.qrCode as any)?.scanCount || 0) - ((b.qrCode as any)?.scanCount || 0),
       render: (count: number) => <span className="font-medium">{count || 0}</span>,
     },
     {
       title: t('admin:actions.actions'),
       key: 'actions',
-      render: (_: unknown, record: QRCodeResponse) => (
+      render: (_: unknown, record: ProductResponse) => (
         <Space size="small">
           <Tooltip title={t('admin:actions.preview')}>
             <Button
               type="text"
               icon={<EyeOutlined />}
-              onClick={() => handlePreview(record)}
+              onClick={() => handlePreview(record.qrCode)}
               className="flex items-center justify-center"
             />
           </Tooltip>
@@ -206,7 +181,7 @@ const QRCodeList: React.FC = () => {
             <Button
               type="text"
               icon={<DownloadOutlined />}
-              onClick={() => handleDownload(record)}
+              onClick={() => handleDownload(record.qrCode)}
               className="flex items-center justify-center"
             />
           </Tooltip>
@@ -215,7 +190,7 @@ const QRCodeList: React.FC = () => {
             <Button
               type="text"
               icon={<ScanOutlined />}
-              onClick={() => handleViewAnalytics(record)}
+              onClick={() => handleViewAnalytics(record.qrCode)}
               className="flex items-center justify-center"
             />
           </Tooltip>
@@ -252,7 +227,9 @@ const QRCodeList: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <Breadcrumb className="mb-2">
-            <Breadcrumb.Item>{t('admin:dashboard.title')}</Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/admin">{t('admin:dashboard.title')}</Link>
+            </Breadcrumb.Item>
             <Breadcrumb.Item>{t('admin:qrcodes.title')}</Breadcrumb.Item>
           </Breadcrumb>
           
@@ -307,7 +284,7 @@ const QRCodeList: React.FC = () => {
           <div className="flex justify-center py-8">
             <Spin size="large" />
           </div>
-        ) : filteredQRCodes.length === 0 ? (
+        ) : filteredProducts.length === 0 ? (
           <Empty 
             image={Empty.PRESENTED_IMAGE_SIMPLE} 
             description={
@@ -327,7 +304,7 @@ const QRCodeList: React.FC = () => {
         ) : (
           <Table
             columns={columns}
-            dataSource={filteredQRCodes}
+            dataSource={filteredProducts}
             rowKey="id"
             pagination={{ pageSize: 10 }}
             className="border border-gray-200 dark:border-gray-700 rounded-lg"
@@ -408,3 +385,4 @@ const QRCodeList: React.FC = () => {
 };
 
 export default QRCodeList;
+

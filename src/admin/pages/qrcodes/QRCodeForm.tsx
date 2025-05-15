@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Form,
   Input,
@@ -11,7 +11,8 @@ import {
   Select,
   Breadcrumb,
   Alert,
-  Space
+  Space,
+  Spin
 } from 'antd';
 import {
   QrcodeOutlined,
@@ -24,7 +25,9 @@ import {
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-
+import { AdminProductService } from '@/admin/services/adminProductService';
+import type { ProductResponse } from '@/admin/types';
+import type { QRCodeRequest } from '@/admin/types/qrcode.types';
 
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -37,68 +40,59 @@ const QRCodeForm: React.FC = () => {
   // State
   const [loading, setLoading] = useState(false);
   const [productLoading, setProductLoading] = useState(false);
-  const [products, setProducts] = useState<{ id: string; name: string }[]>([]);
+  const [products, setProducts] = useState<ProductResponse[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   
-  // Mock function to load products
+  // Load products without QR codes
+  useEffect(() => {
+    loadProducts();
+  }, []);
+  
   const loadProducts = async () => {
     setProductLoading(true);
     try {
-      // In a real application, this would be an API call
-      setTimeout(() => {
-        const mockProducts = [
-          { id: '1', name: 'Traditional Ao Dai' },
-          { id: '2', name: 'Vietnamese Craft Pottery' },
-          { id: '3', name: 'Handmade Jewelry' }
-        ];
-        setProducts(mockProducts);
-        setProductLoading(false);
-      }, 1000);
+      // Fetch all products
+      const response = await AdminProductService.getAllProducts(0, 100);
+      
+      // Filter products that don't already have QR codes
+      const productsWithoutQRCodes = response.content.filter(product => !product.qrCode);
+      setProducts(productsWithoutQRCodes);
     } catch (error) {
       console.error('Error loading products:', error);
-      message.error('Failed to load products');
+      message.error(t('admin:products.fetch_error'));
+    } finally {
       setProductLoading(false);
     }
   };
   
-  // Load products when the component mounts
-  React.useEffect(() => {
-    loadProducts();
-  }, []);
-  
   // Handle form submission
   const handleSubmit = async () => {
     try {
-      
       if (!selectedProduct) {
-        message.error('Please select a product');
+        message.error(t('admin:qrcodes.select_product_required'));
         return;
       }
       
       setLoading(true);
       
-
+      // Validate form fields
+      const values = await form.validateFields();
       
-      // Here we use the actual API method from AdminProductService
-      try {
-        // This would be the real API call in a production app:
-        // await AdminProductService.generateQRCode(selectedProduct, qrCodeData);
-        
-        // For demo purposes, we'll simulate it:
-        setTimeout(() => {
-          setLoading(false);
-          message.success('QR code created successfully');
-          navigate('/admin/qrcodes');
-        }, 1500);
-      } catch (error) {
-        console.error('Error creating QR code:', error);
-        message.error('Failed to create QR code');
-        setLoading(false);
-      }
+      // Create QR code request object
+      const qrCodeRequest: QRCodeRequest = {
+        redirectUrl: values.redirectUrl,
+        active: values.active
+      };
       
+      // Call API to generate QR code
+      await AdminProductService.generateQRCode(selectedProduct, qrCodeRequest);
+      
+      message.success(t('admin:qrcodes.create_success'));
+      navigate('/admin/qrcodes');
     } catch (error) {
       console.error('Error creating QR code:', error);
-      message.error('Failed to create QR code');
+      message.error(t('admin:qrcodes.create_error'));
+    } finally {
       setLoading(false);
     }
   };
@@ -110,7 +104,8 @@ const QRCodeForm: React.FC = () => {
     // Set a default redirect URL based on the selected product
     const selectedProductInfo = products.find(p => p.id === productId);
     if (selectedProductInfo) {
-      form.setFieldValue('redirectUrl', `https://example.com/products/${selectedProductInfo.name.toLowerCase().replace(/\s+/g, '-')}`);
+      const baseUrl = window.location.origin;
+      form.setFieldValue('redirectUrl', `${baseUrl}/products/${selectedProductInfo.slug}`);
     }
   };
   
@@ -169,16 +164,37 @@ const QRCodeForm: React.FC = () => {
               required
               tooltip={t('admin:qrcodes.select_product_tooltip')}
             >
-              <Select
-                placeholder={t('admin:qrcodes.select_product_placeholder')}
-                onChange={handleProductChange}
-                loading={productLoading}
-                className="w-full"
-              >
-                {products.map(product => (
-                  <Option key={product.id} value={product.id}>{product.name}</Option>
-                ))}
-              </Select>
+              {productLoading ? (
+                <div className="flex items-center space-x-2">
+                  <Spin size="small" />
+                  <span>{t('admin:loading')}</span>
+                </div>
+              ) : (
+                <Select
+                  placeholder={t('admin:qrcodes.select_product_placeholder')}
+                  onChange={handleProductChange}
+                  className="w-full"
+                  showSearch
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    (option?.children as unknown as string).toLowerCase().includes(input.toLowerCase())
+                  }
+                >
+                  {products.map(product => (
+                    <Option key={product.id} value={product.id}>{product.name}</Option>
+                  ))}
+                </Select>
+              )}
+              {products.length === 0 && !productLoading && (
+                <div className="mt-2">
+                  <Alert
+                    message={t('admin:qrcodes.no_products_available')}
+                    description={t('admin:qrcodes.no_products_description')}
+                    type="warning"
+                    showIcon
+                  />
+                </div>
+              )}
             </Form.Item>
             
             <Divider />
@@ -225,6 +241,7 @@ const QRCodeForm: React.FC = () => {
                   icon={<SaveOutlined />} 
                   onClick={handleSubmit}
                   loading={loading}
+                  disabled={!selectedProduct}
                 >
                   {t('admin:qrcodes.generate')}
                 </Button>
