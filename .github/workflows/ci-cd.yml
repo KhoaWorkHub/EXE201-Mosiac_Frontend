@@ -3,10 +3,10 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main
+      - main, test-ar 
   pull_request:
     branches:
-      - main
+      - main, test-ar 
   workflow_dispatch:
 
 jobs:
