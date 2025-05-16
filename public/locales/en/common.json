@@ -202,5 +202,8 @@
   },
   "loading": {
     "experience": "Loading your Da Nang experience..."
+  },
+  "form": {
+    "email_cannot_change": "Email cannot be changed"
   }
 }

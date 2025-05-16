@@ -1,0 +1,64 @@
+{
+    "profile": {
+      "title": "My Profile",
+      "personal_info": "Personal Information",
+      "address_book": "Address Book",
+      "edit_profile": "Edit Profile",
+      "save_changes": "Save Changes",
+      "cancel": "Cancel",
+      "email": "Email",
+      "full_name": "Full Name",
+      "phone_number": "Phone Number",
+      "role": "Account Type",
+      "success": {
+        "profile_updated": "Profile updated successfully",
+        "address_created": "Address added successfully",
+        "address_updated": "Address updated successfully",
+        "address_deleted": "Address deleted successfully",
+        "default_address_set": "Default address set successfully"
+      },
+      "validation": {
+        "full_name_required": "Full name is required",
+        "phone_format": "Phone number must be 10-11 digits"
+      }
+    },
+    "address": {
+      "title": "Addresses",
+      "add_new": "Add New Address",
+      "edit": "Edit Address",
+      "delete": "Delete Address",
+      "set_default": "Set as Default",
+      "default_badge": "Default",
+      "form": {
+        "recipient_name": "Recipient Name",
+        "phone": "Phone Number",
+        "province": "Province",
+        "district": "District",
+        "ward": "Ward",
+        "street_address": "Street Address",
+        "set_as_default": "Set as default address",
+        "please_select": "Please select",
+        "save": "Save Address",
+        "error": {
+          "recipient_required": "Recipient name is required",
+          "phone_required": "Phone number is required",
+          "phone_format": "Phone number must be 10-11 digits",
+          "province_required": "Province is required",
+          "district_required": "District is required",
+          "ward_required": "Ward is required",
+          "street_required": "Street address is required"
+        }
+      },
+      "empty": {
+        "title": "No addresses yet",
+        "message": "You haven't added any delivery addresses yet.",
+        "add_first": "Add Your First Address"
+      },
+      "confirm_delete": {
+        "title": "Delete Address",
+        "message": "Are you sure you want to delete this address?",
+        "yes": "Yes, Delete",
+        "no": "No, Keep it"
+      }
+    }
+  }

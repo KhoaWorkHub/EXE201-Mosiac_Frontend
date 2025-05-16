@@ -25,9 +25,10 @@ const DaNangGuidePage = lazy(
 );
 
 // Blog Page
-const BlogPage = lazy(
-  () => import("../features/blog/pages/BlogPage")
-);
+const BlogPage = lazy(() => import("../features/blog/pages/BlogPage"));
+
+// Profile Page
+const ProfilePage = lazy(() => import("../features/profile/pages/ProfilePage"));
 
 // Custom loader for luxury pages
 const LuxuryLoadingFallback = () => (
@@ -120,7 +121,7 @@ const AppRoutes: React.FC = () => {
           </Suspense>
         }
       />
-      
+
       {/* Blog Route */}
       <Route
         path="/blog"
@@ -130,7 +131,17 @@ const AppRoutes: React.FC = () => {
           </Suspense>
         }
       />
-      
+
+      {/* Profile Route */}
+      <Route
+        path="/profile"
+        element={
+          <Suspense fallback={<LoadingFallback />}>
+            <ProfilePage />
+          </Suspense>
+        }
+      />
+
       {/* Destination Guide Routes */}
       <Route
         path="/destinations/danang"
@@ -140,7 +151,7 @@ const AppRoutes: React.FC = () => {
           </Suspense>
         }
       />
-      
+
       <Route
         path="/admin/*"
         element={
