@@ -1,0 +1,99 @@
+{
+    "tabs": {
+      "overview": "Tổng quan",
+      "attractions": "Điểm tham quan",
+      "food_and_drink": "Ẩm thực & Đồ uống",
+      "shopping": "Mua sắm",
+      "getting_around": "Di chuyển"
+    },
+    "vietnam": "Việt Nam",
+    "central_vietnam": "Miền Trung Việt Nam",
+    "about": "Giới thiệu",
+    "location": "Vị trí",
+    "suggested_duration": "Thời gian đề xuất",
+    "tips": "Mẹo du lịch",
+    "map": {
+      "title": "Bản đồ Đà Nẵng",
+      "description": "Khám phá các điểm tham quan nổi bật ở Đà Nẵng với bản đồ tương tác này. Nhấp vào các điểm đánh dấu để tìm hiểu thêm về từng địa điểm."
+    },
+    "photo_gallery": {
+      "title": "Bộ sưu tập ảnh Đà Nẵng",
+      "description": "Khám phá vẻ đẹp của Đà Nẵng qua bộ sưu tập ảnh tuyệt đẹp được chọn lọc của chúng tôi"
+    },
+    "recommendations": {
+      "title": "Gợi ý",
+      "description": "Khám phá những gợi ý từ chuyên gia để có chuyến đi tuyệt vời nhất tại Đà Nẵng",
+      "view_details": "Xem chi tiết",
+      "highlight": "Nổi bật",
+      "types": {
+        "itinerary": "Lịch trình",
+        "hotel": "Chỗ ở",
+        "food": "Ẩm thực"
+      }
+    },
+    "attractions": {
+      "title": "Những điểm tham quan không thể bỏ lỡ ở Đà Nẵng",
+      "intro": "Đà Nẵng sở hữu nhiều kỳ quan thiên nhiên, công trình kiến trúc ấn tượng và di tích văn hóa. Từ Cầu Vàng biểu tượng đến những bãi biển nguyên sơ và núi non cổ kính, các điểm đến này thể hiện sự đa dạng hấp dẫn của thành phố.",
+      "tips": {
+        "1": "Tham quan vào sáng sớm để tránh đông đúc",
+        "2": "Mang giày thoải mái và nước uống",
+        "3": "Kiểm tra thời tiết trước khi đến các điểm tham quan ngoài trời"
+      }
+    },
+    "weather": {
+      "loading": "Đang tải thông tin thời tiết...",
+      "humidity": "Độ ẩm",
+      "wind": "Gió"
+    },
+    "cta": {
+      "title": "Sẵn sàng khám phá Đà Nẵng chưa?",
+      "description": "Khám phá vẻ đẹp, văn hóa và những trải nghiệm tuyệt vời đang chờ đón bạn tại Đà Nẵng. Khởi động lại hướng dẫn viên du lịch hoặc chia sẻ hướng dẫn này với bạn bè đang lên kế hoạch cho chuyến đi.",
+      "restart_tour": "Khởi động lại hướng dẫn"
+    },
+    "tour_guide": {
+      "title": "Hướng dẫn tham quan Đà Nẵng",
+      "subtitle": "Làm theo hướng dẫn từng bước để khám phá những điều tuyệt vời nhất tại Đà Nẵng",
+      "close_success": "Đã đóng hướng dẫn viên. Bạn có thể khởi động lại bất cứ lúc nào!",
+      "steps": {
+        "welcome": {
+          "title": "Chào mừng",
+          "description": "Giới thiệu về Đà Nẵng",
+          "content": "Chào mừng đến với Đà Nẵng – thành phố ven biển sôi động ở miền Trung Việt Nam! Hướng dẫn này sẽ giới thiệu đến bạn những điểm nổi bật của thành phố, từ các bãi biển tuyệt đẹp đến các di tích lịch sử, ẩm thực hấp dẫn và nhiều điều thú vị khác. Hãy cùng khám phá vẻ đẹp của Đà Nẵng."
+        },
+        "attractions": {
+          "title": "Điểm tham quan",
+          "description": "Những địa điểm không thể bỏ qua",
+          "highlight": "Cầu Vàng",
+          "content": "Đà Nẵng là nơi có nhiều điểm tham quan nổi bật. Đừng bỏ lỡ Cầu Vàng biểu tượng tại Bà Nà Hills, Ngũ Hành Sơn hùng vĩ, bãi biển Mỹ Khê nguyên sơ (từng được lính Mỹ đặt tên trong thời chiến), và Cầu Rồng phun lửa và nước vào cuối tuần!"
+        },
+        "food": {
+          "title": "Ẩm thực địa phương",
+          "description": "Tinh hoa ẩm thực",
+          "content": "Ẩm thực Đà Nẵng là điểm nhấn của mỗi chuyến đi. Hãy thử Mì Quảng (mì nghệ với thịt heo, tôm và rau thơm), Bánh Xèo (bánh giòn nhân thịt, tôm) và hải sản tươi sống từ biển Đông gần đó. Thành phố cũng nổi tiếng với văn hóa cà phê và các chợ ẩm thực đường phố."
+        },
+        "shopping": {
+          "title": "Mua sắm",
+          "description": "Chợ và quà lưu niệm",
+          "content": "Với những ai yêu thích mua sắm, Đà Nẵng có nhiều lựa chọn từ chợ truyền thống đến trung tâm thương mại hiện đại. Tham quan chợ Hàn để tìm đặc sản địa phương, chợ Cồn để mua quà lưu niệm, hoặc đến Vincom Plaza để mua sắm các thương hiệu quốc tế. Đừng quên chọn vài món đồ thủ công địa phương làm kỷ niệm."
+        },
+        "transport": {
+          "title": "Di chuyển",
+          "description": "Các phương tiện di chuyển",
+          "content": "Việc di chuyển trong Đà Nẵng khá dễ dàng. Bạn có thể thuê xe máy để linh hoạt hơn, bắt taxi hoặc dùng Grab (ứng dụng gọi xe phổ biến ở Đông Nam Á), hoặc đi xe buýt công cộng cho các tuyến xa. Thành phố cũng thân thiện với xe đạp và có nhiều cửa hàng cho thuê.",
+          "options": {
+            "0": "Thuê xe máy",
+            "1": "Taxi/Grab",
+            "2": "Xe buýt công cộng",
+            "3": "Xe đạp"
+          }
+        },
+        "conclusion": {
+          "title": "Chúc bạn có chuyến đi vui vẻ",
+          "description": "Lời khuyên cuối cùng",
+          "content_title": "Bạn đã sẵn sàng khám phá Đà Nẵng!",
+          "content": "Bây giờ bạn đã nắm được những điều cơ bản về Đà Nẵng, hãy tận hưởng chuyến đi và khám phá thành phố xinh đẹp này. Đừng quên trải nghiệm bình minh tại bãi biển Mỹ..."
+        }
+      }
+    }
+  }
+  

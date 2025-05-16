@@ -20,7 +20,7 @@ interface WeatherProps {
 }
 
 const WeatherWidget: React.FC<WeatherProps> = ({ data }) => {
-  const { t } = useTranslation(['destination']);
+  const { t } = useTranslation(['destinationdanang', 'common']);
   
   if (!data) {
     return (

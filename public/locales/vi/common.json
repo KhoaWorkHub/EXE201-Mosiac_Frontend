@@ -45,7 +45,10 @@
     "view_all": "Xem Tất Cả",
     "explore_collection": "Khám Phá Bộ Sưu Tập",
     "scroll_down": "Cuộn xuống",
-    "share": "Chia sẻ"
+    "share": "Chia sẻ",
+    "previous": "Trước",
+    "next": "Tiếp theo",
+    "finish": "Hoàn tất"
   },
   "theme": {
     "title": "Giao diện",

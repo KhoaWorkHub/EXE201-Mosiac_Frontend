@@ -259,3 +259,43 @@
   * {
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   }
+
+  .tour-steps .ant-steps-item-title {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .tour-steps .ant-steps-item-description {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* Responsive styles cho Step item */
+  @media (max-width: 768px) {
+    .tour-steps .ant-steps-item-container {
+      display: flex;
+      align-items: center;
+    }
+    
+    .tour-steps .ant-steps-item-title {
+      max-width: 120px;
+    }
+    
+    .tour-steps .ant-steps-item-description {
+      max-width: 150px;
+    }
+  }
+  
+  @media (min-width: 769px) {
+    .tour-steps .ant-steps-item {
+      overflow: visible;
+    }
+    
+    .tour-steps .ant-steps-item-title {
+      max-width: 100px;
+    }
+  }

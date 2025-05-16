@@ -12,7 +12,7 @@ interface DestinationHeaderProps {
 }
 
 const DestinationHeader: React.FC<DestinationHeaderProps> = ({ title, subtitle }) => {
-  const { t } = useTranslation(['destination', 'common']);
+  const { t } = useTranslation(['destinationdanang', 'common']);
   
   // Animation variants
   const container = {
@@ -49,7 +49,7 @@ const DestinationHeader: React.FC<DestinationHeaderProps> = ({ title, subtitle }
             icon={<GlobalOutlined />} 
             className="mb-4 px-3 py-1 rounded-full text-sm font-medium"
           >
-            {t('destination:vietnam')}
+            {t('destinationdanang:vietnam')}
           </Tag>
         </motion.div>
         
@@ -74,7 +74,7 @@ const DestinationHeader: React.FC<DestinationHeaderProps> = ({ title, subtitle }
           <div className="flex items-center px-4 py-2 bg-white bg-opacity-20 backdrop-blur-md rounded-full">
             <EnvironmentOutlined className="text-white mr-2" />
             <Text className="text-white">
-              {t('destination:central_vietnam')}
+              {t('destinationdanang:central_vietnam')}
             </Text>
           </div>
         </motion.div>

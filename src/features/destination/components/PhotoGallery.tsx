@@ -10,7 +10,7 @@ interface PhotoGalleryProps {
 }
 
 const PhotoGallery: React.FC<PhotoGalleryProps> = ({ city, inView }) => {
-  useTranslation(['destination']);
+  useTranslation(['destinationdanang', 'common']);
   const [modalVisible, setModalVisible] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
   

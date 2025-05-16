@@ -12,7 +12,7 @@ interface DestinationMapProps {
 }
 
 const DestinationMap: React.FC<DestinationMapProps> = ({ city, inView }) => {
-  const { t } = useTranslation(['destination']);
+  const { t } = useTranslation(['destinationdanang', 'common']);
   const mapRef = useRef<HTMLDivElement>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   

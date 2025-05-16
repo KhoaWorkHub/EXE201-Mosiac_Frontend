@@ -45,7 +45,10 @@
     "view_all": "View All",
     "explore_collection": "Explore Collection",
     "scroll_down": "Scroll Down",
-    "share": "Share"
+    "share": "Share",
+    "previous": "Previous",
+    "next": "Next",
+    "finish": "Finish"
   },
   "theme": {
     "title": "Appearance",

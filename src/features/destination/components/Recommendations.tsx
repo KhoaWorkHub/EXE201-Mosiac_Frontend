@@ -17,7 +17,7 @@ interface RecommendationsProps {
 }
 
 const Recommendations: React.FC<RecommendationsProps> = ({ city }) => {
-  const { t, i18n } = useTranslation(['destination', 'common']);
+const { t, i18n } = useTranslation(['destinationdanang', 'common']);
   
   // This would typically come from an API
   const recommendations = [
@@ -145,7 +145,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ city }) => {
                   <div className="px-3 py-1 bg-primary text-white rounded-full flex items-center text-sm">
                     {getTypeIcon(rec.type)}
                     <span className="ml-1">
-                      {t(`destination:recommendations.types.${rec.type}`)}
+                      {t(`destinationdanang:recommendations.types.${rec.type}`)}
                     </span>
                   </div>
                 </div>
@@ -172,7 +172,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ city }) => {
               
               <div className="flex flex-wrap gap-2 mb-4">
                 {rec.highlights.map((highlight, index) => (
-                  <Tooltip key={index} title={t('destination:recommendations.highlight')}>
+                  <Tooltip key={index} title={t('destinationdanang:recommendations.highlight')}>
                     <div className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">
                       {highlight[i18n.language === 'vi' ? 'vi' : 'en']}
                     </div>
@@ -184,7 +184,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ city }) => {
                 type="primary" 
                 className="w-full flex items-center justify-center"
               >
-                {t('destination:recommendations.view_details')}
+                {t('destinationdanang:recommendations.view_details')}
                 <RightOutlined className="ml-1" />
               </Button>
             </div>
