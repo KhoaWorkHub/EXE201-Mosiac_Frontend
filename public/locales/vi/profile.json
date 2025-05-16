@@ -1,0 +1,64 @@
+{
+    "profile": {
+      "title": "Hồ Sơ Của Tôi",
+      "personal_info": "Thông Tin Cá Nhân",
+      "address_book": "Sổ Địa Chỉ",
+      "edit_profile": "Chỉnh Sửa Hồ Sơ",
+      "save_changes": "Lưu Thay Đổi",
+      "cancel": "Hủy",
+      "email": "Email",
+      "full_name": "Họ Và Tên",
+      "phone_number": "Số Điện Thoại",
+      "role": "Loại Tài Khoản",
+      "success": {
+        "profile_updated": "Cập nhật hồ sơ thành công",
+        "address_created": "Thêm địa chỉ thành công",
+        "address_updated": "Cập nhật địa chỉ thành công",
+        "address_deleted": "Xóa địa chỉ thành công",
+        "default_address_set": "Đặt địa chỉ mặc định thành công"
+      },
+      "validation": {
+        "full_name_required": "Họ và tên là bắt buộc",
+        "phone_format": "Số điện thoại phải có 10-11 chữ số"
+      }
+    },
+    "address": {
+      "title": "Địa Chỉ",
+      "add_new": "Thêm Địa Chỉ Mới",
+      "edit": "Chỉnh Sửa Địa Chỉ",
+      "delete": "Xóa Địa Chỉ",
+      "set_default": "Đặt Làm Mặc Định",
+      "default_badge": "Mặc Định",
+      "form": {
+        "recipient_name": "Tên Người Nhận",
+        "phone": "Số Điện Thoại",
+        "province": "Tỉnh/Thành",
+        "district": "Quận/Huyện",
+        "ward": "Phường/Xã",
+        "street_address": "Địa Chỉ Đường Phố",
+        "set_as_default": "Đặt làm địa chỉ mặc định",
+        "please_select": "Vui lòng chọn",
+        "save": "Lưu Địa Chỉ",
+        "error": {
+          "recipient_required": "Tên người nhận là bắt buộc",
+          "phone_required": "Số điện thoại là bắt buộc",
+          "phone_format": "Số điện thoại phải có 10-11 chữ số",
+          "province_required": "Tỉnh/Thành là bắt buộc",
+          "district_required": "Quận/Huyện là bắt buộc",
+          "ward_required": "Phường/Xã là bắt buộc",
+          "street_required": "Địa chỉ đường phố là bắt buộc"
+        }
+      },
+      "empty": {
+        "title": "Chưa có địa chỉ nào",
+        "message": "Bạn chưa thêm địa chỉ giao hàng nào.",
+        "add_first": "Thêm Địa Chỉ Đầu Tiên Của Bạn"
+      },
+      "confirm_delete": {
+        "title": "Xóa Địa Chỉ",
+        "message": "Bạn có chắc chắn muốn xóa địa chỉ này không?",
+        "yes": "Có, Xóa Đi",
+        "no": "Không, Giữ Lại"
+      }
+    }
+  }

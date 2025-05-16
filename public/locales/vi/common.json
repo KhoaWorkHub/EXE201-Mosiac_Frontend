@@ -202,5 +202,8 @@
   },
   "loading": {
     "experience": "Đang tải trải nghiệm Đà Nẵng của bạn..."
+  },
+  "form": {
+    "email_cannot_change": "Email không thể thay đổi"
   }
 }

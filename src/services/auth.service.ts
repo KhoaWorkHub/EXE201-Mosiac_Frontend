@@ -18,7 +18,8 @@ export const AuthService = {
   },
   
   googleLogin: (): void => {
-    window.location.href = 'http://ec2-54-169-96-88.ap-southeast-1.compute.amazonaws.com/oauth2/authorization/google';
+    //window.location.href = 'http://ec2-54-169-96-88.ap-southeast-1.compute.amazonaws.com/oauth2/authorization/google';
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
   },
   
   logout: (): void => {

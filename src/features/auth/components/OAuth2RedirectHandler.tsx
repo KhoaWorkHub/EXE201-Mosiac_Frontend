@@ -1,4 +1,3 @@
-// src/features/auth/components/OAuth2RedirectHandler.tsx
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '@/store/hooks';
