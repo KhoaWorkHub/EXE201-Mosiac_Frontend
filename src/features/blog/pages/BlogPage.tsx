@@ -12,7 +12,7 @@ const tourGuides = [
   {
     id: 'danang',
     title: 'Da Nang',
-    description: 'destination:danang.overview.intro',
+    description: 'destinationdanang:overview.intro',
     image: '/assets/destinations/danang/banner-1.jpg',
     url: '/destinations/danang',
     date: '2025-02-15',
@@ -22,7 +22,7 @@ const tourGuides = [
 ];
 
 const BlogPage: React.FC = () => {
-  const { t } = useTranslation(['destination', 'common']);
+  const { t } = useTranslation(['destinationdanang', 'common']);
   
   return (
     <MainLayout>
