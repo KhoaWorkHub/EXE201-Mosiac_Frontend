@@ -52,6 +52,7 @@
     "tour_guide": {
       "title": "Da Nang Tour Guide",
       "subtitle": "Follow this step-by-step guide to discover the best of Da Nang",
+      "close_success": "Tour guide closed. You can restart it anytime!",
       "steps": {
         "welcome": {
           "title": "Welcome",
@@ -96,6 +97,7 @@
     "danang": {
       "overview": {
         "title": "Da Nang - The Heart of Central Vietnam",
+        "subtitle": "The Gem of Central Vietnam",
         "region": "Central Vietnam",
         "intro": "Da Nang is Vietnam's third-largest city and the urban center of Central Vietnam. Situated on the coast of the East Sea at the mouth of the Han River, this rapidly developing city combines stunning natural beauty with modern urban life. With long stretches of pristine beaches, mountainous backdrops, historical sites, and a growing food scene, Da Nang has something for every traveler.",
         "why_visit": {

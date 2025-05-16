@@ -24,6 +24,11 @@ const DaNangGuidePage = lazy(
   () => import("../features/destination/pages/DaNangGuidePage")
 );
 
+// Blog Page
+const BlogPage = lazy(
+  () => import("../features/blog/pages/BlogPage")
+);
+
 // Custom loader for luxury pages
 const LuxuryLoadingFallback = () => (
   <div className="h-screen w-full flex flex-col items-center justify-center bg-black">
@@ -112,6 +117,16 @@ const AppRoutes: React.FC = () => {
         element={
           <Suspense fallback={<LoadingFallback />}>
             <QRCodeLandingPage />
+          </Suspense>
+        }
+      />
+      
+      {/* Blog Route */}
+      <Route
+        path="/blog"
+        element={
+          <Suspense fallback={<LoadingFallback />}>
+            <BlogPage />
           </Suspense>
         }
       />
