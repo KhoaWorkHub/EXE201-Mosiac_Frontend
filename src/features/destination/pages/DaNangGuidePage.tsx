@@ -24,7 +24,6 @@ import AttractionCard from '../components/AttractionCard';
 import WeatherWidget from '../components/WeatherWidget';
 import DestinationHeader from '../components/DestinationHeader';
 import Recommendations from '../components/Recommendations';
-import LanguageSwitcher from '../components/LanguageSwitcher';
 
 const { Title, Text, Paragraph } = Typography;
 const { TabPane } = Tabs;
@@ -112,8 +111,19 @@ const DaNangGuidePage: React.FC = () => {
   const [showTourGuide, setShowTourGuide] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [weatherData, setWeatherData] = useState<any>(null);
+  interface WeatherData {
+    temperature: number;
+    condition: string;
+    humidity: number;
+    wind: number;
+    forecast: {
+      day: string;
+      temp: number;
+      condition: string;
+    }[];
+  }
+  
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   
   const controls = useAnimation();
@@ -197,7 +207,7 @@ const DaNangGuidePage: React.FC = () => {
   
   const closeTourGuide = () => {
     setShowTourGuide(false);
-    message.success('Tour guide closed. You can restart it anytime!');
+    message.success(t('destination:tour_guide.close_success'));
   };
   
   const restartTourGuide = () => {
@@ -210,15 +220,15 @@ const DaNangGuidePage: React.FC = () => {
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: 'Da Nang - Vietnam\'s Hidden Gem',
-        text: 'Check out this amazing guide to Da Nang, Vietnam',
+        title: t('destination:danang.overview.title'),
+        text: t('destination:danang.overview.intro'),
         url: window.location.href,
       })
-      .catch(() => message.info('Share cancelled'));
+      .catch(() => message.info(t('common:share.cancelled')));
     } else {
       navigator.clipboard.writeText(window.location.href)
-        .then(() => message.success('Link copied to clipboard!'))
-        .catch(() => message.error('Failed to copy link'));
+        .then(() => message.success(t('common:share.copied')))
+        .catch(() => message.error(t('common:share.error')));
     }
   };
   
@@ -248,7 +258,7 @@ const DaNangGuidePage: React.FC = () => {
         <div className="flex justify-center items-center h-screen">
           <div className="text-center">
             <Spin size="large" />
-            <p className="mt-4 text-xl">Loading your Da Nang experience...</p>
+            <p className="mt-4 text-xl">{t('common:loading.experience')}</p>
           </div>
         </div>
       </MainLayout>
@@ -257,11 +267,6 @@ const DaNangGuidePage: React.FC = () => {
   
   return (
     <MainLayout>
-      {/* Floating Language Switcher */}
-      <div className="fixed top-24 right-4 z-50">
-        <LanguageSwitcher />
-      </div>
-      
       {/* Tour Guide */}
       <AnimatePresence>
         {showTourGuide && (
@@ -275,7 +280,7 @@ const DaNangGuidePage: React.FC = () => {
         
         <DestinationHeader 
           title={i18n.language === 'vi' ? 'Đà Nẵng' : 'Da Nang'}
-          subtitle={i18n.language === 'vi' ? 'Viên ngọc của miền Trung Việt Nam' : 'The Gem of Central Vietnam'}
+          subtitle={t('destination:danang.overview.subtitle')}
         />
         
         {/* Scroll Down Indicator */}
@@ -629,7 +634,7 @@ const DaNangGuidePage: React.FC = () => {
                 </Card>
                 
                 <div ref={mapRef}>
-                  <DestinationMap city="Da Nang" inView={mapInView} />
+                  <DestinationMap city="danang" inView={mapInView} />
                 </div>
               </div>
             </TabPane>

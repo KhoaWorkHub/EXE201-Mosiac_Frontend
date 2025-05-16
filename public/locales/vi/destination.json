@@ -51,6 +51,7 @@
     },
     "tour_guide": {
       "title": "Hướng dẫn du lịch Đà Nẵng",
+      "close_success": "Hướng dẫn du lịch đã được đóng. Bạn có thể khởi động lại bất cứ lúc nào!",
       "subtitle": "Theo dõi hướng dẫn từng bước để khám phá điều tốt nhất của Đà Nẵng",
       "steps": {
         "welcome": {
@@ -96,6 +97,7 @@
     "danang": {
       "overview": {
         "title": "Đà Nẵng - Trái tim của Miền Trung Việt Nam",
+        "subtitle": "Viên ngọc của miền Trung Việt Nam",
         "region": "Miền Trung Việt Nam",
         "intro": "Đà Nẵng là thành phố lớn thứ ba của Việt Nam và là trung tâm đô thị của miền Trung Việt Nam. Nằm trên bờ biển Đông tại cửa sông Hàn, thành phố đang phát triển nhanh chóng này kết hợp vẻ đẹp thiên nhiên tuyệt vời với cuộc sống đô thị hiện đại. Với những bãi biển nguyên sơ dài, khung cảnh núi non, các di tích lịch sử và nền ẩm thực đang phát triển, Đà Nẵng có điều gì đó cho mọi du khách.",
         "why_visit": {
