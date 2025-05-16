@@ -29,7 +29,7 @@ interface AttractionCardProps {
 }
 
 const AttractionCard: React.FC<AttractionCardProps> = ({ attraction, language }) => {
-  const { t } = useTranslation(['destination', 'common']);
+  const { t } = useTranslation(['destinationdanang', 'common']);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {

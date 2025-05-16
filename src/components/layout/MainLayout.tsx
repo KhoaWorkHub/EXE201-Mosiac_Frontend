@@ -12,7 +12,8 @@ import {
   InfoCircleOutlined,
   PhoneOutlined,
   SettingOutlined,
-  ShoppingCartOutlined
+  ShoppingCartOutlined,
+  ReadOutlined
 } from '@ant-design/icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -62,6 +63,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     { key: '/products', label: t('nav.products'), icon: <AppstoreOutlined /> },
     { key: '/regions', label: t('nav.regions'), icon: <EnvironmentOutlined /> },
     { key: '/about', label: t('nav.about'), icon: <InfoCircleOutlined /> },
+    { key: '/blog', label: t('nav.blog'), icon: <ReadOutlined /> },
     { key: '/contact', label: t('nav.contact'), icon: <PhoneOutlined /> },
   ];
 

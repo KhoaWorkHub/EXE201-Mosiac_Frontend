@@ -107,10 +107,12 @@ const attractionsData = [
 ];
 
 const DaNangGuidePage: React.FC = () => {
-  const { t, i18n } = useTranslation(['destination', 'common']);
+  // Thay đổi namespace từ 'destination' sang 'destinationdanang'
+  const { t, i18n } = useTranslation(['destinationdanang', 'common']);
   const [showTourGuide, setShowTourGuide] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   const [loading, setLoading] = useState(true);
+  
   interface WeatherData {
     temperature: number;
     condition: string;
@@ -207,7 +209,7 @@ const DaNangGuidePage: React.FC = () => {
   
   const closeTourGuide = () => {
     setShowTourGuide(false);
-    message.success(t('destination:tour_guide.close_success'));
+    message.success(t('tour_guide.close_success'));
   };
   
   const restartTourGuide = () => {
@@ -220,8 +222,8 @@ const DaNangGuidePage: React.FC = () => {
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: t('destination:danang.overview.title'),
-        text: t('destination:danang.overview.intro'),
+        title: t('overview.title'),
+        text: t('overview.intro'),
         url: window.location.href,
       })
       .catch(() => message.info(t('common:share.cancelled')));
@@ -280,7 +282,7 @@ const DaNangGuidePage: React.FC = () => {
         
         <DestinationHeader 
           title={i18n.language === 'vi' ? 'Đà Nẵng' : 'Da Nang'}
-          subtitle={t('destination:danang.overview.subtitle')}
+          subtitle={t('overview.subtitle')}
         />
         
         {/* Scroll Down Indicator */}
@@ -306,7 +308,7 @@ const DaNangGuidePage: React.FC = () => {
             size={isMobile ? "small" : "large"}
           >
             <TabPane 
-              tab={<span className="tab-item"><InfoCircleOutlined />{t('destination:tabs.overview')}</span>} 
+              tab={<span className="tab-item"><InfoCircleOutlined />{t('tabs.overview')}</span>} 
               key="overview"
             >
               <motion.div
@@ -319,15 +321,15 @@ const DaNangGuidePage: React.FC = () => {
                 <motion.div variants={itemVariants} className="mb-8">
                   <div className="flex items-center mb-4">
                     <Title level={2} className="mb-0 dark:text-white">
-                      {t('destination:danang.overview.title')}
+                      {t('overview.title')}
                     </Title>
                     <Tag color="blue" className="ml-4">
-                      <EnvironmentOutlined /> {t('destination:danang.overview.region')}
+                      <EnvironmentOutlined /> {t('overview.region')}
                     </Tag>
                   </div>
                   
                   <Paragraph className="text-lg dark:text-gray-300">
-                    {t('destination:danang.overview.intro')}
+                    {t('overview.intro')}
                   </Paragraph>
                 </motion.div>
                 
@@ -335,12 +337,12 @@ const DaNangGuidePage: React.FC = () => {
                   <motion.div variants={itemVariants}>
                     <Card className="h-full">
                       <Title level={4} className="mb-4 dark:text-white">
-                        {t('destination:danang.overview.why_visit.title')}
+                        {t('overview.why_visit.title')}
                       </Title>
                       <ul className="list-disc pl-5 space-y-2">
                         {Array.from({ length: 5 }).map((_, index) => (
                           <li key={index} className="dark:text-gray-300">
-                            {t(`destination:danang.overview.why_visit.reasons.${index}`)}
+                            {t(`overview.why_visit.reasons.${index}`)}
                           </li>
                         ))}
                       </ul>
@@ -350,10 +352,10 @@ const DaNangGuidePage: React.FC = () => {
                   <motion.div variants={itemVariants}>
                     <Card className="h-full">
                       <Title level={4} className="mb-4 dark:text-white">
-                        {t('destination:danang.overview.best_time.title')}
+                        {t('overview.best_time.title')}
                       </Title>
                       <Paragraph className="dark:text-gray-300">
-                        {t('destination:danang.overview.best_time.description')}
+                        {t('overview.best_time.description')}
                       </Paragraph>
                       <div className="mt-4">
                         <WeatherWidget data={weatherData} />
@@ -365,10 +367,10 @@ const DaNangGuidePage: React.FC = () => {
                 <motion.div variants={itemVariants} className="mb-12">
                   <Card>
                     <Title level={4} className="mb-4 dark:text-white">
-                      {t('destination:danang.overview.cultural_significance.title')}
+                      {t('overview.cultural_significance.title')}
                     </Title>
                     <Paragraph className="dark:text-gray-300">
-                      {t('destination:danang.overview.cultural_significance.description')}
+                      {t('overview.cultural_significance.description')}
                     </Paragraph>
                   </Card>
                 </motion.div>
@@ -378,30 +380,30 @@ const DaNangGuidePage: React.FC = () => {
                     <Card className="text-center">
                       <CompassOutlined className="text-4xl text-primary mb-4" />
                       <Title level={5} className="dark:text-white">
-                        {t('destination:danang.overview.quick_facts.location')}
+                        {t('overview.quick_facts.location')}
                       </Title>
                       <Text className="dark:text-gray-300">
-                        {t('destination:danang.overview.quick_facts.location_value')}
+                        {t('overview.quick_facts.location_value')}
                       </Text>
                     </Card>
                     
                     <Card className="text-center">
                       <ClockCircleOutlined className="text-4xl text-primary mb-4" />
                       <Title level={5} className="dark:text-white">
-                        {t('destination:danang.overview.quick_facts.time_zone')}
+                        {t('overview.quick_facts.time_zone')}
                       </Title>
                       <Text className="dark:text-gray-300">
-                        {t('destination:danang.overview.quick_facts.time_zone_value')}
+                        {t('overview.quick_facts.time_zone_value')}
                       </Text>
                     </Card>
                     
                     <Card className="text-center">
                       <EnvironmentOutlined className="text-4xl text-primary mb-4" />
                       <Title level={5} className="dark:text-white">
-                        {t('destination:danang.overview.quick_facts.population')}
+                        {t('overview.quick_facts.population')}
                       </Title>
                       <Text className="dark:text-gray-300">
-                        {t('destination:danang.overview.quick_facts.population_value')}
+                        {t('overview.quick_facts.population_value')}
                       </Text>
                     </Card>
                   </div>
@@ -410,7 +412,7 @@ const DaNangGuidePage: React.FC = () => {
             </TabPane>
             
             <TabPane 
-              tab={<span className="tab-item"><PictureOutlined />{t('destination:tabs.attractions')}</span>} 
+              tab={<span className="tab-item"><PictureOutlined />{t('tabs.attractions')}</span>} 
               key="attractions"
             >
               <motion.div
@@ -422,10 +424,10 @@ const DaNangGuidePage: React.FC = () => {
               >
                 <motion.div variants={itemVariants} className="mb-8">
                   <Title level={2} className="mb-4 dark:text-white">
-                    {t('destination:danang.attractions.title')}
+                    {t('attractions.title')}
                   </Title>
                   <Paragraph className="text-lg dark:text-gray-300">
-                    {t('destination:danang.attractions.intro')}
+                    {t('attractions.intro')}
                   </Paragraph>
                 </motion.div>
                 
@@ -446,15 +448,15 @@ const DaNangGuidePage: React.FC = () => {
             </TabPane>
             
             <TabPane 
-              tab={<span className="tab-item"><CoffeeOutlined />{t('destination:tabs.food_and_drink')}</span>} 
+              tab={<span className="tab-item"><CoffeeOutlined />{t('tabs.food_and_drink')}</span>} 
               key="food"
             >
               <div className="py-8">
                 <Title level={2} className="mb-4 dark:text-white">
-                  {t('destination:danang.food.title')}
+                  {t('food.title')}
                 </Title>
                 <Paragraph className="text-lg dark:text-gray-300 mb-8">
-                  {t('destination:danang.food.intro')}
+                  {t('food.intro')}
                 </Paragraph>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
@@ -464,19 +466,19 @@ const DaNangGuidePage: React.FC = () => {
                         <div className="w-24 h-24 bg-gray-200 rounded-lg mr-4 overflow-hidden">
                           <img 
                             src={`/assets/destinations/danang/food-${index + 1}.jpg`} 
-                            alt={t(`destination:danang.food.dishes.${index}.name`)}
+                            alt={t(`food.dishes.${index}.name`)}
                             className="w-full h-full object-cover"
                           />
                         </div>
                         <div>
                           <Title level={5} className="mb-1 dark:text-white">
-                            {t(`destination:danang.food.dishes.${index}.name`)}
+                            {t(`food.dishes.${index}.name`)}
                           </Title>
                           <Paragraph className="dark:text-gray-300 mb-2">
-                            {t(`destination:danang.food.dishes.${index}.description`)}
+                            {t(`food.dishes.${index}.description`)}
                           </Paragraph>
                           <Tag color="green">
-                            {t(`destination:danang.food.dishes.${index}.where_to_try`)}
+                            {t(`food.dishes.${index}.where_to_try`)}
                           </Tag>
                         </div>
                       </div>
@@ -485,27 +487,27 @@ const DaNangGuidePage: React.FC = () => {
                 </div>
                 
                 <Title level={3} className="mb-4 dark:text-white">
-                  {t('destination:danang.food.restaurants.title')}
+                  {t('food.restaurants.title')}
                 </Title>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {Array.from({ length: 3 }).map((_, index) => (
                     <Card key={index} className="h-full">
                       <Title level={5} className="mb-2 dark:text-white">
-                        {t(`destination:danang.food.restaurants.list.${index}.name`)}
+                        {t(`food.restaurants.list.${index}.name`)}
                       </Title>
                       <div className="flex items-center mb-2">
                         <StarFilled className="text-yellow-500 mr-1" />
                         <Text className="dark:text-gray-300">
-                          {t(`destination:danang.food.restaurants.list.${index}.rating`)}
+                          {t(`food.restaurants.list.${index}.rating`)}
                         </Text>
                       </div>
                       <Paragraph className="dark:text-gray-300 mb-2">
-                        {t(`destination:danang.food.restaurants.list.${index}.description`)}
+                        {t(`food.restaurants.list.${index}.description`)}
                       </Paragraph>
                       <div className="flex items-center">
                         <EnvironmentOutlined className="mr-1 text-gray-500" />
                         <Text className="text-gray-500 dark:text-gray-400">
-                          {t(`destination:danang.food.restaurants.list.${index}.address`)}
+                          {t(`food.restaurants.list.${index}.address`)}
                         </Text>
                       </div>
                     </Card>
@@ -515,36 +517,36 @@ const DaNangGuidePage: React.FC = () => {
             </TabPane>
             
             <TabPane 
-              tab={<span className="tab-item"><ShopOutlined />{t('destination:tabs.shopping')}</span>} 
+              tab={<span className="tab-item"><ShopOutlined />{t('tabs.shopping')}</span>} 
               key="shopping"
             >
               <div className="py-8">
                 <Title level={2} className="mb-4 dark:text-white">
-                  {t('destination:danang.shopping.title')}
+                  {t('shopping.title')}
                 </Title>
                 <Paragraph className="text-lg dark:text-gray-300 mb-8">
-                  {t('destination:danang.shopping.intro')}
+                  {t('shopping.intro')}
                 </Paragraph>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                   {Array.from({ length: 4 }).map((_, index) => (
                     <Card key={index} className="h-full">
                       <Title level={4} className="mb-2 dark:text-white">
-                        {t(`destination:danang.shopping.places.${index}.name`)}
+                        {t(`shopping.places.${index}.name`)}
                       </Title>
                       <Paragraph className="dark:text-gray-300 mb-3">
-                        {t(`destination:danang.shopping.places.${index}.description`)}
+                        {t(`shopping.places.${index}.description`)}
                       </Paragraph>
                       <div className="flex items-center mb-2">
                         <EnvironmentOutlined className="mr-2 text-gray-500" />
                         <Text className="text-gray-500 dark:text-gray-400">
-                          {t(`destination:danang.shopping.places.${index}.location`)}
+                          {t(`shopping.places.${index}.location`)}
                         </Text>
                       </div>
                       <div className="flex items-center">
                         <ClockCircleOutlined className="mr-2 text-gray-500" />
                         <Text className="text-gray-500 dark:text-gray-400">
-                          {t(`destination:danang.shopping.places.${index}.hours`)}
+                          {t(`shopping.places.${index}.hours`)}
                         </Text>
                       </div>
                     </Card>
@@ -552,7 +554,7 @@ const DaNangGuidePage: React.FC = () => {
                 </div>
                 
                 <Title level={3} className="mb-4 dark:text-white">
-                  {t('destination:danang.shopping.souvenirs.title')}
+                  {t('shopping.souvenirs.title')}
                 </Title>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {Array.from({ length: 3 }).map((_, index) => (
@@ -565,10 +567,10 @@ const DaNangGuidePage: React.FC = () => {
                         />
                       </div>
                       <Title level={5} className="mb-2 dark:text-white">
-                        {t(`destination:danang.shopping.souvenirs.items.${index}.name`)}
+                        {t(`shopping.souvenirs.items.${index}.name`)}
                       </Title>
                       <Paragraph className="dark:text-gray-300">
-                        {t(`destination:danang.shopping.souvenirs.items.${index}.description`)}
+                        {t(`shopping.souvenirs.items.${index}.description`)}
                       </Paragraph>
                     </Card>
                   ))}
@@ -577,15 +579,15 @@ const DaNangGuidePage: React.FC = () => {
             </TabPane>
             
             <TabPane 
-              tab={<span className="tab-item"><CarOutlined />{t('destination:tabs.getting_around')}</span>} 
+              tab={<span className="tab-item"><CarOutlined />{t('tabs.getting_around')}</span>} 
               key="transport"
             >
               <div className="py-8">
                 <Title level={2} className="mb-4 dark:text-white">
-                  {t('destination:danang.transport.title')}
+                  {t('transport.title')}
                 </Title>
                 <Paragraph className="text-lg dark:text-gray-300 mb-8">
-                  {t('destination:danang.transport.intro')}
+                  {t('transport.intro')}
                 </Paragraph>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
@@ -601,17 +603,17 @@ const DaNangGuidePage: React.FC = () => {
                         </div>
                         <div>
                           <Title level={5} className="mb-2 dark:text-white">
-                            {t(`destination:danang.transport.options.${index}.name`)}
+                            {t(`transport.options.${index}.name`)}
                           </Title>
                           <Paragraph className="dark:text-gray-300 mb-2">
-                            {t(`destination:danang.transport.options.${index}.description`)}
+                            {t(`transport.options.${index}.description`)}
                           </Paragraph>
                           <div className="flex items-center">
                             <Tag color="blue">
-                              {t(`destination:danang.transport.options.${index}.cost`)}
+                              {t(`transport.options.${index}.cost`)}
                             </Tag>
                             <Tag color="green" className="ml-2">
-                              {t(`destination:danang.transport.options.${index}.convenience`)}
+                              {t(`transport.options.${index}.convenience`)}
                             </Tag>
                           </div>
                         </div>
@@ -622,12 +624,12 @@ const DaNangGuidePage: React.FC = () => {
                 
                 <Card className="mb-8">
                   <Title level={4} className="mb-4 dark:text-white">
-                    {t('destination:danang.transport.tips.title')}
+                    {t('transport.tips.title')}
                   </Title>
                   <ul className="list-disc pl-5 space-y-2">
                     {Array.from({ length: 5 }).map((_, index) => (
                       <li key={index} className="dark:text-gray-300">
-                        {t(`destination:danang.transport.tips.list.${index}`)}
+                        {t(`transport.tips.list.${index}`)}
                       </li>
                     ))}
                   </ul>
@@ -647,10 +649,10 @@ const DaNangGuidePage: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <Title level={2} className="mb-3 dark:text-white">
-              {t('destination:photo_gallery.title')}
+              {t('photo_gallery.title')}
             </Title>
             <Paragraph className="text-lg dark:text-gray-300 max-w-3xl mx-auto">
-              {t('destination:photo_gallery.description')}
+              {t('photo_gallery.description')}
             </Paragraph>
           </div>
           
@@ -663,10 +665,10 @@ const DaNangGuidePage: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <Title level={2} className="mb-3 dark:text-white">
-              {t('destination:recommendations.title')}
+              {t('recommendations.title')}
             </Title>
             <Paragraph className="text-lg dark:text-gray-300 max-w-3xl mx-auto">
-              {t('destination:recommendations.description')}
+              {t('recommendations.description')}
             </Paragraph>
           </div>
           
@@ -678,14 +680,14 @@ const DaNangGuidePage: React.FC = () => {
       <section className="py-16 bg-primary text-white">
         <div className="container mx-auto px-4 text-center">
           <Title level={2} className="text-white mb-4">
-            {t('destination:cta.title')}
+            {t('cta.title')}
           </Title>
           <Paragraph className="text-lg text-white mb-8 max-w-3xl mx-auto">
-            {t('destination:cta.description')}
+            {t('cta.description')}
           </Paragraph>
           <div className="flex flex-wrap justify-center gap-4">
             <Button size="large" type="default" onClick={restartTourGuide} className="bg-white text-primary h-12 font-bold">
-              {t('destination:cta.restart_tour')}
+              {t('cta.restart_tour')}
             </Button>
             <Button size="large" type="default" onClick={handleShare} className="bg-transparent text-white border-white h-12 font-bold">
               <ShareAltOutlined /> {t('common:actions.share')}
