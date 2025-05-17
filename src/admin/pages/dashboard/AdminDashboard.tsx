@@ -1,6 +1,5 @@
-// src/admin/pages/dashboard/AdminDashboard.tsx
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, Statistic, Table, List, Avatar, Spin } from 'antd';
+import { Row, Col, Card, Statistic, Spin, Typography } from 'antd';
 import { 
   ShoppingOutlined, 
   DollarOutlined, 
@@ -22,6 +21,9 @@ import {
   Bar
 } from 'recharts';
 
+import RecentOrdersWidget from './RecentOrdersWidget';
+const { Title, Text } = Typography;
+
 // Mock data (would be replaced with actual API calls)
 const salesData = [
   { name: 'T1', sales: 4000 },
@@ -34,7 +36,7 @@ const salesData = [
 ];
 
 const AdminDashboard: React.FC = () => {
-  const { t } = useTranslation(['admin', 'common']);
+  const { t } = useTranslation(['admin', 'common', 'admin-orders']);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     totalProducts: 0,
@@ -56,61 +58,10 @@ const AdminDashboard: React.FC = () => {
     }, 1000);
   }, []);
   
-  const recentOrders = [
-    { id: 1, customer: 'Nguyễn Văn A', total: 125.99, status: 'Delivered', date: '2023-01-15' },
-    { id: 2, customer: 'Trần Thị B', total: 89.99, status: 'Processing', date: '2023-01-14' },
-    { id: 3, customer: 'Lê Văn C', total: 199.99, status: 'Shipped', date: '2023-01-13' },
-    { id: 4, customer: 'Phạm Thị D', total: 59.99, status: 'Pending', date: '2023-01-12' },
-    { id: 5, customer: 'Hoàng Văn E', total: 149.99, status: 'Delivered', date: '2023-01-11' },
-  ];
-  
-  const popularProducts = [
-    { id: 1, name: 'Northern Vietnam T-Shirt', sales: 28, image: 'https://via.placeholder.com/40' },
-    { id: 2, name: 'Hanoi Old Quarter Tee', sales: 23, image: 'https://via.placeholder.com/40' },
-    { id: 3, name: 'Ha Long Bay QR Shirt', sales: 20, image: 'https://via.placeholder.com/40' },
-    { id: 4, name: 'Hue Imperial Shirt', sales: 15, image: 'https://via.placeholder.com/40' },
-  ];
-  
-  const orderColumns = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-    },
-    {
-      title: t('common:checkout.customer'),
-      dataIndex: 'customer',
-      key: 'customer',
-    },
-    {
-      title: t('common:checkout.total'),
-      dataIndex: 'total',
-      key: 'total',
-      render: (total: number) => `$${total}`,
-    },
-    {
-      title: t('common:checkout.status'),
-      dataIndex: 'status',
-      key: 'status',
-      render: (status: string) => {
-        let color = 'green';
-        if (status === 'Processing') color = 'blue';
-        if (status === 'Shipped') color = 'orange';
-        if (status === 'Pending') color = 'gold';
-        return <span style={{ color }}>{status}</span>;
-      },
-    },
-    {
-      title: t('common:checkout.date'),
-      dataIndex: 'date',
-      key: 'date',
-    },
-  ];
-  
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <Spin size="large" />
+      <div className="flex justify-center items-center py-4">
+        <Spin />
       </div>
     );
   }
@@ -118,14 +69,15 @@ const AdminDashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold dark:text-white mb-6">
+        <Title level={2} className="mb-1 dark:text-white">
           {t('admin:dashboard.title')}
-        </h1>
-        <p className="text-gray-600 dark:text-gray-300 mb-8">
+        </Title>
+        <Text className="text-gray-500 dark:text-gray-400">
           {t('admin:dashboard.welcome')}
-        </p>
+        </Text>
       </div>
       
+      {/* Stats */}
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={12} md={6}>
           <motion.div
@@ -269,52 +221,8 @@ const AdminDashboard: React.FC = () => {
       </Row>
       
       <Row gutter={[16, 16]}>
-        <Col xs={24} lg={12}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.7 }}
-          >
-            <Card
-              title={t('admin:dashboard.recent_orders')}
-              className="shadow-sm hover:shadow-md transition-shadow"
-            >
-              <Table
-                columns={orderColumns}
-                dataSource={recentOrders}
-                pagination={false}
-                rowKey="id"
-                size="small"
-              />
-            </Card>
-          </motion.div>
-        </Col>
-        
-        <Col xs={24} lg={12}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
-          >
-            <Card
-              title={t('admin:dashboard.popular_products')}
-              className="shadow-sm hover:shadow-md transition-shadow"
-            >
-              <List
-                itemLayout="horizontal"
-                dataSource={popularProducts}
-                renderItem={(item) => (
-                  <List.Item>
-                    <List.Item.Meta
-                      avatar={<Avatar src={item.image} />}
-                      title={item.name}
-                      description={`${item.sales} sold`}
-                    />
-                  </List.Item>
-                )}
-              />
-            </Card>
-          </motion.div>
+        <Col xs={24}>
+          <RecentOrdersWidget />
         </Col>
       </Row>
     </div>
