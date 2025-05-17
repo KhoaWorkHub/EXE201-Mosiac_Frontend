@@ -4,6 +4,7 @@ import productReducer from './slices/productSlice';
 import categoryReducer from '../admin/store/slices/categorySlice';
 import userProfileReducer from './slices/userProfileSlice';
 import addressReducer from './slices/addressSlice';
+import orderReducer from '../admin/store/slices/orderSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     categories: categoryReducer,
     userProfile: userProfileReducer,
     address: addressReducer,
+    orders: orderReducer,
   },
   devTools: import.meta.env.DEV,
 });

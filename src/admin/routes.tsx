@@ -3,7 +3,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import AdminLayout from './components/layout/AdminLayout';
 import AdminProtectedRoute from './components/AdminProtectedRoute';
 
-
 import CategoryList from './pages/categories/CategoryList';
 import CategoryForm from './pages/categories/CategoryForm';
 import RegionList from './pages/regions/RegionList';
@@ -15,6 +14,8 @@ import CategoryDetail from './pages/categories/CategoryDetail';
 import ProductDetail from './pages/products/ProductDetail';
 import QRCodeList from './pages/qrcodes/QRCodeList';
 import QRCodeForm from './pages/qrcodes/QRCodeForm';
+import OrderList from './pages/orders/OrderList';
+import OrderDetail from './pages/orders/OrderDetail';
 
 const AdminRoutes: React.FC = () => {
   return (
@@ -39,6 +40,10 @@ const AdminRoutes: React.FC = () => {
 
           <Route path="/qrcodes" element={<QRCodeList />} />
           <Route path="/qrcodes/new" element={<QRCodeForm />} />
+          
+          {/* Order routes */}
+          <Route path="/orders" element={<OrderList />} />
+          <Route path="/orders/:id" element={<OrderDetail />} />
           
           <Route path="*" element={<Navigate to="/admin" replace />} />
         </Routes>
