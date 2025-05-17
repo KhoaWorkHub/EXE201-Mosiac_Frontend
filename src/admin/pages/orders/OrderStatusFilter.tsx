@@ -10,7 +10,7 @@ interface OrderStatusFilterProps {
 }
 
 const OrderStatusFilter: React.FC<OrderStatusFilterProps> = ({ value, onChange }) => {
-  const { t } = useTranslation(['admin']);
+  const { t } = useTranslation(['admin-orders']);
   
   const handleToggleStatus = (status: OrderStatus) => {
     if (value.includes(status)) {
@@ -28,8 +28,7 @@ const OrderStatusFilter: React.FC<OrderStatusFilterProps> = ({ value, onChange }
   
   return (
     <Space size={[8, 8]} wrap>
-      {Object.keys(OrderStatus).map((statusKey) => {
-        const status = OrderStatus[statusKey as keyof typeof OrderStatus];
+      {Object.values(OrderStatus).map((status) => {
         const isSelected = value.includes(status);
         
         return (
@@ -47,11 +46,12 @@ const OrderStatusFilter: React.FC<OrderStatusFilterProps> = ({ value, onChange }
                 cursor: 'pointer',
                 borderWidth: isSelected ? 2 : 1,
                 padding: '6px 12px',
-                borderRadius: '16px'
+                borderRadius: '16px',
+                fontWeight: isSelected ? 'bold' : 'normal'
               }}
               onClick={() => handleToggleStatus(status)}
             >
-              {t(`admin:orders.statuses.${status.toLowerCase()}`)}
+              {t(`admin-orders:orders.statuses.${status.toLowerCase()}`)}
             </Tag>
           </motion.div>
         );

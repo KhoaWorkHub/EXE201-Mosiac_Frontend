@@ -1,4 +1,5 @@
 import { UUID } from 'crypto';
+import { UserDto } from '@/types/auth.types';
 
 export enum OrderStatus {
   PENDING_PAYMENT = 'PENDING_PAYMENT',
@@ -43,6 +44,7 @@ export interface PaymentResponse {
   bankName?: string;
   bankAccountNumber?: string;
   paymentNote?: string;
+  adminNote?: string;
 }
 
 export interface OrderResponse {
@@ -60,13 +62,23 @@ export interface OrderResponse {
   updatedAt: string;
   orderItems: OrderItemResponse[];
   payment?: PaymentResponse;
-  user?: {
-    id: UUID;
-    email: string;
-    fullName: string;
-  };
   cancelledReason?: string;
   adminNote?: string;
+  paymentDue?: string;
+}
+
+export interface OrderDetailResponse extends OrderResponse {
+  user: UserDto;
+  invoice?: InvoiceResponse;
+}
+
+export interface InvoiceResponse {
+  id: UUID;
+  orderId: UUID;
+  invoiceNumber: string;
+  pdfUrl: string;
+  issuedDate: string;
+  sent: boolean;
 }
 
 export interface OrderQueryParams {
@@ -80,17 +92,33 @@ export interface OrderQueryParams {
   sort?: string;
 }
 
-export interface PaymentConfirmationRequest {
-  orderId: UUID;
-  transactionReference?: string;
-  bankName?: string;
-  accountNumber?: string;
-  paymentNote?: string;
+export interface OrderItemRequest {
+  productId: UUID;
+  variantId?: UUID;
+  quantity: number;
+  priceOverride?: number;
+}
+
+export interface UpdateOrderItemsRequest {
+  items: OrderItemRequest[];
 }
 
 export interface OrderStatusUpdateRequest {
   status: OrderStatus;
   adminNote?: string;
+}
+
+export interface PaymentValidationRequest {
+  isValid: boolean;
+  adminNote?: string;
+}
+
+export interface PaymentFailRequest {
+  reason: string;
+}
+
+export interface PaymentRefundRequest {
+  reason: string;
 }
 
 export interface OrderFilterState {

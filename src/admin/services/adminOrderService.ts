@@ -3,17 +3,20 @@ import {
   OrderQueryParams,
   OrderResponse,
   OrderStatusUpdateRequest,
+  PaymentValidationRequest,
+  OrderDetailResponse,
+  OrderItemRequest,
+  UpdateOrderItemsRequest
 } from "@/admin/types/order.types";
 import { PageResponse, ApiResponse } from "@/admin/types";
 import { UUID } from "crypto";
 
 const ADMIN_ORDER_URL = "/api/v1/admin/orders";
 const ADMIN_PAYMENT_URL = "/api/v1/admin/payments";
-const USER_ORDER_URL = "/api/v1/user/orders";
 
 export const AdminOrderService = {
   /**
-   * Get all orders with filtering and pagination
+   * Get all orders with filtering and pagination (ADMIN)
    */
   getAllOrders: async (
     params: OrderQueryParams = {}
@@ -45,11 +48,11 @@ export const AdminOrderService = {
   },
 
   /**
-   * Get order by ID
+   * Get detailed order information (ADMIN)
    */
-  getOrderById: async (id: UUID): Promise<OrderResponse> => {
+  getOrderDetails: async (id: UUID): Promise<OrderDetailResponse> => {
     try {
-      const response = await api.get<OrderResponse>(`${USER_ORDER_URL}/${id}`);
+      const response = await api.get<OrderDetailResponse>(`${ADMIN_ORDER_URL}/${id}/details`);
       return response.data;
     } catch (error) {
       console.error("Error fetching order details:", error);
@@ -58,22 +61,7 @@ export const AdminOrderService = {
   },
 
   /**
-   * Get order by order number
-   */
-  getOrderByNumber: async (orderNumber: string): Promise<OrderResponse> => {
-    try {
-      const response = await api.get<OrderResponse>(
-        `${USER_ORDER_URL}/number/${orderNumber}`
-      );
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching order by number:", error);
-      throw error;
-    }
-  },
-
-  /**
-   * Update order status
+   * Update order status (ADMIN)
    */
   updateOrderStatus: async (
     id: UUID,
@@ -96,17 +84,72 @@ export const AdminOrderService = {
   },
 
   /**
-   * Validate payment
+   * Update order items (ADMIN)
+   */
+  updateOrderItems: async (
+    id: UUID,
+    request: UpdateOrderItemsRequest
+  ): Promise<OrderResponse> => {
+    try {
+      const response = await api.put<OrderResponse>(
+        `${ADMIN_ORDER_URL}/${id}/items`,
+        request
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error updating order items:", error);
+      throw error;
+    }
+  },
+
+  /**
+   * Add item to order (ADMIN)
+   */
+  addOrderItem: async (
+    id: UUID,
+    request: OrderItemRequest
+  ): Promise<OrderResponse> => {
+    try {
+      const response = await api.post<OrderResponse>(
+        `${ADMIN_ORDER_URL}/${id}/items`,
+        request
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error adding order item:", error);
+      throw error;
+    }
+  },
+
+  /**
+   * Remove item from order (ADMIN)
+   */
+  removeOrderItem: async (
+    id: UUID,
+    itemId: UUID
+  ): Promise<OrderResponse> => {
+    try {
+      const response = await api.delete<OrderResponse>(
+        `${ADMIN_ORDER_URL}/${id}/items/${itemId}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error removing order item:", error);
+      throw error;
+    }
+  },
+
+  /**
+   * Validate payment (ADMIN)
    */
   validatePayment: async (
     id: UUID,
-    isValid: boolean,
-    adminNote?: string
+    request: PaymentValidationRequest
   ): Promise<ApiResponse> => {
     try {
       const params = new URLSearchParams();
-      params.append("isValid", isValid.toString());
-      if (adminNote) params.append("adminNote", adminNote);
+      params.append("isValid", request.isValid.toString());
+      if (request.adminNote) params.append("adminNote", request.adminNote);
 
       const response = await api.put<ApiResponse>(
         `${ADMIN_PAYMENT_URL}/${id}/validate?${params.toString()}`
@@ -120,7 +163,7 @@ export const AdminOrderService = {
   },
 
   /**
-   * Mark payment as failed
+   * Mark payment as failed (ADMIN)
    */
   markPaymentAsFailed: async (
     id: UUID,
@@ -142,7 +185,7 @@ export const AdminOrderService = {
   },
 
   /**
-   * Refund payment
+   * Refund payment (ADMIN)
    */
   refundPayment: async (id: UUID, reason: string): Promise<ApiResponse> => {
     try {
@@ -161,7 +204,34 @@ export const AdminOrderService = {
   },
 
   /**
-   * Get order analytics (count by status)
+   * Export orders to CSV/Excel (ADMIN)
+   */
+  exportOrders: async (
+    format: string = "csv",
+    status?: string,
+    startDate?: string,
+    endDate?: string
+  ): Promise<Blob> => {
+    try {
+      const params = new URLSearchParams();
+      params.append("format", format);
+      if (status) params.append("status", status);
+      if (startDate) params.append("startDate", startDate);
+      if (endDate) params.append("endDate", endDate);
+
+      const response = await api.get(
+        `${ADMIN_ORDER_URL}/export?${params.toString()}`,
+        { responseType: 'blob' }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error exporting orders:", error);
+      throw error;
+    }
+  },
+
+  /**
+   * Get order analytics (counts by status)
    */
   getOrderAnalytics: async (): Promise<Record<string, number>> => {
     try {
