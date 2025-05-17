@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Radio, Row, Col, Skeleton } from 'antd';
+import { Card, Radio, Row, Col, Skeleton, Empty } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { fetchRevenueAnalytics } from '@/admin/store/slices/orderSlice';
-import { OrderStatus } from '@/admin/types/order.types';
+import { fetchRevenueAnalytics, fetchOrderAnalytics } from '@/admin/store/slices/orderSlice';
+import { OrderStatus, OrderStatusColors } from '@/admin/types/order.types';
+import { formatCurrency } from '@/utils/formatters';
 import { motion } from 'framer-motion';
 import {
   BarChart,
@@ -11,7 +12,7 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
+  Tooltip as RechartsTooltip,
   Legend,
   ResponsiveContainer,
   PieChart,
@@ -21,13 +22,16 @@ import {
   Line
 } from 'recharts';
 
+
 const OrderAnalytics: React.FC = () => {
-  const { t } = useTranslation(['admin']);
+  const { t } = useTranslation(['admin-orders', 'common']);
   const dispatch = useAppDispatch();
   const { analytics } = useAppSelector(state => state.orders);
   const [timePeriod, setTimePeriod] = useState<'day' | 'week' | 'month'>('day');
   
   useEffect(() => {
+    // Load both analytics when component mounts or time period changes
+    dispatch(fetchOrderAnalytics());
     dispatch(fetchRevenueAnalytics(timePeriod));
   }, [dispatch, timePeriod]);
   
@@ -35,20 +39,18 @@ const OrderAnalytics: React.FC = () => {
   const getStatusDistributionData = () => {
     if (!analytics.countByStatus) return [];
     
-    const statusData = Object.entries(analytics.countByStatus).map(([status, count]) => ({
-      name: t(`admin:orders.statuses.${status.toLowerCase()}`),
+    return Object.entries(analytics.countByStatus).map(([status, count]) => ({
+      name: t(`admin-orders:orders.statuses.${status.toLowerCase()}`),
       value: count,
       status
     }));
-    
-    return statusData;
   };
   
-  // Mock revenue data (replace with actual data from API)
+  // Format data for revenue chart
   const getRevenueData = () => {
-    if (!analytics.revenueData) {
-      // Mock data if API data not available
-      const mockData = [];
+    if (!analytics.revenueData || analytics.revenueData.length === 0) {
+      // Generate placeholder data if no real data exists
+      const placeholderData = [];
       const labels = timePeriod === 'day' 
         ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         : timePeriod === 'week'
@@ -56,31 +58,47 @@ const OrderAnalytics: React.FC = () => {
         : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
       
       for (let i = 0; i < labels.length; i++) {
-        mockData.push({
+        placeholderData.push({
           name: labels[i],
-          revenue: Math.floor(Math.random() * 5000) + 1000,
-          orders: Math.floor(Math.random() * 20) + 5
+          revenue: 0,
+          orders: 0
         });
       }
       
-      return mockData;
+      return placeholderData;
     }
     
-    return analytics.revenueData;
+    // Format the actual revenue data from the API
+    return analytics.revenueData.map(item => ({
+      name: item.label,
+      revenue: item.revenue || 0,
+      orders: item.orderCount || 0
+    }));
   };
   
-  // Pie chart colors
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#FF0000'];
   
-  // Status colors
-  const statusColors = {
-    [OrderStatus.PENDING_PAYMENT]: '#ffa940',
-    [OrderStatus.PAID]: '#2f54eb',
-    [OrderStatus.PROCESSING]: '#13c2c2',
-    [OrderStatus.SHIPPING]: '#1890ff',
-    [OrderStatus.DELIVERED]: '#52c41a',
-    [OrderStatus.CANCELLED]: '#f5222d'
+  // Custom tooltip formatter for revenue chart
+  const revenueTooltipFormatter = (value: number, name: string) => {
+    if (name === 'revenue') {
+      return [formatCurrency(value), t('admin-orders:orders.analytics.revenue')];
+    }
+    return [value, t('admin-orders:orders.analytics.orders_count')];
   };
+  
+  // Check if we have any meaningful data to display
+  const hasData = analytics.countByStatus && 
+    Object.values(analytics.countByStatus).some(count => count > 0);
+  
+  if (!hasData && !analytics.loading) {
+    return (
+      <Card title={t('admin-orders:orders.analytics.title')}>
+        <Empty 
+          description={t('admin-orders:orders.analytics.no_data')} 
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+        />
+      </Card>
+    );
+  }
   
   return (
     <motion.div
@@ -89,7 +107,7 @@ const OrderAnalytics: React.FC = () => {
       transition={{ duration: 0.3 }}
     >
       <Card 
-        title={t('admin:orders.analytics.title')}
+        title={t('admin-orders:orders.analytics.title')}
         extra={
           <Radio.Group
             value={timePeriod}
@@ -97,16 +115,16 @@ const OrderAnalytics: React.FC = () => {
             buttonStyle="solid"
             size="small"
           >
-            <Radio.Button value="day">{t('admin:orders.analytics.daily')}</Radio.Button>
-            <Radio.Button value="week">{t('admin:orders.analytics.weekly')}</Radio.Button>
-            <Radio.Button value="month">{t('admin:orders.analytics.monthly')}</Radio.Button>
+            <Radio.Button value="day">{t('admin-orders:orders.analytics.daily')}</Radio.Button>
+            <Radio.Button value="week">{t('admin-orders:orders.analytics.weekly')}</Radio.Button>
+            <Radio.Button value="month">{t('admin-orders:orders.analytics.monthly')}</Radio.Button>
           </Radio.Group>
         }
       >
         <Row gutter={[16, 16]}>
           {/* Revenue Chart */}
           <Col xs={24} lg={16}>
-            <Card title={t('admin:orders.analytics.revenue_trend')} bordered={false}>
+            <Card title={t('admin-orders:orders.analytics.revenue_trend')} bordered={false}>
               {analytics.loading ? (
                 <Skeleton active paragraph={{ rows: 5 }} />
               ) : (
@@ -118,15 +136,32 @@ const OrderAnalytics: React.FC = () => {
                     >
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip formatter={(value) => `$${value}`} />
+                      <YAxis 
+                        yAxisId="left"
+                        orientation="left" 
+                        stroke="#8884d8"
+                      />
+                      <YAxis 
+                        yAxisId="right"
+                        orientation="right" 
+                        stroke="#82ca9d"
+                      />
+                      <RechartsTooltip formatter={revenueTooltipFormatter} />
                       <Legend />
                       <Line 
+                        yAxisId="left"
                         type="monotone" 
                         dataKey="revenue" 
                         stroke="#8884d8" 
-                        name={t('admin:orders.analytics.revenue')}
+                        name={t('admin-orders:orders.analytics.revenue')}
                         activeDot={{ r: 8 }} 
+                      />
+                      <Line 
+                        yAxisId="right"
+                        type="monotone" 
+                        dataKey="orders" 
+                        stroke="#82ca9d" 
+                        name={t('admin-orders:orders.analytics.orders')}
                       />
                     </LineChart>
                   </ResponsiveContainer>
@@ -137,7 +172,7 @@ const OrderAnalytics: React.FC = () => {
           
           {/* Status Distribution */}
           <Col xs={24} sm={12} lg={8}>
-            <Card title={t('admin:orders.analytics.status_distribution')} bordered={false}>
+            <Card title={t('admin-orders:orders.analytics.status_distribution')} bordered={false}>
               {analytics.loading ? (
                 <Skeleton active paragraph={{ rows: 5 }} />
               ) : (
@@ -157,11 +192,13 @@ const OrderAnalytics: React.FC = () => {
                         {getStatusDistributionData().map((entry, index) => (
                           <Cell 
                             key={`cell-${index}`} 
-                            fill={statusColors[entry.status as OrderStatus] || COLORS[index % COLORS.length]}
+                            fill={OrderStatusColors[entry.status as OrderStatus] || "#000000"}
                           />
                         ))}
                       </Pie>
-                      <Tooltip formatter={(value) => [value, t('admin:orders.analytics.orders')]} />
+                      <RechartsTooltip 
+                        formatter={(value) => [value, t('admin-orders:orders.analytics.orders')]} 
+                      />
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
@@ -171,7 +208,7 @@ const OrderAnalytics: React.FC = () => {
           
           {/* Orders Count Chart */}
           <Col xs={24}>
-            <Card title={t('admin:orders.analytics.orders_count')} bordered={false}>
+            <Card title={t('admin-orders:orders.analytics.orders_count')} bordered={false}>
               {analytics.loading ? (
                 <Skeleton active paragraph={{ rows: 5 }} />
               ) : (
@@ -184,12 +221,12 @@ const OrderAnalytics: React.FC = () => {
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis />
-                      <Tooltip />
+                      <RechartsTooltip formatter={(value) => [`${value}`, t('admin-orders:orders.analytics.orders')]} />
                       <Legend />
                       <Bar 
                         dataKey="orders" 
                         fill="#82ca9d" 
-                        name={t('admin:orders.analytics.orders_count')} 
+                        name={t('admin-orders:orders.analytics.orders_count')} 
                       />
                     </BarChart>
                   </ResponsiveContainer>

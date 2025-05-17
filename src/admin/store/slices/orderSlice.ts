@@ -2,10 +2,14 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { AdminOrderService } from '@/admin/services/adminOrderService';
 import { 
   OrderResponse, 
+  OrderDetailResponse,
   OrderQueryParams, 
   OrderStatusUpdateRequest,
   OrderFilterState,
-  OrderStatus
+  OrderStatus,
+  PaymentValidationRequest,
+  UpdateOrderItemsRequest,
+  OrderItemRequest
 } from '@/admin/types/order.types';
 import { PageResponse } from '@/admin/types';
 import { RootState } from '@/store';
@@ -14,6 +18,7 @@ import { UUID } from 'crypto';
 interface OrderState {
   orders: OrderResponse[];
   currentOrder: OrderResponse | null;
+  orderDetail: OrderDetailResponse | null;
   pagination: {
     current: number;
     pageSize: number;
@@ -22,6 +27,7 @@ interface OrderState {
   loading: boolean;
   orderDetailLoading: boolean;
   updating: boolean;
+  exporting: boolean;
   error: string | null;
   filters: OrderFilterState;
   analytics: {
@@ -35,6 +41,7 @@ interface OrderState {
 const initialState: OrderState = {
   orders: [],
   currentOrder: null,
+  orderDetail: null,
   pagination: {
     current: 1,
     pageSize: 10,
@@ -43,6 +50,7 @@ const initialState: OrderState = {
   loading: false,
   orderDetailLoading: false,
   updating: false,
+  exporting: false,
   error: null,
   filters: {
     statuses: [],
@@ -99,24 +107,13 @@ export const fetchOrders = createAsyncThunk(
   }
 );
 
-export const fetchOrderById = createAsyncThunk(
-  'orders/fetchOrderById',
+export const getOrderDetails = createAsyncThunk(
+  'orders/getOrderDetails',
   async (id: UUID, { rejectWithValue }) => {
     try {
-      return await AdminOrderService.getOrderById(id);
+      return await AdminOrderService.getOrderDetails(id);
     } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : 'Failed to fetch order');
-    }
-  }
-);
-
-export const fetchOrderByNumber = createAsyncThunk(
-  'orders/fetchOrderByNumber',
-  async (orderNumber: string, { rejectWithValue }) => {
-    try {
-      return await AdminOrderService.getOrderByNumber(orderNumber);
-    } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : 'Failed to fetch order');
+      return rejectWithValue(error instanceof Error ? error.message : 'Failed to fetch order details');
     }
   }
 );
@@ -132,15 +129,48 @@ export const updateOrderStatus = createAsyncThunk(
   }
 );
 
+export const updateOrderItems = createAsyncThunk(
+  'orders/updateOrderItems',
+  async ({ id, request }: { id: UUID; request: UpdateOrderItemsRequest }, { rejectWithValue }) => {
+    try {
+      return await AdminOrderService.updateOrderItems(id, request);
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Failed to update order items');
+    }
+  }
+);
+
+export const addOrderItem = createAsyncThunk(
+  'orders/addOrderItem',
+  async ({ id, request }: { id: UUID; request: OrderItemRequest }, { rejectWithValue }) => {
+    try {
+      return await AdminOrderService.addOrderItem(id, request);
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Failed to add order item');
+    }
+  }
+);
+
+export const removeOrderItem = createAsyncThunk(
+  'orders/removeOrderItem',
+  async ({ id, itemId }: { id: UUID; itemId: UUID }, { rejectWithValue }) => {
+    try {
+      return await AdminOrderService.removeOrderItem(id, itemId);
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Failed to remove order item');
+    }
+  }
+);
+
 export const validatePayment = createAsyncThunk(
   'orders/validatePayment',
   async (
-    { id, isValid, adminNote }: { id: UUID; isValid: boolean; adminNote?: string }, 
+    { id, request }: { id: UUID; request: PaymentValidationRequest }, 
     { rejectWithValue }
   ) => {
     try {
-      await AdminOrderService.validatePayment(id, isValid, adminNote);
-      return { id, isValid };
+      await AdminOrderService.validatePayment(id, request);
+      return { id, isValid: request.isValid };
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Failed to validate payment');
     }
@@ -167,6 +197,19 @@ export const refundPayment = createAsyncThunk(
       return id;
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Failed to refund payment');
+    }
+  }
+);
+
+export const exportOrders = createAsyncThunk(
+  'orders/exportOrders',
+  async ({ format, status, startDate, endDate }: 
+    { format: string; status?: string; startDate?: string; endDate?: string },
+    { rejectWithValue }) => {
+    try {
+      return await AdminOrderService.exportOrders(format, status, startDate, endDate);
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Failed to export orders');
     }
   }
 );
@@ -206,6 +249,7 @@ const orderSlice = createSlice({
     },
     clearCurrentOrder: (state) => {
       state.currentOrder = null;
+      state.orderDetail = null;
     },
     setKeywordFilter: (state, action: PayloadAction<string>) => {
       state.filters.keyword = action.payload;
@@ -248,30 +292,17 @@ const orderSlice = createSlice({
         state.error = action.payload as string;
       })
       
-      // Fetch order by ID
-      .addCase(fetchOrderById.pending, (state) => {
+      // Get order details
+      .addCase(getOrderDetails.pending, (state) => {
         state.orderDetailLoading = true;
         state.error = null;
       })
-      .addCase(fetchOrderById.fulfilled, (state, action: PayloadAction<OrderResponse>) => {
+      .addCase(getOrderDetails.fulfilled, (state, action: PayloadAction<OrderDetailResponse>) => {
         state.orderDetailLoading = false;
+        state.orderDetail = action.payload;
         state.currentOrder = action.payload;
       })
-      .addCase(fetchOrderById.rejected, (state, action) => {
-        state.orderDetailLoading = false;
-        state.error = action.payload as string;
-      })
-      
-      // Fetch order by number
-      .addCase(fetchOrderByNumber.pending, (state) => {
-        state.orderDetailLoading = true;
-        state.error = null;
-      })
-      .addCase(fetchOrderByNumber.fulfilled, (state, action: PayloadAction<OrderResponse>) => {
-        state.orderDetailLoading = false;
-        state.currentOrder = action.payload;
-      })
-      .addCase(fetchOrderByNumber.rejected, (state, action) => {
+      .addCase(getOrderDetails.rejected, (state, action) => {
         state.orderDetailLoading = false;
         state.error = action.payload as string;
       })
@@ -293,6 +324,79 @@ const orderSlice = createSlice({
       })
       .addCase(updateOrderStatus.rejected, (state, action) => {
         state.updating = false;
+        state.error = action.payload as string;
+      })
+      
+      // Update order items
+      .addCase(updateOrderItems.pending, (state) => {
+        state.updating = true;
+        state.error = null;
+      })
+      .addCase(updateOrderItems.fulfilled, (state, action: PayloadAction<OrderResponse>) => {
+        state.updating = false;
+        state.currentOrder = action.payload;
+        
+        // Update order in list if it exists
+        const index = state.orders.findIndex(order => order.id === action.payload.id);
+        if (index !== -1) {
+          state.orders[index] = action.payload;
+        }
+      })
+      .addCase(updateOrderItems.rejected, (state, action) => {
+        state.updating = false;
+        state.error = action.payload as string;
+      })
+      
+      // Add order item
+      .addCase(addOrderItem.pending, (state) => {
+        state.updating = true;
+        state.error = null;
+      })
+      .addCase(addOrderItem.fulfilled, (state, action: PayloadAction<OrderResponse>) => {
+        state.updating = false;
+        state.currentOrder = action.payload;
+        
+        // Update order in list if it exists
+        const index = state.orders.findIndex(order => order.id === action.payload.id);
+        if (index !== -1) {
+          state.orders[index] = action.payload;
+        }
+      })
+      .addCase(addOrderItem.rejected, (state, action) => {
+        state.updating = false;
+        state.error = action.payload as string;
+      })
+      
+      // Remove order item
+      .addCase(removeOrderItem.pending, (state) => {
+        state.updating = true;
+        state.error = null;
+      })
+      .addCase(removeOrderItem.fulfilled, (state, action: PayloadAction<OrderResponse>) => {
+        state.updating = false;
+        state.currentOrder = action.payload;
+        
+        // Update order in list if it exists
+        const index = state.orders.findIndex(order => order.id === action.payload.id);
+        if (index !== -1) {
+          state.orders[index] = action.payload;
+        }
+      })
+      .addCase(removeOrderItem.rejected, (state, action) => {
+        state.updating = false;
+        state.error = action.payload as string;
+      })
+      
+      // Export orders
+      .addCase(exportOrders.pending, (state) => {
+        state.exporting = true;
+        state.error = null;
+      })
+      .addCase(exportOrders.fulfilled, (state) => {
+        state.exporting = false;
+      })
+      .addCase(exportOrders.rejected, (state, action) => {
+        state.exporting = false;
         state.error = action.payload as string;
       })
       
