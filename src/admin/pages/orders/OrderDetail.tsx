@@ -67,7 +67,7 @@ import {
 } from "@/admin/types/order.types";
 import { formatCurrency, formatDate } from "@/utils/formatters";
 import { motion } from "framer-motion";
-import OrderTimeLine from "./OrderTimeLine";
+import OrderTimelineStatus  from "./OrderTimelineStatus";
 
 const { Title, Text } = Typography;
 const { Step } = Steps;
@@ -1082,7 +1082,7 @@ const OrderDetail: React.FC = () => {
           </TabPane>
 
           <TabPane tab={t("admin-orders:orders.tabs.history")} key="history">
-            <OrderTimeLine order={currentOrder} />
+            <OrderTimelineStatus order={currentOrder} />
           </TabPane>
         </Tabs>
       </motion.div>

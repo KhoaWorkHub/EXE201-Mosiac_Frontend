@@ -31,7 +31,7 @@ interface TimelineItem {
   userName?: string;
 }
 
-const OrderTimeLine: React.FC<OrderTimelineProps> = ({ order }) => {
+const OrderTimelineStatus: React.FC<OrderTimelineProps> = ({ order }) => {
   const { t } = useTranslation(['admin', 'admin-orders', 'common']);
   
   // Helper function to determine appropriate status icon
@@ -251,4 +251,4 @@ const OrderTimeLine: React.FC<OrderTimelineProps> = ({ order }) => {
   );
 };
 
-export default OrderTimeLine;
+export default OrderTimelineStatus;
