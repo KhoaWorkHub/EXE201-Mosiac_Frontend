@@ -13,6 +13,7 @@ import { UUID } from "crypto";
 
 const ADMIN_ORDER_URL = "/api/v1/admin/orders";
 const ADMIN_PAYMENT_URL = "/api/v1/admin/payments";
+const ADMIN_ANALYTICS_ORDER_URL = "/api/v1/admin/analytics/orders";
 
 export const AdminOrderService = {
   /**
@@ -236,11 +237,11 @@ export const AdminOrderService = {
   getOrderAnalytics: async (): Promise<Record<string, number>> => {
     try {
       const response = await api.get<Record<string, number>>(
-        `${ADMIN_ORDER_URL}/analytics`
+        `${ADMIN_ANALYTICS_ORDER_URL}/count`
       );
       return response.data;
     } catch (error) {
-      console.error("Error fetching order analytics:", error);
+      console.error("Error fetching order analytics count:", error);
       throw error;
     }
   },
@@ -255,7 +256,7 @@ export const AdminOrderService = {
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const response = await api.get<any>(
-        `${ADMIN_ORDER_URL}/revenue?period=${period}`
+        `${ADMIN_ANALYTICS_ORDER_URL}/revenue?period=${period}`
       );
       return response.data;
     } catch (error) {
