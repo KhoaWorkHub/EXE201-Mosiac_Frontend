@@ -25,7 +25,7 @@ const LuxuryLoginPage: React.FC = () => {
   // Collection of luxury Vietnamese fashion images for background
   const luxuryImages = [
     '/assets/auth/luxury-ao-dai-1.jpg',
-    '/assets/auth/luxury-vietnamese-fashion-2.jpg',
+    '/assets/auth/luxury-vietnamese-fashion-2.png',
     '/assets/auth/luxury-craft-3.jpg',
     '/assets/auth/luxury-silks-4.jpg',
   ];
@@ -56,7 +56,7 @@ const LuxuryLoginPage: React.FC = () => {
     // Rotate background images
     slideTimerRef.current = setInterval(() => {
       setActiveSlide(prev => (prev + 1) % luxuryImages.length);
-    }, 6000);
+    }, 4000);
     
     return () => {
       if (slideTimerRef.current) {
