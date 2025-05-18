@@ -68,6 +68,8 @@ import {
 import { formatCurrency, formatDate } from "@/utils/formatters";
 import { motion } from "framer-motion";
 import OrderTimelineStatus  from "./OrderTimelineStatus";
+import OrderShippingTab from './OrderShippingTab';
+
 
 const { Title, Text } = Typography;
 const { Step } = Steps;
@@ -1083,6 +1085,64 @@ const OrderDetail: React.FC = () => {
 
           <TabPane tab={t("admin-orders:orders.tabs.history")} key="history">
             <OrderTimelineStatus order={currentOrder} />
+          </TabPane>
+          <TabPane tab={t("admin-orders:orders.tabs.shipping")} key="shipping">
+            <OrderShippingTab 
+              order={currentOrder} 
+              onShippingFeeUpdated={() => {
+                // Refresh order data
+                if (id) {
+                  dispatch(
+                    getOrderDetails(
+                      id as `${string}-${string}-${string}-${string}-${string}`
+                    )
+                  );
+                }
+              }} 
+            />
+          </TabPane>
+          
+          <TabPane tab={t("admin-orders:orders.tabs.payment")} key="payment">
+            {/* Bạn có thể thêm nội dung chi tiết thanh toán ở đây */}
+            <Card title={t("admin-orders:orders.payment_details")} className="mb-4">
+              {currentOrder.payment ? (
+                <Descriptions bordered column={1}>
+                  <Descriptions.Item label={t("admin-orders:orders.payment_method")}>
+                    {t(`admin-orders:orders.payment_methods.${currentOrder.payment.paymentMethod.toLowerCase()}`)}
+                  </Descriptions.Item>
+                  <Descriptions.Item label={t("admin-orders:orders.amount")}>
+                    {formatCurrency(currentOrder.payment.amount)}
+                  </Descriptions.Item>
+                  <Descriptions.Item label={t("admin-orders:orders.payment_status")}>
+                    <Tag color={PaymentStatusColors[currentOrder.payment.status]}>
+                      {t(`admin-orders:orders.payment_statuses.${currentOrder.payment.status.toLowerCase()}`)}
+                    </Tag>
+                  </Descriptions.Item>
+                  {currentOrder.payment.paymentDate && (
+                    <Descriptions.Item label={t("admin-orders:orders.payment_date")}>
+                      {formatDate(currentOrder.payment.paymentDate)}
+                    </Descriptions.Item>
+                  )}
+                  {currentOrder.payment.transactionReference && (
+                    <Descriptions.Item label={t("admin-orders:orders.transaction_reference")}>
+                      {currentOrder.payment.transactionReference}
+                    </Descriptions.Item>
+                  )}
+                  {currentOrder.payment.paymentNote && (
+                    <Descriptions.Item label={t("admin-orders:orders.payment_note")}>
+                      {currentOrder.payment.paymentNote}
+                    </Descriptions.Item>
+                  )}
+                </Descriptions>
+              ) : (
+                <Alert
+                  message={t("admin-orders:orders.no_payment")}
+                  description={t("admin-orders:orders.no_payment_desc")}
+                  type="info"
+                  showIcon
+                />
+              )}
+            </Card>
           </TabPane>
         </Tabs>
       </motion.div>

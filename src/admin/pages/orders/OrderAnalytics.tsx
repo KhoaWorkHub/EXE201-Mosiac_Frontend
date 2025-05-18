@@ -22,7 +22,6 @@ import {
   Line
 } from 'recharts';
 
-
 const OrderAnalytics: React.FC = () => {
   const { t } = useTranslation(['admin-orders', 'common']);
   const dispatch = useAppDispatch();
@@ -46,36 +45,72 @@ const OrderAnalytics: React.FC = () => {
     }));
   };
   
-  // Format data for revenue chart
   const getRevenueData = () => {
-    if (!analytics.revenueData || analytics.revenueData.length === 0) {
+    // Check if revenueData exists and has a data property that is an array
+    if (!analytics.revenueData || !Array.isArray(analytics.revenueData) || analytics.revenueData.length === 0) {
       // Generate placeholder data if no real data exists
       const placeholderData = [];
-      const labels = timePeriod === 'day' 
-        ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        : timePeriod === 'week'
-        ? ['Week 1', 'Week 2', 'Week 3', 'Week 4'] 
-        : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-      
+      const labels =
+        timePeriod === 'day'
+          ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          : timePeriod === 'week'
+          ? ['Week 1', 'Week 2', 'Week 3', 'Week 4']
+          : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+  
       for (let i = 0; i < labels.length; i++) {
         placeholderData.push({
           name: labels[i],
           revenue: 0,
-          orders: 0
+          orders: 0,
         });
       }
-      
+  
       return placeholderData;
     }
-    
-    // Format the actual revenue data from the API
-    return analytics.revenueData.map(item => ({
+  
+    // Aggregate data based on timePeriod
+    if (timePeriod === 'week' || timePeriod === 'month') {
+      interface AggregatedData {
+        [key: string]: { revenue: number; orders: number };
+      }
+      
+      const aggregatedData: AggregatedData = {};
+      
+      analytics.revenueData.forEach((item) => {
+        const date = new Date(item.label);
+        let key;
+  
+        if (timePeriod === 'week') {
+          // Group by week (assuming week starts on Monday)
+          const weekNumber = Math.floor((date.getDate() - 1) / 7) + 1;
+          key = `Week ${weekNumber}`;
+        } else {
+          // Group by month
+          key = date.toLocaleString('default', { month: 'short' });
+        }
+  
+        if (!aggregatedData[key]) {
+          aggregatedData[key] = { revenue: 0, orders: 0 };
+        }
+        aggregatedData[key].revenue += item.value || 0;
+        aggregatedData[key].orders += item.count || 0;
+      });
+  
+      return Object.keys(aggregatedData).map((name) => ({
+        name,
+        revenue: aggregatedData[name].revenue,
+        orders: aggregatedData[name].orders,
+      }));
+    }
+  
+    // Format daily data from the API
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return analytics.revenueData.map((item: { label: any; value: any; count: any; }) => ({
       name: item.label,
-      revenue: item.revenue || 0,
-      orders: item.orderCount || 0
+      revenue: item.value || 0,
+      orders: item.count || 0,
     }));
   };
-  
   
   // Custom tooltip formatter for revenue chart
   const revenueTooltipFormatter = (value: number, name: string) => {
