@@ -118,8 +118,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <Header 
         className={`px-4 md:px-6 fixed top-0 w-full z-50 transition-all duration-300 ${
           scrolled 
-            ? 'bg-white dark:bg-gray-900 shadow-md py-2' 
-            : 'bg-transparent dark:bg-transparent py-4'
+            ? 'bg-white dark:bg-gray-700 shadow-md py-2' 
+            : 'bg-transparent dark:bg-gray-800/90 py-4'
         }`}
         style={{ padding: 0, height: 'auto' }}
       >
@@ -129,7 +129,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               <img 
                 src="/logo.svg" 
                 alt="MOSIAC" 
-                className={`h-8 w-auto mr-2 transition-all duration-300 ${scrolled ? 'opacity-100' : 'opacity-80'}`}
+                className={`h-8 w-auto ml-4 transition-all duration-300 
+                  ${scrolled ? 'opacity-100' : 'opacity-95'} 
+                  dark:filter dark:brightness-150 dark:contrast-125`}
               />
               <span className={`hidden md:inline text-xl font-bold transition-colors duration-300 ${
                 scrolled 
@@ -146,14 +148,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 className={`border-none transition-colors duration-300 ${
                   scrolled 
                     ? 'bg-transparent text-gray-800 dark:text-white' 
-                    : 'bg-transparent text-white dark:text-gray-200'
+                    : 'bg-transparent text-white dark:text-gray-100'
                 }`}
                 items={navItems.map(item => ({
                   key: item.key,
                   label: <Link to={item.key}>{item.label}</Link>,
                   className: scrolled 
                     ? 'hover:text-primary dark:hover:text-primary' 
-                    : 'hover:text-gray-300 dark:hover:text-gray-300'
+                    : 'hover:text-gray-300 dark:hover:text-primary'
                 }))}
               />
             </div>
@@ -163,7 +165,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <div className={`transition-colors duration-300 ${
               scrolled 
                 ? 'text-gray-800 dark:text-white' 
-                : 'text-white dark:text-gray-200'
+                : 'text-white dark:text-white'
             }`}>
               <Button 
                 type="text" 
@@ -172,7 +174,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 className={`hover:bg-transparent ${
                   scrolled 
                     ? 'hover:text-primary dark:hover:text-primary' 
-                    : 'hover:text-gray-300 dark:hover:text-gray-300'
+                    : 'hover:text-gray-300 dark:hover:text-primary'
                 }`}
               />
             </div>
@@ -189,7 +191,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <CartButton 
               className={scrolled 
                 ? 'text-gray-800 dark:text-white hover:text-primary dark:hover:text-primary' 
-                : 'text-white dark:text-gray-200 hover:text-gray-300 dark:hover:text-gray-300'
+                : 'text-white dark:text-white hover:text-gray-300 dark:hover:text-primary'
               } 
             />
 
@@ -200,7 +202,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                   <span className={`ml-2 hidden md:inline transition-colors duration-300 ${
                     scrolled 
                       ? 'text-gray-800 dark:text-white' 
-                      : 'text-white dark:text-gray-200'
+                      : 'text-white dark:text-white'
                   }`}>
                     {user?.fullName}
                   </span>
@@ -210,7 +212,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               <Link to="/login">
                 <Button 
                   type={scrolled ? "primary" : "default"} 
-                  className={!scrolled ? "text-white border-white hover:text-gray-300 hover:border-gray-300" : ""}
+                  className={!scrolled ? "text-white border-white hover:text-gray-300 hover:border-gray-300 dark:bg-primary dark:text-white dark:border-primary dark:hover:bg-primary/90" : ""}
                 >
                   {t('actions.login')}
                 </Button>
@@ -225,7 +227,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 className={`hover:bg-transparent ${
                   scrolled 
                     ? 'text-gray-800 dark:text-white hover:text-primary dark:hover:text-primary' 
-                    : 'text-white dark:text-gray-200 hover:text-gray-300 dark:hover:text-gray-300'
+                    : 'text-white dark:text-white hover:text-gray-300 dark:hover:text-primary'
                 }`}
               />
             </div>
@@ -287,7 +289,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <AnimatePresence>
         {searchOpen && (
           <motion.div 
-            className="fixed inset-0 bg-white dark:bg-gray-900 z-50 p-4 flex flex-col"
+            className="fixed inset-0 bg-white dark:bg-gray-800 z-50 p-4 flex flex-col"
             initial="closed"
             animate="open"
             exit="closed"

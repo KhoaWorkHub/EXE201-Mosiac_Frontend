@@ -9,7 +9,6 @@ import {
   Input, 
   Select, 
   Button, 
-  Slider, 
   Collapse, 
   Tag, 
   Pagination, 
@@ -54,7 +53,19 @@ const ProductsPage: React.FC = () => {
     sort: 'createdAt,desc',
     ...filters // Override defaults with any defined values from filters
   });
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
+  
+  // Định nghĩa các khoảng giá VND
+  const priceRanges = [
+    { min: 0, max: 100000, label: '0 - 100.000₫' },
+    { min: 100000, max: 150000, label: '100.000₫ - 150.000₫' },
+    { min: 150000, max: 200000, label: '150.000₫ - 200.000₫' },
+    { min: 200000, max: 250000, label: '200.000₫ - 250.000₫' },
+    { min: 250000, max: 300000, label: '250.000₫ - 300.000₫' },
+    { min: 300000, max: 350000, label: '300.000₫ - 350.000₫' },
+  ];
+  
+  // Lưu trữ khoảng giá đang được chọn
+  const [selectedPriceRange, setSelectedPriceRange] = useState<string | undefined>(undefined);
   
   // Define type for filters
   interface ProductFilters {
@@ -100,11 +111,14 @@ const ProductsPage: React.FC = () => {
       }
     });
     
-    // Update price range based on query parameters or set to default
+    // Update price range selection based on query parameters
     if (newFilters.minPrice !== undefined && newFilters.maxPrice !== undefined) {
-      setPriceRange([newFilters.minPrice, newFilters.maxPrice]);
-    } else {
-      setPriceRange([0, 1000]); // Default price range
+      const rangeIndex = priceRanges.findIndex(
+        range => range.min === newFilters.minPrice && range.max === newFilters.maxPrice
+      );
+      if (rangeIndex !== -1) {
+        setSelectedPriceRange(rangeIndex.toString());
+      }
     }
     
     // Update local filters
@@ -112,6 +126,7 @@ const ProductsPage: React.FC = () => {
     
     // Dispatch filters to Redux
     dispatch(setFilters(newFilters));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search, dispatch]);
   
   // Fetch products when filters change
@@ -134,7 +149,7 @@ const ProductsPage: React.FC = () => {
       size: 12,
       sort: 'createdAt,desc',
     });
-    setPriceRange([0, 1000]);
+    setSelectedPriceRange(undefined);
     navigate('/products');
     setShowFilters(false);
   };
@@ -184,14 +199,29 @@ const ProductsPage: React.FC = () => {
   };
   
   // Handle price range change
-  const handlePriceRangeChange = (value: [number, number]) => {
-    setPriceRange(value);
-    setLocalFilters(prev => ({ 
-      ...prev, 
-      minPrice: value[0], 
-      maxPrice: value[1],
-      page: 0
-    }));
+  const handlePriceRangeChange = (rangeIndex: string) => {
+    const index = parseInt(rangeIndex);
+    
+    // Nếu chọn khoảng giá đang được chọn, hủy chọn
+    if (selectedPriceRange === rangeIndex) {
+      setSelectedPriceRange(undefined);
+      setLocalFilters(prev => ({ 
+        ...prev, 
+        minPrice: undefined, 
+        maxPrice: undefined,
+        page: 0 
+      }));
+    } else {
+      // Chọn khoảng giá mới
+      setSelectedPriceRange(rangeIndex);
+      const range = priceRanges[index];
+      setLocalFilters(prev => ({ 
+        ...prev, 
+        minPrice: range.min, 
+        maxPrice: range.max,
+        page: 0 
+      }));
+    }
   };
   
   // Add/remove active filter
@@ -283,29 +313,26 @@ const handleAddToCart = async (product: ProductResponse) => {
                 />
               </div>
               
-              {/* Price Range */}
+              {/* Price Range - Dạng checkbox thay vì slider */}
               <div className="mb-6">
                 <Text strong className="block mb-2 dark:text-white">
                   {t('product:filters.price_range')}
                 </Text>
-                <Slider 
-                  range 
-                  min={0} 
-                  max={1000} 
-                  step={10}
-                  value={priceRange}
-                  onChange={(value) => handlePriceRangeChange(value as [number, number])}
-                  tooltip={{
-                    formatter: (value) => `$${value}`,
-                  }}
-                />
-                <div className="flex justify-between mt-2">
-                  <Text className="text-gray-500 dark:text-gray-400">
-                    ${priceRange[0]}
-                  </Text>
-                  <Text className="text-gray-500 dark:text-gray-400">
-                    ${priceRange[1]}
-                  </Text>
+                <div className="flex flex-col space-y-2">
+                  {priceRanges.map((range, index) => (
+                    <div className="flex items-center" key={index}>
+                      <input 
+                        type="checkbox" 
+                        id={`price-range-${index}`} 
+                        className="mr-2" 
+                        checked={selectedPriceRange === index.toString()}
+                        onChange={() => handlePriceRangeChange(index.toString())}
+                      />
+                      <label htmlFor={`price-range-${index}`} className="dark:text-gray-300">
+                        {range.label}
+                      </label>
+                    </div>
+                  ))}
                 </div>
               </div>
               
@@ -551,10 +578,10 @@ const handleAddToCart = async (product: ProductResponse) => {
                           };
                           dispatch(setFilters(updatedFilters));
                           updateURLParams(updatedFilters);
-                          setPriceRange([0, 1000]);
+                          setSelectedPriceRange(undefined);
                         }}
                       >
-                        {t('product:price')}: ${filters.minPrice || 0} - ${filters.maxPrice || 1000}
+                        {t('product:price')}: {filters.minPrice?.toLocaleString('vi-VN')}₫ - {filters.maxPrice?.toLocaleString('vi-VN')}₫
                       </Tag>
                     )}
                     
@@ -675,31 +702,27 @@ const handleAddToCart = async (product: ProductResponse) => {
                   />
                 </Panel>
                 
-                {/* Price Range */}
+                {/* Price Range - Thay đổi từ slider sang checkbox */}
                 <Panel 
                   header={<Text strong className="dark:text-white">{t('product:filters.price_range')}</Text>} 
                   key="2" 
                   className="mb-2"
                 >
-                  <Slider 
-                    range 
-                    min={0} 
-                    max={1000} 
-                    step={10}
-                    value={priceRange}
-                    onChange={(value) => handlePriceRangeChange(value as [number, number])}
-                    tooltip={{
-                      formatter: (value) => `$${value}`,
-                    }}
-                    className="mb-4"
-                  />
-                  <div className="flex justify-between mb-4">
-                    <Text className="text-gray-500 dark:text-gray-400">
-                      ${priceRange[0]}
-                    </Text>
-                    <Text className="text-gray-500 dark:text-gray-400">
-                      ${priceRange[1]}
-                    </Text>
+                  <div className="flex flex-col space-y-2 mb-4">
+                    {priceRanges.map((range, index) => (
+                      <div className="flex items-center" key={index}>
+                        <input 
+                          type="checkbox" 
+                          id={`m-price-range-${index}`} 
+                          className="mr-2" 
+                          checked={selectedPriceRange === index.toString()}
+                          onChange={() => handlePriceRangeChange(index.toString())}
+                        />
+                        <label htmlFor={`m-price-range-${index}`} className="dark:text-gray-300">
+                          {range.label}
+                        </label>
+                      </div>
+                    ))}
                   </div>
                 </Panel>
                 
