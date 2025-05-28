@@ -1,0 +1,268 @@
+{
+    "tabs": {
+      "overview": "Tổng quan",
+      "attractions": "Điểm tham quan",
+      "food_and_drink": "Ẩm thực & Đồ uống",
+      "shopping": "Mua sắm",
+      "getting_around": "Di chuyển"
+    },
+    "vietnam": "Việt Nam",
+    "northern_vietnam": "Miền Bắc Việt Nam",
+    "about": "Giới thiệu",
+    "location": "Vị trí",
+    "suggested_duration": "Thời gian đề xuất",
+    "tips": "Mẹo du lịch",
+    "map": {
+      "title": "Bản đồ Hà Nội",
+      "description": "Khám phá các điểm tham quan nổi bật ở Hà Nội với bản đồ tương tác này. Nhấp vào các điểm đánh dấu để tìm hiểu thêm về từng địa điểm."
+    },
+    "photo_gallery": {
+      "title": "Bộ sưu tập ảnh Hà Nội",
+      "description": "Khám phá vẻ đẹp của Hà Nội qua bộ sưu tập ảnh tuyệt đẹp được chọn lọc của chúng tôi"
+    },
+    "recommendations": {
+      "title": "Gợi ý",
+      "description": "Khám phá những gợi ý từ chuyên gia để có chuyến đi tuyệt vời nhất tại Hà Nội",
+      "view_details": "Xem chi tiết",
+      "highlight": "Nổi bật",
+      "types": {
+        "itinerary": "Lịch trình",
+        "hotel": "Chỗ ở",
+        "food": "Ẩm thực"
+      }
+    },
+    "attractions": {
+      "title": "Những điểm tham quan không thể bỏ lỡ ở Hà Nội",
+      "intro": "Hà Nội sở hữu vô số di tích lịch sử, kho tàng văn hóa và công trình kiến trúc tuyệt vời. Từ Văn Miếu cổ kính đến Phố Cổ sầm uất, các điểm đến này thể hiện di sản phong phú và nền văn hóa sôi động của thành phố.",
+      "tips": {
+        "1": "Tham quan vào sáng sớm để tránh đông đúc và nóng nực",
+        "2": "Mang giày thoải mái và nước uống",
+        "3": "Tôn trọng phong tục địa phương khi thăm đền chùa",
+        "4": "Học một số cụm từ tiếng Việt cơ bản để giao tiếp tốt hơn với người dân địa phương"
+      }
+    },
+    "weather": {
+      "loading": "Đang tải thông tin thời tiết...",
+      "humidity": "Độ ẩm",
+      "wind": "Gió"
+    },
+    "cta": {
+      "title": "Sẵn sàng khám phá Hà Nội chưa?",
+      "description": "Khám phá lịch sử, văn hóa và những trải nghiệm tuyệt vời đang chờ đón bạn tại thủ đô Việt Nam. Khởi động lại hướng dẫn viên du lịch hoặc chia sẻ hướng dẫn này với bạn bè đang lên kế hoạch cho chuyến đi.",
+      "restart_tour": "Khởi động lại hướng dẫn"
+    },
+    "tour_guide": {
+      "title": "Hướng dẫn tham quan Hà Nội",
+      "subtitle": "Làm theo hướng dẫn từng bước để khám phá những điều tuyệt vời nhất tại Hà Nội",
+      "close_success": "Đã đóng hướng dẫn viên. Bạn có thể khởi động lại bất cứ lúc nào!",
+      "steps": {
+        "welcome": {
+          "title": "Chào mừng",
+          "description": "Giới thiệu về Hà Nội",
+          "content": "Chào mừng đến với Hà Nội – thủ đô quyến rũ của Việt Nam! Hướng dẫn này sẽ giới thiệu đến bạn lịch sử phong phú của thành phố, từ các ngôi đền cổ kính đến kiến trúc thuộc địa, ẩm thực đường phố ngon miệng và đời sống văn hóa sôi động. Hãy cùng khám phá vẻ đẹp của Hà Nội."
+        },
+        "attractions": {
+          "title": "Điểm tham quan",
+          "description": "Những địa điểm không thể bỏ qua",
+          "highlight": "Hồ Hoàn Kiếm",
+          "content": "Hà Nội là nơi có nhiều điểm tham quan nổi bật. Đừng bỏ lỡ Hồ Hoàn Kiếm thanh bình với cây cầu đỏ biểu tượng, Phố Cổ lịch sử với kiến trúc cổ xưa, Văn Miếu - trường đại học đầu tiên của Việt Nam, và Lăng Chủ tịch Hồ Chí Minh tôn vinh vị lãnh tụ kính yêu của dân tộc!"
+        },
+        "food": {
+          "title": "Ẩm thực địa phương",
+          "description": "Tinh hoa ẩm thực",
+          "content": "Ẩm thực Hà Nội nổi tiếng khắp Việt Nam. Hãy thử Phở Bò chính thống (súp mì bò), Bún chả (thịt nướng với bún), Bánh mì (bánh mì Việt Nam), và Chả cá (cá nướng với nghệ). Thành phố cũng có nền văn hóa ẩm thực đường phố tuyệt vời và những quán cà phê truyền thống."
+        },
+        "shopping": {
+          "title": "Mua sắm",
+          "description": "Chợ và quà lưu niệm",
+          "content": "Với những ai yêu thích mua sắm, Hà Nội mang đến trải nghiệm đa dạng từ chợ cổ đến trung tâm thương mại hiện đại. Tham quan chợ Đồng Xuân để mua hàng địa phương, khám phá các phố chuyên doanh ở Phố Cổ, hoặc mua sắm tại các trung tâm thương mại hiện đại như Vincom và Lotte. Đừng quên chọn mua đồ thủ công truyền thống và quà lưu niệm."
+        },
+        "transport": {
+          "title": "Di chuyển",
+          "description": "Các phương tiện di chuyển",
+          "content": "Việc di chuyển quanh Hà Nội là một cuộc phiêu lưu thú vị. Bạn có thể thuê xe máy để linh hoạt hơn, bắt taxi hoặc dùng Grab, sử dụng xe buýt công cộng để tiết kiệm, hoặc đơn giản là đi bộ khám phá Phố Cổ. Trung tâm lịch sử của thành phố rất thuận tiện để đi bộ.",
+          "options": {
+            "0": "Thuê xe máy",
+            "1": "Taxi/Grab",
+            "2": "Xe buýt công cộng",
+            "3": "Đi bộ"
+          }
+        },
+        "conclusion": {
+          "title": "Chúc bạn có chuyến đi vui vẻ",
+          "description": "Lời khuyên cuối cùng",
+          "content_title": "Bạn đã sẵn sàng khám phá Hà Nội!",
+          "content": "Bây giờ bạn đã nắm được những điều cơ bản về Hà Nội, hãy tận hưởng chuyến đi và khám phá thành phố hấp dẫn này. Đừng quên trải nghiệm buổi sáng sớm quanh Hồ Hoàn Kiếm, thử ẩm thực đường phố ở Phố Cổ, thăm Văn Miếu, và tham gia chuyến tham quan trong ngày đến Vịnh Hạ Long gần đó. Chúc bạn có hành trình tuyệt vời qua thủ đô Việt Nam!"
+        }
+      }
+    },
+    "overview": {
+      "title": "Hà Nội - Trái tim của Việt Nam",
+      "subtitle": "Thủ đô lịch sử của Việt Nam",
+      "region": "Miền Bắc Việt Nam",
+      "intro": "Hà Nội là thủ đô của Việt Nam và là trung tâm chính trị, văn hóa, kinh tế của đất nước. Với hơn 1.000 năm lịch sử, thành phố cổ kính này hoàn hảo kết hợp văn hóa truyền thống Việt Nam với ảnh hưởng thuộc địa Pháp và sự phát triển hiện đại. Từ Hồ Hoàn Kiếm thanh bình đến Phố Cổ sầm uất, Hà Nội mang đến cho du khách hương vị chân thực của cuộc sống, lịch sử và ẩm thực Việt Nam.",
+      "why_visit": {
+        "title": "Tại sao nên đến Hà Nội?",
+        "reasons": {
+          "0": "Lịch sử phong phú kéo dài hơn 1.000 năm với các ngôi đền cổ và kiến trúc thuộc địa",
+          "1": "Ẩm thực Việt Nam chính thống bao gồm món Phở và Bún chả nổi tiếng thế giới",
+          "2": "Phố Cổ sôi động với những con phố hẹp và nhà ống truyền thống",
+          "3": "Cửa ngõ đến các điểm tham quan miền Bắc như Vịnh Hạ Long và Sa Pa",
+          "4": "Sự pha trộn độc đáo giữa văn hóa Việt Nam truyền thống và hiện đại"
+        }
+      },
+      "best_time": {
+        "title": "Thời điểm tốt nhất để đến",
+        "description": "Thời điểm tốt nhất để đến Hà Nội là mùa thu (tháng 9 đến tháng 11) và mùa xuân (tháng 3 đến tháng 4) khi thời tiết ôn hòa và dễ chịu. Mùa hè có thể nóng ẩm với những cơn mưa lớn thỉnh thoảng, trong khi mùa đông mát mẻ và khô ráo nhưng có thể khá lạnh. Thành phố đẹp quanh năm, mỗi mùa đều có nét quyến rũ và trải nghiệm riêng."
+      },
+      "cultural_significance": {
+        "title": "Ý nghĩa văn hóa",
+        "description": "Hà Nội đã là thủ đô của Việt Nam trong hơn 1.000 năm, phục vụ như trái tim chính trị và văn hóa của quốc gia. Thành phố bảo tồn các truyền thống cổ xưa của Việt Nam đồng thời đón nhận sự hiện đại. Phố Cổ của nó đại diện cho một trong những khu thương mại cổ được bảo tồn tốt nhất ở châu Á, và thành phố đóng vai trò quan trọng trong bản sắc Việt Nam, từ ẩm thực đến nghệ thuật và văn học."
+      },
+      "quick_facts": {
+        "location": "Vị trí",
+        "location_value": "Miền Bắc Việt Nam, đồng bằng sông Hồng",
+        "time_zone": "Múi giờ",
+        "time_zone_value": "GMT+7 (Giờ chuẩn Việt Nam)",
+        "population": "Dân số",
+        "population_value": "Khoảng 8,1 triệu"
+      }
+    },
+    "food": {
+      "title": "Thủ đô ẩm thực của Việt Nam",
+      "intro": "Hà Nội được coi là trái tim ẩm thực của Việt Nam, nơi nhiều món ăn nổi tiếng nhất của đất nước ra đời. Văn hóa ẩm thực của thành phố phản ánh lịch sử phong phú và mang đến sự đa dạng hương vị không thể tin được, từ ẩm thực đường phố đến nhà hàng cao cấp.",
+      "dishes": {
+        "0": {
+          "name": "Phở Bò",
+          "description": "Món ăn nổi tiếng nhất Việt Nam - súp mì bò thơm ngon với rau thơm, bữa sáng tinh túy của Hà Nội.",
+          "where_to_try": "Phở Gia Truyền"
+        },
+        "1": {
+          "name": "Bún Chả",
+          "description": "Thịt heo nướng ăn với bún, rau thơm và nước chấm - đặc sản Hà Nội.",
+          "where_to_try": "Bún Chả Hương Liên"
+        },
+        "2": {
+          "name": "Bánh Mì",
+          "description": "Bánh mì Việt Nam với bánh baguette Pháp nhân thịt heo, pate, rau và rau thơm.",
+          "where_to_try": "Bánh Mì 25"
+        },
+        "3": {
+          "name": "Chả Cá",
+          "description": "Cá nướng với nghệ, ăn với bún và rau thơm - đặc sản Hà Nội.",
+          "where_to_try": "Chả Cá Lã Vọng"
+        }
+      },
+      "restaurants": {
+        "title": "Nhà hàng hàng đầu",
+        "list": {
+          "0": {
+            "name": "Madame Hiên",
+            "rating": "4.6/5",
+            "description": "Ẩm thực Việt Nam cao cấp trong khung cảnh biệt thự thuộc địa Pháp đẹp mắt.",
+            "address": "15 Phố Chân Cầm, Quận Hoàn Kiếm"
+          },
+          "1": {
+            "name": "Quán Ăn Ngon",
+            "rating": "4.4/5",
+            "description": "Nhà hàng nổi tiếng phục vụ ẩm thực đường phố trong không gian thoải mái.",
+            "address": "18 Phố Phan Bội Châu, Quận Hoàn Kiếm"
+          },
+          "2": {
+            "name": "Green Tangerine",
+            "rating": "4.5/5",
+            "description": "Ẩm thực fusion Pháp-Việt trong một dinh thự thuộc địa tuyệt đẹp.",
+            "address": "48 Phố Hàng Bè, Quận Hoàn Kiếm"
+          }
+        }
+      }
+    },
+    "shopping": {
+      "title": "Mua sắm ở Hà Nội",
+      "intro": "Từ chợ cổ đến trung tâm thương mại hiện đại và các phố chuyên doanh, Hà Nội mang đến trải nghiệm mua sắm đa dạng. Thành phố nổi tiếng với đồ thủ công truyền thống, sản phẩm lụa và quà lưu niệm độc đáo.",
+      "places": {
+        "0": {
+          "name": "Chợ Đồng Xuân",
+          "description": "Chợ có mái che lớn nhất Hà Nội cung cấp mọi thứ từ quần áo, đồ điện tử đến thực phẩm và quà lưu niệm.",
+          "location": "Phố Đồng Xuân, Quận Hoàn Kiếm",
+          "hours": "06:00 - 19:00, hàng ngày"
+        },
+        "1": {
+          "name": "Các phố Phố Cổ",
+          "description": "Mỗi phố chuyên về sản phẩm khác nhau - Hàng Gai (lụa), Hàng Bạc (bạc), Hàng Mã (đồ giấy).",
+          "location": "Quận Hoàn Kiếm",
+          "hours": "08:00 - 22:00, hàng ngày"
+        },
+        "2": {
+          "name": "Trung tâm Vincom",
+          "description": "Trung tâm thương mại hiện đại với các thương hiệu quốc tế, nhà hàng và cơ sở giải trí.",
+          "location": "191 Phố Bà Triệu, Quận Hai Bà Trưng",
+          "hours": "09:30 - 22:00, hàng ngày"
+        },
+        "3": {
+          "name": "Chợ đêm cuối tuần",
+          "description": "Chợ đêm sầm uất ở Phố Cổ với ẩm thực đường phố, quà lưu niệm và đồ thủ công địa phương.",
+          "location": "Phố Hàng Đào, Quận Hoàn Kiếm",
+          "hours": "18:00 - 24:00, thứ 6-chủ nhật"
+        }
+      },
+      "souvenirs": {
+        "title": "Quà lưu niệm tốt nhất",
+        "items": {
+          "0": {
+            "name": "Lụa Việt Nam",
+            "description": "Sản phẩm lụa chất lượng cao bao gồm khăn choàng, quần áo và đồ trang trí nhà từ phố Hàng Gai."
+          },
+          "1": {
+            "name": "Đồ sơn mài truyền thống",
+            "description": "Hộp sơn mài, bình hoa và đồ trang trí đẹp mắt được làm bằng kỹ thuật truyền thống Việt Nam."
+          },
+          "2": {
+            "name": "Cà phê Việt Nam",
+            "description": "Hạt cà phê cao cấp và phin truyền thống, hoàn hảo để tái tạo trải nghiệm cà phê Việt Nam tại nhà."
+          }
+        }
+      }
+    },
+    "transport": {
+      "title": "Di chuyển quanh Hà Nội",
+      "intro": "Hà Nội cung cấp nhiều lựa chọn giao thông để giúp bạn di chuyển hiệu quả quanh thành phố. Từ xe máy đến đi bộ, mỗi phương thức đều mang đến góc nhìn khác nhau về thành phố sôi động này.",
+      "options": {
+        "0": {
+          "name": "Thuê xe máy",
+          "description": "Cách linh hoạt nhất để khám phá Hà Nội và vùng lân cận. Giá thuê hợp lý (khoảng 100.000-160.000 đồng/ngày) và có sẵn rộng rãi.",
+          "cost": "Tiết kiệm",
+          "convenience": "Linh hoạt cao"
+        },
+        "1": {
+          "name": "Taxi & Ứng dụng gọi xe",
+          "description": "Mai Linh Taxi và Grab là những lựa chọn đáng tin cậy cho việc di chuyển thoải mái quanh thành phố.",
+          "cost": "Trung bình",
+          "convenience": "Rất thuận tiện"
+        },
+        "2": {
+          "name": "Xe buýt công cộng",
+          "description": "Hà Nội có mạng lưới xe buýt rộng khắp bao phủ toàn thành phố. Xe buýt sạch sẽ, có điều hòa và rất rẻ.",
+          "cost": "Rất rẻ",
+          "convenience": "Phủ sóng tốt"
+        },
+        "3": {
+          "name": "Đi bộ",
+          "description": "Phố Cổ và trung tâm thành phố rất thuận tiện để đi bộ, mang đến cách tốt nhất để trải nghiệm đời sống đường phố Hà Nội.",
+          "cost": "Miễn phí",
+          "convenience": "Trải nghiệm sâu sắc"
+        }
+      },
+      "tips": {
+        "title": "Mẹo di chuyển",
+        "list": {
+          "0": "Tải ứng dụng Grab để có phương tiện giao thông đáng tin cậy và an toàn",
+          "1": "Luôn đội mũ bảo hiểm khi đi xe máy (bắt buộc theo luật)",
+          "2": "Đi bộ là cách tốt nhất để khám phá Phố Cổ và trải nghiệm cuộc sống địa phương",
+          "3": "Hãy cẩn thận khi băng qua đường - giao thông có thể khó khăn cho du khách lần đầu",
+          "4": "Thương lượng giá taxi trước hoặc đảm bảo đồng hồ đang chạy"
+        
+      }
+    }
+  }
+}

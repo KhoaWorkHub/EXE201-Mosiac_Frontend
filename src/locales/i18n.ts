@@ -22,7 +22,19 @@ i18n
       caches: ['localStorage', 'cookie'],
     },
     defaultNS: 'common',
-    ns: ['common', 'auth', 'product', 'cart', 'checkout', 'admin', 'destination', 'destinationdanang', 'profile', 'admin-orders'],
+    ns: [
+      'common', 
+      'auth', 
+      'product', 
+      'cart', 
+      'checkout', 
+      'admin', 
+      'destination', 
+      'destinationdanang', 
+      'destinationhanoi',  // New namespace for Hanoi
+      'profile', 
+      'admin-orders'
+    ],
   });
 
 export default i18n;

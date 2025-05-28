@@ -23,6 +23,9 @@ const AdminRoutes = lazy(() => import("../admin/routes"));
 const DaNangGuidePage = lazy(
   () => import("../features/destination/pages/DaNangGuidePage")
 );
+const HanoiGuidePage = lazy(
+  () => import("../features/destination/pages/HaNoiGuidePage")
+);
 
 // Blog Page
 const BlogPage = lazy(() => import("../features/blog/pages/BlogPage"));
@@ -148,6 +151,16 @@ const AppRoutes: React.FC = () => {
         element={
           <Suspense fallback={<LoadingFallback />}>
             <DaNangGuidePage />
+          </Suspense>
+        }
+      />
+      
+      {/* New Hanoi Route */}
+      <Route
+        path="/destinations/hanoi"
+        element={
+          <Suspense fallback={<LoadingFallback />}>
+            <HanoiGuidePage />
           </Suspense>
         }
       />

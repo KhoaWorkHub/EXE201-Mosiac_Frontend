@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => {
                     target: apiEndpoint,
                     changeOrigin: true,
                     secure: false,
-                    rewrite: (path) => path.replace(/^/, ''), // Remove /api prefix
+                    rewrite: (path) => path.replace(/^\/api/, ''), // Remove /api prefix
                 },
                 '/auth': {
                     target: apiEndpoint,
