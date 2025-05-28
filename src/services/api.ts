@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { StorageService } from "./storage.service";
 
-const API_URL = import.meta.env.VITE_API_URL || "/api";
+const API_URL = import.meta.env.VITE_API_URL || "/";
 const TIMEOUT = 30000;
 
 const api: AxiosInstance = axios.create({
