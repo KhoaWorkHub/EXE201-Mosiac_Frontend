@@ -18,11 +18,20 @@ const tourGuides = [
     date: '2025-02-15',
     region: 'Central Vietnam'
   },
+  {
+    id: 'hanoi',
+    title: 'Hanoi',
+    description: 'destinationhanoi:overview.intro',
+    image: '/assets/destinations/hanoi/banner-1.jpg',
+    url: '/destinations/hanoi',
+    date: '2025-02-20',
+    region: 'Northern Vietnam'
+  },
   // You can add more destinations here in the future
 ];
 
 const BlogPage: React.FC = () => {
-  const { t } = useTranslation(['destinationdanang', 'common']);
+  const { t } = useTranslation(['destinationdanang', 'destinationhanoi', 'common']);
   
   return (
     <MainLayout>
@@ -48,7 +57,7 @@ const BlogPage: React.FC = () => {
                     <img 
                       src={guide.image} 
                       alt={guide.title} 
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                     />
                   </div>
                 }
@@ -80,6 +89,27 @@ const BlogPage: React.FC = () => {
               </Card>
             </Link>
           ))}
+        </div>
+        
+        {/* Call to Action for more destinations */}
+        <div className="text-center mt-16 p-8 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <Title level={3} className="dark:text-white mb-4">
+            More Destinations Coming Soon
+          </Title>
+          <Paragraph className="text-lg dark:text-gray-300 mb-6">
+            We're working on adding more amazing destinations to help you explore Vietnam. 
+            Stay tuned for guides to Ho Chi Minh City, Hoi An, Hue, Sapa, and many more!
+          </Paragraph>
+          <div className="flex flex-wrap justify-center gap-2">
+            <Tag>Ho Chi Minh City</Tag>
+            <Tag>Hoi An</Tag>
+            <Tag>Hue</Tag>
+            <Tag>Sapa</Tag>
+            <Tag>Nha Trang</Tag>
+            <Tag>Dalat</Tag>
+            <Tag>Phu Quoc</Tag>
+            <Tag>Ha Long Bay</Tag>
+          </div>
         </div>
       </div>
     </MainLayout>

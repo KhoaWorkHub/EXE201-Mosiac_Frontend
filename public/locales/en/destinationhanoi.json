@@ -1,0 +1,267 @@
+{
+    "tabs": {
+      "overview": "Overview",
+      "attractions": "Attractions",
+      "food_and_drink": "Food & Drink",
+      "shopping": "Shopping",
+      "getting_around": "Getting Around"
+    },
+    "vietnam": "Vietnam",
+    "northern_vietnam": "Northern Vietnam",
+    "about": "About",
+    "location": "Location",
+    "suggested_duration": "Suggested Duration",
+    "tips": "Tips",
+    "map": {
+      "title": "Hanoi Map",
+      "description": "Explore the major attractions of Hanoi with this interactive map. Click on the markers to learn more about each location."
+    },
+    "photo_gallery": {
+      "title": "Hanoi Photo Gallery",
+      "description": "Explore the charm of Hanoi through our curated collection of stunning photographs"
+    },
+    "recommendations": {
+      "title": "Recommendations",
+      "description": "Explore our expert recommendations to make the most of your visit to Hanoi",
+      "view_details": "View Details",
+      "highlight": "Highlight",
+      "types": {
+        "itinerary": "Itinerary",
+        "hotel": "Accommodation",
+        "food": "Culinary"
+      }
+    },
+    "attractions": {
+      "title": "Must-Visit Attractions in Hanoi",
+      "intro": "Hanoi is home to countless historical landmarks, cultural treasures, and architectural marvels. From the ancient Temple of Literature to the bustling Old Quarter, these attractions showcase the city's rich heritage and vibrant culture.",
+      "tips": {
+        "1": "Visit early in the morning to avoid crowds and heat",
+        "2": "Wear comfortable walking shoes and bring water",
+        "3": "Respect local customs when visiting temples and pagodas",
+        "4": "Learn basic Vietnamese phrases for better interaction with locals"
+      }
+    },
+    "weather": {
+      "loading": "Loading weather information...",
+      "humidity": "Humidity",
+      "wind": "Wind"
+    },
+    "cta": {
+      "title": "Ready to Explore Hanoi?",
+      "description": "Discover the history, culture, and incredible experiences waiting for you in Vietnam's capital city. Restart the tour guide or share this guide with friends planning their trip.",
+      "restart_tour": "Restart Tour Guide"
+    },
+    "tour_guide": {
+      "title": "Hanoi Tour Guide",
+      "subtitle": "Follow this step-by-step guide to discover the best of Hanoi",
+      "close_success": "Tour guide closed. You can restart it anytime!",
+      "steps": {
+        "welcome": {
+          "title": "Welcome",
+          "description": "Introduction to Hanoi",
+          "content": "Welcome to Hanoi, Vietnam's captivating capital city! This tour guide will introduce you to the city's rich history, from ancient temples to colonial architecture, delicious street food, and vibrant cultural life. Follow along to discover the best of Hanoi."
+        },
+        "attractions": {
+          "title": "Attractions",
+          "description": "Must-visit places",
+          "highlight": "Hoan Kiem Lake",
+          "content": "Hanoi is home to many remarkable attractions. Don't miss the serene Hoan Kiem Lake with its iconic red bridge, the historic Old Quarter with its ancient architecture, the Temple of Literature - Vietnam's first university, and Ho Chi Minh Mausoleum honoring the nation's beloved leader!"
+        },
+        "food": {
+          "title": "Local Cuisine",
+          "description": "Culinary delights",
+          "content": "Hanoi's cuisine is legendary throughout Vietnam. Try authentic Pho Bo (beef noodle soup), Bun Cha (grilled pork with noodles), Banh Mi (Vietnamese sandwich), and Cha Ca (grilled fish with turmeric). The city also has amazing street food culture and traditional coffee shops."
+        },
+        "shopping": {
+          "title": "Shopping",
+          "description": "Markets and souvenirs",
+          "content": "For shopping enthusiasts, Hanoi offers diverse experiences from ancient markets to modern shopping centers. Visit Dong Xuan Market for local goods, explore the Old Quarter's specialty streets, or shop at modern malls like Vincom and Lotte. Don't forget to pick up traditional crafts and souvenirs."
+        },
+        "transport": {
+          "title": "Getting Around",
+          "description": "Transportation options",
+          "content": "Getting around Hanoi is an adventure in itself. You can rent a motorbike for flexibility, take taxis or Grab, use public buses for budget travel, or simply walk through the Old Quarter. The city is very walkable in the historic center.",
+          "options": {
+            "0": "Motorbike Rental",
+            "1": "Taxi/Grab",
+            "2": "Public Bus",
+            "3": "Walking"
+          }
+        },
+        "conclusion": {
+          "title": "Enjoy Your Visit",
+          "description": "Final tips and advice",
+          "content_title": "You're ready to explore Hanoi!",
+          "content": "Now that you know the essentials about Hanoi, you're ready to discover this fascinating city. Remember to experience the early morning around Hoan Kiem Lake, try street food in the Old Quarter, visit the Temple of Literature, and take a day trip to nearby Ha Long Bay. Enjoy your journey through Vietnam's capital!"
+        }
+      }
+    },
+    "overview": {
+      "title": "Hanoi - The Heart of Vietnam",
+      "subtitle": "Vietnam's Historic Capital",
+      "region": "Northern Vietnam",
+      "intro": "Hanoi is Vietnam's capital and the country's political, cultural, and economic center. With over 1,000 years of history, this ancient city perfectly blends traditional Vietnamese culture with French colonial influences and modern development. From the serene Hoan Kiem Lake to the bustling Old Quarter, Hanoi offers visitors an authentic taste of Vietnamese life, history, and cuisine.",
+      "why_visit": {
+        "title": "Why Visit Hanoi?",
+        "reasons": {
+          "0": "Rich history spanning over 1,000 years with ancient temples and colonial architecture",
+          "1": "Authentic Vietnamese cuisine including the world-famous Pho and Bun Cha",
+          "2": "Vibrant Old Quarter with narrow streets and traditional shophouses",
+          "3": "Gateway to northern Vietnam attractions like Ha Long Bay and Sapa",
+          "4": "Unique blend of traditional and modern Vietnamese culture"
+        }
+      },
+      "best_time": {
+        "title": "Best Time to Visit",
+        "description": "The best time to visit Hanoi is during autumn (September to November) and spring (March to April) when the weather is mild and pleasant. Summer can be hot and humid with occasional heavy rains, while winter is cool and dry but can be quite chilly. The city is beautiful year-round, each season offering its own unique charm and experiences."
+      },
+      "cultural_significance": {
+        "title": "Cultural Significance",
+        "description": "Hanoi has been Vietnam's capital for over 1,000 years, serving as the political and cultural heart of the nation. The city preserves ancient Vietnamese traditions while embracing modernity. Its Old Quarter represents one of Asia's most well-preserved ancient commercial districts, and the city plays a crucial role in Vietnam's identity, from its cuisine to its arts and literature."
+      },
+      "quick_facts": {
+        "location": "Location",
+        "location_value": "Northern Vietnam, Red River Delta",
+        "time_zone": "Time Zone",
+        "time_zone_value": "GMT+7 (Vietnam Standard Time)",
+        "population": "Population",
+        "population_value": "Approx. 8.1 million"
+      }
+    },
+    "food": {
+      "title": "Culinary Capital of Vietnam",
+      "intro": "Hanoi is considered the culinary heart of Vietnam, where many of the country's most famous dishes originated. The city's food culture reflects its rich history and offers an incredible variety of flavors, from street food to fine dining.",
+      "dishes": {
+        "0": {
+          "name": "Pho Bo",
+          "description": "Vietnam's most famous dish - aromatic beef noodle soup with herbs, the quintessential Hanoi breakfast.",
+          "where_to_try": "Pho Gia Truyen"
+        },
+        "1": {
+          "name": "Bun Cha",
+          "description": "Grilled pork patties served with rice noodles, herbs, and dipping sauce - a Hanoi specialty.",
+          "where_to_try": "Bun Cha Huong Lien"
+        },
+        "2": {
+          "name": "Banh Mi",
+          "description": "Vietnamese sandwich with French baguette filled with pork, pate, vegetables, and herbs.",
+          "where_to_try": "Banh Mi 25"
+        },
+        "3": {
+          "name": "Cha Ca",
+          "description": "Grilled fish with turmeric, served with rice noodles and herbs - a Hanoi delicacy.",
+          "where_to_try": "Cha Ca La Vong"
+        }
+      },
+      "restaurants": {
+        "title": "Top Restaurants",
+        "list": {
+          "0": {
+            "name": "Madame Hiên",
+            "rating": "4.6/5",
+            "description": "Upscale Vietnamese cuisine in a beautiful French colonial villa setting.",
+            "address": "15 Chan Cam Street, Hoan Kiem District"
+          },
+          "1": {
+            "name": "Quan An Ngon",
+            "rating": "4.4/5",
+            "description": "Famous restaurant featuring street food in a comfortable setting.",
+            "address": "18 Phan Boi Chau Street, Hoan Kiem District"
+          },
+          "2": {
+            "name": "Green Tangerine",
+            "rating": "4.5/5",
+            "description": "French-Vietnamese fusion cuisine in a stunning colonial mansion.",
+            "address": "48 Hang Be Street, Hoan Kiem District"
+          }
+        }
+      }
+    },
+    "shopping": {
+      "title": "Shopping in Hanoi",
+      "intro": "From ancient markets to modern shopping centers and specialty streets, Hanoi offers diverse shopping experiences. The city is known for its traditional crafts, silk products, and unique souvenirs.",
+      "places": {
+        "0": {
+          "name": "Dong Xuan Market",
+          "description": "Hanoi's largest covered market offering everything from clothes and electronics to food and souvenirs.",
+          "location": "Dong Xuan Street, Hoan Kiem District",
+          "hours": "06:00 - 19:00, daily"
+        },
+        "1": {
+          "name": "Old Quarter Streets",
+          "description": "Each street specializes in different products - Hang Gai (silk), Hang Bac (silver), Hang Ma (paper goods).",
+          "location": "Hoan Kiem District",
+          "hours": "08:00 - 22:00, daily"
+        },
+        "2": {
+          "name": "Vincom Center",
+          "description": "Modern shopping mall with international brands, restaurants, and entertainment facilities.",
+          "location": "191 Ba Trieu Street, Hai Ba Trung District",
+          "hours": "09:30 - 22:00, daily"
+        },
+        "3": {
+          "name": "Weekend Night Market",
+          "description": "Bustling night market in the Old Quarter with street food, souvenirs, and local crafts.",
+          "location": "Hang Dao Street, Hoan Kiem District",
+          "hours": "18:00 - 24:00, Friday-Sunday"
+        }
+      },
+      "souvenirs": {
+        "title": "Best Souvenirs",
+        "items": {
+          "0": {
+            "name": "Vietnamese Silk",
+            "description": "High-quality silk products including scarves, clothing, and home decorations from Hang Gai Street."
+          },
+          "1": {
+            "name": "Traditional Lacquerware",
+            "description": "Beautiful lacquered boxes, vases, and decorative items made using traditional Vietnamese techniques."
+          },
+          "2": {
+            "name": "Vietnamese Coffee",
+            "description": "Premium coffee beans and traditional phin filters, perfect for recreating the Vietnamese coffee experience at home."
+          }
+        }
+      }
+    },
+    "transport": {
+      "title": "Getting Around Hanoi",
+      "intro": "Hanoi offers various transportation options to help you navigate the city efficiently. From motorbikes to walking, each method offers a different perspective of this vibrant city.",
+      "options": {
+        "0": {
+          "name": "Motorbike Rental",
+          "description": "The most flexible way to explore Hanoi and beyond. Rentals are affordable (around $5-8/day) and widely available.",
+          "cost": "Budget",
+          "convenience": "High Flexibility"
+        },
+        "1": {
+          "name": "Taxi & Ride-hailing Apps",
+          "description": "Mai Linh Taxi and Grab are reliable options for comfortable transportation around the city.",
+          "cost": "Moderate",
+          "convenience": "Very Convenient"
+        },
+        "2": {
+          "name": "Public Buses",
+          "description": "Hanoi has an extensive bus network covering the entire city. Buses are clean, air-conditioned, and very affordable.",
+          "cost": "Very Cheap",
+          "convenience": "Good Coverage"
+        },
+        "3": {
+          "name": "Walking",
+          "description": "The Old Quarter and city center are very walkable, offering the best way to experience Hanoi's street life.",
+          "cost": "Free",
+          "convenience": "Immersive Experience"
+        }
+      },
+      "tips": {
+        "title": "Transportation Tips",
+        "list": {
+          "0": "Download the Grab app for reliable and safe transportation",
+          "1": "Always wear a helmet when riding a motorbike (required by law)",
+          "2": "Walking is the best way to explore the Old Quarter and experience local life",
+          "3": "Be cautious when crossing streets - traffic can be overwhelming for first-time visitors",
+          "4": "Negotiate taxi fares in advance or ensure the meter is running"
+        }
+      }
+    }
+  }
