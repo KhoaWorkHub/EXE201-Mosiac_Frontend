@@ -201,7 +201,8 @@
     "error": "Failed to copy link"
   },
   "loading": {
-    "experience": "Loading your Da Nang experience..."
+    "experience_dn": "Loading your Da Nang experience...",
+    "experience_hn": "Loading your Ha Noi experience..."
   },
   "form": {
     "email_cannot_change": "Email cannot be changed"

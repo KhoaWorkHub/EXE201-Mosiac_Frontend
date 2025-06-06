@@ -201,7 +201,8 @@
     "error": "Không thể sao chép liên kết"
   },
   "loading": {
-    "experience": "Đang tải trải nghiệm Đà Nẵng của bạn..."
+    "experience_dn": "Đang tải trải nghiệm Đà Nẵng của bạn...",
+    "experience_hn": "Đang tải trải nghiệm Hà Nội của bạn..."
   },
   "form": {
     "email_cannot_change": "Email không thể thay đổi"

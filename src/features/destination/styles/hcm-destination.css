@@ -1,0 +1,527 @@
+/* HCM-specific styles and enhancements - The most impressive destination guide */
+
+/* HCM vibrant theme colors inspired by Saigon's energy */
+.hcm-theme {
+  --hcm-orange: #ea580c;
+  --hcm-red: #dc2626;
+  --hcm-pink: #ec4899;
+  --hcm-yellow: #f59e0b;
+  --hcm-deep-orange: #c2410c;
+  --hcm-gradient-primary: linear-gradient(135deg, #ea580c 0%, #dc2626 50%, #ec4899 100%);
+  --hcm-gradient-secondary: linear-gradient(45deg, #f59e0b 0%, #ea580c 50%, #dc2626 100%);
+  --hcm-shadow-primary: 0 25px 50px rgba(234, 88, 12, 0.15);
+  --hcm-shadow-hover: 0 35px 60px rgba(220, 38, 38, 0.2);
+}
+
+/* Enhanced hero section with dynamic effects */
+.hcm-hero {
+  background: linear-gradient(135deg, rgba(234, 88, 12, 0.1) 0%, rgba(220, 38, 38, 0.2) 50%, rgba(236, 72, 153, 0.1) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hcm-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(234, 88, 12, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.05) 0%, transparent 50%);
+  animation: hcmHeroFlow 15s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes hcmHeroFlow {
+  0%, 100% { 
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(234, 88, 12, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(220, 38, 38, 0.1) 0%, transparent 50%);
+  }
+  33% { 
+    background: 
+      radial-gradient(circle at 60% 20%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 30% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+  }
+  66% { 
+    background: 
+      radial-gradient(circle at 80% 60%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 20% 40%, rgba(234, 88, 12, 0.1) 0%, transparent 50%);
+  }
+}
+
+/* Revolutionary card system with 3D transforms */
+.hcm-card, .hcm-gradient-card {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(254, 240, 230, 0.9) 100%);
+  backdrop-filter: blur(10px);
+  border-image: linear-gradient(135deg, rgba(234, 88, 12, 0.2), rgba(220, 38, 38, 0.2), rgba(236, 72, 153, 0.2)) 1;
+  box-shadow: var(--hcm-shadow-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.hcm-card::before, .hcm-gradient-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(234, 88, 12, 0.1), transparent);
+  transition: left 0.8s;
+  z-index: 1;
+}
+
+.hcm-card:hover::before, .hcm-gradient-card:hover::before {
+  left: 100%;
+}
+
+.hcm-card:hover, .hcm-gradient-card:hover {
+  transform: translateY(-15px) rotateX(5deg) rotateY(5deg);
+  box-shadow: var(--hcm-shadow-hover);
+  border-image: linear-gradient(135deg, rgba(234, 88, 12, 0.4), rgba(220, 38, 38, 0.4), rgba(236, 72, 153, 0.4)) 1;
+}
+
+.dark .hcm-card, .dark .hcm-gradient-card {
+  background: linear-gradient(135deg, rgba(31, 41, 55, 0.95) 0%, rgba(55, 48, 163, 0.1) 100%);
+  border-color: rgba(234, 88, 12, 0.2);
+}
+
+/* Revolutionary attraction cards with holographic effects */
+.hcm-attraction-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #ffffff 0%, #fef7f0 100%);
+  box-shadow: 
+    0 20px 40px rgba(234, 88, 12, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.hcm-attraction-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--hcm-gradient-primary);
+  z-index: 10;
+}
+
+.hcm-attraction-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent, rgba(234, 88, 12, 0.1), transparent, rgba(220, 38, 38, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.5s;
+  z-index: 1;
+  animation: hcmRotate 10s linear infinite;
+}
+
+.hcm-attraction-card:hover::after {
+  opacity: 1;
+}
+
+@keyframes hcmRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.hcm-attraction-card:hover {
+  transform: translateY(-20px) scale(1.03);
+  box-shadow: 
+    0 40px 80px rgba(234, 88, 12, 0.2),
+    0 0 0 1px rgba(234, 88, 12, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Mind-blowing tab styling */
+.hcm-tabs .ant-tabs-tab {
+  position: relative;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(254, 240, 230, 0.6) 100%);
+  border-radius: 12px 12px 0 0;
+  margin-right: 8px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(234, 88, 12, 0.1);
+}
+
+.hcm-tabs .ant-tabs-tab::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  background: var(--hcm-gradient-primary);
+  transition: width 0.3s ease;
+}
+
+.hcm-tabs .ant-tabs-tab:hover::before {
+  width: 70%;
+}
+
+.hcm-tabs .ant-tabs-tab.ant-tabs-tab-active {
+  background: var(--hcm-gradient-primary);
+  color: white;
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(234, 88, 12, 0.3);
+}
+
+.hcm-tabs .ant-tabs-tab.ant-tabs-tab-active::before {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.hcm-tabs .ant-tabs-ink-bar {
+  display: none; /* We use our custom indicator */
+}
+
+/* Spectacular weather widget */
+.hcm-weather-widget {
+  background: linear-gradient(145deg, 
+    rgba(254, 240, 230, 0.8) 0%, 
+    rgba(253, 224, 71, 0.1) 25%,
+    rgba(239, 68, 68, 0.1) 50%,
+    rgba(236, 72, 153, 0.1) 75%,
+    rgba(254, 240, 230, 0.8) 100%);
+  border: 2px solid;
+  border-image: var(--hcm-gradient-primary) 1;
+  border-radius: 20px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(15px);
+  box-shadow: 
+    0 25px 50px rgba(234, 88, 12, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.hcm-weather-widget::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--hcm-gradient-primary);
+  z-index: 10;
+}
+
+.hcm-weather-widget::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(234, 88, 12, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(220, 38, 38, 0.05) 0%, transparent 50%);
+  z-index: -1;
+  animation: hcmWeatherFlow 8s ease-in-out infinite;
+}
+
+@keyframes hcmWeatherFlow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+/* Incredible photo gallery effects */
+.hcm-gallery-item {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(254, 240, 230, 0.7));
+  box-shadow: 0 15px 35px rgba(234, 88, 12, 0.1);
+}
+
+.hcm-gallery-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(45deg, 
+      rgba(234, 88, 12, 0.1) 0%, 
+      rgba(220, 38, 38, 0.1) 30%,
+      rgba(236, 72, 153, 0.1) 60%,
+      rgba(245, 158, 11, 0.1) 100%);
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: 2;
+}
+
+.hcm-gallery-item:hover::before {
+  opacity: 1;
+}
+
+.hcm-gallery-item:hover {
+  transform: translateY(-10px) rotateX(5deg);
+  box-shadow: 
+    0 35px 70px rgba(234, 88, 12, 0.2),
+    0 0 0 1px rgba(234, 88, 12, 0.1);
+}
+
+/* Revolutionary CTA section */
+.hcm-cta-section {
+  background: linear-gradient(135deg, #ea580c 0%, #dc2626 25%, #ec4899 50%, #dc2626 75%, #ea580c 100%);
+  background-size: 400% 400%;
+  animation: hcmGradientShift 8s ease infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes hcmGradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  25% { background-position: 100% 50%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+}
+
+.hcm-cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="hcm-pattern" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="50" cy="50" r="25" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><path d="M25,50 Q50,25 75,50 Q50,75 25,50" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/></pattern></defs><rect width="100" height="100" fill="url(%23hcm-pattern)"/></svg>') repeat;
+  opacity: 0.4;
+  animation: hcmPatternFloat 20s linear infinite;
+}
+
+@keyframes hcmPatternFloat {
+  from { transform: translateX(0) translateY(0); }
+  to { transform: translateX(-100px) translateY(-100px); }
+}
+
+.hcm-cta-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  animation: hcmSpotlightMove 12s ease-in-out infinite;
+}
+
+@keyframes hcmSpotlightMove {
+  0%, 100% { 
+    background: 
+      radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  }
+  50% { 
+    background: 
+      radial-gradient(circle at 75% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 25% 75%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  }
+}
+
+/* Enhanced scroll indicators with HCM flair */
+.hcm-scroll-indicator {
+  color: rgba(255, 255, 255, 0.95);
+  animation: hcmScrollPulse 2.5s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(234, 88, 12, 0.5);
+}
+
+@keyframes hcmScrollPulse {
+  0%, 100% { 
+    transform: translateY(0) rotate(90deg) scale(1);
+    text-shadow: 0 0 20px rgba(234, 88, 12, 0.5);
+  }
+  50% { 
+    transform: translateY(-15px) rotate(90deg) scale(1.1);
+    text-shadow: 0 0 30px rgba(220, 38, 38, 0.7);
+  }
+}
+
+/* Perspective and 3D enhancements */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.hcm-3d-card {
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.hcm-3d-card:hover {
+  transform: rotateY(10deg) rotateX(5deg) translateZ(20px);
+}
+
+/* Floating animation for various elements */
+.hcm-float {
+  animation: hcmFloat 6s ease-in-out infinite;
+}
+
+@keyframes hcmFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-10px) rotate(1deg); }
+  66% { transform: translateY(-5px) rotate(-1deg); }
+}
+
+/* Enhanced modal styling */
+.hcm-attraction-modal .ant-modal-content {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid;
+  border-image: var(--hcm-gradient-primary) 1;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(254, 240, 230, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 50px 100px rgba(234, 88, 12, 0.2);
+}
+
+.hcm-attraction-modal .ant-modal-header {
+  background: var(--hcm-gradient-primary);
+  border-bottom: none;
+  padding: 20px 24px;
+}
+
+.hcm-attraction-modal .ant-modal-header .ant-modal-title {
+  color: white;
+  font-weight: bold;
+}
+
+/* Mobile optimizations with enhanced effects */
+@media (max-width: 768px) {
+  .hcm-card:hover, .hcm-gradient-card:hover {
+    transform: translateY(-8px) rotateX(2deg) rotateY(2deg);
+  }
+  
+  .hcm-attraction-card:hover {
+    transform: translateY(-10px) scale(1.02);
+  }
+  
+  .hcm-gallery-item:hover {
+    transform: translateY(-5px) rotateX(2deg);
+  }
+  
+  .hcm-tabs .ant-tabs-tab {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+  
+  .hcm-weather-widget {
+    padding: 1.5rem;
+  }
+}
+
+/* Dark mode enhancements for HCM */
+.dark .hcm-card, .dark .hcm-gradient-card {
+  background: linear-gradient(135deg, rgba(31, 41, 55, 0.95) 0%, rgba(75, 85, 99, 0.8) 100%);
+  border-color: rgba(234, 88, 12, 0.2);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(234, 88, 12, 0.1);
+}
+
+.dark .hcm-card:hover, .dark .hcm-gradient-card:hover {
+  border-color: rgba(234, 88, 12, 0.4);
+  box-shadow: 
+    0 35px 70px rgba(234, 88, 12, 0.15),
+    0 0 0 1px rgba(234, 88, 12, 0.2);
+}
+
+.dark .hcm-weather-widget {
+  background: linear-gradient(145deg, 
+    rgba(31, 41, 55, 0.9) 0%, 
+    rgba(234, 88, 12, 0.1) 25%,
+    rgba(220, 38, 38, 0.1) 50%,
+    rgba(236, 72, 153, 0.1) 75%,
+    rgba(31, 41, 55, 0.9) 100%);
+  border-color: rgba(234, 88, 12, 0.3);
+}
+
+.dark .hcm-tabs .ant-tabs-tab {
+  background: linear-gradient(135deg, rgba(31, 41, 55, 0.8) 0%, rgba(55, 65, 81, 0.6) 100%);
+  border-color: rgba(234, 88, 12, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.dark .hcm-tabs .ant-tabs-tab:hover {
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(234, 88, 12, 0.4);
+}
+
+/* Performance optimizations */
+.hcm-gpu-accelerated {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Accessibility improvements */
+.hcm-focus-visible:focus {
+  outline: 3px solid rgba(234, 88, 12, 0.8);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .hcm-card, .hcm-gradient-card {
+    border: 2px solid rgba(234, 88, 12, 0.8);
+  }
+  
+  .hcm-attraction-card {
+    box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.8);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .hcm-card, .hcm-gradient-card, .hcm-attraction-card, .hcm-gallery-item {
+    transition: none;
+    animation: none;
+  }
+  
+  .hcm-cta-section::before, .hcm-weather-widget::after {
+    animation: none;
+  }
+}
+
+/* Print styles for HCM guide */
+@media print {
+  .hcm-hero, .hcm-cta-section {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .hcm-card, .hcm-gradient-card, .hcm-attraction-card {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 2px solid #ea580c !important;
+    background: white !important;
+  }
+  
+  .hcm-weather-widget {
+    border: 2px solid #ea580c !important;
+    background: white !important;
+  }
+}

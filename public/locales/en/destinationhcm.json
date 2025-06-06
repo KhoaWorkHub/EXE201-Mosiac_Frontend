@@ -1,0 +1,270 @@
+{
+  "vietnam": "Vietnam",
+  "southern_vietnam": "Southern Vietnam",
+  
+  "tabs": {
+    "overview": "Overview",
+    "attractions": "Attractions",
+    "food_and_drink": "Food & Drink",
+    "shopping": "Shopping",
+    "getting_around": "Getting Around"
+  },
+
+  "overview": {
+    "title": "Pearl of the Far East",
+    "subtitle": "Vietnam's bustling economic powerhouse and cultural melting pot",
+    "region": "Southern Vietnam",
+    "intro": "Ho Chi Minh City, formerly known as Saigon, is Vietnam's largest city and economic center. This vibrant metropolis seamlessly blends traditional Vietnamese culture with modern urban life, offering visitors an exciting mix of historical landmarks, delicious street food, bustling markets, and gleaming skyscrapers.",
+    
+    "why_visit": {
+      "title": "Why Visit Ho Chi Minh City?",
+      "reasons": {
+        "0": "Experience the dynamic energy of Vietnam's most cosmopolitan city",
+        "1": "Discover rich history from the Vietnam War era and French colonial period",
+        "2": "Savor incredible street food and traditional Vietnamese cuisine",
+        "3": "Shop in world-class malls and traditional markets",
+        "4": "Enjoy vibrant nightlife and rooftop bars with stunning city views"
+      }
+    },
+
+    "best_time": {
+      "title": "Best Time to Visit",
+      "description": "HCM City has a tropical climate with two seasons: dry (December-April) and rainy (May-November). The best time to visit is during the dry season when temperatures are cooler and rainfall is minimal."
+    },
+
+    "cultural_significance": {
+      "title": "Cultural Significance",
+      "description": "As Vietnam's economic capital, Ho Chi Minh City represents the country's rapid modernization while preserving its cultural heritage. The city showcases the fascinating intersection of East and West, with French colonial architecture standing alongside Buddhist temples and cutting-edge skyscrapers."
+    },
+
+    "quick_facts": {
+      "location": "Location",
+      "location_value": "Southern Vietnam",
+      "time_zone": "Time Zone",
+      "time_zone_value": "UTC+7 (ICT)",
+      "population": "Population",
+      "population_value": "9+ million"
+    }
+  },
+
+  "attractions": {
+    "title": "Must-Visit Attractions",
+    "intro": "From historic landmarks to modern marvels, Ho Chi Minh City offers diverse attractions that tell the story of Vietnam's past, present, and future.",
+    
+    "tips": {
+      "1": "Visit major attractions early morning to avoid crowds and heat",
+      "2": "Dress respectfully when visiting religious and historical sites",
+      "3": "Hire local guides for deeper historical insights"
+    }
+  },
+
+  "food": {
+    "title": "Culinary Adventures",
+    "intro": "Ho Chi Minh City is a food lover's paradise, offering everything from world-famous pho to innovative fusion cuisine in a setting that ranges from street stalls to Michelin-starred restaurants.",
+    
+    "dishes": {
+      "0": {
+        "name": "Phở",
+        "description": "Vietnam's most famous noodle soup with aromatic broth, fresh herbs, and your choice of beef or chicken",
+        "where_to_try": "Phở Hòa Pasteur, Phở 2000"
+      },
+      "1": {
+        "name": "Bánh Mì",
+        "description": "Vietnamese baguette sandwich filled with various meats, pâté, vegetables, and herbs",
+        "where_to_try": "Bánh Mì Huỳnh Hoa, Bánh Mì 37 Nguyễn Trãi"
+      },
+      "2": {
+        "name": "Gỏi Cuốn",
+        "description": "Fresh spring rolls with shrimp, herbs, rice noodles wrapped in rice paper",
+        "where_to_try": "Street vendors, local restaurants"
+      },
+      "3": {
+        "name": "Cà Phê Sữa Đá",
+        "description": "Vietnamese iced coffee with condensed milk, a perfect afternoon refresher",
+        "where_to_try": "The Coffee House, Highlands Coffee"
+      }
+    },
+
+    "restaurants": {
+      "title": "Recommended Restaurants",
+      "list": {
+        "0": {
+          "name": "Secret Garden Restaurant",
+          "rating": "4.8/5",
+          "description": "Hidden rooftop restaurant serving authentic Vietnamese cuisine in a magical garden setting",
+          "address": "District 1"
+        },
+        "1": {
+          "name": "Noir. Dining in the Dark",
+          "rating": "4.7/5", 
+          "description": "Unique dining experience where you eat in complete darkness, served by visually impaired staff",
+          "address": "District 1"
+        },
+        "2": {
+          "name": "Cục Gạch Quán",
+          "rating": "4.6/5",
+          "description": "Charming restaurant in a restored French villa serving traditional Vietnamese dishes",
+          "address": "District 1"
+        }
+      }
+    }
+  },
+
+  "shopping": {
+    "title": "Shopping Paradise",
+    "intro": "From luxury malls to bustling markets, Ho Chi Minh City offers incredible shopping experiences with everything from designer brands to unique local handicrafts.",
+    
+    "places": {
+      "0": {
+        "name": "Ben Thanh Market",
+        "description": "Iconic central market perfect for souvenirs, local crafts, and street food",
+        "location": "District 1",
+        "hours": "6:00 AM - 6:00 PM"
+      },
+      "1": {
+        "name": "Saigon Square",
+        "description": "Popular shopping center known for affordable fashion, accessories, and electronics",
+        "location": "District 1",
+        "hours": "9:00 AM - 10:00 PM"
+      },
+      "2": {
+        "name": "Vincom Center",
+        "description": "Modern shopping mall featuring international brands, cinema, and dining options",
+        "location": "District 1",
+        "hours": "9:30 AM - 10:00 PM"
+      },
+      "3": {
+        "name": "Dong Khoi Street",
+        "description": "Upscale shopping street with luxury boutiques, art galleries, and cafes",
+        "location": "District 1",
+        "hours": "9:00 AM - 9:00 PM"
+      }
+    },
+
+    "souvenirs": {
+      "title": "Perfect Souvenirs",
+      "items": {
+        "0": {
+          "name": "Vietnamese Coffee",
+          "description": "Premium coffee beans and traditional drip filters"
+        },
+        "1": {
+          "name": "Áo Dài",
+          "description": "Traditional Vietnamese dress, beautifully tailored"
+        },
+        "2": {
+          "name": "Lacquerware",
+          "description": "Handcrafted items with intricate mother-of-pearl inlays"
+        }
+      }
+    }
+  },
+
+  "transport": {
+    "title": "Getting Around the City",
+    "intro": "Ho Chi Minh City offers various transportation options to help you navigate this bustling metropolis efficiently and safely.",
+    
+    "options": {
+      "0": {
+        "name": "Grab/Taxi",
+        "description": "Convenient and air-conditioned, perfect for longer distances and comfort",
+        "cost": "$$",
+        "convenience": "High"
+      },
+      "1": {
+        "name": "Motorbike Taxi (Xe Ôm)",
+        "description": "Fast and authentic way to navigate through traffic, great for short distances",
+        "cost": "$", 
+        "convenience": "High"
+      },
+      "2": {
+        "name": "City Bus",
+        "description": "Affordable public transportation covering major routes throughout the city",
+        "cost": "$",
+        "convenience": "Medium"
+      },
+      "3": {
+        "name": "Walking",
+        "description": "Perfect for exploring District 1's compact downtown area and major attractions",
+        "cost": "Free",
+        "convenience": "Medium"
+      }
+    },
+
+    "tips": {
+      "title": "Transportation Tips",
+      "list": {
+        "0": "Always use Grab app for reliable and safe rides",
+        "1": "Negotiate taxi fares or insist on using the meter",
+        "2": "Be extremely careful when crossing streets - follow locals",
+        "3": "Wear a helmet when using motorbike taxis",
+        "4": "Download offline maps for easy navigation"
+      }
+    }
+  },
+
+  "photo_gallery": {
+    "title": "Visual Journey",
+    "description": "Immerse yourself in the vibrant colors, bustling energy, and stunning contrasts that make Ho Chi Minh City an unforgettable destination."
+  },
+
+  "recommendations": {
+    "title": "Personalized Recommendations",
+    "description": "Discover curated experiences, insider tips, and hidden gems that will make your Ho Chi Minh City adventure truly memorable.",
+    
+    "types": {
+      "itinerary": "Itinerary",
+      "hotel": "Hotels",
+      "food": "Food Guide"
+    },
+
+    "view_details": "View Details",
+    "highlight": "Featured"
+  },
+
+  "cta": {
+    "title": "Ready for Your Ho Chi Minh City Adventure?",
+    "description": "Start your journey through Vietnam's most dynamic city with our comprehensive guide and insider tips.",
+    "restart_tour": "Restart Tour Guide"
+  },
+
+  "tour_guide": {
+    "subtitle": "Your interactive guide to Vietnam's most dynamic metropolis",
+    "close_success": "Tour guide closed successfully!",
+    
+    "steps": {
+      "welcome": {
+        "title": "Welcome to Ho Chi Minh City!",
+        "content": "Discover the Pearl of the Far East - a vibrant metropolis where tradition meets modernity in perfect harmony. Get ready for an incredible journey!"
+      },
+      "attractions": {
+        "title": "Historic & Modern Attractions",
+        "content": "From the iconic Independence Palace to the towering Landmark 81, explore attractions that showcase the city's rich past and bright future.",
+        "highlight": "Independence Palace"
+      },
+      "food": {
+        "title": "Street Food & Fine Dining",
+        "content": "Embark on a culinary adventure from street-side phở stalls to rooftop restaurants, experiencing the incredible diversity of Vietnamese cuisine."
+      },
+      "shopping": {
+        "title": "Markets & Malls",
+        "content": "Shop till you drop at traditional markets like Ben Thanh and modern malls, finding everything from handcrafted souvenirs to luxury brands."
+      },
+      "transport": {
+        "title": "Navigate Like a Local",
+        "content": "Master the art of getting around this bustling city using various transportation options from Grab to motorbike taxis.",
+        "options": {
+          "0": "Grab/Taxi",
+          "1": "Motorbike Taxi",
+          "2": "City Bus", 
+          "3": "Walking"
+        }
+      },
+      "conclusion": {
+        "title": "Your Adventure Begins!",
+        "content_title": "Ready to Explore!",
+        "content": "You're now equipped with everything you need to experience the best of Ho Chi Minh City. Have an amazing adventure in this incredible metropolis!"
+      }
+    }
+  }
+}
