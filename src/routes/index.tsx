@@ -26,6 +26,10 @@ const DaNangGuidePage = lazy(
 const HanoiGuidePage = lazy(
   () => import("../features/destination/pages/HaNoiGuidePage")
 );
+// NEW: HCM Guide Page
+const HCMGuidePage = lazy(
+  () => import("../features/destination/pages/HCMGuidePage")
+);
 
 // Blog Page
 const BlogPage = lazy(() => import("../features/blog/pages/BlogPage"));
@@ -42,6 +46,18 @@ const LuxuryLoadingFallback = () => (
     </div>
     <div className="w-16 h-[1px] bg-primary my-4"></div>
     <p className="text-gray-400 text-sm">Loading experience...</p>
+  </div>
+);
+
+// Enhanced loading component for HCM with special effects
+const HCMLoadingFallback = () => (
+  <div className="h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-orange-50 via-red-50 to-pink-50 dark:from-orange-900 dark:via-red-900 dark:to-pink-900">
+    <div className="relative">
+      <div className="w-20 h-20 rounded-full bg-gradient-to-r from-orange-500 to-red-500 opacity-20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+      <img src="/logo.svg" alt="MOSIAC" className="h-12 relative z-10" />
+    </div>
+    <div className="w-16 h-[1px] bg-gradient-to-r from-orange-500 to-red-500 my-4"></div>
+    <p className="text-gray-600 dark:text-gray-300 text-sm animate-pulse">Loading Ho Chi Minh City experience...</p>
   </div>
 );
 
@@ -155,12 +171,21 @@ const AppRoutes: React.FC = () => {
         }
       />
       
-      {/* New Hanoi Route */}
       <Route
         path="/destinations/hanoi"
         element={
           <Suspense fallback={<LoadingFallback />}>
             <HanoiGuidePage />
+          </Suspense>
+        }
+      />
+
+      {/* NEW: Ho Chi Minh City Route with special loading */}
+      <Route
+        path="/destinations/hcm"
+        element={
+          <Suspense fallback={<HCMLoadingFallback />}>
+            <HCMGuidePage />
           </Suspense>
         }
       />

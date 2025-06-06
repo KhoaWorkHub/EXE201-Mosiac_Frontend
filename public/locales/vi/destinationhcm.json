@@ -1,0 +1,270 @@
+{
+  "vietnam": "Việt Nam",
+  "southern_vietnam": "Miền Nam Việt Nam",
+  
+  "tabs": {
+    "overview": "Tổng quan",
+    "attractions": "Điểm tham quan",
+    "food_and_drink": "Ẩm thực",
+    "shopping": "Mua sắm",
+    "getting_around": "Di chuyển"
+  },
+
+  "overview": {
+    "title": "Hòn ngọc Viễn Đông",
+    "subtitle": "Trung tâm kinh tế sôi động và nơi giao thoa văn hóa của Việt Nam",
+    "region": "Miền Nam Việt Nam",
+    "intro": "Thành phố Hồ Chí Minh, trước đây gọi là Sài Gòn, là thành phố lớn nhất và trung tâm kinh tế của Việt Nam. Đô thị sôi động này hòa quyện hoàn hảo giữa văn hóa truyền thống Việt Nam với cuộc sống đô thị hiện đại, mang đến cho du khách sự kết hợp thú vị giữa các di tích lịch sử, ẩm thực đường phố ngon tuyệt, chợ búa nhộn nhịp và những tòa nhà chọc trời lấp lánh.",
+    
+    "why_visit": {
+      "title": "Tại sao nên đến TP. Hồ Chí Minh?",
+      "reasons": {
+        "0": "Trải nghiệm năng lượng sôi động của thành phố quốc tế nhất Việt Nam",
+        "1": "Khám phá lịch sử phong phú từ thời kỳ chiến tranh Việt Nam và thời Pháp thuộc",
+        "2": "Thưởng thức ẩm thực đường phố tuyệt vời và món ăn truyền thống Việt Nam",
+        "3": "Mua sắm tại các trung tâm thương mại đẳng cấp thế giới và chợ truyền thống",
+        "4": "Tận hưởng cuộc sống về đêm sôi động và quán bar trên tầng thượng với tầm nhìn tuyệt đẹp"
+      }
+    },
+
+    "best_time": {
+      "title": "Thời điểm tốt nhất để ghé thăm",
+      "description": "TP.HCM có khí hậu nhiệt đới với hai mùa: khô (tháng 12-4) và mưa (tháng 5-11). Thời gian tốt nhất để du lịch là mùa khô khi nhiệt độ mát mẻ hơn và lượng mưa ít nhất."
+    },
+
+    "cultural_significance": {
+      "title": "Ý nghĩa văn hóa",
+      "description": "Là thủ đô kinh tế của Việt Nam, TP. Hồ Chí Minh đại diện cho sự hiện đại hóa nhanh chóng của đất nước trong khi vẫn bảo tồn di sản văn hóa. Thành phố thể hiện sự giao thoa hấp dẫn giữa Đông và Tây, với kiến trúc thuộc địa Pháp đứng cạnh các ngôi chùa Phật giáo và những tòa nhà chọc trời hiện đại."
+    },
+
+    "quick_facts": {
+      "location": "Vị trí",
+      "location_value": "Miền Nam Việt Nam",
+      "time_zone": "múi giờ",
+      "time_zone_value": "UTC+7 (ICT)",
+      "population": "Dân số",
+      "population_value": "9+ triệu người"
+    }
+  },
+
+  "attractions": {
+    "title": "Điểm tham quan không thể bỏ qua",
+    "intro": "Từ các di tích lịch sử đến những kỳ quan hiện đại, TP. Hồ Chí Minh mang đến những điểm tham quan đa dạng kể câu chuyện về quá khứ, hiện tại và tương lai của Việt Nam.",
+    
+    "tips": {
+      "1": "Tham quan các điểm du lịch chính vào sáng sớm để tránh đông đúc và nóng nực",
+      "2": "Ăn mặc lịch sự khi tham quan các địa điểm tôn giáo và lịch sử",
+      "3": "Thuê hướng dẫn viên địa phương để hiểu sâu hơn về lịch sử"
+    }
+  },
+
+  "food": {
+    "title": "Cuộc phiêu lưu ẩm thực",
+    "intro": "TP. Hồ Chí Minh là thiên đường cho những người yêu ẩm thực, cung cấp mọi thứ từ phở nổi tiếng thế giới đến món ăn fusion sáng tạo trong môi trường từ quầy hàng đường phố đến nhà hàng Michelin.",
+    
+    "dishes": {
+      "0": {
+        "name": "Phở",
+        "description": "Món bún nước nổi tiếng nhất Việt Nam với nước dùng thơm ngon, rau thơm tươi và thịt bò hoặc gà tùy chọn",
+        "where_to_try": "Phở Hòa Pasteur, Phở 2000"
+      },
+      "1": {
+        "name": "Bánh Mì",
+        "description": "Bánh mì baguette Việt Nam nhồi với nhiều loại thịt, pâté, rau củ và rau thơm",
+        "where_to_try": "Bánh Mì Huỳnh Hoa, Bánh Mì 37 Nguyễn Trãi"
+      },
+      "2": {
+        "name": "Gỏi Cuốn",
+        "description": "Gỏi cuốn tươi với tôm, rau thơm, bún gạo cuốn trong bánh tráng",
+        "where_to_try": "Hàng rong, nhà hàng địa phương"
+      },
+      "3": {
+        "name": "Cà Phê Sữa Đá",
+        "description": "Cà phê đá Việt Nam với sữa đặc, thức uống giải khát hoàn hảo buổi chiều",
+        "where_to_try": "The Coffee House, Highlands Coffee"
+      }
+    },
+
+    "restaurants": {
+      "title": "Nhà hàng được đề xuất",
+      "list": {
+        "0": {
+          "name": "Secret Garden Restaurant",
+          "rating": "4.8/5",
+          "description": "Nhà hàng trên tầng thượng ẩn mình phục vụ ẩm thực Việt Nam chính thống trong không gian vườn kỳ diệu",
+          "address": "Quận 1"
+        },
+        "1": {
+          "name": "Noir. Dining in the Dark",
+          "rating": "4.7/5",
+          "description": "Trải nghiệm ăn uống độc đáo khi bạn ăn trong bóng tối hoàn toàn, được phục vụ bởi nhân viên khiếm thị",
+          "address": "Quận 1"
+        },
+        "2": {
+          "name": "Cục Gạch Quán",
+          "rating": "4.6/5",
+          "description": "Nhà hàng quyến rũ trong biệt thự Pháp được phục hồi phục vụ các món ăn truyền thống Việt Nam",
+          "address": "Quận 1"
+        }
+      }
+    }
+  },
+
+  "shopping": {
+    "title": "Thiên đường mua sắm",
+    "intro": "Từ trung tâm thương mại sang trọng đến chợ búa nhộn nhịp, TP. Hồ Chí Minh mang đến trải nghiệm mua sắm tuyệt vời với mọi thứ từ thương hiệu thiết kế đến đồ thủ công địa phương độc đáo.",
+    
+    "places": {
+      "0": {
+        "name": "Chợ Bến Thành",
+        "description": "Chợ trung tâm biểu tượng hoàn hảo cho đồ lưu niệm, thủ công mỹ nghệ địa phương và ẩm thực đường phố",
+        "location": "Quận 1",
+        "hours": "6:00 AM - 6:00 PM"
+      },
+      "1": {
+        "name": "Saigon Square",
+        "description": "Trung tâm mua sắm phổ biến nổi tiếng với thời trang giá cả phải chăng, phụ kiện và điện tử",
+        "location": "Quận 1",
+        "hours": "9:00 AM - 10:00 PM"
+      },
+      "2": {
+        "name": "Vincom Center",
+        "description": "Trung tâm thương mại hiện đại với các thương hiệu quốc tế, rạp chiếu phim và tùy chọn ăn uống",
+        "location": "Quận 1",
+        "hours": "9:30 AM - 10:00 PM"
+      },
+      "3": {
+        "name": "Phố Đồng Khởi",
+        "description": "Phố mua sắm cao cấp với các cửa hàng thời trang sang trọng, phòng trưng bày nghệ thuật và quán cà phê",
+        "location": "Quận 1",
+        "hours": "9:00 AM - 9:00 PM"
+      }
+    },
+
+    "souvenirs": {
+      "title": "Quà lưu niệm hoàn hảo",
+      "items": {
+        "0": {
+          "name": "Cà phê Việt Nam",
+          "description": "Hạt cà phê cao cấp và bộ lọc nhỏ giọt truyền thống"
+        },
+        "1": {
+          "name": "Áo Dài",
+          "description": "Trang phục truyền thống Việt Nam, may đo đẹp mắt"
+        },
+        "2": {
+          "name": "Đồ sơn mài",
+          "description": "Các vật phẩm thủ công với khảm xà cừ tinh xảo"
+        }
+      }
+    }
+  },
+
+  "transport": {
+    "title": "Di chuyển trong thành phố",
+    "intro": "TP. Hồ Chí Minh cung cấp nhiều phương tiện giao thông khác nhau để giúp bạn di chuyển trong đô thị nhộn nhịp này một cách hiệu quả và an toàn.",
+    
+    "options": {
+      "0": {
+        "name": "Grab/Taxi",
+        "description": "Tiện lợi và có điều hòa, hoàn hảo cho quãng đường dài và sự thoải mái",
+        "cost": "$$",
+        "convenience": "Cao"
+      },
+      "1": {
+        "name": "Xe ôm",
+        "description": "Cách nhanh chóng và chính thống để di chuyển qua giao thông, tuyệt vời cho quãng đường ngắn",
+        "cost": "$",
+        "convenience": "Cao"
+      },
+      "2": {
+        "name": "Xe buýt thành phố",
+        "description": "Giao thông công cộng giá cả phải chăng bao phủ các tuyến chính trong toàn thành phố",
+        "cost": "$",
+        "convenience": "Trung bình"
+      },
+      "3": {
+        "name": "Đi bộ",
+        "description": "Hoàn hảo để khám phá khu vực trung tâm nhỏ gọn của Quận 1 và các điểm tham quan chính",
+        "cost": "Miễn phí",
+        "convenience": "Trung bình"
+      }
+    },
+
+    "tips": {
+      "title": "Mẹo di chuyển",
+      "list": {
+        "0": "Luôn sử dụng ứng dụng Grab để có chuyến đi đáng tin cậy và an toàn",
+        "1": "Thương lượng giá taxi hoặc yêu cầu sử dụng đồng hồ tính tiền",
+        "2": "Hết sức cẩn thận khi băng qua đường - hãy làm theo người dân địa phương",
+        "3": "Đội mũ bảo hiểm khi sử dụng xe ôm",
+        "4": "Tải bản đồ offline để dễ dàng định hướng"
+      }
+    }
+  },
+
+  "photo_gallery": {
+    "title": "Hành trình thị giác",
+    "description": "Đắm chìm trong những màu sắc sôi động, năng lượng nhộn nhịp và sự tương phản tuyệt đẹp làm cho TP. Hồ Chí Minh trở thành điểm đến khó quên."
+  },
+
+  "recommendations": {
+    "title": "Đề xuất cá nhân hóa",
+    "description": "Khám phá những trải nghiệm được tuyển chọn, mẹo từ người trong cuộc và những viên ngọc ẩn sẽ khiến cuộc phiêu lưu TP. Hồ Chí Minh của bạn thực sự đáng nhớ.",
+    
+    "types": {
+      "itinerary": "Lịch trình",
+      "hotel": "Khách sạn",
+      "food": "Hướng dẫn ẩm thực"
+    },
+
+    "view_details": "Xem chi tiết",
+    "highlight": "Nổi bật"
+  },
+
+  "cta": {
+    "title": "Sẵn sàng cho cuộc phiêu lưu TP. Hồ Chí Minh?",
+    "description": "Bắt đầu hành trình của bạn qua thành phố năng động nhất Việt Nam với hướng dẫn toàn diện và mẹo từ người trong cuộc của chúng tôi.",
+    "restart_tour": "Khởi động lại Hướng dẫn"
+  },
+
+  "tour_guide": {
+    "subtitle": "Hướng dẫn tương tác của bạn đến đô thị năng động nhất Việt Nam",
+    "close_success": "Đã đóng hướng dẫn thành công!",
+    
+    "steps": {
+      "welcome": {
+        "title": "Chào mừng đến TP. Hồ Chí Minh!",
+        "content": "Khám phá Hòn ngọc Viễn Đông - một đô thị sôi động nơi truyền thống gặp gỡ hiện đại trong sự hòa hợp hoàn hảo. Hãy sẵn sàng cho một hành trình tuyệt vời!"
+      },
+      "attractions": {
+        "title": "Điểm tham quan lịch sử & hiện đại",
+        "content": "Từ Dinh Độc Lập mang tính biểu tượng đến tòa tháp Landmark 81 cao chọc trời, khám phá những điểm tham quan thể hiện quá khứ phong phú và tương lai tươi sáng của thành phố.",
+        "highlight": "Dinh Độc Lập"
+      },
+      "food": {
+        "title": "Ẩm thực đường phố & nhà hàng cao cấp",
+        "content": "Bắt đầu cuộc phiêu lưu ẩm thực từ quầy phở đường phố đến nhà hàng trên tầng thượng, trải nghiệm sự đa dạng tuyệt vời của ẩm thực Việt Nam."
+      },
+      "shopping": {
+        "title": "Chợ & trung tâm thương mại",
+        "content": "Mua sắm thỏa thích tại các chợ truyền thống như Bến Thành và trung tâm thương mại hiện đại, tìm thấy mọi thứ từ quà lưu niệm thủ công đến thương hiệu xa xỉ."
+      },
+      "transport": {
+        "title": "Di chuyển như người địa phương",
+        "content": "Làm chủ nghệ thuật di chuyển trong thành phố nhộn nhịp này bằng cách sử dụng các phương tiện giao thông khác nhau từ Grab đến xe ôm.",
+        "options": {
+          "0": "Grab/Taxi",
+          "1": "Xe ôm",
+          "2": "Xe buýt thành phố",
+          "3": "Đi bộ"
+        }
+      },
+      "conclusion": {
+        "title": "Cuộc phiêu lưu của bạn bắt đầu!",
+        "content_title": "Sẵn sàng khám phá!",
+        "content": "Bây giờ bạn đã được trang bị mọi thứ cần thiết để trải nghiệm những điều tuyệt vời nhất của TP. Hồ Chí Minh. Chúc bạn có một cuộc phiêu lưu tuyệt vời trong đô thị tuyệt vời này!"
+      }
+    }
+  }
+}

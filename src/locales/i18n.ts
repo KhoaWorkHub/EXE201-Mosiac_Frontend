@@ -31,7 +31,8 @@ i18n
       'admin', 
       'destination', 
       'destinationdanang', 
-      'destinationhanoi',  // New namespace for Hanoi
+      'destinationhanoi',
+      'destinationhcm',  
       'profile', 
       'admin-orders'
     ],
