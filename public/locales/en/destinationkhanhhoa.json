@@ -1,0 +1,263 @@
+{
+  "vietnam": "Vietnam",
+  "coastal_vietnam": "Coastal Vietnam",
+  
+  "overview": {
+    "title": "Discover Khánh Hòa's Coastal Paradise",
+    "subtitle": "Where turquoise waters meet golden shores",
+    "region": "South Central Coast",
+    "intro": "Khánh Hòa Province, home to the stunning coastal city of Nha Trang, is Vietnam's premier beach destination offering pristine beaches, crystal-clear waters, vibrant coral reefs, and world-class resorts. This tropical paradise combines natural beauty with rich Cham culture, creating an unforgettable experience for every traveler.",
+    
+    "why_visit": {
+      "title": "Why Visit Khánh Hòa?",
+      "reasons": [
+        "Some of Southeast Asia's most beautiful beaches with powder-white sand",
+        "World-class diving and snorkeling in pristine coral reefs",
+        "Unique cultural heritage with ancient Cham towers and temples",
+        "Luxurious resorts and world's longest sea-crossing cable car",
+        "Delicious fresh seafood and authentic coastal Vietnamese cuisine"
+      ]
+    },
+    
+    "best_time": {
+      "title": "Best Time to Visit",
+      "description": "Khánh Hòa enjoys a tropical climate with warm temperatures year-round. The best time to visit is from February to August when rainfall is minimal and seas are calm, perfect for beach activities and island hopping."
+    },
+    
+    "cultural_significance": {
+      "title": "Cultural Heritage",
+      "description": "Khánh Hòa is deeply rooted in Cham culture, evident in the magnificent Po Nagar Towers and traditional fishing villages. The province showcases a harmonious blend of Vietnamese coastal life and ancient Cham traditions, creating a unique cultural tapestry that has been preserved for over a millennium."
+    },
+    
+    "quick_facts": {
+      "location": "Location",
+      "location_value": "South Central Coast Vietnam",
+      "time_zone": "Time Zone",
+      "time_zone_value": "UTC+7 (ICT)",
+      "population": "Population", 
+      "population_value": "1.2 million residents"
+    }
+  },
+  
+  "tabs": {
+    "overview": "Overview",
+    "attractions": "Attractions", 
+    "food_and_drink": "Food & Drink",
+    "shopping": "Shopping",
+    "getting_around": "Getting Around"
+  },
+  
+  "attractions": {
+    "title": "Must-Visit Coastal Attractions",
+    "intro": "From world-famous beaches to ancient towers, Khánh Hòa offers diverse attractions that showcase both natural beauty and cultural heritage. Explore pristine islands, relax on stunning beaches, and immerse yourself in the province's rich history.",
+    "tips": {
+      "1": "Best visited during early morning or late afternoon",
+      "2": "Bring reef-safe sunscreen for marine conservation",
+      "3": "Respect local customs at cultural and religious sites"
+    }
+  },
+  
+  "food": {
+    "title": "Coastal Culinary Delights",
+    "intro": "Khánh Hòa's cuisine is a seafood lover's paradise, featuring fresh catches from the South China Sea prepared with local herbs and spices. From street food markets to fine dining restaurants, the province offers an incredible variety of flavors that reflect its coastal location and cultural diversity.",
+    
+    "dishes": {
+      "0": {
+        "name": "Fresh Seafood Platter",
+        "description": "A magnificent spread of locally caught lobster, crab, prawns, and fish prepared with traditional Vietnamese seasonings and herbs.",
+        "where_to_try": "Seaside restaurants in Nha Trang"
+      },
+      "1": {
+        "name": "Nem Nướng Nha Trang",
+        "description": "Grilled pork skewers wrapped in rice paper with fresh herbs, lettuce, and special dipping sauce - a Nha Trang specialty.",
+        "where_to_try": "Local street food stalls"
+      },
+      "2": {
+        "name": "Bánh Căn",
+        "description": "Mini rice pancakes cooked in special round molds, served with sweet and sour fish sauce and fresh seafood.",
+        "where_to_try": "Night markets and street vendors"
+      },
+      "3": {
+        "name": "Chả Cá Nha Trang", 
+        "description": "Grilled fish cakes made with fresh local fish, herbs, and spices, served with rice noodles and vegetables.",
+        "where_to_try": "Traditional Vietnamese restaurants"
+      }
+    },
+    
+    "restaurants": {
+      "title": "Top Restaurants",
+      "list": {
+        "0": {
+          "name": "Sailing Club Nha Trang",
+          "rating": "4.8",
+          "description": "Beachfront dining with international and Vietnamese cuisine, famous for fresh seafood and cocktails.",
+          "address": "72-74 Tran Phu, Nha Trang"
+        },
+        "1": {
+          "name": "Lanterns Vietnamese Restaurant",
+          "rating": "4.7", 
+          "description": "Authentic Vietnamese cuisine in a beautiful traditional setting with live cultural performances.",
+          "address": "34/6 Nguyen Thien Thuat, Nha Trang"
+        },
+        "2": {
+          "name": "Yen's Restaurant",
+          "rating": "4.6",
+          "description": "Family-run restaurant serving the best Nem Nướng and traditional Nha Trang specialties.",
+          "address": "3/2A Tran Quang Khai, Nha Trang"
+        }
+      }
+    }
+  },
+  
+  "shopping": {
+    "title": "Shopping & Souvenirs",
+    "intro": "Khánh Hòa offers diverse shopping experiences from bustling local markets selling fresh seafood and handicrafts to modern shopping centers with international brands. Don't miss the unique pearls, traditional textiles, and locally produced goods that make perfect souvenirs.",
+    
+    "places": {
+      "0": {
+        "name": "Nha Trang Center",
+        "description": "Modern shopping mall with international brands, restaurants, and entertainment facilities in the heart of the city.",
+        "location": "Tran Phu Street, Nha Trang",
+        "hours": "9:00 AM - 10:00 PM daily"
+      },
+      "1": {
+        "name": "Dam Market (Chợ Đầm)",
+        "description": "Traditional market offering fresh seafood, local produce, handicrafts, and authentic Vietnamese goods.",
+        "location": "Dam Market Area, Nha Trang", 
+        "hours": "5:00 AM - 6:00 PM daily"
+      },
+      "2": {
+        "name": "Vincom Plaza Nha Trang",
+        "description": "Large shopping complex with fashion stores, electronics, food court, and entertainment options.",
+        "location": "190 Hoang Van Thu, Nha Trang",
+        "hours": "9:30 AM - 10:00 PM daily"
+      },
+      "3": {
+        "name": "Nha Trang Night Market",
+        "description": "Vibrant evening market with street food, souvenirs, clothing, and local handicrafts at great prices.",
+        "location": "46 Tran Phu, Nha Trang",
+        "hours": "6:00 PM - 11:00 PM daily"
+      }
+    },
+    
+    "souvenirs": {
+      "title": "Unique Souvenirs",
+      "items": {
+        "0": {
+          "name": "Khánh Hòa Pearls",
+          "description": "Beautiful cultured pearls harvested from local pearl farms, available in various sizes and colors."
+        },
+        "1": {
+          "name": "Bird's Nest Products",
+          "description": "High-quality bird's nest from Khánh Hòa's islands, known for their health and beauty benefits."
+        },
+        "2": {
+          "name": "Salted Fish Specialties",
+          "description": "Traditional dried and salted fish products made using time-honored coastal preservation methods."
+        }
+      }
+    }
+  },
+  
+  "transport": {
+    "title": "Getting Around Khánh Hòa",
+    "intro": "Khánh Hòa offers various transportation options to help you explore its beautiful coastline and attractions. From convenient taxis to scenic boat tours, getting around this coastal paradise is easy and enjoyable.",
+    
+    "options": {
+      "0": {
+        "name": "Taxi & Ride-sharing",
+        "description": "Convenient and air-conditioned transport with Grab, traditional taxis, or hotel shuttle services throughout the province.",
+        "cost": "Affordable",
+        "convenience": "High"
+      },
+      "1": {
+        "name": "Motorbike Rental",
+        "description": "Perfect for exploring coastal roads and reaching scenic viewpoints. International driving license required.",
+        "cost": "Budget-friendly", 
+        "convenience": "High flexibility"
+      },
+      "2": {
+        "name": "Cable Car & Boat Tours",
+        "description": "Experience the world's longest sea-crossing cable car to Vinpearl and boat tours to nearby islands.",
+        "cost": "Moderate to premium",
+        "convenience": "Scenic routes"
+      },
+      "3": {
+        "name": "Local Bus System",
+        "description": "Public buses connecting major attractions and districts, though less frequent than in major cities.",
+        "cost": "Very affordable",
+        "convenience": "Basic"
+      }
+    },
+    
+    "tips": {
+      "title": "Transportation Tips",
+      "list": [
+        "Book island hopping tours in advance during peak season",
+        "Always negotiate taxi fares beforehand or use the meter",
+        "Rent motorbikes from reputable shops and wear helmets",
+        "The cable car to Vinpearl offers stunning aerial views",
+        "Water taxis are available for quick trips to nearby islands"
+      ]
+    }
+  },
+  
+  "photo_gallery": {
+    "title": "Coastal Paradise Gallery",
+    "description": "Immerse yourself in the breathtaking beauty of Khánh Hòa through our curated collection of stunning photographs showcasing pristine beaches, crystal-clear waters, vibrant coral reefs, and magnificent coastal landscapes."
+  },
+  
+  "recommendations": {
+    "title": "Curated Experiences",
+    "description": "Discover handpicked recommendations for the ultimate Khánh Hòa experience, from luxury resorts to authentic local experiences.",
+    "types": {
+      "itinerary": "Itinerary",
+      "hotel": "Accommodation", 
+      "food": "Dining",
+      "activity": "Activities"
+    },
+    "highlight": "Featured Experience",
+    "view_details": "View Details"
+  },
+  
+  "cta": {
+    "title": "Ready to Explore Khánh Hòa's Coastal Paradise?",
+    "description": "Join thousands of travelers who have discovered the magic of Vietnam's premier beach destination. From pristine beaches to cultural treasures, your perfect coastal getaway awaits!",
+    "restart_tour": "Restart Tour Guide",
+    "plan_trip": "Plan Your Trip"
+  },
+  
+  "tour_guide": {
+    "subtitle": "Your digital companion to coastal paradise",
+    "close_success": "Tour guide completed! Enjoy exploring Khánh Hòa's wonders.",
+    
+    "steps": {
+      "welcome": {
+        "title": "Welcome to Khánh Hòa! 🏖️",
+        "content": "Discover Vietnam's premier coastal destination where pristine beaches meet ancient culture. This interactive guide will help you explore the best of Khánh Hòa's natural beauty and rich heritage."
+      },
+      "attractions": {
+        "title": "Coastal Attractions & Islands 🏝️", 
+        "highlight": "Nha Trang Beach",
+        "content": "From the world-famous Nha Trang Beach to pristine island paradises, explore stunning coastal attractions, ancient Cham towers, and unique experiences like mud baths and cable car rides."
+      },
+      "food": {
+        "title": "Fresh Seafood & Local Cuisine 🦐",
+        "content": "Indulge in the freshest seafood and authentic Vietnamese coastal cuisine. From street food markets to beachfront restaurants, discover the flavors that make Khánh Hòa a culinary paradise."
+      },
+      "shopping": {
+        "title": "Markets & Coastal Souvenirs 🛍️", 
+        "content": "Shop for unique coastal treasures including cultured pearls, traditional handicrafts, and local specialties. Explore bustling markets and modern shopping centers for the perfect souvenirs."
+      },
+      "transport": {
+        "title": "Island Transportation 🚗",
+        "content": "Navigate Khánh Hòa with ease using taxis, motorbikes, boats, and the famous cable car. Learn the best ways to reach beaches, islands, and attractions while enjoying scenic coastal routes."
+      },
+      "conclusion": {
+        "title": "Your Coastal Adventure Awaits! 🏆",
+        "content_title": "Ready to Dive into Paradise!",
+        "content": "You're now equipped with insider knowledge to explore Khánh Hòa's coastal wonders. From pristine beaches to cultural treasures, your perfect Vietnamese coastal adventure starts here!"
+      }
+    }
+  }
+}
