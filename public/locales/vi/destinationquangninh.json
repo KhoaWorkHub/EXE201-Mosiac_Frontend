@@ -1,0 +1,159 @@
+{
+  "vietnam": "Việt Nam",
+  "northern_vietnam": "Miền Bắc Việt Nam",
+  "overview": {
+    "title": "Quảng Ninh - Cửa Ngõ Kỳ Quan",
+    "subtitle": "Nơi núi đá vôi gặp gỡ biển xanh ngọc bích",
+    "region": "Đông Bắc Việt Nam",
+    "intro": "Tỉnh Quảng Ninh là quê hương của Vịnh Hạ Long huyền thoại - Di sản Thế giới được UNESCO công nhận với hàng nghìn hòn đảo đá vôi sừng sững trên mặt nước màu ngọc bích. Ngoài vịnh biển nổi tiếng, tỉnh ven biển này còn có những bãi biển hoang sơ, hang động bí ẩn, làng chài nổi và di sản văn hóa phong phú qua nhiều thế kỷ.",
+    "why_visit": {
+      "title": "Tại Sao Nên Đến Quảng Ninh?",
+      "reasons": {
+        "0": "Trải nghiệm kỳ quan Vịnh Hạ Long - Di sản Thế giới UNESCO",
+        "1": "Khám phá những hang động và thạch nhũ hùng vĩ",
+        "2": "Tìm hiểu làng chài nổi và văn hóa địa phương",
+        "3": "Thưởng thức hải sản tươi ngon và ẩm thực độc đáo",
+        "4": "Tận hưởng những bãi biển hoang sơ và nước biển xanh ngọc"
+      }
+    },
+    "best_time": {
+      "title": "Thời Gian Tốt Nhất",
+      "description": "Thời điểm lý tưởng để ghé thăm Quảng Ninh là từ tháng 10 đến tháng 4 khi thời tiết mát mẻ và khô ráo. Từ tháng 3 đến tháng 5 có nhiệt độ dễ chịu nhất để khám phá hang động và du ngoạn vịnh."
+    },
+    "cultural_significance": {
+      "title": "Di Sản Văn Hóa",
+      "description": "Quảng Ninh không chỉ nổi tiếng với vẻ đẹp thiên nhiên - đây là nơi truyền thống đánh cá cổ xưa gặp gỡ du lịch hiện đại. Những làng chài nổi trên Vịnh Hạ Long đại diện cho văn hóa hàng hải hàng thế kỷ, trong khi lịch sử khai thác than của tỉnh tạo thêm một lớp văn hóa phong phú."
+    },
+    "quick_facts": {
+      "location": "Vị Trí Địa Lý",
+      "location_value": "Đông Bắc Việt Nam",
+      "time_zone": "múi Giờ",
+      "time_zone_value": "UTC+7 (ICT)",
+      "population": "Dân Số",
+      "population_value": "1.3 triệu người"
+    }
+  },
+  "tabs": {
+    "overview": "Tổng Quan",
+    "attractions": "Điểm Tham Quan",
+    "food_and_drink": "Ẩm Thực",
+    "shopping": "Mua Sắm",
+    "getting_around": "Di Chuyển"
+  },
+  "attractions": {
+    "title": "Điểm Tham Quan Hùng Vĩ",
+    "intro": "Từ Vịnh Hạ Long nổi tiếng thế giới đến những hang động ẩn giấu và bãi biển hoang sơ, Quảng Ninh mang đến những trải nghiệm sẽ khiến bạn ngây ngất và tạo nên những kỷ niệm suốt đời."
+  },
+  "food": {
+    "title": "Kho Tángẩm Thực",
+    "intro": "Ẩm thực Quảng Ninh là sự tôn vinh hải sản tươi ngon, nguyên liệu địa phương độc đáo và những công thức truyền thống được truyền qua nhiều thế hệ ngư dân.",
+    "dishes": {
+      "0": {
+        "name": "Chả Mực Hạ Long",
+        "description": "Chả mực nổi tiếng làm từ mực tươi đánh bắt tại Vịnh Hạ Long, món đặc sản không thể bỏ qua",
+        "where_to_try": "Chợ Hạ Long, Bãi Cháy"
+      },
+      "1": {
+        "name": "Sá Sùng Sầm Sơn",
+        "description": "Món sâu biển độc đáo, được coi là đặc sản địa phương với hương vị và kết cấu đặc trưng",
+        "where_to_try": "Nhà hàng nổi trên Vịnh Hạ Long"
+      },
+      "2": {
+        "name": "Bánh Cuốn Hạ Long",
+        "description": "Bánh cuốn hấp nhúng hải sản tươi và rau thơm, biến tấu địa phương của món ăn truyền thống",
+        "where_to_try": "Quán ăn đường phố tại thành phố Hạ Long"
+      },
+      "3": {
+        "name": "Cá Khoai Nướng",
+        "description": "Chả cá nướng gói lá chuối, thấm đẫm hương vị thảo mộc và gia vị thơm lừng",
+        "where_to_try": "Nhà hàng địa phương dọc bờ biển"
+      }
+    }
+  },
+  "shopping": {
+    "title": "Mua Sắm & Quà Lưu Niệm",
+    "intro": "Mang về nhà những kho báu độc đáo từ Quảng Ninh, từ ngọc trai thủ công đến đặc sản địa phương và sản phẩm thủ công mỹ nghệ.",
+    "places": {
+      "0": {
+        "name": "Chợ Đêm Hạ Long",
+        "description": "Chợ đêm nhộn nhịp với hải sản tươi sống, đồ ăn nhẹ địa phương và quà lưu niệm với tầm nhìn tuyệt đẹp ra vịnh"
+      },
+      "1": {
+        "name": "Chợ Bãi Cháy",
+        "description": "Chợ truyền thống nơi người dân địa phương mua sắm nhu yếu phẩm hàng ngày, nông sản tươi và đồ ăn đường phố chính thống"
+      },
+      "2": {
+        "name": "Trại Nuôi Ngọc Trai",
+        "description": "Thăm các trại nuôi ngọc trai địa phương để xem quy trình nuôi trồng và mua ngọc trai tự nhiên chất lượng cao"
+      },
+      "3": {
+        "name": "Cửa Hàng Bảo Tàng Than",
+        "description": "Quà lưu niệm độc đáo liên quan đến di sản khai thác than của Quảng Ninh và kho báu địa chất"
+      }
+    }
+  },
+  "transport": {
+    "title": "Di Chuyển",
+    "intro": "Khám phá Quảng Ninh là một cuộc phiêu lưu, với nhiều lựa chọn từ chuyến đi thuyền ngắm cảnh đến phương tiện giao thông đường bộ thoải mái.",
+    "options": {
+      "0": {
+        "name": "Du Thuyền & Thuyền Buồm",
+        "description": "Cách chân thực nhất để khám phá Vịnh Hạ Long, từ du thuyền sang trọng đến thuyền gỗ truyền thống"
+      },
+      "1": {
+        "name": "Xe Buýt Du Lịch",
+        "description": "Xe buýt thoải mái kết nối các điểm tham quan chính, hoàn hảo cho tour có hướng dẫn và chuyến đi trong ngày"
+      },
+      "2": {
+        "name": "Xe Máy & Xe Scooter",
+        "description": "Tuyệt vời để khám phá các tuyến đường ven biển và đến những điểm đến ít người biết"
+      },
+      "3": {
+        "name": "Cáp Treo",
+        "description": "Chuyến đi cáp treo ngắm cảnh tại Queen Cable Car và các điểm tham quan khác với tầm nhìn toàn cảnh"
+      }
+    }
+  },
+  "photo_gallery": {
+    "title": "Hành Trình Thị Giác",
+    "description": "Đắm mình trong vẻ đẹp ngoạn mục của Quảng Ninh thông qua bộ sưu tập ảnh được tuyển chọn kỹ lưỡng."
+  },
+  "cta": {
+    "title": "Sẵn Sàng Khám Phá Quảng Ninh?",
+    "description": "Hãy để những hòn đảo đá vôi và làn nước màu ngọc bích của Vịnh Hạ Long mê hoặc bạn. Bắt đầu hành trình vào một trong những kỳ quan thiên nhiên ngoạn mục nhất thế giới.",
+    "restart_tour": "🗿 Khởi Động Lại Tour Hang Động"
+  },
+  "tour_guide": {
+    "title": "Hướng Dẫn Khám Phá Quảng Ninh",
+    "subtitle": "Cửa ngõ đến những kỳ quan đá vôi và biển xanh ngọc bích",
+    "close_success": "Hoàn thành khám phá hang động! Chào mừng đến Quảng Ninh!",
+    "steps": {
+      "welcome": {
+        "title": "Chào Mừng Đến Kỳ Quan",
+        "content": "Chào mừng bạn đến Quảng Ninh, quê hương của Vịnh Hạ Long - một trong những kỳ quan thiên nhiên ngoạn mục nhất thế giới! Hãy chuẩn bị để ngỡ ngàng trước những hòn đảo đá vôi sừng sững, hang động bí ẩn và làn nước màu ngọc bích đã mê hoặc du khách suốt nhiều thế kỷ."
+      },
+      "attractions": {
+        "title": "Điểm Tham Quan Huyền Thoại",
+        "content": "Từ Vịnh Hạ Long biểu tượng đến Hang Sơn Trà hùng vĩ, Quảng Ninh có những điểm tham quan như thuộc về thế giới cổ tích. Mỗi khối đá vôi kể một câu chuyện hàng triệu năm.",
+        "highlight": "Di Sản Thế Giới UNESCO"
+      },
+      "food": {
+        "title": "Kho Báu Đại Dương",
+        "content": "Nếm thử kho báu biển cả với ẩm thực hải sản tuyệt vời của Quảng Ninh. Từ chả mực nổi tiếng đến sá sùng hiếm có, mỗi món ăn là một lễ kỷ niệm sự hào phóng của đại dương."
+      },
+      "shopping": {
+        "title": "Kho Báu & Ngọc Trai",
+        "content": "Khám phá ngọc trai tự nhiên được nuôi trồng trong làn nước trong lành của Vịnh Hạ Long, cùng với đồ thủ công độc đáo và quà lưu niệm chứa đựng tinh hoa của vùng đất kỳ diệu này."
+      },
+      "transport": {
+        "title": "Phương Thức Di Chuyển",
+        "content": "Khám phá vùng nước Quảng Ninh bằng thuyền buồm truyền thống, tìm hiểu hang động bằng kayak, hoặc đi cáp treo ngắm cảnh để có tầm nhìn toàn cảnh xứ sở đá vôi kỳ thú."
+      },
+      "conclusion": {
+        "title": "Cuộc Phiêu Lưu Quảng Ninh Của Bạn Đang Chờ",
+        "content": "Bây giờ bạn đã sẵn sàng bắt đầu một trong những hành trình ngoạn mục nhất tại Việt Nam. Hãy để những hòn đảo đá vôi cổ xưa và làn nước màu ngọc bích của Quảng Ninh tạo nên những kỷ niệm sẽ tồn tại suốt đời!",
+        "content_title": "Cuộc Phiêu Lưu Bắt Đầu Ngay!"
+      }
+    }
+  }
+}
