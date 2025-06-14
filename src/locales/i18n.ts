@@ -32,7 +32,9 @@ i18n
       'destination', 
       'destinationdanang', 
       'destinationhanoi',
-      'destinationhcm',  
+      'destinationhcm',
+      'destinationkhanhhoa',
+      'destinationquangninh', 
       'profile', 
       'admin-orders'
     ],
