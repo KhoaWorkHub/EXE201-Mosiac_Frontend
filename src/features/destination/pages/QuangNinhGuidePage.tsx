@@ -105,7 +105,10 @@ const attractionsData = [
 
 const QuangNinhGuidePage: React.FC = () => {
   const { t, i18n } = useTranslation(['destinationquangninh', 'common']);
-  const [showTourGuide, setShowTourGuide] = useState(true);
+  const [showTourGuide, setShowTourGuide] = useState(() => {
+    // Check if user has seen the tour guide before
+    return !localStorage.getItem('quangninhTourGuideShown');
+  });
   const [activeTab, setActiveTab] = useState('overview');
   const [loading, setLoading] = useState(true);
   
@@ -436,6 +439,8 @@ const QuangNinhGuidePage: React.FC = () => {
         <DestinationHeader 
           title={i18n.language === 'vi' ? 'Quảng Ninh' : 'Quảng Ninh'}
           subtitle={t('overview.subtitle')}
+          onShare={handleShare}
+          onStartTour={restartTourGuide}
         />
         
         {/* Enhanced scroll indicator with limestone motion */}
@@ -464,7 +469,7 @@ const QuangNinhGuidePage: React.FC = () => {
         </div>
       </section>
       
-      <section className="py-16 bg-white dark:bg-gray-800 relative overflow-hidden">
+      <section className="py-8 md:py-16 bg-white dark:bg-gray-800 relative overflow-hidden">
         {/* Background limestone pattern */}
         <div className="absolute inset-0 opacity-5">
           <svg viewBox="0 0 1200 120" className="w-full h-full">
@@ -495,34 +500,34 @@ const QuangNinhGuidePage: React.FC = () => {
                 variants={containerVariants}
                 initial="hidden"
                 animate={overviewInView ? "visible" : "hidden"}
-                className="py-8"
+                className="py-4 md:py-8"
               >
-                <motion.div variants={itemVariants} className="mb-8">
-                  <div className="flex items-center mb-4">
-                    <Title level={2} className="mb-0 dark:text-white bg-gradient-to-r from-slate-700 via-stone-700 to-slate-800 bg-clip-text text-transparent">
+                <motion.div variants={itemVariants} className="mb-6 md:mb-8">
+                  <div className="flex flex-col md:flex-row md:items-center mb-4">
+                    <Title level={2} className="mb-2 md:mb-0 dark:text-white bg-gradient-to-r from-slate-700 via-stone-700 to-slate-800 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
                       {t('overview.title')}
                     </Title>
-                    <Tag color="blue" className="ml-4 text-lg px-4 py-1">
+                    <Tag color="blue" className="ml-0 md:ml-4 text-sm md:text-lg px-3 py-1 w-fit">
                       <EnvironmentOutlined className="mr-1" /> {t('overview.region')}
                     </Tag>
                   </div>
                   
-                  <Paragraph className="text-lg dark:text-gray-300">
+                  <Paragraph className="text-base md:text-lg dark:text-gray-300">
                     {t('overview.intro')}
                   </Paragraph>
                 </motion.div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-12">
                   <motion.div variants={itemVariants}>
                     <Card className="h-full quangninh-gradient-card">
-                      <Title level={4} className="mb-4 dark:text-white">
+                      <Title level={4} className="mb-4 dark:text-white text-lg md:text-xl">
                         {t('overview.why_visit.title')}
                       </Title>
-                      <ul className="list-disc pl-5 space-y-3">
+                      <ul className="list-disc pl-5 space-y-2 md:space-y-3">
                         {Array.from({ length: 5 }).map((_, index) => (
                           <motion.li 
                             key={index} 
-                            className="dark:text-gray-300"
+                            className="dark:text-gray-300 text-sm md:text-base"
                             whileHover={{ x: 5, color: '#475569' }}
                             transition={{ duration: 0.2 }}
                           >
@@ -535,10 +540,10 @@ const QuangNinhGuidePage: React.FC = () => {
                   
                   <motion.div variants={itemVariants}>
                     <Card className="h-full quangninh-gradient-card">
-                      <Title level={4} className="mb-4 dark:text-white">
+                      <Title level={4} className="mb-4 dark:text-white text-lg md:text-xl">
                         {t('overview.best_time.title')}
                       </Title>
-                      <Paragraph className="dark:text-gray-300">
+                      <Paragraph className="dark:text-gray-300 text-sm md:text-base">
                         {t('overview.best_time.description')}
                       </Paragraph>
                       <div className="mt-4">
@@ -548,50 +553,50 @@ const QuangNinhGuidePage: React.FC = () => {
                   </motion.div>
                 </div>
                 
-                <motion.div variants={itemVariants} className="mb-12">
+                <motion.div variants={itemVariants} className="mb-8 md:mb-12">
                   <Card className="quangninh-gradient-card">
-                    <Title level={4} className="mb-4 dark:text-white">
+                    <Title level={4} className="mb-4 dark:text-white text-lg md:text-xl">
                       {t('overview.cultural_significance.title')}
                     </Title>
-                    <Paragraph className="dark:text-gray-300">
+                    <Paragraph className="dark:text-gray-300 text-sm md:text-base">
                       {t('overview.cultural_significance.description')}
                     </Paragraph>
                   </Card>
                 </motion.div>
                 
                 <motion.div variants={itemVariants}>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                     <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
-                      <Card className="text-center quangninh-gradient-card">
-                        <CompassOutlined className="text-4xl text-slate-600 mb-4" />
-                        <Title level={5} className="dark:text-white">
+                      <Card className="text-center quangninh-gradient-card h-full">
+                        <CompassOutlined className="text-3xl md:text-4xl text-slate-600 mb-4" />
+                        <Title level={5} className="dark:text-white text-base md:text-lg">
                           {t('overview.quick_facts.location')}
                         </Title>
-                        <Text className="dark:text-gray-300">
+                        <Text className="dark:text-gray-300 text-sm md:text-base">
                           {t('overview.quick_facts.location_value')}
                         </Text>
                       </Card>
                     </motion.div>
                     
                     <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
-                      <Card className="text-center quangninh-gradient-card">
-                        <ClockCircleOutlined className="text-4xl text-stone-600 mb-4" />
-                        <Title level={5} className="dark:text-white">
+                      <Card className="text-center quangninh-gradient-card h-full">
+                        <ClockCircleOutlined className="text-3xl md:text-4xl text-stone-600 mb-4" />
+                        <Title level={5} className="dark:text-white text-base md:text-lg">
                           {t('overview.quick_facts.time_zone')}
                         </Title>
-                        <Text className="dark:text-gray-300">
+                        <Text className="dark:text-gray-300 text-sm md:text-base">
                           {t('overview.quick_facts.time_zone_value')}
                         </Text>
                       </Card>
                     </motion.div>
                     
                     <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
-                      <Card className="text-center quangninh-gradient-card">
-                        <EnvironmentOutlined className="text-4xl text-slate-700 mb-4" />
-                        <Title level={5} className="dark:text-white">
+                      <Card className="text-center quangninh-gradient-card h-full">
+                        <EnvironmentOutlined className="text-3xl md:text-4xl text-slate-700 mb-4" />
+                        <Title level={5} className="dark:text-white text-base md:text-lg">
                           {t('overview.quick_facts.population')}
                         </Title>
-                        <Text className="dark:text-gray-300">
+                        <Text className="dark:text-gray-300 text-sm md:text-base">
                           {t('overview.quick_facts.population_value')}
                         </Text>
                       </Card>
@@ -615,20 +620,20 @@ const QuangNinhGuidePage: React.FC = () => {
                 variants={containerVariants}
                 initial="hidden"
                 animate={attractionsInView ? "visible" : "hidden"}
-                className="py-8"
+                className="py-4 md:py-8"
               >
-                <motion.div variants={itemVariants} className="mb-8">
-                  <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-slate-700 via-stone-700 to-slate-800 bg-clip-text text-transparent">
+                <motion.div variants={itemVariants} className="mb-6 md:mb-8">
+                  <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-slate-700 via-stone-700 to-slate-800 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
                     {t('attractions.title')}
                   </Title>
-                  <Paragraph className="text-lg dark:text-gray-300">
+                  <Paragraph className="text-base md:text-lg dark:text-gray-300">
                     {t('attractions.intro')}
                   </Paragraph>
                 </motion.div>
                 
                 <motion.div
                   variants={containerVariants}
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                  className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8"
                 >
                   {attractionsData.map((attraction) => (
                     <motion.div key={attraction.id} variants={itemVariants}>
@@ -652,40 +657,40 @@ const QuangNinhGuidePage: React.FC = () => {
               } 
               key="food"
             >
-              <div className="py-8">
-                <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-slate-700 via-stone-700 to-slate-800 bg-clip-text text-transparent">
+              <div className="py-4 md:py-8">
+                <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-slate-700 via-stone-700 to-slate-800 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
                   {t('food.title')}
                 </Title>
-                <Paragraph className="text-lg dark:text-gray-300 mb-8">
+                <Paragraph className="text-base md:text-lg dark:text-gray-300 mb-6 md:mb-8">
                   {t('food.intro')}
                 </Paragraph>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-12">
                   {Array.from({ length: 4 }).map((_, index) => (
                     <motion.div
                       key={index}
                       whileHover={{ scale: 1.02, y: -5 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <Card className="quangninh-gradient-card">
-                        <div className="flex items-start">
-                          <div className="w-24 h-24 bg-gradient-to-br from-slate-100 to-stone-100 rounded-lg mr-4 overflow-hidden flex items-center justify-center">
+                      <Card className="quangninh-gradient-card h-full">
+                        <div className="flex flex-col md:flex-row md:items-start">
+                          <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-slate-100 to-stone-100 rounded-lg mb-4 md:mb-0 md:mr-4 overflow-hidden flex items-center justify-center mx-auto md:mx-0 flex-shrink-0">
                             <motion.div
                               animate={{ rotate: [0, 5, -5, 0] }}
                               transition={{ duration: 4, repeat: Infinity }}
-                              className="text-3xl"
+                              className="text-2xl md:text-3xl"
                             >
-                              🦑🐟🦐🪱
+                              {index === 0 ? '🦑' : index === 1 ? '🪱' : index === 2 ? '🍤' : '🐟'}
                             </motion.div>
                           </div>
-                          <div>
-                            <Title level={5} className="mb-1 dark:text-white text-slate-700">
+                          <div className="text-center md:text-left flex-grow">
+                            <Title level={5} className="mb-1 dark:text-white text-slate-700 text-base md:text-lg">
                               {t(`food.dishes.${index}.name`)}
                             </Title>
-                            <Paragraph className="dark:text-gray-300 mb-2">
+                            <Paragraph className="dark:text-gray-300 mb-2 text-sm md:text-base">
                               {t(`food.dishes.${index}.description`)}
                             </Paragraph>
-                            <Tag color="blue">
+                            <Tag color="blue" className="text-xs md:text-sm">
                               {t(`food.dishes.${index}.where_to_try`)}
                             </Tag>
                           </div>
@@ -707,15 +712,15 @@ const QuangNinhGuidePage: React.FC = () => {
               } 
               key="shopping"
             >
-              <div className="py-8">
-                <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-slate-700 via-stone-700 to-slate-800 bg-clip-text text-transparent">
+              <div className="py-4 md:py-8">
+                <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-slate-700 via-stone-700 to-slate-800 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
                   {t('shopping.title')}
                 </Title>
-                <Paragraph className="text-lg dark:text-gray-300 mb-8">
+                <Paragraph className="text-base md:text-lg dark:text-gray-300 mb-6 md:mb-8">
                   {t('shopping.intro')}
                 </Paragraph>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                   {Array.from({ length: 4 }).map((_, index) => (
                     <motion.div
                       key={index}
@@ -723,10 +728,10 @@ const QuangNinhGuidePage: React.FC = () => {
                       transition={{ duration: 0.3 }}
                     >
                       <Card className="h-full quangninh-gradient-card">
-                        <Title level={4} className="mb-2 dark:text-white text-slate-700">
+                        <Title level={4} className="mb-2 dark:text-white text-slate-700 text-base md:text-lg">
                           {t(`shopping.places.${index}.name`)}
                         </Title>
-                        <Paragraph className="dark:text-gray-300 mb-3">
+                        <Paragraph className="dark:text-gray-300 mb-3 text-sm md:text-base">
                           {t(`shopping.places.${index}.description`)}
                         </Paragraph>
                       </Card>
@@ -746,15 +751,15 @@ const QuangNinhGuidePage: React.FC = () => {
               } 
               key="transport"
             >
-              <div className="py-8">
-                <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-slate-700 via-stone-700 to-slate-800 bg-clip-text text-transparent">
+              <div className="py-4 md:py-8">
+                <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-slate-700 via-stone-700 to-slate-800 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
                   {t('transport.title')}
                 </Title>
-                <Paragraph className="text-lg dark:text-gray-300 mb-8">
+                <Paragraph className="text-base md:text-lg dark:text-gray-300 mb-6 md:mb-8">
                   {t('transport.intro')}
                 </Paragraph>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                   {Array.from({ length: 4 }).map((_, index) => (
                     <motion.div
                       key={index}
@@ -762,10 +767,10 @@ const QuangNinhGuidePage: React.FC = () => {
                       transition={{ duration: 0.3 }}
                     >
                       <Card className="h-full quangninh-gradient-card">
-                        <Title level={5} className="mb-2 dark:text-white text-slate-700">
+                        <Title level={5} className="mb-2 dark:text-white text-slate-700 text-base md:text-lg">
                           {t(`transport.options.${index}.name`)}
                         </Title>
-                        <Paragraph className="dark:text-gray-300">
+                        <Paragraph className="dark:text-gray-300 text-sm md:text-base">
                           {t(`transport.options.${index}.description`)}
                         </Paragraph>
                       </Card>
@@ -779,7 +784,7 @@ const QuangNinhGuidePage: React.FC = () => {
       </section>
       
       {/* Photo Gallery with Limestone Effects */}
-      <section ref={galleryRef} className="py-16 bg-gradient-to-br from-slate-50 via-stone-50 to-slate-100 dark:from-slate-900/20 dark:via-stone-900/20 dark:to-slate-800/20 relative overflow-hidden">
+      <section ref={galleryRef} className="py-8 md:py-16 bg-gradient-to-br from-slate-50 via-stone-50 to-slate-100 dark:from-slate-900/20 dark:via-stone-900/20 dark:to-slate-800/20 relative overflow-hidden">
         {/* Animated background limestone formations */}
         <div className="absolute inset-0">
           {Array.from({ length: 4 }).map((_, i) => (
@@ -809,11 +814,11 @@ const QuangNinhGuidePage: React.FC = () => {
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-8">
-            <Title level={2} className="mb-3 dark:text-white bg-gradient-to-r from-slate-700 via-stone-700 to-slate-800 bg-clip-text text-transparent">
+          <div className="text-center mb-6 md:mb-8">
+            <Title level={2} className="mb-3 dark:text-white bg-gradient-to-r from-slate-700 via-stone-700 to-slate-800 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
               {t('photo_gallery.title')}
             </Title>
-            <Paragraph className="text-lg dark:text-gray-300 max-w-3xl mx-auto">
+            <Paragraph className="text-base md:text-lg dark:text-gray-300 max-w-3xl mx-auto">
               {t('photo_gallery.description')}
             </Paragraph>
           </div>
@@ -823,7 +828,7 @@ const QuangNinhGuidePage: React.FC = () => {
       </section>
       
       {/* CTA with Dramatic Limestone Animation */}
-      <section className="py-16 bg-gradient-to-r from-slate-600 via-stone-600 to-slate-700 text-white relative overflow-hidden">
+      <section className="py-8 md:py-16 bg-gradient-to-r from-slate-600 via-stone-600 to-slate-700 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
         
         {/* Animated limestone karst background */}
@@ -841,7 +846,7 @@ const QuangNinhGuidePage: React.FC = () => {
         
         {/* Limestone pattern overlay */}
         <div className="absolute inset-0">
-          <svg viewBox="0 0 1200 200" className="absolute bottom-0 w-full h-32">
+          <svg viewBox="0 0 1200 200" className="absolute bottom-0 w-full h-24 md:h-32">
             <motion.path 
               d="M0,100 C200,60 400,140 600,100 C800,60 1000,140 1200,100 L1200,200 L0,200 Z" 
               fill="rgba(255,255,255,0.1)"
@@ -863,18 +868,18 @@ const QuangNinhGuidePage: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Title level={2} className="text-white mb-4">
+            <Title level={2} className="text-white mb-4 text-xl md:text-2xl lg:text-3xl">
               {t('cta.title')}
             </Title>
-            <Paragraph className="text-lg text-white mb-8 max-w-3xl mx-auto">
+            <Paragraph className="text-base md:text-lg text-white mb-6 md:mb-8 max-w-3xl mx-auto">
               {t('cta.description')}
             </Paragraph>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button 
                   size="large" 
                   onClick={restartTourGuide} 
-                  className="bg-white text-slate-700 h-12 font-bold hover:bg-gray-100 border-none shadow-lg"
+                  className="bg-white text-slate-700 h-12 font-bold hover:bg-gray-100 border-none shadow-lg w-full sm:w-auto"
                 >
                   <FireOutlined className="mr-2" />
                   {t('cta.restart_tour')}
@@ -884,7 +889,7 @@ const QuangNinhGuidePage: React.FC = () => {
                 <Button 
                   size="large" 
                   onClick={handleShare} 
-                  className="bg-transparent text-white border-white h-12 font-bold hover:bg-white hover:text-slate-700 shadow-lg"
+                  className="bg-transparent text-white border-white h-12 font-bold hover:bg-white hover:text-slate-700 shadow-lg w-full sm:w-auto"
                 >
                   <ShareAltOutlined className="mr-2" /> {t('common:actions.share')}
                 </Button>
@@ -896,7 +901,7 @@ const QuangNinhGuidePage: React.FC = () => {
           {Array.from({ length: 10 }).map((_, i) => (
             <motion.div
               key={i}
-              className="absolute text-white/20 text-4xl"
+              className="absolute text-white/20 text-2xl md:text-4xl"
               animate={{
                 y: [0, -30, 0],
                 x: [0, Math.sin(i) * 20, 0],

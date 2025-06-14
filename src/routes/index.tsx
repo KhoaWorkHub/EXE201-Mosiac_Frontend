@@ -29,9 +29,12 @@ const HanoiGuidePage = lazy(
 const HCMGuidePage = lazy(
   () => import("../features/destination/pages/HCMGuidePage")
 );
-// NEW: Khánh Hòa Guide Page
 const KhanhHoaGuidePage = lazy(
   () => import("../features/destination/pages/KhanhHoaGuidePage")
+);
+// NEW: Quảng Ninh Guide Page
+const QuangNinhGuidePage = lazy(
+  () => import("../features/destination/pages/QuangNinhGuidePage")
 );
 
 // Blog Page
@@ -88,7 +91,6 @@ const KhanhHoaLoadingFallback = () => (
     <div className="relative z-10">
       <div className="w-20 h-20 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 rounded-full mx-auto mb-4 flex items-center justify-center shadow-2xl animate-pulse relative overflow-hidden">
         <div className="text-2xl">🌊</div>
-        {/* Wave effect inside loading circle */}
         <div 
           className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-white/30 to-transparent"
           style={{
@@ -181,6 +183,165 @@ const KhanhHoaLoadingFallback = () => (
         }
         to { 
           transform: translateY(-50px) scale(0) translateX(15px);
+          opacity: 0;
+        }
+      }
+    `}</style>
+  </div>
+);
+
+// NEW: Enhanced loading component for Quảng Ninh with limestone cave effects
+const QuangNinhLoadingFallback = () => (
+  <div className="h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-stone-50 to-slate-100 dark:from-slate-900 dark:via-stone-900 dark:to-slate-800 relative overflow-hidden">
+    {/* Animated limestone formations background */}
+    <div className="absolute inset-0">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div
+          key={i}
+          className={`absolute bg-gradient-to-t ${
+            i === 0 ? 'from-slate-400/30 to-transparent' :
+            i === 1 ? 'from-stone-400/20 to-transparent' :
+            i === 2 ? 'from-slate-500/15 to-transparent' :
+            i === 3 ? 'from-stone-500/10 to-transparent' :
+            i === 4 ? 'from-slate-600/8 to-transparent' :
+            'from-stone-600/5 to-transparent'
+          }`}
+          style={{
+            left: 5 + i * 15 + '%',
+            bottom: 0,
+            width: 60 + i * 10 + 'px',
+            height: 120 + i * 20 + 'px',
+            clipPath: `polygon(${15 + i * 3}% 0%, ${85 - i * 3}% 0%, 90% 100%, 10% 100%)`,
+            animation: `karst${i + 1} ${6 + i}s ease-in-out infinite`,
+          }}
+        />
+      ))}
+    </div>
+    
+    <div className="relative z-10">
+      <div className="w-24 h-24 bg-gradient-to-r from-slate-600 via-stone-600 to-slate-700 rounded-full mx-auto mb-6 flex items-center justify-center shadow-2xl relative overflow-hidden">
+        <div className="text-3xl animate-pulse">🗿</div>
+        {/* Cave depth rings */}
+        <div 
+          className="absolute inset-0 border-4 border-white/30 rounded-full"
+          style={{
+            animation: 'caveRing 2s ease-out infinite'
+          }}
+        />
+      </div>
+      <div className="w-16 h-[1px] bg-gradient-to-r from-slate-600 via-stone-600 to-slate-700 my-4"></div>
+      <p className="text-gray-600 dark:text-gray-300 text-sm animate-pulse">
+        Exploring limestone wonders...
+      </p>
+    </div>
+    
+    {/* Floating limestone particles */}
+    {Array.from({ length: 15 }).map((_, i) => (
+      <div
+        key={i}
+        className="absolute w-2 h-2 bg-gradient-to-r from-slate-400 to-stone-500 rounded-full opacity-60"
+        style={{
+          left: Math.random() * 100 + '%',
+          animation: `stone${i % 4 + 1} ${Math.random() * 10 + 6}s linear infinite`,
+          animationDelay: Math.random() * 5 + 's'
+        }}
+      />
+    ))}
+
+    <style>{`
+      @keyframes karst1 {
+        0%, 100% { transform: translateY(0) translateX(0); }
+        50% { transform: translateY(-8px) translateX(5px); }
+      }
+      @keyframes karst2 {
+        0%, 100% { transform: translateY(0) translateX(0); }
+        50% { transform: translateY(-12px) translateX(-3px); }
+      }
+      @keyframes karst3 {
+        0%, 100% { transform: translateY(0) translateX(0); }
+        50% { transform: translateY(-6px) translateX(8px); }
+      }
+      @keyframes karst4 {
+        0%, 100% { transform: translateY(0) translateX(0); }
+        50% { transform: translateY(-10px) translateX(-6px); }
+      }
+      @keyframes karst5 {
+        0%, 100% { transform: translateY(0) translateX(0); }
+        50% { transform: translateY(-4px) translateX(3px); }
+      }
+      @keyframes karst6 {
+        0%, 100% { transform: translateY(0) translateX(0); }
+        50% { transform: translateY(-14px) translateX(-8px); }
+      }
+      @keyframes caveRing {
+        0% { transform: scale(0.8); opacity: 0.6; }
+        100% { transform: scale(2.5); opacity: 0; }
+      }
+      @keyframes stone1 {
+        from { 
+          transform: translateY(100vh) scale(0) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.8;
+          transform: scale(1) rotate(45deg);
+        }
+        90% {
+          opacity: 0.8;
+        }
+        to { 
+          transform: translateY(-50px) scale(0) rotate(360deg);
+          opacity: 0;
+        }
+      }
+      @keyframes stone2 {
+        from { 
+          transform: translateY(100vh) scale(0) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.6;
+          transform: scale(1.5) rotate(-30deg);
+        }
+        90% {
+          opacity: 0.6;
+        }
+        to { 
+          transform: translateY(-50px) scale(0) rotate(-360deg);
+          opacity: 0;
+        }
+      }
+      @keyframes stone3 {
+        from { 
+          transform: translateY(100vh) scale(0) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.7;
+          transform: scale(0.8) rotate(90deg);
+        }
+        90% {
+          opacity: 0.7;
+        }
+        to { 
+          transform: translateY(-50px) scale(0) rotate(180deg);
+          opacity: 0;
+        }
+      }
+      @keyframes stone4 {
+        from { 
+          transform: translateY(100vh) scale(0) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.9;
+          transform: scale(1.2) rotate(-60deg);
+        }
+        90% {
+          opacity: 0.9;
+        }
+        to { 
+          transform: translateY(-50px) scale(0) rotate(-180deg);
           opacity: 0;
         }
       }
@@ -317,12 +478,22 @@ const AppRoutes: React.FC = () => {
         }
       />
 
-      {/* NEW: Khánh Hòa Route with ocean-themed loading */}
+      {/* Khánh Hòa Route with ocean-themed loading */}
       <Route
         path="/destinations/khanhhoa"
         element={
           <Suspense fallback={<KhanhHoaLoadingFallback />}>
             <KhanhHoaGuidePage />
+          </Suspense>
+        }
+      />
+
+      {/* NEW: Quảng Ninh Route with limestone cave-themed loading */}
+      <Route
+        path="/destinations/quangninh"
+        element={
+          <Suspense fallback={<QuangNinhLoadingFallback />}>
+            <QuangNinhGuidePage />
           </Suspense>
         }
       />

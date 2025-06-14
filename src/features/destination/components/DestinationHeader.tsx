@@ -1,7 +1,7 @@
 import React from 'react';
-import { Typography, Tag } from 'antd';
+import { Typography, Button } from 'antd';
+import { ShareAltOutlined, HeartOutlined, BookOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
-import { EnvironmentOutlined, GlobalOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 
 const { Title, Text } = Typography;
@@ -9,76 +9,74 @@ const { Title, Text } = Typography;
 interface DestinationHeaderProps {
   title: string;
   subtitle: string;
+  onShare?: () => void;
+  onSave?: () => void;
+  onStartTour?: () => void;
 }
 
-const DestinationHeader: React.FC<DestinationHeaderProps> = ({ title, subtitle }) => {
-  const { t } = useTranslation(['destinationdanang', 'common']);
-  
-  // Animation variants
-  const container = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3
-      }
-    }
-  };
-  
-  const item = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.7, ease: "easeOut" }
-    }
-  };
+const DestinationHeader: React.FC<DestinationHeaderProps> = ({
+  title,
+  subtitle,
+  onShare,
+  onSave,
+  onStartTour
+}) => {
+  const { t } = useTranslation(['common']);
 
   return (
-    <div className="flex flex-col items-center justify-center h-full relative z-10 text-white text-center">
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate="visible"
-        className="max-w-4xl"
-      >
-        <motion.div variants={item}>
-          <Tag 
-            color="blue" 
-            icon={<GlobalOutlined />} 
-            className="mb-4 px-3 py-1 rounded-full text-sm font-medium"
-          >
-            {t('destinationdanang:vietnam')}
-          </Tag>
-        </motion.div>
-        
-        <motion.div variants={item}>
-          <Title 
-            level={1} 
-            className="text-4xl md:text-6xl text-white font-bold mb-4"
-          >
+    <div className="absolute inset-0 flex items-center justify-center text-white z-10">
+      <div className="text-center max-w-4xl mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="mb-6"
+        >
+          <Title level={1} className="text-white mb-4 text-4xl md:text-6xl lg:text-7xl font-bold">
             {title}
           </Title>
-        </motion.div>
-        
-        <motion.div variants={item}>
-          <Text 
-            className="text-xl md:text-2xl text-white opacity-90 mb-8 block"
-          >
+          <Text className="text-lg md:text-xl lg:text-2xl text-gray-200 block">
             {subtitle}
           </Text>
         </motion.div>
         
-        <motion.div variants={item} className="flex justify-center">
-          <div className="flex items-center px-4 py-2 bg-white bg-opacity-20 backdrop-blur-md rounded-full">
-            <EnvironmentOutlined className="text-white mr-2" />
-            <Text className="text-white">
-              {t('destinationdanang:central_vietnam')}
-            </Text>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+        >
+          <Button
+            type="primary"
+            size="large"
+            onClick={onStartTour}
+            className="bg-white text-gray-900 border-none hover:bg-gray-100 font-bold px-8 py-3 h-auto text-lg"
+          >
+            <BookOutlined className="mr-2" />
+            {t('actions.start_tour')}
+          </Button>
+          
+          <div className="flex gap-3">
+            <Button
+              type="default"
+              size="large"
+              onClick={onSave}
+              className="bg-white/10 text-white border-white/30 hover:bg-white/20 backdrop-blur-sm"
+            >
+              <HeartOutlined />
+            </Button>
+            
+            <Button
+              type="default"
+              size="large"
+              onClick={onShare}
+              className="bg-white/10 text-white border-white/30 hover:bg-white/20 backdrop-blur-sm"
+            >
+              <ShareAltOutlined />
+            </Button>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 };
