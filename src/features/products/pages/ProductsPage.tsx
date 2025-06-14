@@ -51,36 +51,19 @@ const ProductsPage: React.FC = () => {
     page: 0,
     size: 12,
     sort: 'createdAt,desc',
-    ...filters // Override defaults with any defined values from filters
+    ...filters
   });
   
-  // Định nghĩa các khoảng giá VND
-  const priceRanges = [
-    { min: 0, max: 100000, label: '0 - 100.000₫' },
-    { min: 100000, max: 150000, label: '100.000₫ - 150.000₫' },
-    { min: 150000, max: 200000, label: '150.000₫ - 200.000₫' },
-    { min: 200000, max: 250000, label: '200.000₫ - 250.000₫' },
-    { min: 250000, max: 300000, label: '250.000₫ - 300.000₫' },
-    { min: 300000, max: 350000, label: '300.000₫ - 350.000₫' },
-  ];
-  
-  // Lưu trữ khoảng giá đang được chọn
-  const [selectedPriceRange, setSelectedPriceRange] = useState<string | undefined>(undefined);
-  
-  // Define type for filters
+  // Define type for filters (simplified - no regionId)
   interface ProductFilters {
     page: number;
     size: number;
     sort: string;
     keyword?: string;
-    minPrice?: number;
-    maxPrice?: number;
     featured?: boolean;
     active?: boolean;
-    categoryId?: string;
-    regionId?: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [key: string]: any; // For any additional dynamic properties
+    [key: string]: any;
   }
   
   // Parse query parameters on mount
@@ -90,18 +73,13 @@ const ProductsPage: React.FC = () => {
       page: 0,
       size: 12,
       sort: 'createdAt,desc',
-      // Add other default filter values as needed
     };
     
     queryParams.forEach((value, key) => {
       if (key === 'page') {
-        newFilters.page = parseInt(value) - 1; // Convert to 0-based index
+        newFilters.page = parseInt(value) - 1;
       } else if (key === 'size') {
         newFilters.size = parseInt(value);
-      } else if (key === 'minPrice') {
-        newFilters.minPrice = parseFloat(value);
-      } else if (key === 'maxPrice') {
-        newFilters.maxPrice = parseFloat(value);
       } else if (key === 'featured') {
         newFilters.featured = value === 'true';
       } else if (key === 'active') {
@@ -111,22 +89,8 @@ const ProductsPage: React.FC = () => {
       }
     });
     
-    // Update price range selection based on query parameters
-    if (newFilters.minPrice !== undefined && newFilters.maxPrice !== undefined) {
-      const rangeIndex = priceRanges.findIndex(
-        range => range.min === newFilters.minPrice && range.max === newFilters.maxPrice
-      );
-      if (rangeIndex !== -1) {
-        setSelectedPriceRange(rangeIndex.toString());
-      }
-    }
-    
-    // Update local filters
     setLocalFilters(newFilters);
-    
-    // Dispatch filters to Redux
     dispatch(setFilters(newFilters));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search, dispatch]);
   
   // Fetch products when filters change
@@ -149,7 +113,6 @@ const ProductsPage: React.FC = () => {
       size: 12,
       sort: 'createdAt,desc',
     });
-    setSelectedPriceRange(undefined);
     navigate('/products');
     setShowFilters(false);
   };
@@ -159,11 +122,9 @@ const ProductsPage: React.FC = () => {
   const updateURLParams = (updatedFilters: any) => {
     const searchParams = new URLSearchParams();
     
-    // Add all filters to URL
     Object.entries(updatedFilters).forEach(([key, value]) => {
       if (value !== undefined && value !== null && value !== '') {
         if (key === 'page') {
-          // Convert 0-based index to 1-based for URL
           searchParams.append(key, String(Number(value) + 1));
         } else {
           searchParams.append(key, String(value));
@@ -171,7 +132,6 @@ const ProductsPage: React.FC = () => {
       }
     });
     
-    // Update URL without reloading page
     navigate({
       pathname: '/products',
       search: searchParams.toString()
@@ -196,32 +156,6 @@ const ProductsPage: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFilterChange = (key: string, value: any) => {
     setLocalFilters(prev => ({ ...prev, [key]: value, page: 0 }));
-  };
-  
-  // Handle price range change
-  const handlePriceRangeChange = (rangeIndex: string) => {
-    const index = parseInt(rangeIndex);
-    
-    // Nếu chọn khoảng giá đang được chọn, hủy chọn
-    if (selectedPriceRange === rangeIndex) {
-      setSelectedPriceRange(undefined);
-      setLocalFilters(prev => ({ 
-        ...prev, 
-        minPrice: undefined, 
-        maxPrice: undefined,
-        page: 0 
-      }));
-    } else {
-      // Chọn khoảng giá mới
-      setSelectedPriceRange(rangeIndex);
-      const range = priceRanges[index];
-      setLocalFilters(prev => ({ 
-        ...prev, 
-        minPrice: range.min, 
-        maxPrice: range.max,
-        page: 0 
-      }));
-    }
   };
   
   // Add/remove active filter
@@ -249,18 +183,17 @@ const ProductsPage: React.FC = () => {
   const { addToCart } = useCart();
   
   // Handle add to cart
-const handleAddToCart = async (product: ProductResponse) => {
-  try {
-    await addToCart({
-      productId: product.id as UUID,
-      quantity: 1,
-    }, product);
-    // The notification will be shown by the CartNotification component
-  } catch (error) {
-    console.error('Failed to add to cart:', error);
-    message.error(t('cart:notifications.error_adding'));
-  }
-};
+  const handleAddToCart = async (product: ProductResponse) => {
+    try {
+      await addToCart({
+        productId: product.id as UUID,
+        quantity: 1,
+      }, product);
+    } catch (error) {
+      console.error('Failed to add to cart:', error);
+      message.error(t('cart:notifications.error_adding'));
+    }
+  };
   
   // Handle add to wishlist (placeholder)
   const handleAddToWishlist = (product: ProductResponse) => {
@@ -271,9 +204,6 @@ const handleAddToCart = async (product: ProductResponse) => {
   const getActiveFiltersCount = () => {
     let count = 0;
     if (filters.keyword) count++;
-    if (filters.categoryId) count++;
-    if (filters.regionId) count++;
-    if (filters.minPrice !== undefined || filters.maxPrice !== undefined) count++;
     if (filters.featured !== undefined) count++;
     if (filters.active !== undefined) count++;
     return count;
@@ -292,7 +222,7 @@ const handleAddToCart = async (product: ProductResponse) => {
         />
         
         <Row gutter={[24, 24]}>
-          {/* Desktop Filters - Left Sidebar */}
+          {/* Desktop Filters - Left Sidebar (Ultra Simplified) */}
           <Col xs={0} lg={6} className="hidden lg:block">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
               <Title level={4} className="mb-4 dark:text-white">
@@ -313,123 +243,10 @@ const handleAddToCart = async (product: ProductResponse) => {
                 />
               </div>
               
-              {/* Price Range - Dạng checkbox thay vì slider */}
+              {/* Quick Filters */}
               <div className="mb-6">
                 <Text strong className="block mb-2 dark:text-white">
-                  {t('product:filters.price_range')}
-                </Text>
-                <div className="flex flex-col space-y-2">
-                  {priceRanges.map((range, index) => (
-                    <div className="flex items-center" key={index}>
-                      <input 
-                        type="checkbox" 
-                        id={`price-range-${index}`} 
-                        className="mr-2" 
-                        checked={selectedPriceRange === index.toString()}
-                        onChange={() => handlePriceRangeChange(index.toString())}
-                      />
-                      <label htmlFor={`price-range-${index}`} className="dark:text-gray-300">
-                        {range.label}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Categories - Placeholder, would load from API */}
-              <div className="mb-6">
-                <Text strong className="block mb-2 dark:text-white">
-                  {t('product:filters.categories')}
-                </Text>
-                <div className="flex flex-col space-y-2">
-                  <div className="flex items-center">
-                    <input 
-                      type="checkbox" 
-                      id="cat-womens" 
-                      className="mr-2" 
-                      checked={localFilters.categoryId === '123'}
-                      onChange={(e) => handleFilterChange('categoryId', e.target.checked ? '123' : undefined)}
-                    />
-                    <label htmlFor="cat-womens" className="dark:text-gray-300">
-                      {t('product:categories.womens')}
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input 
-                      type="checkbox" 
-                      id="cat-mens" 
-                      className="mr-2" 
-                      checked={localFilters.categoryId === '456'}
-                      onChange={(e) => handleFilterChange('categoryId', e.target.checked ? '456' : undefined)}
-                    />
-                    <label htmlFor="cat-mens" className="dark:text-gray-300">
-                      {t('product:categories.mens')}
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input 
-                      type="checkbox" 
-                      id="cat-accessories" 
-                      className="mr-2" 
-                      checked={localFilters.categoryId === '789'}
-                      onChange={(e) => handleFilterChange('categoryId', e.target.checked ? '789' : undefined)}
-                    />
-                    <label htmlFor="cat-accessories" className="dark:text-gray-300">
-                      {t('product:categories.accessories')}
-                    </label>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Regions - Placeholder, would load from API */}
-              <div className="mb-6">
-                <Text strong className="block mb-2 dark:text-white">
-                  {t('product:filters.regions')}
-                </Text>
-                <div className="flex flex-col space-y-2">
-                  <div className="flex items-center">
-                    <input 
-                      type="checkbox" 
-                      id="region-north" 
-                      className="mr-2" 
-                      checked={localFilters.regionId === '111'}
-                      onChange={(e) => handleFilterChange('regionId', e.target.checked ? '111' : undefined)}
-                    />
-                    <label htmlFor="region-north" className="dark:text-gray-300">
-                      {t('product:regions.north')}
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input 
-                      type="checkbox" 
-                      id="region-central" 
-                      className="mr-2" 
-                      checked={localFilters.regionId === '222'}
-                      onChange={(e) => handleFilterChange('regionId', e.target.checked ? '222' : undefined)}
-                    />
-                    <label htmlFor="region-central" className="dark:text-gray-300">
-                      {t('product:regions.central')}
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input 
-                      type="checkbox" 
-                      id="region-south" 
-                      className="mr-2" 
-                      checked={localFilters.regionId === '333'}
-                      onChange={(e) => handleFilterChange('regionId', e.target.checked ? '333' : undefined)}
-                    />
-                    <label htmlFor="region-south" className="dark:text-gray-300">
-                      {t('product:regions.south')}
-                    </label>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Special Filters */}
-              <div className="mb-6">
-                <Text strong className="block mb-2 dark:text-white">
-                  {t('product:filters.special')}
+                  {t('product:filters.filter')}
                 </Text>
                 <div className="flex flex-col space-y-2">
                   <div className="flex items-center">
@@ -479,7 +296,7 @@ const handleAddToCart = async (product: ProductResponse) => {
                   <Title level={3} className="mb-1 dark:text-white">
                     {filters.keyword ? 
                       t('product:search_results_for', { keyword: filters.keyword }) : 
-                      t('product:categories.all')}
+                      t('product:all_products')}
                   </Title>
                   <Text className="text-gray-500 dark:text-gray-400">
                     {pagination.totalElements} {t('product:products_found')}
@@ -521,7 +338,7 @@ const handleAddToCart = async (product: ProductResponse) => {
                 <div className="mb-6">
                   <div className="flex flex-wrap items-center gap-2">
                     <Text strong className="dark:text-white">
-                      {t('product:active_filters')}:
+                      {t('product:applied_filters')}:
                     </Text>
                     
                     {filters.keyword && (
@@ -534,54 +351,6 @@ const handleAddToCart = async (product: ProductResponse) => {
                         }}
                       >
                         {t('product:search')}: {filters.keyword}
-                      </Tag>
-                    )}
-                    
-                    {filters.categoryId && (
-                      <Tag 
-                        color="blue" 
-                        closable 
-                        onClose={() => {
-                          const updatedFilters = { ...filters, categoryId: undefined, page: 0 };
-                          dispatch(setFilters(updatedFilters));
-                          updateURLParams(updatedFilters);
-                        }}
-                      >
-                        {t('product:category')}: {filters.categoryId}
-                      </Tag>
-                    )}
-                    
-                    {filters.regionId && (
-                      <Tag 
-                        color="green" 
-                        closable 
-                        onClose={() => {
-                          const updatedFilters = { ...filters, regionId: undefined, page: 0 };
-                          dispatch(setFilters(updatedFilters));
-                          updateURLParams(updatedFilters);
-                        }}
-                      >
-                        {t('product:region')}: {filters.regionId}
-                      </Tag>
-                    )}
-                    
-                    {(filters.minPrice !== undefined || filters.maxPrice !== undefined) && (
-                      <Tag 
-                        color="orange" 
-                        closable 
-                        onClose={() => {
-                          const updatedFilters = { 
-                            ...filters, 
-                            minPrice: undefined, 
-                            maxPrice: undefined,
-                            page: 0 
-                          };
-                          dispatch(setFilters(updatedFilters));
-                          updateURLParams(updatedFilters);
-                          setSelectedPriceRange(undefined);
-                        }}
-                      >
-                        {t('product:price')}: {filters.minPrice?.toLocaleString('vi-VN')}₫ - {filters.maxPrice?.toLocaleString('vi-VN')}₫
                       </Tag>
                     )}
                     
@@ -640,7 +409,7 @@ const handleAddToCart = async (product: ProductResponse) => {
               {pagination.totalPages > 1 && (
                 <div className="mt-8 flex justify-center">
                   <Pagination
-                    current={pagination.currentPage + 1} // Convert 0-based to 1-based
+                    current={pagination.currentPage + 1}
                     total={pagination.totalElements}
                     pageSize={pagination.pageSize}
                     onChange={handlePageChange}
@@ -654,7 +423,7 @@ const handleAddToCart = async (product: ProductResponse) => {
         </Row>
       </div>
       
-      {/* Mobile Filters Drawer */}
+      {/* Mobile Filters Drawer (Ultra Simplified) */}
       <AnimatePresence>
         {showFilters && (
           <motion.div
@@ -686,7 +455,7 @@ const handleAddToCart = async (product: ProductResponse) => {
               <Divider />
               
               {/* Mobile Filters Content */}
-              <Collapse defaultActiveKey={['1', '2', '3']} className="bg-transparent border-0">
+              <Collapse defaultActiveKey={['1', '2']} className="bg-transparent border-0">
                 {/* Search */}
                 <Panel 
                   header={<Text strong className="dark:text-white">{t('common:search.title')}</Text>} 
@@ -702,126 +471,10 @@ const handleAddToCart = async (product: ProductResponse) => {
                   />
                 </Panel>
                 
-                {/* Price Range - Thay đổi từ slider sang checkbox */}
+                {/* Quick Filters */}
                 <Panel 
-                  header={<Text strong className="dark:text-white">{t('product:filters.price_range')}</Text>} 
+                  header={<Text strong className="dark:text-white">{t('product:filters.quick_filters')}</Text>} 
                   key="2" 
-                  className="mb-2"
-                >
-                  <div className="flex flex-col space-y-2 mb-4">
-                    {priceRanges.map((range, index) => (
-                      <div className="flex items-center" key={index}>
-                        <input 
-                          type="checkbox" 
-                          id={`m-price-range-${index}`} 
-                          className="mr-2" 
-                          checked={selectedPriceRange === index.toString()}
-                          onChange={() => handlePriceRangeChange(index.toString())}
-                        />
-                        <label htmlFor={`m-price-range-${index}`} className="dark:text-gray-300">
-                          {range.label}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </Panel>
-                
-                {/* Categories */}
-                <Panel 
-                  header={<Text strong className="dark:text-white">{t('product:filters.categories')}</Text>} 
-                  key="3" 
-                  className="mb-2"
-                >
-                  <div className="flex flex-col space-y-2 mb-4">
-                    <div className="flex items-center">
-                      <input 
-                        type="checkbox" 
-                        id="m-cat-womens" 
-                        className="mr-2" 
-                        checked={localFilters.categoryId === '123'}
-                        onChange={(e) => handleFilterChange('categoryId', e.target.checked ? '123' : undefined)}
-                      />
-                      <label htmlFor="m-cat-womens" className="dark:text-gray-300">
-                        {t('product:categories.womens')}
-                      </label>
-                    </div>
-                    <div className="flex items-center">
-                      <input 
-                        type="checkbox" 
-                        id="m-cat-mens" 
-                        className="mr-2" 
-                        checked={localFilters.categoryId === '456'}
-                        onChange={(e) => handleFilterChange('categoryId', e.target.checked ? '456' : undefined)}
-                      />
-                      <label htmlFor="m-cat-mens" className="dark:text-gray-300">
-                        {t('product:categories.mens')}
-                      </label>
-                    </div>
-                    <div className="flex items-center">
-                      <input 
-                        type="checkbox" 
-                        id="m-cat-accessories" 
-                        className="mr-2" 
-                        checked={localFilters.categoryId === '789'}
-                        onChange={(e) => handleFilterChange('categoryId', e.target.checked ? '789' : undefined)}
-                      />
-                      <label htmlFor="m-cat-accessories" className="dark:text-gray-300">
-                        {t('product:categories.accessories')}
-                      </label>
-                    </div>
-                  </div>
-                </Panel>
-                
-                {/* Regions */}
-                <Panel 
-                  header={<Text strong className="dark:text-white">{t('product:filters.regions')}</Text>} 
-                  key="4" 
-                  className="mb-2"
-                >
-                  <div className="flex flex-col space-y-2 mb-4">
-                    <div className="flex items-center">
-                      <input 
-                        type="checkbox" 
-                        id="m-region-north" 
-                        className="mr-2" 
-                        checked={localFilters.regionId === '111'}
-                        onChange={(e) => handleFilterChange('regionId', e.target.checked ? '111' : undefined)}
-                      />
-                      <label htmlFor="m-region-north" className="dark:text-gray-300">
-                        {t('product:regions.north')}
-                      </label>
-                    </div>
-                    <div className="flex items-center">
-                      <input 
-                        type="checkbox" 
-                        id="m-region-central" 
-                        className="mr-2" 
-                        checked={localFilters.regionId === '222'}
-                        onChange={(e) => handleFilterChange('regionId', e.target.checked ? '222' : undefined)}
-                      />
-                      <label htmlFor="m-region-central" className="dark:text-gray-300">
-                        {t('product:regions.central')}
-                      </label>
-                    </div>
-                    <div className="flex items-center">
-                      <input 
-                        type="checkbox" 
-                        id="m-region-south" 
-                        className="mr-2" 
-                        checked={localFilters.regionId === '333'}
-                        onChange={(e) => handleFilterChange('regionId', e.target.checked ? '333' : undefined)}
-                      />
-                      <label htmlFor="m-region-south" className="dark:text-gray-300">
-                        {t('product:regions.south')}
-                      </label>
-                    </div>
-                  </div>
-                </Panel>
-                
-                {/* Special Filters */}
-                <Panel 
-                  header={<Text strong className="dark:text-white">{t('product:filters.special')}</Text>} 
-                  key="5" 
                   className="mb-2"
                 >
                   <div className="flex flex-col space-y-2 mb-4">
