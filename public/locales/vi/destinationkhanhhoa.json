@@ -1,0 +1,263 @@
+{
+  "vietnam": "Việt Nam",
+  "coastal_vietnam": "Miền Biển Việt Nam",
+  
+  "overview": {
+    "title": "Khám Phá Thiên Đường Biển Khánh Hòa",
+    "subtitle": "Nơi làn nước xanh ngọc gặp gỡ bờ cát vàng",
+    "region": "Duyên Hải Nam Trung Bộ",
+    "intro": "Tỉnh Khánh Hòa, quê hương của thành phố biển tuyệt đẹp Nha Trang, là điểm đến biển hàng đầu của Việt Nam với những bãi biển hoang sơ, làn nước trong như pha lê, rạn san hô rực rỡ và các khu nghỉ dưỡng đẳng cấp thế giới. Thiên đường nhiệt đới này kết hợp vẻ đẹp tự nhiên với nền văn hóa Chăm phong phú, tạo nên trải nghiệm khó quên cho mọi du khách.",
+    
+    "why_visit": {
+      "title": "Tại Sao Nên Đến Khánh Hòa?",
+      "reasons": [
+        "Những bãi biển đẹp nhất Đông Nam Á với cát trắng mịn như bột",
+        "Lặn biển và lặn với ống thở đẳng cấp thế giới tại rạn san hô nguyên sơ",
+        "Di sản văn hóa độc đáo với tháp Chăm cổ và đền thờ",
+        "Khu nghỉ dưỡng sang trọng và cáp treo vượt biển dài nhất thế giới",
+        "Hải sản tươi ngon và ẩm thực ven biển Việt Nam chính thống"
+      ]
+    },
+    
+    "best_time": {
+      "title": "Thời Gian Tốt Nhất Để Đi",
+      "description": "Khánh Hòa có khí hậu nhiệt đới với nhiệt độ ấm áp quanh năm. Thời gian tốt nhất để thăm quan là từ tháng 2 đến tháng 8 khi lượng mưa tối thiểu và biển lặng, hoàn hảo cho các hoạt động bãi biển và du ngoạn đảo."
+    },
+    
+    "cultural_significance": {
+      "title": "Di Sản Văn Hóa",
+      "description": "Khánh Hòa có nguồn gốc sâu sắc từ văn hóa Chăm, thể hiện rõ qua các tháp Po Nagar tráng lệ và làng chài truyền thống. Tỉnh này thể hiện sự hòa quyện hài hòa giữa đời sống ven biển Việt Nam và truyền thống Chăm cổ xưa, tạo nên tấm thảm văn hóa độc đáo được bảo tồn qua hơn một thiên niên kỷ."
+    },
+    
+    "quick_facts": {
+      "location": "Vị Trí",
+      "location_value": "Duyên Hải Nam Trung Bộ Việt Nam",
+      "time_zone": "múi Giờ",
+      "time_zone_value": "UTC+7 (ICT)",
+      "population": "Dân Số", 
+      "population_value": "1,2 triệu cư dân"
+    }
+  },
+  
+  "tabs": {
+    "overview": "Tổng Quan",
+    "attractions": "Điểm Tham Quan", 
+    "food_and_drink": "Ẩm Thực",
+    "shopping": "Mua Sắm",
+    "getting_around": "Di Chuyển"
+  },
+  
+  "attractions": {
+    "title": "Điểm Tham Quan Ven Biển Không Thể Bỏ Qua",
+    "intro": "Từ những bãi biển nổi tiếng thế giới đến các tháp cổ, Khánh Hòa mang đến những điểm tham quan đa dạng thể hiện cả vẻ đẹp tự nhiên và di sản văn hóa. Khám phá các hòn đảo hoang sơ, thư giãn trên những bãi biển tuyệt đẹp và đắm mình trong lịch sử phong phú của tỉnh.",
+    "tips": {
+      "1": "Nên thăm quan vào sáng sớm hoặc chiều muộn",
+      "2": "Mang theo kem chống nắng an toàn cho san hô để bảo vệ môi trường biển",
+      "3": "Tôn trọng phong tục địa phương tại các di tích văn hóa và tôn giáo"
+    }
+  },
+  
+  "food": {
+    "title": "Tinh Hoa Ẩm Thực Ven Biển",
+    "intro": "Ẩm thực Khánh Hòa là thiên đường của những người yêu hải sản, với những món tươi ngon từ Biển Đông được chế biến cùng rau thơm và gia vị địa phương. Từ chợ ẩm thực đường phố đến nhà hàng cao cấp, tỉnh này mang đến sự đa dạng hương vị không thể tin được, phản ánh vị trí ven biển và sự đa dạng văn hóa.",
+    
+    "dishes": {
+      "0": {
+        "name": "Đĩa Hải Sản Tươi Sống",
+        "description": "Sự kết hợp tuyệt vời của tôm hùm, cua, tôm và cá đánh bắt tại địa phương được chế biến với gia vị và rau thơm truyền thống Việt Nam.",
+        "where_to_try": "Nhà hàng ven biển tại Nha Trang"
+      },
+      "1": {
+        "name": "Nem Nướng Nha Trang",
+        "description": "Thịt nướng xiên cuốn bánh tráng với rau thơm tươi, rau diếp và nước chấm đặc biệt - đặc sản Nha Trang.",
+        "where_to_try": "Quán ăn vỉa hè địa phương"
+      },
+      "2": {
+        "name": "Bánh Căn",
+        "description": "Bánh gạo mini nướng trong khuôn tròn đặc biệt, ăn kèm nước mắm chua ngọt và hải sản tươi.",
+        "where_to_try": "Chợ đêm và quán bán rong"
+      },
+      "3": {
+        "name": "Chả Cá Nha Trang", 
+        "description": "Chả cá nướng làm từ cá tươi địa phương, rau thơm và gia vị, ăn kèm bún và rau sống.",
+        "where_to_try": "Nhà hàng Việt Nam truyền thống"
+      }
+    },
+    
+    "restaurants": {
+      "title": "Nhà Hàng Hàng Đầu",
+      "list": {
+        "0": {
+          "name": "Sailing Club Nha Trang",
+          "rating": "4.8",
+          "description": "Nhà hàng ven biển với ẩm thực quốc tế và Việt Nam, nổi tiếng với hải sản tươi và cocktail.",
+          "address": "72-74 Trần Phú, Nha Trang"
+        },
+        "1": {
+          "name": "Lanterns Vietnamese Restaurant",
+          "rating": "4.7", 
+          "description": "Ẩm thực Việt Nam chính thống trong không gian truyền thống đẹp mắt với biểu diễn văn hóa trực tiếp.",
+          "address": "34/6 Nguyễn Thiện Thuật, Nha Trang"
+        },
+        "2": {
+          "name": "Yen's Restaurant",
+          "rating": "4.6",
+          "description": "Nhà hàng gia đình phục vụ nem nướng ngon nhất và các đặc sản truyền thống Nha Trang.",
+          "address": "3/2A Trần Quang Khải, Nha Trang"
+        }
+      }
+    }
+  },
+  
+  "shopping": {
+    "title": "Mua Sắm & Quà Lưu Niệm",
+    "intro": "Khánh Hòa mang đến trải nghiệm mua sắm đa dạng từ các chợ địa phương nhộn nhịp bán hải sản tươi và đồ thủ công đến các trung tâm mua sắm hiện đại với thương hiệu quốc tế. Đừng bỏ lỡ những viên ngọc trai độc đáo, hàng dệt truyền thống và sản phẩm địa phương làm quà lưu niệm hoàn hảo.",
+    
+    "places": {
+      "0": {
+        "name": "Nha Trang Center",
+        "description": "Trung tâm thương mại hiện đại với các thương hiệu quốc tế, nhà hàng và cơ sở giải trí tại trung tâm thành phố.",
+        "location": "Đường Trần Phú, Nha Trang",
+        "hours": "9:00 AM - 10:00 PM hàng ngày"
+      },
+      "1": {
+        "name": "Chợ Đầm",
+        "description": "Chợ truyền thống bán hải sản tươi, nông sản địa phương, đồ thủ công và hàng hóa Việt Nam chính thống.",
+        "location": "Khu vực Chợ Đầm, Nha Trang", 
+        "hours": "5:00 AM - 6:00 PM hàng ngày"
+      },
+      "2": {
+        "name": "Vincom Plaza Nha Trang",
+        "description": "Khu phức hợp mua sắm lớn với cửa hàng thời trang, điện tử, khu ẩm thực và giải trí.",
+        "location": "190 Hoàng Văn Thụ, Nha Trang",
+        "hours": "9:30 AM - 10:00 PM hàng ngày"
+      },
+      "3": {
+        "name": "Chợ Đêm Nha Trang",
+        "description": "Chợ buổi tối sôi động với ẩm thực đường phố, quà lưu niệm, quần áo và đồ thủ công địa phương với giá cả hợp lý.",
+        "location": "46 Trần Phú, Nha Trang",
+        "hours": "6:00 PM - 11:00 PM hàng ngày"
+      }
+    },
+    
+    "souvenirs": {
+      "title": "Quà Lưu Niệm Độc Đáo",
+      "items": {
+        "0": {
+          "name": "Ngọc Trai Khánh Hòa",
+          "description": "Ngọc trai nuôi tuyệt đẹp thu hoạch từ các trại nuôi ngọc trai địa phương, có nhiều kích cỡ và màu sắc khác nhau."
+        },
+        "1": {
+          "name": "Sản Phẩm Yến Sào",
+          "description": "Yến sào chất lượng cao từ các hòn đảo Khánh Hòa, nổi tiếng với công dụng làm đẹp và tốt cho sức khỏe."
+        },
+        "2": {
+          "name": "Đặc Sản Cá Khô Muối",
+          "description": "Sản phẩm cá sấy khô và muối truyền thống được làm theo phương pháp bảo quản ven biển truyền thống lâu đời."
+        }
+      }
+    }
+  },
+  
+  "transport": {
+    "title": "Di Chuyển Quanh Khánh Hòa",
+    "intro": "Khánh Hòa cung cấp nhiều lựa chọn giao thông để giúp bạn khám phá bờ biển tuyệt đẹp và các điểm tham quan. Từ taxi tiện lợi đến tour thuyền ngắm cảnh, việc di chuyển quanh thiên đường ven biển này dễ dàng và thú vị.",
+    
+    "options": {
+      "0": {
+        "name": "Taxi & Gọi Xe",
+        "description": "Phương tiện giao thông tiện lợi và có điều hòa với Grab, taxi truyền thống hoặc dịch vụ đưa đón khách sạn trong toàn tỉnh.",
+        "cost": "Giá cả phải chăng",
+        "convenience": "Tiện lợi cao"
+      },
+      "1": {
+        "name": "Thuê Xe Máy",
+        "description": "Hoàn hảo để khám phá các con đường ven biển và đến những điểm ngắm cảnh đẹp. Cần có bằng lái xe quốc tế.",
+        "cost": "Tiết kiệm chi phí", 
+        "convenience": "Linh hoạt cao"
+      },
+      "2": {
+        "name": "Cáp Treo & Tour Thuyền",
+        "description": "Trải nghiệm cáp treo vượt biển dài nhất thế giới đến Vinpearl và tour thuyền đến các hòn đảo gần đó.",
+        "cost": "Vừa phải đến cao cấp",
+        "convenience": "Tuyến đường ngắm cảnh"
+      },
+      "3": {
+        "name": "Hệ Thống Xe Buýt Địa Phương",
+        "description": "Xe buýt công cộng kết nối các điểm tham quan và quận chính, tuy nhiên ít thường xuyên hơn so với các thành phố lớn.",
+        "cost": "Rất rẻ",
+        "convenience": "Cơ bản"
+      }
+    },
+    
+    "tips": {
+      "title": "Mẹo Di Chuyển",
+      "list": [
+        "Đặt tour khám phá đảo trước trong mùa cao điểm",
+        "Luôn thương lượng giá taxi trước hoặc sử dụng đồng hồ",
+        "Thuê xe máy từ các cửa hàng uy tín và đội mũ bảo hiểm",
+        "Cáp treo đến Vinpearl mang đến tầm nhìn tuyệt đẹp từ trên cao",
+        "Taxi nước có sẵn cho chuyến đi nhanh đến các hòn đảo gần"
+      ]
+    }
+  },
+  
+  "photo_gallery": {
+    "title": "Thư Viện Ảnh Thiên Đường Biển",
+    "description": "Đắm mình trong vẻ đẹp ngoạn mục của Khánh Hòa qua bộ sưu tập ảnh được tuyển chọn kỹ lưỡng, thể hiện những bãi biển hoang sơ, làn nước trong như pha lê, rạn san hô rực rỡ và phong cảnh ven biển tráng lệ."
+  },
+  
+  "recommendations": {
+    "title": "Trải Nghiệm Được Tuyển Chọn",
+    "description": "Khám phá những gợi ý được chọn lọc kỹ càng cho trải nghiệm Khánh Hòa tuyệt vời nhất, từ khu nghỉ dưỡng sang trọng đến trải nghiệm địa phương chính thống.",
+    "types": {
+      "itinerary": "Lịch Trình",
+      "hotel": "Chỗ Ở", 
+      "food": "Ẩm Thực",
+      "activity": "Hoạt Động"
+    },
+    "highlight": "Trải Nghiệm Nổi Bật",
+    "view_details": "Xem Chi Tiết"
+  },
+  
+  "cta": {
+    "title": "Sẵn Sàng Khám Phá Thiên Đường Biển Khánh Hòa?",
+    "description": "Tham gia cùng hàng nghìn du khách đã khám phá ra sự kỳ diệu của điểm đến biển hàng đầu Việt Nam. Từ những bãi biển hoang sơ đến kho tàng văn hóa, kỳ nghỉ ven biển hoàn hảo của bạn đang chờ đón!",
+    "restart_tour": "Khởi Động Lại Hướng Dẫn",
+    "plan_trip": "Lên Kế Hoạch Chuyến Đi"
+  },
+  
+  "tour_guide": {
+    "subtitle": "Người bạn đồng hành số đến thiên đường biển",
+    "close_success": "Hoàn thành hướng dẫn du lịch! Hãy thưởng thức việc khám phá những kỳ quan của Khánh Hòa.",
+    
+    "steps": {
+      "welcome": {
+        "title": "Chào Mừng Đến Khánh Hòa! 🏖️",
+        "content": "Khám phá điểm đến ven biển hàng đầu Việt Nam nơi những bãi biển hoang sơ gặp gỡ văn hóa cổ xưa. Hướng dẫn tương tác này sẽ giúp bạn khám phá những điều tuyệt vời nhất về vẻ đẹp tự nhiên và di sản phong phú của Khánh Hòa."
+      },
+      "attractions": {
+        "title": "Điểm Tham Quan Ven Biển & Hòn Đảo 🏝️", 
+        "highlight": "Bãi Biển Nha Trang",
+        "content": "Từ Bãi biển Nha Trang nổi tiếng thế giới đến những thiên đường đảo hoang sơ, khám phá các điểm tham quan ven biển tuyệt đẹp, tháp Chăm cổ và những trải nghiệm độc đáo như tắm bùn và đi cáp treo."
+      },
+      "food": {
+        "title": "Hải Sản Tươi Ngon & Ẩm Thực Địa Phương 🦐",
+        "content": "Thưởng thức hải sản tươi ngon nhất và ẩm thực ven biển Việt Nam chính thống. Từ chợ ẩm thực đường phố đến nhà hàng ven biển, khám phá những hương vị làm nên thiên đường ẩm thực Khánh Hòa."
+      },
+      "shopping": {
+        "title": "Chợ Búa & Quà Lưu Niệm Ven Biển 🛍️", 
+        "content": "Mua sắm những báu vật ven biển độc đáo bao gồm ngọc trai nuôi, đồ thủ công truyền thống và đặc sản địa phương. Khám phá những khu chợ nhộn nhịp và trung tâm mua sắm hiện đại để tìm quà lưu niệm hoàn hảo."
+      },
+      "transport": {
+        "title": "Giao Thông Đảo 🚗",
+        "content": "Di chuyển quanh Khánh Hòa một cách dễ dàng bằng taxi, xe máy, thuyền và cáp treo nổi tiếng. Tìm hiểu những cách tốt nhất để đến bãi biển, hòn đảo và điểm tham quan trong khi thưởng thức những tuyến đường ven biển đẹp mắt."
+      },
+      "conclusion": {
+        "title": "Cuộc Phiêu Lưu Ven Biển Của Bạn Đang Chờ! 🏆",
+        "content_title": "Sẵn Sàng Lặn Vào Thiên Đường!",
+        "content": "Bây giờ bạn đã được trang bị kiến thức nội bộ để khám phá những kỳ quan ven biển của Khánh Hòa. Từ những bãi biển hoang sơ đến kho tàng văn hóa, cuộc phiêu lưu ven biển Việt Nam hoàn hảo của bạn bắt đầu từ đây!"
+      }
+    }
+  }
+}

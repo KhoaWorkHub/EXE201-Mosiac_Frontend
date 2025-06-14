@@ -1,0 +1,598 @@
+/* Khánh Hòa-specific styles - The most stunning coastal destination guide */
+
+/* Khánh Hòa ocean theme colors inspired by pristine beaches and turquoise waters */
+.khanhhoa-theme {
+  --khanhhoa-blue: #0891b2;
+  --khanhhoa-cyan: #06b6d4;
+  --khanhhoa-teal: #0d9488;
+  --khanhhoa-emerald: #059669;
+  --khanhhoa-deep-blue: #0c4a6e;
+  --khanhhoa-gradient-primary: linear-gradient(135deg, #0891b2 0%, #06b6d4 50%, #0d9488 100%);
+  --khanhhoa-gradient-secondary: linear-gradient(45deg, #06b6d4 0%, #0d9488 50%, #059669 100%);
+  --khanhhoa-shadow-primary: 0 25px 50px rgba(8, 145, 178, 0.15);
+  --khanhhoa-shadow-hover: 0 35px 60px rgba(6, 182, 212, 0.2);
+}
+
+/* Enhanced hero section with ocean wave effects */
+.khanhhoa-hero {
+  background: linear-gradient(135deg, rgba(8, 145, 178, 0.1) 0%, rgba(6, 182, 212, 0.2) 50%, rgba(13, 148, 136, 0.1) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.khanhhoa-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(8, 145, 178, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(13, 148, 136, 0.05) 0%, transparent 50%);
+  animation: khanhhoaOceanFlow 20s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes khanhhoaOceanFlow {
+  0%, 100% { 
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(8, 145, 178, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+  }
+  33% { 
+    background: 
+      radial-gradient(circle at 60% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 30% 80%, rgba(13, 148, 136, 0.1) 0%, transparent 50%);
+  }
+  66% { 
+    background: 
+      radial-gradient(circle at 80% 60%, rgba(13, 148, 136, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 20% 40%, rgba(8, 145, 178, 0.1) 0%, transparent 50%);
+  }
+}
+
+/* Revolutionary card system with ocean depth transforms */
+.khanhhoa-card, .khanhhoa-gradient-card {
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 250, 0.9) 100%);
+  backdrop-filter: blur(15px);
+  border-image: linear-gradient(135deg, rgba(8, 145, 178, 0.2), rgba(6, 182, 212, 0.2), rgba(13, 148, 136, 0.2)) 1;
+  box-shadow: var(--khanhhoa-shadow-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.khanhhoa-card::before, .khanhhoa-gradient-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(8, 145, 178, 0.1), transparent);
+  transition: left 1s;
+  z-index: 1;
+}
+
+.khanhhoa-card:hover::before, .khanhhoa-gradient-card:hover::before {
+  left: 100%;
+}
+
+.khanhhoa-card:hover, .khanhhoa-gradient-card:hover {
+  transform: translateY(-20px) rotateX(8deg) rotateY(8deg);
+  box-shadow: var(--khanhhoa-shadow-hover);
+  border-image: linear-gradient(135deg, rgba(8, 145, 178, 0.4), rgba(6, 182, 212, 0.4), rgba(13, 148, 136, 0.4)) 1;
+}
+
+.dark .khanhhoa-card, .dark .khanhhoa-gradient-card {
+  background: linear-gradient(135deg, rgba(31, 41, 55, 0.95) 0%, rgba(30, 58, 138, 0.1) 100%);
+  border-color: rgba(8, 145, 178, 0.2);
+}
+
+/* Revolutionary attraction cards with liquid effects */
+.khanhhoa-attraction-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #ffffff 0%, #f0fdfa 100%);
+  box-shadow: 
+    0 25px 50px rgba(8, 145, 178, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.khanhhoa-attraction-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--khanhhoa-gradient-primary);
+  z-index: 10;
+}
+
+.khanhhoa-attraction-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent, rgba(8, 145, 178, 0.1), transparent, rgba(6, 182, 212, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.6s;
+  z-index: 1;
+  animation: khanhhoaWaterRotate 12s linear infinite;
+}
+
+.khanhhoa-attraction-card:hover::after {
+  opacity: 1;
+}
+
+@keyframes khanhhoaWaterRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.khanhhoa-attraction-card:hover {
+  transform: translateY(-25px) scale(1.03);
+  box-shadow: 
+    0 50px 100px rgba(8, 145, 178, 0.2),
+    0 0 0 1px rgba(8, 145, 178, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Spectacular tab styling with ocean waves */
+.khanhhoa-tabs .ant-tabs-tab {
+  position: relative;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(240, 253, 250, 0.6) 100%);
+  border-radius: 16px 16px 0 0;
+  margin-right: 8px;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(8, 145, 178, 0.1);
+}
+
+.khanhhoa-tabs .ant-tabs-tab::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  background: var(--khanhhoa-gradient-primary);
+  transition: width 0.4s ease;
+}
+
+.khanhhoa-tabs .ant-tabs-tab:hover::before {
+  width: 80%;
+}
+
+.khanhhoa-tabs .ant-tabs-tab.ant-tabs-tab-active {
+  background: var(--khanhhoa-gradient-primary);
+  color: white;
+  border-color: transparent;
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(8, 145, 178, 0.3);
+}
+
+.khanhhoa-tabs .ant-tabs-tab.ant-tabs-tab-active::before {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.khanhhoa-tabs .ant-tabs-ink-bar {
+  display: none; /* We use our custom wave indicator */
+}
+
+/* Magnificent weather widget with liquid motion */
+.khanhhoa-weather-widget {
+  background: linear-gradient(145deg, 
+    rgba(240, 253, 250, 0.8) 0%, 
+    rgba(204, 251, 241, 0.1) 25%,
+    rgba(153, 246, 228, 0.1) 50%,
+    rgba(94, 234, 212, 0.1) 75%,
+    rgba(240, 253, 250, 0.8) 100%);
+  border: 2px solid;
+  border-image: var(--khanhhoa-gradient-primary) 1;
+  border-radius: 24px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 30px 60px rgba(8, 145, 178, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.khanhhoa-weather-widget::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--khanhhoa-gradient-primary);
+  z-index: 10;
+}
+
+.khanhhoa-weather-widget::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(8, 145, 178, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+  z-index: -1;
+  animation: khanhhoaWeatherWaves 10s ease-in-out infinite;
+}
+
+@keyframes khanhhoaWeatherWaves {
+  0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+  50% { opacity: 0.7; transform: scale(1.1) rotate(180deg); }
+}
+
+/* Incredible photo gallery effects with water ripples */
+.khanhhoa-gallery-item {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(240, 253, 250, 0.7));
+  box-shadow: 0 20px 40px rgba(8, 145, 178, 0.1);
+}
+
+.khanhhoa-gallery-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(45deg, 
+      rgba(8, 145, 178, 0.1) 0%, 
+      rgba(6, 182, 212, 0.1) 30%,
+      rgba(13, 148, 136, 0.1) 60%,
+      rgba(5, 150, 105, 0.1) 100%);
+  opacity: 0;
+  transition: all 0.5s ease;
+  z-index: 2;
+}
+
+.khanhhoa-gallery-item:hover::before {
+  opacity: 1;
+}
+
+.khanhhoa-gallery-item:hover {
+  transform: translateY(-15px) rotateX(8deg);
+  box-shadow: 
+    0 40px 80px rgba(8, 145, 178, 0.2),
+    0 0 0 1px rgba(8, 145, 178, 0.1);
+}
+
+/* Revolutionary CTA section with animated ocean */
+.khanhhoa-cta-section {
+  background: linear-gradient(135deg, #0891b2 0%, #06b6d4 25%, #0d9488 50%, #06b6d4 75%, #0891b2 100%);
+  background-size: 400% 400%;
+  animation: khanhhoaOceanShift 12s ease infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes khanhhoaOceanShift {
+  0%, 100% { background-position: 0% 50%; }
+  25% { background-position: 100% 50%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+}
+
+.khanhhoa-cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="khanhhoa-pattern" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><path d="M20,50 Q40,30 60,50 Q80,70 100,50" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/><path d="M0,50 Q20,70 40,50 Q60,30 80,50 Q100,70 120,50" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23khanhhoa-pattern)"/></svg>') repeat;
+  opacity: 0.4;
+  animation: khanhhoaWaveFloat 25s linear infinite;
+}
+
+@keyframes khanhhoaWaveFloat {
+  from { transform: translateX(0) translateY(0); }
+  to { transform: translateX(-100px) translateY(-50px); }
+}
+
+.khanhhoa-cta-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  animation: khanhhoaUnderwaterLight 15s ease-in-out infinite;
+}
+
+@keyframes khanhhoaUnderwaterLight {
+  0%, 100% { 
+    background: 
+      radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  }
+  33% { 
+    background: 
+      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 60%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  }
+  66% { 
+    background: 
+      radial-gradient(circle at 75% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 25% 75%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  }
+}
+
+/* Enhanced scroll indicators with ocean current motion */
+.khanhhoa-scroll-indicator {
+  color: rgba(255, 255, 255, 0.95);
+  animation: khanhhoaCurrentPulse 3s ease-in-out infinite;
+  text-shadow: 0 0 25px rgba(8, 145, 178, 0.5);
+}
+
+@keyframes khanhhoaCurrentPulse {
+  0%, 100% { 
+    transform: translateY(0) rotate(90deg) scale(1);
+    text-shadow: 0 0 25px rgba(8, 145, 178, 0.5);
+  }
+  50% { 
+    transform: translateY(-20px) rotate(90deg) scale(1.15);
+    text-shadow: 0 0 35px rgba(6, 182, 212, 0.7);
+  }
+}
+
+/* Deep sea perspective and 3D enhancements */
+.perspective-1000 {
+  perspective: 1000px;
+  perspective-origin: center center;
+}
+
+.khanhhoa-3d-card {
+  transform-style: preserve-3d;
+  transition: transform 0.8s;
+}
+
+.khanhhoa-3d-card:hover {
+  transform: rotateY(15deg) rotateX(8deg) translateZ(30px);
+}
+
+/* Floating animation for various ocean elements */
+.khanhhoa-float {
+  animation: khanhhoaOceanFloat 8s ease-in-out infinite;
+}
+
+@keyframes khanhhoaOceanFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-15px) rotate(2deg); }
+  50% { transform: translateY(-10px) rotate(-1deg); }
+  75% { transform: translateY(-20px) rotate(1deg); }
+}
+
+/* Enhanced modal styling with underwater theme */
+.khanhhoa-attraction-modal .ant-modal-content {
+  border-radius: 24px;
+  overflow: hidden;
+  border: 2px solid;
+  border-image: var(--khanhhoa-gradient-primary) 1;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 250, 0.9) 100%);
+  backdrop-filter: blur(25px);
+  box-shadow: 0 60px 120px rgba(8, 145, 178, 0.2);
+}
+
+.khanhhoa-attraction-modal .ant-modal-header {
+  background: var(--khanhhoa-gradient-primary);
+  border-bottom: none;
+  padding: 24px 28px;
+}
+
+.khanhhoa-attraction-modal .ant-modal-header .ant-modal-title {
+  color: white;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile optimizations with enhanced ocean effects */
+@media (max-width: 768px) {
+  .khanhhoa-card:hover, .khanhhoa-gradient-card:hover {
+    transform: translateY(-12px) rotateX(4deg) rotateY(4deg);
+  }
+  
+  .khanhhoa-attraction-card:hover {
+    transform: translateY(-15px) scale(1.02);
+  }
+  
+  .khanhhoa-gallery-item:hover {
+    transform: translateY(-8px) rotateX(4deg);
+  }
+  
+  .khanhhoa-tabs .ant-tabs-tab {
+    font-size: 0.95rem;
+    padding: 10px 16px;
+  }
+  
+  .khanhhoa-weather-widget {
+    padding: 1.5rem;
+  }
+}
+
+/* Dark mode enhancements for Khánh Hòa ocean theme */
+.dark .khanhhoa-card, .dark .khanhhoa-gradient-card {
+  background: linear-gradient(135deg, rgba(31, 41, 55, 0.95) 0%, rgba(55, 65, 81, 0.8) 100%);
+  border-color: rgba(8, 145, 178, 0.2);
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(8, 145, 178, 0.1);
+}
+
+.dark .khanhhoa-card:hover, .dark .khanhhoa-gradient-card:hover {
+  border-color: rgba(8, 145, 178, 0.4);
+  box-shadow: 
+    0 40px 80px rgba(8, 145, 178, 0.15),
+    0 0 0 1px rgba(8, 145, 178, 0.2);
+}
+
+.dark .khanhhoa-weather-widget {
+  background: linear-gradient(145deg, 
+    rgba(31, 41, 55, 0.9) 0%, 
+    rgba(8, 145, 178, 0.1) 25%,
+    rgba(6, 182, 212, 0.1) 50%,
+    rgba(13, 148, 136, 0.1) 75%,
+    rgba(31, 41, 55, 0.9) 100%);
+  border-color: rgba(8, 145, 178, 0.3);
+}
+
+.dark .khanhhoa-tabs .ant-tabs-tab {
+  background: linear-gradient(135deg, rgba(31, 41, 55, 0.8) 0%, rgba(55, 65, 81, 0.6) 100%);
+  border-color: rgba(8, 145, 178, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.dark .khanhhoa-tabs .ant-tabs-tab:hover {
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(8, 145, 178, 0.4);
+}
+
+/* Performance optimizations */
+.khanhhoa-gpu-accelerated {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Accessibility improvements */
+.khanhhoa-focus-visible:focus {
+  outline: 3px solid rgba(8, 145, 178, 0.8);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .khanhhoa-card, .khanhhoa-gradient-card {
+    border: 2px solid rgba(8, 145, 178, 0.8);
+  }
+  
+  .khanhhoa-attraction-card {
+    box-shadow: 0 0 0 2px rgba(8, 145, 178, 0.8);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .khanhhoa-card, .khanhhoa-gradient-card, .khanhhoa-attraction-card, .khanhhoa-gallery-item {
+    transition: none;
+    animation: none;
+  }
+  
+  .khanhhoa-cta-section::before, .khanhhoa-weather-widget::after {
+    animation: none;
+  }
+  
+  .khanhhoa-float {
+    animation: none;
+  }
+}
+
+/* Print styles for Khánh Hòa guide */
+@media print {
+  .khanhhoa-hero, .khanhhoa-cta-section {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .khanhhoa-card, .khanhhoa-gradient-card, .khanhhoa-attraction-card {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 2px solid #0891b2 !important;
+    background: white !important;
+  }
+  
+  .khanhhoa-weather-widget {
+    border: 2px solid #0891b2 !important;
+    background: white !important;
+  }
+}
+
+/* Special wave effects for loading screens */
+@keyframes khanhhoaWaveRipple {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+.khanhhoa-wave-ripple {
+  animation: khanhhoaWaveRipple 2s ease-out infinite;
+}
+
+/* Bubble animation for immersive effects */
+@keyframes khanhhoBubbleRise {
+  0% {
+    transform: translateY(100px) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  90% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-100px) scale(0);
+    opacity: 0;
+  }
+}
+
+.khanhhoa-bubble {
+  animation: khanhhoBubbleRise 6s ease-in-out infinite;
+}
+
+/* Underwater lighting effect */
+@keyframes khanhhoaUnderwaterGlow {
+  0%, 100% {
+    box-shadow: 
+      0 0 20px rgba(8, 145, 178, 0.3),
+      0 0 40px rgba(6, 182, 212, 0.2),
+      0 0 60px rgba(13, 148, 136, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 30px rgba(8, 145, 178, 0.5),
+      0 0 60px rgba(6, 182, 212, 0.3),
+      0 0 90px rgba(13, 148, 136, 0.2);
+  }
+}
+
+.khanhhoa-underwater-glow {
+  animation: khanhhoaUnderwaterGlow 4s ease-in-out infinite;
+}

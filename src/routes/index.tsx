@@ -26,9 +26,12 @@ const DaNangGuidePage = lazy(
 const HanoiGuidePage = lazy(
   () => import("../features/destination/pages/HaNoiGuidePage")
 );
-// NEW: HCM Guide Page
 const HCMGuidePage = lazy(
   () => import("../features/destination/pages/HCMGuidePage")
+);
+// NEW: Khánh Hòa Guide Page
+const KhanhHoaGuidePage = lazy(
+  () => import("../features/destination/pages/KhanhHoaGuidePage")
 );
 
 // Blog Page
@@ -58,6 +61,130 @@ const HCMLoadingFallback = () => (
     </div>
     <div className="w-16 h-[1px] bg-gradient-to-r from-orange-500 to-red-500 my-4"></div>
     <p className="text-gray-600 dark:text-gray-300 text-sm animate-pulse">Loading Ho Chi Minh City experience...</p>
+  </div>
+);
+
+// Enhanced loading component for Khánh Hòa with ocean effects
+const KhanhHoaLoadingFallback = () => (
+  <div className="h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50 dark:from-blue-900 dark:via-cyan-900 dark:to-teal-900 relative overflow-hidden">
+    {/* Animated ocean waves background */}
+    <div className="absolute inset-0">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <div
+          key={i}
+          className={`absolute bottom-0 w-full h-32 bg-gradient-to-t ${
+            i === 0 ? 'from-blue-400/30 to-transparent' :
+            i === 1 ? 'from-cyan-400/20 to-transparent' :
+            'from-teal-400/10 to-transparent'
+          }`}
+          style={{
+            animation: `wave${i + 1} ${4 + i}s ease-in-out infinite`,
+            clipPath: 'polygon(0 50%, 100% 80%, 100% 100%, 0 100%)',
+          }}
+        />
+      ))}
+    </div>
+    
+    <div className="relative z-10">
+      <div className="w-20 h-20 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 rounded-full mx-auto mb-4 flex items-center justify-center shadow-2xl animate-pulse relative overflow-hidden">
+        <div className="text-2xl">🌊</div>
+        {/* Wave effect inside loading circle */}
+        <div 
+          className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-white/30 to-transparent"
+          style={{
+            animation: 'innerWave 2s ease-in-out infinite',
+            clipPath: 'polygon(0 60%, 100% 40%, 100% 100%, 0 100%)'
+          }}
+        />
+      </div>
+      <div className="w-16 h-[1px] bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 my-4"></div>
+      <p className="text-gray-600 dark:text-gray-300 text-sm animate-pulse">
+        Diving into Khánh Hòa paradise...
+      </p>
+    </div>
+    
+    {/* Floating bubbles */}
+    {Array.from({ length: 12 }).map((_, i) => (
+      <div
+        key={i}
+        className="absolute w-4 h-4 bg-blue-400/30 rounded-full"
+        style={{
+          left: Math.random() * 100 + '%',
+          animation: `bubble${i % 3 + 1} ${Math.random() * 8 + 4}s linear infinite`,
+          animationDelay: Math.random() * 4 + 's'
+        }}
+      />
+    ))}
+
+    <style>{`
+      @keyframes wave1 {
+        0%, 100% { transform: translateY(0) translateX(0); }
+        50% { transform: translateY(-10px) translateX(-50px); }
+      }
+      @keyframes wave2 {
+        0%, 100% { transform: translateY(0) translateX(0); }
+        50% { transform: translateY(-15px) translateX(50px); }
+      }
+      @keyframes wave3 {
+        0%, 100% { transform: translateY(0) translateX(0); }
+        50% { transform: translateY(-5px) translateX(-25px); }
+      }
+      @keyframes innerWave {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+      @keyframes bubble1 {
+        from { 
+          transform: translateY(100vh) scale(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.7;
+          transform: scale(1);
+        }
+        90% {
+          opacity: 0.7;
+        }
+        to { 
+          transform: translateY(-50px) scale(0);
+          opacity: 0;
+        }
+      }
+      @keyframes bubble2 {
+        from { 
+          transform: translateY(100vh) scale(0) translateX(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.5;
+          transform: scale(1.2) translateX(20px);
+        }
+        90% {
+          opacity: 0.5;
+        }
+        to { 
+          transform: translateY(-50px) scale(0) translateX(-20px);
+          opacity: 0;
+        }
+      }
+      @keyframes bubble3 {
+        from { 
+          transform: translateY(100vh) scale(0) translateX(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.8;
+          transform: scale(0.8) translateX(-15px);
+        }
+        90% {
+          opacity: 0.8;
+        }
+        to { 
+          transform: translateY(-50px) scale(0) translateX(15px);
+          opacity: 0;
+        }
+      }
+    `}</style>
   </div>
 );
 
@@ -180,12 +307,22 @@ const AppRoutes: React.FC = () => {
         }
       />
 
-      {/* NEW: Ho Chi Minh City Route with special loading */}
+      {/* Ho Chi Minh City Route with special loading */}
       <Route
         path="/destinations/hcm"
         element={
           <Suspense fallback={<HCMLoadingFallback />}>
             <HCMGuidePage />
+          </Suspense>
+        }
+      />
+
+      {/* NEW: Khánh Hòa Route with ocean-themed loading */}
+      <Route
+        path="/destinations/khanhhoa"
+        element={
+          <Suspense fallback={<KhanhHoaLoadingFallback />}>
+            <KhanhHoaGuidePage />
           </Suspense>
         }
       />
