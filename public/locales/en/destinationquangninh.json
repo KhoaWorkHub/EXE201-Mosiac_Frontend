@@ -1,0 +1,159 @@
+{
+  "vietnam": "Vietnam",
+  "northern_vietnam": "Northern Vietnam",
+  "overview": {
+    "title": "Quảng Ninh - Gateway to Wonder",
+    "subtitle": "Where limestone karsts meet emerald waters",
+    "region": "Northeast Vietnam",
+    "intro": "Quảng Ninh Province is home to the legendary Hạ Long Bay, a UNESCO World Heritage Site featuring thousands of limestone karsts rising majestically from emerald waters. Beyond the famous bay, this coastal province offers pristine beaches, mysterious caves, floating villages, and rich cultural heritage that spans centuries.",
+    "why_visit": {
+      "title": "Why Visit Quảng Ninh?",
+      "reasons": {
+        "0": "Experience the wonder of Hạ Long Bay - UNESCO World Heritage Site",
+        "1": "Explore magnificent limestone caves and grottoes",
+        "2": "Discover floating fishing villages and local culture",
+        "3": "Enjoy fresh seafood and unique Quảng Ninh cuisine",
+        "4": "Visit pristine beaches and emerald waters"
+      }
+    },
+    "best_time": {
+      "title": "Best Time to Visit",
+      "description": "The ideal time to visit Quảng Ninh is from October to April when the weather is cool and dry. March to May offers the most pleasant temperatures for exploring caves and cruising the bay."
+    },
+    "cultural_significance": {
+      "title": "Cultural Heritage",
+      "description": "Quảng Ninh is not just about natural beauty - it's a place where ancient fishing traditions meet modern tourism. The floating villages of Hạ Long Bay represent centuries of maritime culture, while the province's coal mining history adds another layer to its cultural tapestry."
+    },
+    "quick_facts": {
+      "location": "Geographic Location",
+      "location_value": "Northeast Vietnam",
+      "time_zone": "Time Zone",
+      "time_zone_value": "UTC+7 (ICT)",
+      "population": "Population",
+      "population_value": "1.3 million"
+    }
+  },
+  "tabs": {
+    "overview": "Overview",
+    "attractions": "Attractions",
+    "food_and_drink": "Food & Cuisine",
+    "shopping": "Shopping",
+    "getting_around": "Getting Around"
+  },
+  "attractions": {
+    "title": "Magnificent Attractions",
+    "intro": "From the world-famous Hạ Long Bay to hidden caves and pristine beaches, Quảng Ninh offers experiences that will take your breath away and create memories to last a lifetime."
+  },
+  "food": {
+    "title": "Culinary Treasures",
+    "intro": "Quảng Ninh's cuisine is a celebration of fresh seafood, unique local ingredients, and centuries-old recipes passed down through fishing communities.",
+    "dishes": {
+      "0": {
+        "name": "Chả Mực Hạ Long",
+        "description": "Famous squid cake made from fresh squid caught in Hạ Long Bay, a must-try local delicacy",
+        "where_to_try": "Hạ Long Market, Bãi Cháy"
+      },
+      "1": {
+        "name": "Sá Sùng Sầm Sơn",
+        "description": "Unique sea worm dish, considered a local delicacy with distinctive taste and texture",
+        "where_to_try": "Floating restaurants in Hạ Long Bay"
+      },
+      "2": {
+        "name": "Bánh Cuốn Hạ Long",
+        "description": "Steamed rice rolls filled with fresh seafood and herbs, a local twist on the classic dish",
+        "where_to_try": "Street food stalls in Hạ Long City"
+      },
+      "3": {
+        "name": "Cá Khoai Nướng",
+        "description": "Grilled fish cake wrapped in banana leaves, infused with aromatic herbs and spices",
+        "where_to_try": "Local restaurants along the coast"
+      }
+    }
+  },
+  "shopping": {
+    "title": "Shopping & Souvenirs",
+    "intro": "Take home unique treasures from Quảng Ninh, from handcrafted pearls to local delicacies and artisan products.",
+    "places": {
+      "0": {
+        "name": "Hạ Long Night Market",
+        "description": "Bustling night market offering fresh seafood, local snacks, and souvenirs with stunning bay views"
+      },
+      "1": {
+        "name": "Bãi Cháy Market",
+        "description": "Traditional market where locals shop for daily necessities, fresh produce, and authentic street food"
+      },
+      "2": {
+        "name": "Pearl Farms",
+        "description": "Visit local pearl farms to see cultivation process and purchase high-quality natural pearls"
+      },
+      "3": {
+        "name": "Coal Museum Shop",
+        "description": "Unique souvenirs related to Quảng Ninh's coal mining heritage and geological treasures"
+      }
+    }
+  },
+  "transport": {
+    "title": "Getting Around",
+    "intro": "Navigating Quảng Ninh is an adventure in itself, with options ranging from scenic boat rides to comfortable land transport.",
+    "options": {
+      "0": {
+        "name": "Cruise Ships & Boats",
+        "description": "The most authentic way to explore Hạ Long Bay, from luxury cruises to traditional wooden boats"
+      },
+      "1": {
+        "name": "Tourist Buses",
+        "description": "Comfortable buses connecting major attractions, perfect for guided tours and day trips"
+      },
+      "2": {
+        "name": "Motorbike & Scooter",
+        "description": "Great for exploring coastal roads and reaching off-the-beaten-path destinations"
+      },
+      "3": {
+        "name": "Cable Cars",
+        "description": "Scenic cable car rides at Queen Cable Car and other attractions offering panoramic views"
+      }
+    }
+  },
+  "photo_gallery": {
+    "title": "Visual Journey",
+    "description": "Immerse yourself in the breathtaking beauty of Quảng Ninh through our carefully curated photo collection."
+  },
+  "cta": {
+    "title": "Ready to Discover Quảng Ninh?",
+    "description": "Let the limestone karsts and emerald waters of Hạ Long Bay enchant you. Start your journey into one of the world's most spectacular natural wonders.",
+    "restart_tour": "🗿 Restart Cave Tour"
+  },
+  "tour_guide": {
+    "title": "Quảng Ninh Discovery Guide",
+    "subtitle": "Your gateway to limestone wonders and emerald seas",
+    "close_success": "Cave exploration completed! Welcome to Quảng Ninh!",
+    "steps": {
+      "welcome": {
+        "title": "Welcome to Wonder",
+        "content": "Welcome to Quảng Ninh, home to Hạ Long Bay - one of the world's most spectacular natural wonders! Prepare to be amazed by towering limestone karsts, mysterious caves, and emerald waters that have captivated travelers for centuries."
+      },
+      "attractions": {
+        "title": "Legendary Attractions",
+        "content": "From the iconic Hạ Long Bay to the magnificent Sơn Trà Cave, Quảng Ninh offers attractions that seem to belong in fairy tales. Each limestone formation tells a story millions of years in the making.",
+        "highlight": "UNESCO World Heritage Sites"
+      },
+      "food": {
+        "title": "Ocean's Bounty",
+        "content": "Taste the treasures of the sea with Quảng Ninh's exceptional seafood cuisine. From the famous squid cakes to rare sea worms, every dish is a celebration of the ocean's generosity."
+      },
+      "shopping": {
+        "title": "Treasures & Pearls",
+        "content": "Discover natural pearls cultivated in the pristine waters of Hạ Long Bay, along with unique handicrafts and souvenirs that capture the essence of this magical region."
+      },
+      "transport": {
+        "title": "Journey Methods",
+        "content": "Navigate Quảng Ninh's waters by traditional junk boats, explore caves by kayak, or take scenic cable cars for panoramic views of the limestone wonderland."
+      },
+      "conclusion": {
+        "title": "Your Quảng Ninh Adventure Awaits",
+        "content": "You're now ready to embark on one of the most spectacular journeys in Vietnam. Let the ancient limestone karsts and emerald waters of Quảng Ninh create memories that will last a lifetime!",
+        "content_title": "Adventure Begins Now!"
+      }
+    }
+  }
+}
