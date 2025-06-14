@@ -8,15 +8,30 @@ import {
   EnvironmentOutlined,
   FireOutlined,
   StarFilled,
-  ThunderboltOutlined
 } from '@ant-design/icons';
 import { motion } from 'framer-motion';
 import MainLayout from '@/components/layout/MainLayout';
 
 const { Title, Text, Paragraph } = Typography;
 
-// Updated list of available tour guides with HCM
+// Updated list of available tour guides with Khánh Hòa
 const tourGuides = [
+  {
+    id: 'khanhhoa',
+    title: 'Khánh Hòa',
+    titleVi: 'Khánh Hòa',
+    description: 'destinationkhanhhoa:overview.intro',
+    image: '/assets/destinations/khanhhoa/banner-1.jpg',
+    url: '/destinations/khanhhoa',
+    date: '2025-06-14',
+    region: 'South Central Coast',
+    regionVi: 'Duyên Hải Nam Trung Bộ',
+    color: 'blue',
+    gradient: 'from-blue-500 to-cyan-500',
+    featured: true,
+    rating: 4.9,
+    icon: <span className="text-2xl">🌊</span>
+  },
   {
     id: 'hcm',
     title: 'Ho Chi Minh City',
@@ -29,7 +44,7 @@ const tourGuides = [
     regionVi: 'Miền Nam Việt Nam',
     color: 'volcano',
     gradient: 'from-orange-500 to-red-500',
-    featured: true,
+    featured: false,
     rating: 4.9,
     icon: <FireOutlined />
   },
@@ -68,7 +83,7 @@ const tourGuides = [
 ];
 
 const BlogPage: React.FC = () => {
-  const { t, i18n } = useTranslation(['destinationdanang', 'destinationhanoi', 'destinationhcm', 'common']);
+  const { t, i18n } = useTranslation(['destinationdanang', 'destinationhanoi', 'destinationhcm', 'destinationkhanhhoa', 'common']);
   
   // Animation variants
   const containerVariants = {
@@ -99,7 +114,7 @@ const BlogPage: React.FC = () => {
     }
   };
 
-  // Get the featured destination (HCM)
+  // Get the featured destination (Khánh Hòa)
   const featuredDestination = tourGuides.find(guide => guide.featured);
   const otherDestinations = tourGuides.filter(guide => !guide.featured);
   
@@ -122,7 +137,7 @@ const BlogPage: React.FC = () => {
         
         <Divider className="mb-12" />
 
-        {/* Featured Destination - HCM */}
+        {/* Featured Destination - Khánh Hòa */}
         {featuredDestination && (
           <motion.div
             variants={featuredVariants}
@@ -131,11 +146,11 @@ const BlogPage: React.FC = () => {
             className="mb-16"
           >
             <div className="flex items-center mb-6">
-              <ThunderboltOutlined className="text-orange-500 text-2xl mr-3" />
+              <div className="text-blue-500 text-2xl mr-3">🌊</div>
               <Title level={2} className="dark:text-white m-0">
-                Featured Destination
+                Featured Coastal Paradise
               </Title>
-              <Tag color="volcano" className="ml-3 px-3 py-1">
+              <Tag color="blue" className="ml-3 px-3 py-1">
                 NEW
               </Tag>
             </div>
@@ -143,7 +158,7 @@ const BlogPage: React.FC = () => {
             <Link to={featuredDestination.url}>
               <Card 
                 hoverable 
-                className="overflow-hidden shadow-2xl border-4 border-orange-200 dark:border-orange-700 relative"
+                className="overflow-hidden shadow-2xl border-4 border-blue-200 dark:border-blue-700 relative"
                 cover={
                   <div className="h-96 overflow-hidden relative">
                     <img 
@@ -151,8 +166,8 @@ const BlogPage: React.FC = () => {
                       alt={i18n.language === 'vi' ? featuredDestination.titleVi : featuredDestination.title} 
                       className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                     />
-                    {/* Gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                    {/* Ocean gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-transparent to-transparent" />
                     
                     {/* Featured badge */}
                     <div className="absolute top-6 left-6">
@@ -168,6 +183,24 @@ const BlogPage: React.FC = () => {
                         <StarFilled className="text-yellow-500 mr-1" />
                         <span className="font-bold text-gray-800">{featuredDestination.rating}</span>
                       </div>
+                    </div>
+
+                    {/* Ocean wave effects */}
+                    <div className="absolute bottom-0 left-0 w-full h-20 overflow-hidden">
+                      <motion.div
+                        className="absolute bottom-0 w-[200%] h-20 bg-gradient-to-r from-blue-500/40 to-cyan-500/40"
+                        animate={{
+                          x: ['-50%', '0%']
+                        }}
+                        transition={{
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: "linear"
+                        }}
+                        style={{
+                          clipPath: 'polygon(0 60%, 100% 40%, 100% 100%, 0 100%)'
+                        }}
+                      />
                     </div>
 
                     {/* Content overlay */}
@@ -207,7 +240,7 @@ const BlogPage: React.FC = () => {
             </Title>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {otherDestinations.map((guide) => (
               <motion.div key={guide.id} variants={itemVariants}>
                 <Link to={guide.url}>
@@ -265,44 +298,64 @@ const BlogPage: React.FC = () => {
         
         {/* Call to Action for more destinations */}
         <motion.div 
-          className="text-center mt-16 p-8 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-blue-900/20 rounded-xl shadow-lg"
+          className="text-center mt-16 p-8 bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50 dark:from-blue-800 dark:via-cyan-900 dark:to-teal-900 rounded-xl shadow-lg relative overflow-hidden"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <Title level={3} className="dark:text-white mb-4">
-            More Amazing Destinations Coming Soon
-          </Title>
-          <Paragraph className="text-lg dark:text-gray-300 mb-6">
-            We're constantly expanding our collection of travel guides to help you explore more of Vietnam's incredible destinations. 
-            Stay tuned for comprehensive guides to Hue, Hoi An, Sapa, Nha Trang, and many more breathtaking locations!
-          </Paragraph>
-          <div className="flex flex-wrap justify-center gap-3">
-            {[
-              { name: 'Hue', color: 'purple' },
-              { name: 'Hoi An', color: 'orange' },
-              { name: 'Sapa', color: 'green' },
-              { name: 'Nha Trang', color: 'blue' },
-              { name: 'Dalat', color: 'pink' },
-              { name: 'Phu Quoc', color: 'cyan' },
-              { name: 'Ha Long Bay', color: 'emerald' },
-              { name: 'Can Tho', color: 'amber' }
-            ].map((destination, index) => (
-              <motion.div
-                key={destination.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.6 + index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <Tag 
-                  color={destination.color}
-                  className="px-3 py-1 text-sm font-medium cursor-pointer"
+          {/* Ocean wave background */}
+          <div className="absolute inset-0">
+            <motion.div
+              className="absolute bottom-0 w-[200%] h-16 bg-gradient-to-r from-blue-400/20 to-cyan-400/20"
+              animate={{
+                x: ['-50%', '0%']
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              style={{
+                clipPath: 'polygon(0 50%, 100% 70%, 100% 100%, 0 100%)'
+              }}
+            />
+          </div>
+
+          <div className="relative z-10">
+            <Title level={3} className="dark:text-white mb-4">
+              More Amazing Destinations Coming Soon
+            </Title>
+            <Paragraph className="text-lg dark:text-gray-300 mb-6">
+              We're constantly expanding our collection of travel guides to help you explore more of Vietnam's incredible destinations. 
+              Stay tuned for comprehensive guides to Hue, Hoi An, Sapa, Phu Quoc, and many more breathtaking locations!
+            </Paragraph>
+            <div className="flex flex-wrap justify-center gap-3">
+              {[
+                { name: 'Hue', color: 'purple' },
+                { name: 'Hoi An', color: 'orange' },
+                { name: 'Sapa', color: 'green' },
+                { name: 'Phu Quoc', color: 'blue' },
+                { name: 'Dalat', color: 'pink' },
+                { name: 'Can Tho', color: 'cyan' },
+                { name: 'Ha Long Bay', color: 'emerald' },
+                { name: 'Mui Ne', color: 'amber' }
+              ].map((destination, index) => (
+                <motion.div
+                  key={destination.name}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6 + index * 0.1 }}
+                  whileHover={{ scale: 1.05 }}
                 >
-                  {destination.name}
-                </Tag>
-              </motion.div>
-            ))}
+                  <Tag 
+                    color={destination.color}
+                    className="px-3 py-1 text-sm font-medium cursor-pointer"
+                  >
+                    {destination.name}
+                  </Tag>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
