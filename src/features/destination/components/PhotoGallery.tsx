@@ -9,22 +9,57 @@ interface PhotoGalleryProps {
   inView: boolean;
 }
 
+// Define images for each city
+const cityImages: Record<string, string[]> = {
+  quangninh: [
+    `/assets/destinations/quangninh/Chùa Yên Tử 2.jpg`,
+    `/assets/destinations/quangninh/Chùa Ba Vàng 2.jpg`,
+    `/assets/destinations/quangninh/Đảo Cô tô 1.jpg`,
+    `/assets/destinations/quangninh/sontra.png`,
+    `/assets/destinations/quangninh/bai-tu-long-bay.jpg`,
+    `/assets/destinations/quangninh/daotiptop.png`,
+    `/assets/destinations/quangninh/Chùa Lôi Âm 1.webp`,
+    `/assets/destinations/quangninh/Vịnh Hạ Long 1.jpeg`,
+  ],
+  khanhhoa: [
+    `/assets/destinations/khanhhoa/yang-bay-waterfall.jpg`,
+    `/assets/destinations/khanhhoa/vinpearl-land.jpg`,
+    `/assets/destinations/khanhhoa/po-nagar-towers.jpg`,
+    `/assets/destinations/khanhhoa/nha-trang-beach.jpg`,
+    `/assets/destinations/khanhhoa/mud-bath.jpg`,
+    `/assets/destinations/khanhhoa/island-hopping.jpg`,
+    `/assets/destinations/khanhhoa/nhatrang.png`,
+    `/assets/destinations/khanhhoa/biennhatrang.png`,
+  ],
+  hcm: [
+    `/assets/destinations/hcm/dragon-bridge.jpg`,
+    `/assets/destinations/hcm/ba-na-hills.jpg`,
+    `/assets/destinations/hcm/my-khe-beach.jpg`,
+    `/assets/destinations/hcm/marble-mountains.jpg`,
+    `/assets/destinations/hcm/golden-bridge.jpg`,
+    `/assets/destinations/hcm/hoi-an-ancient-town.jpg`,
+  ],
+  // Add more cities as needed
+};
+
 const PhotoGallery: React.FC<PhotoGalleryProps> = ({ city, inView }) => {
-  useTranslation(['destinationdanang', 'common']);
+  const { t } = useTranslation(['destinationdanang', 'common']);
   const [modalVisible, setModalVisible] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
   
-  // Simulated gallery images - in production, these would come from an API
-  const galleryImages = [
-    `/assets/destinations/${city}/gallery-1.jpg`,
-    `/assets/destinations/${city}/gallery-2.jpg`,
-    `/assets/destinations/${city}/gallery-3.jpg`,
-    `/assets/destinations/${city}/gallery-4.jpg`,
-    `/assets/destinations/${city}/gallery-5.jpg`,
-    `/assets/destinations/${city}/gallery-6.jpg`,
-    `/assets/destinations/${city}/gallery-7.jpg`,
-    `/assets/destinations/${city}/gallery-8.jpg`,
-  ];
+  // Get images for the specific city, fallback to empty array if city not found
+  const galleryImages = cityImages[city.toLowerCase()] || [];
+  
+  // If no images available for this city, don't render anything
+  if (galleryImages.length === 0) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-500 dark:text-gray-400">
+          {t('common:no_images_available', 'No images available for this destination.')}
+        </p>
+      </div>
+    );
+  }
   
   const openModal = (index: number) => {
     setCurrentImage(index);
@@ -65,6 +100,30 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ city, inView }) => {
     }
   };
 
+  // Dynamic grid layout based on number of images
+  const getGridLayout = (imageCount: number, index: number) => {
+    if (imageCount >= 8) {
+      // For 8+ images, use the original layout with featured images
+      return index === 0 || index === 3 ? 'md:col-span-2 md:row-span-2' : '';
+    } else if (imageCount >= 6) {
+      // For 6-7 images, make first image featured
+      return index === 0 ? 'md:col-span-2 md:row-span-2' : '';
+    } else {
+      // For fewer images, use simple grid
+      return '';
+    }
+  };
+
+  // Get image height based on layout
+  const getImageHeight = (imageCount: number, index: number) => {
+    if (imageCount >= 8 && (index === 0 || index === 3)) {
+      return '300px';
+    } else if (imageCount >= 6 && index === 0) {
+      return '300px';
+    }
+    return '150px';
+  };
+
   return (
     <>
       <motion.div
@@ -77,9 +136,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ city, inView }) => {
           <motion.div
             key={index}
             variants={itemVariants}
-            className={`relative overflow-hidden rounded-lg ${
-              index === 0 || index === 3 ? 'md:col-span-2 md:row-span-2' : ''
-            }`}
+            className={`relative overflow-hidden rounded-lg ${getGridLayout(galleryImages.length, index)}`}
           >
             <div 
               className="group cursor-pointer w-full h-full"
@@ -87,9 +144,14 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ city, inView }) => {
             >
               <img
                 src={image}
-                alt={`Da Nang photo ${index + 1}`}
+                alt={`${city} photo ${index + 1}`}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                style={{ minHeight: index === 0 || index === 3 ? '300px' : '150px' }}
+                style={{ minHeight: getImageHeight(galleryImages.length, index) }}
+                onError={(e) => {
+                  // Hide broken images
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                 <div className="bg-white bg-opacity-80 rounded-full w-10 h-10 flex items-center justify-center">
@@ -113,7 +175,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ city, inView }) => {
         <div className="relative h-screen max-h-[80vh]">
           <img 
             src={galleryImages[currentImage]} 
-            alt={`Da Nang photo ${currentImage + 1}`} 
+            alt={`${city} photo ${currentImage + 1}`} 
             className="w-full h-full object-contain"
           />
           
@@ -123,6 +185,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ city, inView }) => {
             icon={<LeftOutlined />}
             onClick={prevImage}
             className="absolute left-4 top-1/2 transform -translate-y-1/2 opacity-70 hover:opacity-100"
+            disabled={galleryImages.length <= 1}
           />
           
           <Button
@@ -131,6 +194,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ city, inView }) => {
             icon={<RightOutlined />}
             onClick={nextImage}
             className="absolute right-4 top-1/2 transform -translate-y-1/2 opacity-70 hover:opacity-100"
+            disabled={galleryImages.length <= 1}
           />
           
           <div className="absolute bottom-4 left-0 right-0 text-center">
