@@ -28,11 +28,12 @@ const { Title, Text, Paragraph } = Typography;
 const { TabPane } = Tabs;
 
 const quangNinhImages = [
-  '/assets/destinations/quangninh/bai-tu-long-bay.jpg', // Hạ Long Bay aerial view
-  '/assets/destinations/quangninh/sontra.png', // Limestone karsts at sunset
-  '/assets/destinations/quangninh/daotiptop.png', // Traditional junk boats
-  '/assets/destinations/quangninh/queencablecar.png', // Cave exploration scene
+  '/assets/destinations/quangninh/bai-tu-long-bay.jpg',
+  '/assets/destinations/quangninh/sontra.png',
+  '/assets/destinations/quangninh/daotiptop.png',
+  '/assets/destinations/quangninh/queencablecar.png',
 ];
+
 // Quảng Ninh attractions with limestone cave and bay highlights
 const attractionsData = [
   {
@@ -105,10 +106,9 @@ const attractionsData = [
 
 const QuangNinhGuidePage: React.FC = () => {
   const { t, i18n } = useTranslation(['destinationquangninh', 'common']);
-  const [showTourGuide, setShowTourGuide] = useState(() => {
-    // Check if user has seen the tour guide before
-    return !localStorage.getItem('quangninhTourGuideShown');
-  });
+  
+  // Always show tour guide on page load - removed localStorage check
+  const [showTourGuide, setShowTourGuide] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   const [loading, setLoading] = useState(true);
   
@@ -144,7 +144,7 @@ const QuangNinhGuidePage: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % quangNinhImages.length);
-    }, 5000); // Change image every 5 seconds
+    }, 5000);
     
     return () => clearInterval(interval);
   }, []);
@@ -256,10 +256,9 @@ const QuangNinhGuidePage: React.FC = () => {
   
   // Get current image with fallback
   const getCurrentImage = () => {
-    // Filter out images that failed to load
     const validImages = quangNinhImages.filter((_, index) => !imageLoadErrors[index]);
     if (validImages.length === 0) {
-      return '/assets/destinations/quangninh/default-hero.jpg'; // fallback image
+      return '/assets/destinations/quangninh/default-hero.jpg';
     }
     
     const validIndex = currentImageIndex % validImages.length;
@@ -412,7 +411,7 @@ const QuangNinhGuidePage: React.FC = () => {
   
   return (
     <MainLayout>
-      {/* Tour Guide */}
+      {/* Tour Guide - Always show on page load */}
       <AnimatePresence>
         {showTourGuide && (
           <QuangNinhTourGuideSteps onClose={closeTourGuide} />

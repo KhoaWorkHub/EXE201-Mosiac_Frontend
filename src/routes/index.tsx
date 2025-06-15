@@ -32,7 +32,6 @@ const HCMGuidePage = lazy(
 const KhanhHoaGuidePage = lazy(
   () => import("../features/destination/pages/KhanhHoaGuidePage")
 );
-// NEW: Quảng Ninh Guide Page
 const QuangNinhGuidePage = lazy(
   () => import("../features/destination/pages/QuangNinhGuidePage")
 );
@@ -42,6 +41,10 @@ const BlogPage = lazy(() => import("../features/blog/pages/BlogPage"));
 
 // Profile Page
 const ProfilePage = lazy(() => import("../features/profile/pages/ProfilePage"));
+
+// NEW: About Us and Regions Pages
+const AboutUsPage = lazy(() => import("../features/about/pages/AboutUsPage"));
+const RegionsPage = lazy(() => import("../features/regions/pages/RegionsPage"));
 
 // Custom loader for luxury pages
 const LuxuryLoadingFallback = () => (
@@ -190,7 +193,7 @@ const KhanhHoaLoadingFallback = () => (
   </div>
 );
 
-// NEW: Enhanced loading component for Quảng Ninh with limestone cave effects
+// Enhanced loading component for Quảng Ninh with limestone cave effects
 const QuangNinhLoadingFallback = () => (
   <div className="h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-stone-50 to-slate-100 dark:from-slate-900 dark:via-stone-900 dark:to-slate-800 relative overflow-hidden">
     {/* Animated limestone formations background */}
@@ -349,6 +352,113 @@ const QuangNinhLoadingFallback = () => (
   </div>
 );
 
+// NEW: About Us loading component with startup theme
+const AboutUsLoadingFallback = () => (
+  <div className="h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 dark:from-purple-900/20 dark:via-indigo-900/20 dark:to-blue-900/20 relative overflow-hidden">
+    {/* Animated startup elements background */}
+    <div className="absolute inset-0">
+      {Array.from({ length: 20 }).map((_, i) => (
+        <div
+          key={i}
+          className="absolute text-4xl opacity-10"
+          style={{
+            left: Math.random() * 100 + '%',
+            top: Math.random() * 100 + '%',
+            animation: `float${i % 3 + 1} ${Math.random() * 6 + 4}s ease-in-out infinite`,
+            animationDelay: Math.random() * 3 + 's'
+          }}
+        >
+          {['🚀', '💡', '🎯', '⭐', '🏆', '💎'][i % 6]}
+        </div>
+      ))}
+    </div>
+    
+    <div className="relative z-10">
+      <div className="w-24 h-24 bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 rounded-full mx-auto mb-6 flex items-center justify-center shadow-2xl relative overflow-hidden">
+        <div className="text-3xl animate-pulse">🧩</div>
+        <div 
+          className="absolute inset-0 border-4 border-white/30 rounded-full"
+          style={{
+            animation: 'startupRing 2s ease-out infinite'
+          }}
+        />
+      </div>
+      <div className="w-16 h-[1px] bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 my-4"></div>
+      <p className="text-gray-600 dark:text-gray-300 text-sm animate-pulse">
+        Loading our startup story...
+      </p>
+    </div>
+
+    <style>{`
+      @keyframes float1 {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(10deg); }
+      }
+      @keyframes float2 {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-15px) rotate(-10deg); }
+      }
+      @keyframes float3 {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-25px) rotate(5deg); }
+      }
+      @keyframes startupRing {
+        0% { transform: scale(0.8); opacity: 0.8; }
+        100% { transform: scale(2.5); opacity: 0; }
+      }
+    `}</style>
+  </div>
+);
+
+// NEW: Regions loading component with Vietnam map theme
+const RegionsLoadingFallback = () => (
+  <div className="h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-green-50 via-blue-50 to-orange-50 dark:from-green-900/20 dark:via-blue-900/20 dark:to-orange-900/20 relative overflow-hidden">
+    {/* Animated map elements background */}
+    <div className="absolute inset-0">
+      {Array.from({ length: 15 }).map((_, i) => (
+        <div
+          key={i}
+          className="absolute w-2 h-2 rounded-full"
+          style={{
+            background: ['#10b981', '#3b82f6', '#f59e0b'][i % 3],
+            left: Math.random() * 100 + '%',
+            top: Math.random() * 100 + '%',
+            animation: `mapFloat ${Math.random() * 8 + 6}s ease-in-out infinite`,
+            animationDelay: Math.random() * 3 + 's'
+          }}
+        />
+      ))}
+    </div>
+    
+    <div className="relative z-10">
+      <div className="w-24 h-24 bg-gradient-to-r from-green-500 via-blue-500 to-orange-500 rounded-full mx-auto mb-6 flex items-center justify-center shadow-2xl relative overflow-hidden">
+        <div className="text-3xl animate-pulse">🗺️</div>
+        <div 
+          className="absolute inset-0 border-4 border-white/30 rounded-full"
+          style={{
+            animation: 'mapRing 2s ease-out infinite'
+          }}
+        />
+      </div>
+      <div className="w-16 h-[1px] bg-gradient-to-r from-green-500 via-blue-500 to-orange-500 my-4"></div>
+      <p className="text-gray-600 dark:text-gray-300 text-sm animate-pulse">
+        Exploring Vietnam regions...
+      </p>
+    </div>
+
+    <style>{`
+      @keyframes mapFloat {
+        0%, 100% { transform: translateY(0px) scale(1); opacity: 0.3; }
+        50% { transform: translateY(-30px) scale(1.5); opacity: 1; }
+      }
+      @keyframes mapRing {
+        0% { transform: scale(0.8); opacity: 0.8; }
+        100% { transform: scale(2.5); opacity: 0; }
+      }
+    `}</style>
+  </div>
+);
+
 // Loading component for other pages
 const LoadingFallback = () => <Loading fullScreen message="Loading page..." />;
 
@@ -449,6 +559,26 @@ const AppRoutes: React.FC = () => {
         }
       />
 
+      {/* NEW: About Us Route with startup-themed loading */}
+      <Route
+        path="/about"
+        element={
+          <Suspense fallback={<AboutUsLoadingFallback />}>
+            <AboutUsPage />
+          </Suspense>
+        }
+      />
+
+      {/* NEW: Regions Route with Vietnam map-themed loading */}
+      <Route
+        path="/regions"
+        element={
+          <Suspense fallback={<RegionsLoadingFallback />}>
+            <RegionsPage />
+          </Suspense>
+        }
+      />
+
       {/* Destination Guide Routes */}
       <Route
         path="/destinations/danang"
@@ -488,7 +618,7 @@ const AppRoutes: React.FC = () => {
         }
       />
 
-      {/* NEW: Quảng Ninh Route with limestone cave-themed loading */}
+      {/* Quảng Ninh Route with limestone cave-themed loading */}
       <Route
         path="/destinations/quangninh"
         element={

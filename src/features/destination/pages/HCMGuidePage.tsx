@@ -26,10 +26,10 @@ const { TabPane } = Tabs;
 
 // HCM images with vibrant, modern cityscape
 const hcmImages = [
-  '/assets/destinations/hcm/notre-dame-cathedral.jpg', // Skyline with Landmark 81
-  '/assets/destinations/hcm/independence-palace.jpg', // Ben Thanh Market street
-  '/assets/destinations/hcm/ben-thanh-market.jpg', // Independence Palace
-  '/assets/destinations/hcm/central-post-office.jpg', // Saigon River at night
+  '/assets/destinations/hcm/notre-dame-cathedral.jpg',
+  '/assets/destinations/hcm/independence-palace.jpg',
+  '/assets/destinations/hcm/ben-thanh-market.jpg',
+  '/assets/destinations/hcm/central-post-office.jpg',
 ];
 
 // HCM attractions with dynamic, modern feel
@@ -104,10 +104,9 @@ const attractionsData = [
 
 const HCMGuidePage: React.FC = () => {
   const { t, i18n } = useTranslation(['destinationhcm', 'common']);
-  const [showTourGuide, setShowTourGuide] = useState(() => {
-    // Check if user has seen the tour guide before
-    return !localStorage.getItem('hcmTourGuideShown');
-  });
+  
+  // Always show tour guide on page load - removed localStorage check
+  const [showTourGuide, setShowTourGuide] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   const [loading, setLoading] = useState(true);
   
@@ -143,7 +142,7 @@ const HCMGuidePage: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % hcmImages.length);
-    }, 5000); // Change image every 5 seconds
+    }, 5000);
     
     return () => clearInterval(interval);
   }, []);
@@ -217,13 +216,11 @@ const HCMGuidePage: React.FC = () => {
   
   const closeTourGuide = () => {
     setShowTourGuide(false);
-    localStorage.setItem('hcmTourGuideShown', 'true');
     message.success(t('tour_guide.close_success'));
   };
   
   const restartTourGuide = () => {
     setShowTourGuide(true);
-    localStorage.removeItem('hcmTourGuideShown');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   
@@ -257,10 +254,9 @@ const HCMGuidePage: React.FC = () => {
   
   // Get current image with fallback
   const getCurrentImage = () => {
-    // Filter out images that failed to load
     const validImages = hcmImages.filter((_, index) => !imageLoadErrors[index]);
     if (validImages.length === 0) {
-      return '/assets/destinations/hcm/default-hero.jpg'; // fallback image
+      return '/assets/destinations/hcm/default-hero.jpg';
     }
     
     const validIndex = currentImageIndex % validImages.length;
@@ -412,7 +408,7 @@ const HCMGuidePage: React.FC = () => {
   
   return (
     <MainLayout>
-      {/* Tour Guide */}
+      {/* Tour Guide - Always show on page load */}
       <AnimatePresence>
         {showTourGuide && (
           <HCMTourGuideSteps onClose={closeTourGuide} />
