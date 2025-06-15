@@ -14,6 +14,8 @@ import {
   ShopOutlined,
   CarOutlined,
   FireOutlined,
+  LeftOutlined,
+  RightOutlined,
 } from '@ant-design/icons';
 import MainLayout from '@/components/layout/MainLayout';
 import QuangNinhTourGuideSteps from '../components/QuangNinhTourGuideSteps';
@@ -25,21 +27,19 @@ import DestinationHeader from '../components/DestinationHeader';
 const { Title, Text, Paragraph } = Typography;
 const { TabPane } = Tabs;
 
-// Quảng Ninh images with majestic limestone landscapes
 const quangNinhImages = [
-  '/assets/destinations/quangninh/banner-1.jpg', // Hạ Long Bay aerial view
-  '/assets/destinations/quangninh/banner-2.jpg', // Limestone karsts at sunset
-  '/assets/destinations/quangninh/banner-3.jpg', // Traditional junk boats
-  '/assets/destinations/quangninh/banner-4.jpg', // Cave exploration scene
+  '/assets/destinations/quangninh/bai-tu-long-bay.jpg', // Hạ Long Bay aerial view
+  '/assets/destinations/quangninh/sontra.png', // Limestone karsts at sunset
+  '/assets/destinations/quangninh/daotiptop.png', // Traditional junk boats
+  '/assets/destinations/quangninh/queencablecar.png', // Cave exploration scene
 ];
-
 // Quảng Ninh attractions with limestone cave and bay highlights
 const attractionsData = [
   {
     id: 1,
     name: 'Hạ Long Bay',
     nameVi: 'Vịnh Hạ Long',
-    image: '/assets/destinations/quangninh/ha-long-bay.jpg',
+    image: '/assets/destinations/quangninh/Vịnh Hạ Long 1.jpeg',
     location: 'Hạ Long City, Quảng Ninh',
     duration: 'Full day to 3 days',
     rating: 4.9,
@@ -50,7 +50,7 @@ const attractionsData = [
     id: 2,
     name: 'Sơn Trà Cave',
     nameVi: 'Hang Sơn Trà',
-    image: '/assets/destinations/quangninh/son-tra-cave.jpg',
+    image: '/assets/destinations/quangninh/Vịnh Hạ Long 1.jpeg',
     location: 'Hạ Long Bay, Quảng Ninh',
     duration: '2-3 hours',
     rating: 4.7,
@@ -61,7 +61,7 @@ const attractionsData = [
     id: 3,
     name: 'Titop Island',
     nameVi: 'Đảo Titop',
-    image: '/assets/destinations/quangninh/titop-island.jpg',
+    image: '/assets/destinations/quangninh/daotiptop.png',
     location: 'Hạ Long Bay, Quảng Ninh',
     duration: '2-4 hours',
     rating: 4.6,
@@ -72,7 +72,7 @@ const attractionsData = [
     id: 4,
     name: 'Queen Cable Car',
     nameVi: 'Cáp Treo Nữ Hoàng',
-    image: '/assets/destinations/quangninh/queen-cable-car.jpg',
+    image: '/assets/destinations/quangninh/queencablecar.png',
     location: 'Bãi Cháy, Quảng Ninh',
     duration: '1-2 hours',
     rating: 4.5,
@@ -112,6 +112,10 @@ const QuangNinhGuidePage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [loading, setLoading] = useState(true);
   
+  // Hero image carousel state
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageLoadErrors, setImageLoadErrors] = useState<{[key: number]: boolean}>({});
+  
   interface WeatherData {
     temperature: number;
     condition: string;
@@ -135,6 +139,15 @@ const QuangNinhGuidePage: React.FC = () => {
   const [galleryRef, galleryInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   
   const headerRef = useRef<HTMLDivElement>(null);
+  
+  // Auto-advance carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % quangNinhImages.length);
+    }, 5000); // Change image every 5 seconds
+    
+    return () => clearInterval(interval);
+  }, []);
   
   // Handle window resize
   useEffect(() => {
@@ -226,6 +239,31 @@ const QuangNinhGuidePage: React.FC = () => {
         .then(() => message.success(t('common:share.copied')))
         .catch(() => message.error(t('common:share.error')));
     }
+  };
+  
+  // Carousel navigation functions
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % quangNinhImages.length);
+  };
+  
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + quangNinhImages.length) % quangNinhImages.length);
+  };
+  
+  const handleImageError = (index: number) => {
+    setImageLoadErrors(prev => ({ ...prev, [index]: true }));
+  };
+  
+  // Get current image with fallback
+  const getCurrentImage = () => {
+    // Filter out images that failed to load
+    const validImages = quangNinhImages.filter((_, index) => !imageLoadErrors[index]);
+    if (validImages.length === 0) {
+      return '/assets/destinations/quangninh/default-hero.jpg'; // fallback image
+    }
+    
+    const validIndex = currentImageIndex % validImages.length;
+    return validImages[validIndex];
   };
   
   // Animation variants
@@ -381,13 +419,80 @@ const QuangNinhGuidePage: React.FC = () => {
         )}
       </AnimatePresence>
       
-      {/* Hero Section with Limestone Karst Theme */}
-      <section ref={headerRef} className="relative h-screen bg-cover bg-center overflow-hidden" style={{ backgroundImage: `url(${quangNinhImages[0]})` }}>
+      {/* Hero Section with Image Carousel */}
+      <section ref={headerRef} className="relative h-screen overflow-hidden">
+        {/* Image Carousel Background */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentImageIndex}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ 
+              backgroundImage: `url(${getCurrentImage()})`,
+              backgroundPosition: 'center center',
+              backgroundSize: 'cover'
+            }}
+          />
+        </AnimatePresence>
+        
         {/* Dynamic gradient overlay with limestone effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900/70 via-stone-800/60 to-slate-700/70"></div>
         
+        {/* Carousel Navigation */}
+        <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-20">
+          <Button
+            type="primary"
+            shape="circle"
+            icon={<LeftOutlined />}
+            onClick={prevImage}
+            className="bg-white/20 border-white/30 backdrop-blur-sm hover:bg-white/30 text-white"
+            size="large"
+          />
+        </div>
+        
+        <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-20">
+          <Button
+            type="primary"
+            shape="circle"
+            icon={<RightOutlined />}
+            onClick={nextImage}
+            className="bg-white/20 border-white/30 backdrop-blur-sm hover:bg-white/30 text-white"
+            size="large"
+          />
+        </div>
+        
+        {/* Image indicators */}
+        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+          {quangNinhImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentImageIndex(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentImageIndex 
+                  ? 'bg-white scale-125' 
+                  : 'bg-white/50 hover:bg-white/75'
+              }`}
+            />
+          ))}
+        </div>
+        
+        {/* Preload images */}
+        <div className="hidden">
+          {quangNinhImages.map((image, index) => (
+            <img 
+              key={index}
+              src={image} 
+              alt={`Preload ${index}`}
+              onError={() => handleImageError(index)}
+            />
+          ))}
+        </div>
+        
         {/* Animated limestone karst layers */}
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden z-10">
           {Array.from({ length: 6 }).map((_, i) => (
             <motion.div
               key={i}
@@ -411,7 +516,7 @@ const QuangNinhGuidePage: React.FC = () => {
         </div>
         
         {/* Floating limestone particles */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 z-10">
           {Array.from({ length: 30 }).map((_, i) => (
             <motion.div
               key={i}
@@ -436,15 +541,17 @@ const QuangNinhGuidePage: React.FC = () => {
           ))}
         </div>
         
-        <DestinationHeader 
-          title={i18n.language === 'vi' ? 'Quảng Ninh' : 'Quảng Ninh'}
-          subtitle={t('overview.subtitle')}
-          onShare={handleShare}
-          onStartTour={restartTourGuide}
-        />
+        <div className="absolute inset-0 flex items-center justify-center z-20">
+          <DestinationHeader 
+            title={i18n.language === 'vi' ? 'Quảng Ninh' : 'Quảng Ninh'}
+            subtitle={t('overview.subtitle')}
+            onShare={handleShare}
+            onStartTour={restartTourGuide}
+          />
+        </div>
         
         {/* Enhanced scroll indicator with limestone motion */}
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white text-center">
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white text-center z-20">
           <motion.div
             animate={{ y: [0, 15, 0] }}
             transition={{ duration: 2, repeat: Infinity }}

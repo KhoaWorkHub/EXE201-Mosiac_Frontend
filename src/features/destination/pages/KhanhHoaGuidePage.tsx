@@ -13,7 +13,9 @@ import {
   CoffeeOutlined,
   ShopOutlined,
   CarOutlined,
-  FireOutlined
+  FireOutlined,
+  LeftOutlined,
+  RightOutlined,
 } from '@ant-design/icons';
 import MainLayout from '@/components/layout/MainLayout';
 import KhanhHoaTourGuideSteps from '../components/KhanhHoaTourGuideSteps';
@@ -27,10 +29,10 @@ const { TabPane } = Tabs;
 
 // Khánh Hòa images with beautiful coastal views
 const khanhHoaImages = [
-  '/assets/destinations/khanhhoa/banner-1.jpg', // Nha Trang Bay aerial view
-  '/assets/destinations/khanhhoa/banner-2.jpg', // Vinpearl cable car
-  '/assets/destinations/khanhhoa/banner-3.jpg', // Po Nagar Cham Towers
-  '/assets/destinations/khanhhoa/banner-4.jpg', // Sunset beach scene
+  '/assets/destinations/khanhhoa/nha-trang-beach.jpg', // Nha Trang Bay aerial view
+  '/assets/destinations/khanhhoa/vinpearl-land.jpg', // Vinpearl cable car
+  '/assets/destinations/khanhhoa/island-hopping.jpg', // Po Nagar Cham Towers
+  '/assets/destinations/khanhhoa/po-nagar-towers.jpg', // Sunset beach scene
 ];
 
 // Khánh Hòa attractions with coastal and cultural highlights
@@ -109,6 +111,10 @@ const KhanhHoaGuidePage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [loading, setLoading] = useState(true);
   
+  // Hero image carousel state
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageLoadErrors, setImageLoadErrors] = useState<{[key: number]: boolean}>({});
+  
   interface WeatherData {
     temperature: number;
     condition: string;
@@ -132,6 +138,15 @@ const KhanhHoaGuidePage: React.FC = () => {
   const [galleryRef, galleryInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   
   const headerRef = useRef<HTMLDivElement>(null);
+  
+  // Auto-advance carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % khanhHoaImages.length);
+    }, 5000); // Change image every 5 seconds
+    
+    return () => clearInterval(interval);
+  }, []);
   
   // Handle window resize
   useEffect(() => {
@@ -225,6 +240,31 @@ const KhanhHoaGuidePage: React.FC = () => {
     }
   };
   
+  // Carousel navigation functions
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % khanhHoaImages.length);
+  };
+  
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + khanhHoaImages.length) % khanhHoaImages.length);
+  };
+  
+  const handleImageError = (index: number) => {
+    setImageLoadErrors(prev => ({ ...prev, [index]: true }));
+  };
+  
+  // Get current image with fallback
+  const getCurrentImage = () => {
+    // Filter out images that failed to load
+    const validImages = khanhHoaImages.filter((_, index) => !imageLoadErrors[index]);
+    if (validImages.length === 0) {
+      return '/assets/destinations/khanhhoa/default-hero.jpg'; // fallback image
+    }
+    
+    const validIndex = currentImageIndex % validImages.length;
+    return validImages[validIndex];
+  };
+  
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -302,14 +342,29 @@ const KhanhHoaGuidePage: React.FC = () => {
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="w-24 h-24 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 rounded-full mx-auto mb-6 flex items-center justify-center shadow-2xl"
+              className="w-24 h-24 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 rounded-full mx-auto mb-6 flex items-center justify-center shadow-2xl relative overflow-hidden"
             >
               <motion.div
                 animate={{ rotate: [0, -360] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                className="text-3xl"
               >
                 🌊
               </motion.div>
+              
+              {/* Wave rings */}
+              <motion.div
+                className="absolute inset-0 border-4 border-white/30 rounded-full"
+                animate={{
+                  scale: [1, 2, 2.5],
+                  opacity: [0.6, 0.3, 0]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeOut"
+                }}
+              />
             </motion.div>
             <motion.p 
               className="mt-4 text-xl bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent font-bold"
@@ -324,12 +379,13 @@ const KhanhHoaGuidePage: React.FC = () => {
           {Array.from({ length: 15 }).map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-4 h-4 bg-blue-400/30 rounded-full"
+              className="absolute w-4 h-4 bg-blue-400/30 rounded-full opacity-60"
               animate={{
                 y: [window.innerHeight, -50],
                 x: [Math.random() * window.innerWidth, Math.random() * window.innerWidth],
                 scale: [0, 1, 0],
                 opacity: [0, 0.7, 0],
+                rotate: [0, 360]
               }}
               transition={{
                 duration: Math.random() * 8 + 4,
@@ -356,13 +412,80 @@ const KhanhHoaGuidePage: React.FC = () => {
         )}
       </AnimatePresence>
       
-      {/* Hero Section with Ocean Theme */}
-      <section ref={headerRef} className="relative h-screen bg-cover bg-center overflow-hidden" style={{ backgroundImage: `url(${khanhHoaImages[0]})` }}>
+      {/* Hero Section with Image Carousel */}
+      <section ref={headerRef} className="relative h-screen overflow-hidden">
+        {/* Image Carousel Background */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentImageIndex}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ 
+              backgroundImage: `url(${getCurrentImage()})`,
+              backgroundPosition: 'center center',
+              backgroundSize: 'cover'
+            }}
+          />
+        </AnimatePresence>
+        
         {/* Dynamic gradient overlay with wave effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 via-cyan-800/60 to-teal-700/70"></div>
         
+        {/* Carousel Navigation */}
+        <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-20">
+          <Button
+            type="primary"
+            shape="circle"
+            icon={<LeftOutlined />}
+            onClick={prevImage}
+            className="bg-white/20 border-white/30 backdrop-blur-sm hover:bg-white/30 text-white"
+            size="large"
+          />
+        </div>
+        
+        <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-20">
+          <Button
+            type="primary"
+            shape="circle"
+            icon={<RightOutlined />}
+            onClick={nextImage}
+            className="bg-white/20 border-white/30 backdrop-blur-sm hover:bg-white/30 text-white"
+            size="large"
+          />
+        </div>
+        
+        {/* Image indicators */}
+        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+          {khanhHoaImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentImageIndex(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentImageIndex 
+                  ? 'bg-white scale-125' 
+                  : 'bg-white/50 hover:bg-white/75'
+              }`}
+            />
+          ))}
+        </div>
+        
+        {/* Preload images */}
+        <div className="hidden">
+          {khanhHoaImages.map((image, index) => (
+            <img 
+              key={index}
+              src={image} 
+              alt={`Preload ${index}`}
+              onError={() => handleImageError(index)}
+            />
+          ))}
+        </div>
+        
         {/* Animated wave layers */}
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden z-10">
           {Array.from({ length: 4 }).map((_, i) => (
             <motion.div
               key={i}
@@ -383,7 +506,7 @@ const KhanhHoaGuidePage: React.FC = () => {
         </div>
         
         {/* Floating water particles */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 z-10">
           {Array.from({ length: 25 }).map((_, i) => (
             <motion.div
               key={i}
@@ -408,13 +531,17 @@ const KhanhHoaGuidePage: React.FC = () => {
           ))}
         </div>
         
-        <DestinationHeader 
-          title={i18n.language === 'vi' ? 'Khánh Hòa' : 'Khánh Hòa'}
-          subtitle={t('overview.subtitle')}
-        />
+        <div className="absolute inset-0 flex items-center justify-center z-20">
+          <DestinationHeader 
+            title={i18n.language === 'vi' ? 'Khánh Hòa' : 'Khánh Hòa'}
+            subtitle={t('overview.subtitle')}
+            onShare={handleShare}
+            onStartTour={restartTourGuide}
+          />
+        </div>
         
         {/* Enhanced scroll indicator with wave motion */}
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white text-center">
+        <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 text-white text-center z-30">
           <motion.div
             animate={{ y: [0, 15, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
@@ -439,7 +566,7 @@ const KhanhHoaGuidePage: React.FC = () => {
         </div>
       </section>
       
-      <section className="py-16 bg-white dark:bg-gray-800 relative overflow-hidden">
+      <section className="py-8 md:py-16 bg-white dark:bg-gray-800 relative overflow-hidden">
         {/* Background wave pattern */}
         <div className="absolute inset-0 opacity-5">
           <svg viewBox="0 0 1200 120" className="w-full h-full">
@@ -470,34 +597,34 @@ const KhanhHoaGuidePage: React.FC = () => {
                 variants={containerVariants}
                 initial="hidden"
                 animate={overviewInView ? "visible" : "hidden"}
-                className="py-8"
+                className="py-4 md:py-8"
               >
-                <motion.div variants={itemVariants} className="mb-8">
-                  <div className="flex items-center mb-4">
-                    <Title level={2} className="mb-0 dark:text-white bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent">
+                <motion.div variants={itemVariants} className="mb-6 md:mb-8">
+                  <div className="flex flex-col md:flex-row md:items-center mb-4">
+                    <Title level={2} className="mb-2 md:mb-0 dark:text-white bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
                       {t('overview.title')}
                     </Title>
-                    <Tag color="blue" className="ml-4 text-lg px-4 py-1">
+                    <Tag color="blue" className="ml-0 md:ml-4 text-sm md:text-lg px-3 py-1 w-fit">
                       <EnvironmentOutlined className="mr-1" /> {t('overview.region')}
                     </Tag>
                   </div>
                   
-                  <Paragraph className="text-lg dark:text-gray-300">
+                  <Paragraph className="text-base md:text-lg dark:text-gray-300">
                     {t('overview.intro')}
                   </Paragraph>
                 </motion.div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-12">
                   <motion.div variants={itemVariants}>
                     <Card className="h-full khanhhoa-gradient-card">
-                      <Title level={4} className="mb-4 dark:text-white">
+                      <Title level={4} className="mb-4 dark:text-white text-lg md:text-xl">
                         {t('overview.why_visit.title')}
                       </Title>
-                      <ul className="list-disc pl-5 space-y-3">
+                      <ul className="list-disc pl-5 space-y-2 md:space-y-3">
                         {Array.from({ length: 5 }).map((_, index) => (
                           <motion.li 
                             key={index} 
-                            className="dark:text-gray-300"
+                            className="dark:text-gray-300 text-sm md:text-base"
                             whileHover={{ x: 5, color: '#0891b2' }}
                             transition={{ duration: 0.2 }}
                           >
@@ -510,10 +637,10 @@ const KhanhHoaGuidePage: React.FC = () => {
                   
                   <motion.div variants={itemVariants}>
                     <Card className="h-full khanhhoa-gradient-card">
-                      <Title level={4} className="mb-4 dark:text-white">
+                      <Title level={4} className="mb-4 dark:text-white text-lg md:text-xl">
                         {t('overview.best_time.title')}
                       </Title>
-                      <Paragraph className="dark:text-gray-300">
+                      <Paragraph className="dark:text-gray-300 text-sm md:text-base">
                         {t('overview.best_time.description')}
                       </Paragraph>
                       <div className="mt-4">
@@ -523,50 +650,50 @@ const KhanhHoaGuidePage: React.FC = () => {
                   </motion.div>
                 </div>
                 
-                <motion.div variants={itemVariants} className="mb-12">
+                <motion.div variants={itemVariants} className="mb-8 md:mb-12">
                   <Card className="khanhhoa-gradient-card">
-                    <Title level={4} className="mb-4 dark:text-white">
+                    <Title level={4} className="mb-4 dark:text-white text-lg md:text-xl">
                       {t('overview.cultural_significance.title')}
                     </Title>
-                    <Paragraph className="dark:text-gray-300">
+                    <Paragraph className="dark:text-gray-300 text-sm md:text-base">
                       {t('overview.cultural_significance.description')}
                     </Paragraph>
                   </Card>
                 </motion.div>
                 
                 <motion.div variants={itemVariants}>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                     <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
-                      <Card className="text-center khanhhoa-gradient-card">
-                        <CompassOutlined className="text-4xl text-blue-500 mb-4" />
-                        <Title level={5} className="dark:text-white">
+                      <Card className="text-center khanhhoa-gradient-card h-full">
+                        <CompassOutlined className="text-3xl md:text-4xl text-blue-500 mb-4" />
+                        <Title level={5} className="dark:text-white text-base md:text-lg">
                           {t('overview.quick_facts.location')}
                         </Title>
-                        <Text className="dark:text-gray-300">
+                        <Text className="dark:text-gray-300 text-sm md:text-base">
                           {t('overview.quick_facts.location_value')}
                         </Text>
                       </Card>
                     </motion.div>
                     
                     <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
-                      <Card className="text-center khanhhoa-gradient-card">
-                        <ClockCircleOutlined className="text-4xl text-cyan-500 mb-4" />
-                        <Title level={5} className="dark:text-white">
+                      <Card className="text-center khanhhoa-gradient-card h-full">
+                        <ClockCircleOutlined className="text-3xl md:text-4xl text-cyan-500 mb-4" />
+                        <Title level={5} className="dark:text-white text-base md:text-lg">
                           {t('overview.quick_facts.time_zone')}
                         </Title>
-                        <Text className="dark:text-gray-300">
+                        <Text className="dark:text-gray-300 text-sm md:text-base">
                           {t('overview.quick_facts.time_zone_value')}
                         </Text>
                       </Card>
                     </motion.div>
                     
                     <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
-                      <Card className="text-center khanhhoa-gradient-card">
-                        <EnvironmentOutlined className="text-4xl text-teal-500 mb-4" />
-                        <Title level={5} className="dark:text-white">
+                      <Card className="text-center khanhhoa-gradient-card h-full">
+                        <EnvironmentOutlined className="text-3xl md:text-4xl text-teal-500 mb-4" />
+                        <Title level={5} className="dark:text-white text-base md:text-lg">
                           {t('overview.quick_facts.population')}
                         </Title>
-                        <Text className="dark:text-gray-300">
+                        <Text className="dark:text-gray-300 text-sm md:text-base">
                           {t('overview.quick_facts.population_value')}
                         </Text>
                       </Card>
@@ -590,20 +717,20 @@ const KhanhHoaGuidePage: React.FC = () => {
                 variants={containerVariants}
                 initial="hidden"
                 animate={attractionsInView ? "visible" : "hidden"}
-                className="py-8"
+                className="py-4 md:py-8"
               >
-                <motion.div variants={itemVariants} className="mb-8">
-                  <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent">
+                <motion.div variants={itemVariants} className="mb-6 md:mb-8">
+                  <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
                     {t('attractions.title')}
                   </Title>
-                  <Paragraph className="text-lg dark:text-gray-300">
+                  <Paragraph className="text-base md:text-lg dark:text-gray-300">
                     {t('attractions.intro')}
                   </Paragraph>
                 </motion.div>
                 
                 <motion.div
                   variants={containerVariants}
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                  className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8"
                 >
                   {attractionsData.map((attraction) => (
                     <motion.div key={attraction.id} variants={itemVariants}>
@@ -627,40 +754,40 @@ const KhanhHoaGuidePage: React.FC = () => {
               } 
               key="food"
             >
-              <div className="py-8">
-                <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent">
+              <div className="py-4 md:py-8">
+                <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
                   {t('food.title')}
                 </Title>
-                <Paragraph className="text-lg dark:text-gray-300 mb-8">
+                <Paragraph className="text-base md:text-lg dark:text-gray-300 mb-6 md:mb-8">
                   {t('food.intro')}
                 </Paragraph>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-12">
                   {Array.from({ length: 4 }).map((_, index) => (
                     <motion.div
                       key={index}
                       whileHover={{ scale: 1.02, y: -5 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <Card className="khanhhoa-gradient-card">
-                        <div className="flex items-start">
-                          <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg mr-4 overflow-hidden flex items-center justify-center">
+                      <Card className="khanhhoa-gradient-card h-full">
+                        <div className="flex flex-col md:flex-row md:items-start">
+                          <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg mb-4 md:mb-0 md:mr-4 overflow-hidden flex items-center justify-center mx-auto md:mx-0 flex-shrink-0">
                             <motion.div
                               animate={{ rotate: [0, 5, -5, 0] }}
                               transition={{ duration: 4, repeat: Infinity }}
-                              className="text-3xl"
+                              className="text-2xl md:text-3xl"
                             >
-                              🦐🐟🦀🦞
+                              {index === 0 ? '🦐' : index === 1 ? '🐟' : index === 2 ? '🦀' : '🦞'}
                             </motion.div>
                           </div>
-                          <div>
-                            <Title level={5} className="mb-1 dark:text-white text-blue-700">
+                          <div className="text-center md:text-left flex-grow">
+                            <Title level={5} className="mb-1 dark:text-white text-blue-700 text-base md:text-lg">
                               {t(`food.dishes.${index}.name`)}
                             </Title>
-                            <Paragraph className="dark:text-gray-300 mb-2">
+                            <Paragraph className="dark:text-gray-300 mb-2 text-sm md:text-base">
                               {t(`food.dishes.${index}.description`)}
                             </Paragraph>
-                            <Tag color="blue">
+                            <Tag color="blue" className="text-xs md:text-sm">
                               {t(`food.dishes.${index}.where_to_try`)}
                             </Tag>
                           </div>
@@ -682,15 +809,15 @@ const KhanhHoaGuidePage: React.FC = () => {
               } 
               key="shopping"
             >
-              <div className="py-8">
-                <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent">
+              <div className="py-4 md:py-8">
+                <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
                   {t('shopping.title')}
                 </Title>
-                <Paragraph className="text-lg dark:text-gray-300 mb-8">
+                <Paragraph className="text-base md:text-lg dark:text-gray-300 mb-6 md:mb-8">
                   {t('shopping.intro')}
                 </Paragraph>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                   {Array.from({ length: 4 }).map((_, index) => (
                     <motion.div
                       key={index}
@@ -698,10 +825,10 @@ const KhanhHoaGuidePage: React.FC = () => {
                       transition={{ duration: 0.3 }}
                     >
                       <Card className="h-full khanhhoa-gradient-card">
-                        <Title level={4} className="mb-2 dark:text-white text-blue-700">
+                        <Title level={4} className="mb-2 dark:text-white text-blue-700 text-base md:text-lg">
                           {t(`shopping.places.${index}.name`)}
                         </Title>
-                        <Paragraph className="dark:text-gray-300 mb-3">
+                        <Paragraph className="dark:text-gray-300 mb-3 text-sm md:text-base">
                           {t(`shopping.places.${index}.description`)}
                         </Paragraph>
                       </Card>
@@ -721,15 +848,15 @@ const KhanhHoaGuidePage: React.FC = () => {
               } 
               key="transport"
             >
-              <div className="py-8">
-                <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent">
+              <div className="py-4 md:py-8">
+                <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
                   {t('transport.title')}
                 </Title>
-                <Paragraph className="text-lg dark:text-gray-300 mb-8">
+                <Paragraph className="text-base md:text-lg dark:text-gray-300 mb-6 md:mb-8">
                   {t('transport.intro')}
                 </Paragraph>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                   {Array.from({ length: 4 }).map((_, index) => (
                     <motion.div
                       key={index}
@@ -737,10 +864,10 @@ const KhanhHoaGuidePage: React.FC = () => {
                       transition={{ duration: 0.3 }}
                     >
                       <Card className="h-full khanhhoa-gradient-card">
-                        <Title level={5} className="mb-2 dark:text-white text-blue-700">
+                        <Title level={5} className="mb-2 dark:text-white text-blue-700 text-base md:text-lg">
                           {t(`transport.options.${index}.name`)}
                         </Title>
-                        <Paragraph className="dark:text-gray-300">
+                        <Paragraph className="dark:text-gray-300 text-sm md:text-base">
                           {t(`transport.options.${index}.description`)}
                         </Paragraph>
                       </Card>
@@ -754,7 +881,7 @@ const KhanhHoaGuidePage: React.FC = () => {
       </section>
       
       {/* Photo Gallery with Ocean Effects */}
-      <section ref={galleryRef} className="py-16 bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50 dark:from-blue-900/20 dark:via-cyan-900/20 dark:to-teal-900/20 relative overflow-hidden">
+      <section ref={galleryRef} className="py-8 md:py-16 bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50 dark:from-blue-900/20 dark:via-cyan-900/20 dark:to-teal-900/20 relative overflow-hidden">
         {/* Animated background waves */}
         <div className="absolute inset-0">
           {Array.from({ length: 3 }).map((_, i) => (
@@ -783,11 +910,11 @@ const KhanhHoaGuidePage: React.FC = () => {
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-8">
-            <Title level={2} className="mb-3 dark:text-white bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent">
+          <div className="text-center mb-6 md:mb-8">
+            <Title level={2} className="mb-3 dark:text-white bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
               {t('photo_gallery.title')}
             </Title>
-            <Paragraph className="text-lg dark:text-gray-300 max-w-3xl mx-auto">
+            <Paragraph className="text-base md:text-lg dark:text-gray-300 max-w-3xl mx-auto">
               {t('photo_gallery.description')}
             </Paragraph>
           </div>
@@ -797,7 +924,7 @@ const KhanhHoaGuidePage: React.FC = () => {
       </section>
       
       {/* CTA with Ocean Wave Animation */}
-      <section className="py-16 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 text-white relative overflow-hidden">
+      <section className="py-8 md:py-16 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
         
         {/* Animated wave background */}
@@ -815,7 +942,7 @@ const KhanhHoaGuidePage: React.FC = () => {
         
         {/* Wave pattern overlay */}
         <div className="absolute inset-0">
-          <svg viewBox="0 0 1200 200" className="absolute bottom-0 w-full h-32">
+          <svg viewBox="0 0 1200 200" className="absolute bottom-0 w-full h-24 md:h-32">
             <motion.path 
               d="M0,100 C200,60 400,140 600,100 C800,60 1000,140 1200,100 L1200,200 L0,200 Z" 
               fill="rgba(255,255,255,0.1)"
@@ -837,18 +964,18 @@ const KhanhHoaGuidePage: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Title level={2} className="text-white mb-4">
+            <Title level={2} className="text-white mb-4 text-xl md:text-2xl lg:text-3xl">
               {t('cta.title')}
             </Title>
-            <Paragraph className="text-lg text-white mb-8 max-w-3xl mx-auto">
+            <Paragraph className="text-base md:text-lg text-white mb-6 md:mb-8 max-w-3xl mx-auto">
               {t('cta.description')}
             </Paragraph>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button 
                   size="large" 
                   onClick={restartTourGuide} 
-                  className="bg-white text-blue-600 h-12 font-bold hover:bg-gray-100 border-none shadow-lg"
+                  className="bg-white text-blue-600 h-12 font-bold hover:bg-gray-100 border-none shadow-lg w-full sm:w-auto"
                 >
                   <FireOutlined className="mr-2" />
                   {t('cta.restart_tour')}
@@ -858,7 +985,7 @@ const KhanhHoaGuidePage: React.FC = () => {
                 <Button 
                   size="large" 
                   onClick={handleShare} 
-                  className="bg-transparent text-white border-white h-12 font-bold hover:bg-white hover:text-blue-600 shadow-lg"
+                  className="bg-transparent text-white border-white h-12 font-bold hover:bg-white hover:text-blue-600 shadow-lg w-full sm:w-auto"
                 >
                   <ShareAltOutlined className="mr-2" /> {t('common:actions.share')}
                 </Button>
@@ -870,7 +997,7 @@ const KhanhHoaGuidePage: React.FC = () => {
           {Array.from({ length: 8 }).map((_, i) => (
             <motion.div
               key={i}
-              className="absolute text-white/20 text-4xl"
+              className="absolute text-white/20 text-2xl md:text-4xl"
               animate={{
                 y: [0, -30, 0],
                 x: [0, Math.sin(i) * 20, 0],
