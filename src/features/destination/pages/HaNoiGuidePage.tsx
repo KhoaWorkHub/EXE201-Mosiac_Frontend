@@ -2,41 +2,44 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Button, Typography, Tabs, Card, Tag, Spin, message } from 'antd';
+import { Button, Typography, Tabs, Card, Tag, message } from 'antd';
 import { 
   EnvironmentOutlined, 
   ClockCircleOutlined, 
   InfoCircleOutlined, 
-  ArrowRightOutlined,
   ShareAltOutlined,
-  StarFilled,
   CompassOutlined,
   PictureOutlined,
   CoffeeOutlined,
   ShopOutlined,
-  CarOutlined
+  CarOutlined,
+  LeftOutlined,
+  RightOutlined,
+  HeartOutlined,
 } from '@ant-design/icons';
 import MainLayout from '@/components/layout/MainLayout';
 import HanoiTourGuideSteps from '../components/HanoiTourGuideSteps';
-import DestinationMap from '../components/DestinationMap';
 import PhotoGallery from '../components/PhotoGallery';
 import HanoiAttractionCard from '../components/HanoiAttractionCard';
 import HanoiWeatherWidget from '../components/HanoiWeatherWidget';
 import DestinationHeader from '../components/DestinationHeader';
-import Recommendations from '../components/Recommendations';
 
 const { Title, Text, Paragraph } = Typography;
 const { TabPane } = Tabs;
 
-// Hanoi images with more diverse and authentic representations
+// Enhanced Hanoi images with cultural diversity
 const hanoiImages = [
-  '/assets/destinations/hanoi/ho-chi-minh-mausoleum.jpg', // Hoan Kiem Lake with red bridge
-  '/assets/destinations/hanoi/opera-house.jpg', // Old Quarter street scene
-  '/assets/destinations/hanoi/temple-literature.jpg', // Temple of Literature
-  '/assets/destinations/hanoi/old-quarter.jpg', // Ho Chi Minh Mausoleum
+  '/assets/destinations/hanoi/hoan-kiem-lake.jpg',
+  '/assets/destinations/hanoi/old-quarter.jpg',
+  '/assets/destinations/hanoi/temple-literature.jpg',
+  '/assets/destinations/hanoi/ho-chi-minh-mausoleum.jpg',
+  '/assets/destinations/hanoi/one-pillar-pagoda.jpg',
+  '/assets/destinations/hanoi/opera-house.jpg',
+  '/assets/destinations/hanoi/hanoihohoankiem.jpg',
+  '/assets/destinations/hanoi/hanoicity.jpg',
 ];
 
-// Hanoi attractions data with authentic local information
+// Enhanced attractions data with deeper cultural context
 const attractionsData = [
   {
     id: 1,
@@ -46,8 +49,8 @@ const attractionsData = [
     location: 'Hoan Kiem District, Hanoi',
     duration: '1-2 hours',
     rating: 4.7,
-    description: 'The spiritual heart of Hanoi, featuring the iconic red Huc Bridge and Ngoc Son Temple, perfect for morning walks.',
-    descriptionVi: 'Trái tim tinh thần của Hà Nội, với cây cầu Thê Húc màu đỏ biểu tượng và đền Ngọc Sơn, hoàn hảo cho những buổi đi bộ sáng sớm.',
+    description: 'The legendary "Lake of the Returned Sword" at the heart of Hanoi, featuring the iconic red Huc Bridge and mystical Ngoc Son Temple, where locals gather for morning tai chi and evening strolls.',
+    descriptionVi: 'Hồ "Hoàn Kiếm" huyền thoại ở trái tim Hà Nội, với cây cầu Thê Húc màu đỏ biểu tượng và đền Ngọc Sơn huyền bí, nơi người dân tập thái cực chi buổi sáng và đi dạo buổi tối.',
   },
   {
     id: 2,
@@ -55,10 +58,10 @@ const attractionsData = [
     nameVi: 'Phố Cổ Hà Nội',
     image: '/assets/destinations/hanoi/old-quarter.jpg',
     location: 'Hoan Kiem District, Hanoi',
-    duration: '3-4 hours',
+    duration: '3-5 hours',
     rating: 4.6,
-    description: 'A maze of narrow streets with traditional shophouses, each street specializing in different trades, showcasing authentic Vietnamese life.',
-    descriptionVi: 'Một mê cung những con phố hẹp với nhà ống truyền thống, mỗi phố chuyên về nghề khác nhau, thể hiện cuộc sống Việt Nam chính thống.',
+    description: 'A 1000-year-old labyrinth of narrow streets, each named after traditional crafts, where ancient shophouses blend with bustling street food vendors and artisan workshops.',
+    descriptionVi: 'Mê cung 1000 năm tuổi với những con phố hẹp, mỗi phố được đặt tên theo nghề thủ công truyền thống, nơi nhà ống cổ kính hòa quyện với xe đẩy thức ăn đường phố và xưởng thủ công.',
   },
   {
     id: 3,
@@ -66,10 +69,10 @@ const attractionsData = [
     nameVi: 'Văn Miếu',
     image: '/assets/destinations/hanoi/temple-literature.jpg',
     location: 'Dong Da District, Hanoi',
-    duration: '1-2 hours',
+    duration: '1.5-2 hours',
     rating: 4.8,
-    description: 'Vietnam\'s first university, dedicated to Confucius and literature, featuring beautiful traditional architecture and peaceful gardens.',
-    descriptionVi: 'Trường đại học đầu tiên của Việt Nam, dành riêng cho Khổng Tử và văn học, với kiến trúc truyền thống đẹp mắt và khu vườn yên bình.',
+    description: 'Vietnam\'s first university (1070), a magnificent Confucian temple complex with ancient stelae, peaceful courtyards, and the famous "Well of Heavenly Clarity" symbolizing knowledge.',
+    descriptionVi: 'Trường đại học đầu tiên của Việt Nam (1070), quần thể đền Khổng Tử tráng lệ với bia đá cổ, sân trong yên bình và "Giếng Thiên Quang" nổi tiếng tượng trưng cho tri thức.',
   },
   {
     id: 4,
@@ -77,10 +80,10 @@ const attractionsData = [
     nameVi: 'Lăng Chủ tịch Hồ Chí Minh',
     image: '/assets/destinations/hanoi/ho-chi-minh-mausoleum.jpg',
     location: 'Ba Dinh District, Hanoi',
-    duration: '2-3 hours (including museum)',
+    duration: '2-3 hours',
     rating: 4.5,
-    description: 'The final resting place of Vietnam\'s beloved leader, surrounded by beautiful gardens and historical significance.',
-    descriptionVi: 'Nơi an nghỉ cuối cùng của vị lãnh tụ kính yêu của Việt Nam, được bao quanh bởi những khu vườn đẹp và ý nghĩa lịch sử.',
+    description: 'The solemn resting place of Vietnam\'s founding father, surrounded by the Presidential Palace, Ho Chi Minh Museum, and beautiful botanical gardens reflecting national pride.',
+    descriptionVi: 'Nơi an nghỉ trang nghiêm của cha đẻ nước Việt Nam, được bao quanh bởi Phủ Chủ tịch, Bảo tàng Hồ Chí Minh và vườn bách thảo đẹp mắt phản ánh niềm tự hào dân tộc.',
   },
   {
     id: 5,
@@ -88,10 +91,10 @@ const attractionsData = [
     nameVi: 'Chùa Một Cột',
     image: '/assets/destinations/hanoi/one-pillar-pagoda.jpg',
     location: 'Ba Dinh District, Hanoi',
-    duration: '30 minutes',
+    duration: '30-45 minutes',
     rating: 4.4,
-    description: 'A historic Buddhist temple built in 1049, famous for its unique architecture resembling a lotus blossom emerging from water.',
-    descriptionVi: 'Một ngôi chùa Phật giáo lịch sử được xây dựng năm 1049, nổi tiếng với kiến trúc độc đáo giống như hoa sen nổi trên mặt nước.',
+    description: 'An architectural marvel built in 1049, resembling a lotus blossom emerging from water, representing the Buddhist philosophy of purity rising from earthly suffering.',
+    descriptionVi: 'Kỳ quan kiến trúc được xây dựng năm 1049, giống như hoa sen nổi trên mặt nước, thể hiện triết lý Phật giáo về sự trong sạch vượt lên khỏi khổ đau trần thế.',
   },
   {
     id: 6,
@@ -99,18 +102,25 @@ const attractionsData = [
     nameVi: 'Nhà hát Lớn Hà Nội',
     image: '/assets/destinations/hanoi/opera-house.jpg',
     location: 'Hoan Kiem District, Hanoi',
-    duration: '1 hour (tour) or 2-3 hours (performance)',
+    duration: '1-3 hours',
     rating: 4.6,
-    description: 'A beautiful example of French colonial architecture, hosting world-class performances and offering guided tours.',
-    descriptionVi: 'Một ví dụ đẹp mắt của kiến trúc thuộc địa Pháp, tổ chức các buổi biểu diễn đẳng cấp thế giới và tour tham quan có hướng dẫn.',
+    description: 'A stunning example of French colonial architecture (1911) inspired by Paris Opéra, hosting world-class performances and serving as a cultural beacon of modern Hanoi.',
+    descriptionVi: 'Ví dụ tuyệt đẹp của kiến trúc thuộc địa Pháp (1911) lấy cảm hứng từ Paris Opéra, tổ chức các buổi biểu diễn đẳng cấp thế giới và là ngọn hải đăng văn hóa của Hà Nội hiện đại.',
   },
 ];
 
 const HanoiGuidePage: React.FC = () => {
   const { t, i18n } = useTranslation(['destinationhanoi', 'common']);
+  
+  // Always show tour guide on first visit
   const [showTourGuide, setShowTourGuide] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   const [loading, setLoading] = useState(true);
+  
+  // Enhanced hero carousel state
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageLoadErrors, setImageLoadErrors] = useState<{[key: number]: boolean}>({});
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
   
   interface WeatherData {
     temperature: number;
@@ -129,13 +139,28 @@ const HanoiGuidePage: React.FC = () => {
   
   const controls = useAnimation();
   
-  // For animation triggers based on scroll
+  // Animation refs
   const [overviewRef, overviewInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [attractionsRef, attractionsInView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [mapRef, mapInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [galleryRef, galleryInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   
   const headerRef = useRef<HTMLDivElement>(null);
+  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Enhanced auto-advance carousel with cultural timing
+  useEffect(() => {
+    if (isAutoPlay) {
+      autoPlayRef.current = setInterval(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % hanoiImages.length);
+      }, 7000); // Slightly slower for cultural appreciation
+    }
+    
+    return () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current);
+      }
+    };
+  }, [isAutoPlay]);
   
   // Handle window resize
   useEffect(() => {
@@ -147,32 +172,30 @@ const HanoiGuidePage: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   
-  // Simulating loading
+  // Enhanced loading simulation
   useEffect(() => {
-    // Simulate loading the destination guide data
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 2800);
     
     return () => clearTimeout(timer);
   }, []);
   
-  // Simulate fetching weather data for Hanoi
+  // Enhanced Hanoi weather data 
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
-        // Simulated weather data for Hanoi
         const weatherData = {
-          temperature: 26,
+          temperature: 24,
           condition: 'Cloudy',
           humidity: 78,
           wind: 8,
           forecast: [
-            { day: 'Mon', temp: 26, condition: 'Cloudy' },
-            { day: 'Tue', temp: 24, condition: 'Rain' },
-            { day: 'Wed', temp: 28, condition: 'Sunny' },
-            { day: 'Thu', temp: 25, condition: 'Cloudy' },
-            { day: 'Fri', temp: 27, condition: 'Sunny' },
+            { day: 'Mon', temp: 24, condition: 'Cloudy' },
+            { day: 'Tue', temp: 22, condition: 'Rain' },
+            { day: 'Wed', temp: 26, condition: 'Sunny' },
+            { day: 'Thu', temp: 23, condition: 'Cloudy' },
+            { day: 'Fri', temp: 25, condition: 'Sunny' },
           ]
         };
         
@@ -185,12 +208,13 @@ const HanoiGuidePage: React.FC = () => {
     fetchWeatherData();
   }, []);
   
-  // Animation for the parallax effect
+  // Enhanced parallax effect with traditional architecture feel
   useEffect(() => {
     const handleScroll = () => {
       if (headerRef.current) {
         const scrollPosition = window.scrollY;
-        headerRef.current.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
+        headerRef.current.style.backgroundPositionY = `${scrollPosition * 0.25}px`;
+        headerRef.current.style.transform = `translateY(${scrollPosition * 0.12}px)`;
       }
     };
     
@@ -198,7 +222,7 @@ const HanoiGuidePage: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  // Animation for sections based on scroll
+  // Animation trigger
   useEffect(() => {
     if (overviewInView) {
       controls.start('visible');
@@ -212,11 +236,9 @@ const HanoiGuidePage: React.FC = () => {
   
   const restartTourGuide = () => {
     setShowTourGuide(true);
-    // Scroll to top to start the tour properly
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   
-  // For sharing the page
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
@@ -230,6 +252,30 @@ const HanoiGuidePage: React.FC = () => {
         .then(() => message.success(t('common:share.copied')))
         .catch(() => message.error(t('common:share.error')));
     }
+  };
+  
+  // Enhanced carousel navigation
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % hanoiImages.length);
+  };
+  
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + hanoiImages.length) % hanoiImages.length);
+  };
+  
+  const handleImageError = (index: number) => {
+    setImageLoadErrors(prev => ({ ...prev, [index]: true }));
+  };
+  
+  // Get current image with fallback
+  const getCurrentImage = () => {
+    const validImages = hanoiImages.filter((_, index) => !imageLoadErrors[index]);
+    if (validImages.length === 0) {
+      return '/assets/destinations/hanoi/default-hero.jpg';
+    }
+    
+    const validIndex = currentImageIndex % validImages.length;
+    return validImages[validIndex];
   };
   
   // Animation variants
@@ -251,15 +297,208 @@ const HanoiGuidePage: React.FC = () => {
       transition: { duration: 0.5 }
     }
   };
+
+  const templeVariants = {
+    animate: {
+      y: [0, -12, 0],
+      rotateY: [0, 2, -2, 0],
+      transition: {
+        y: {
+          repeat: Infinity,
+          repeatType: "reverse",
+          duration: 9,
+          ease: "easeInOut",
+        },
+        rotateY: {
+          repeat: Infinity,
+          repeatType: "reverse", 
+          duration: 15,
+          ease: "easeInOut",
+        },
+      },
+    },
+  };
   
   if (loading) {
     return (
       <MainLayout>
-        <div className="flex justify-center items-center h-screen">
-          <div className="text-center">
-            <Spin size="large" />
-            <p className="mt-4 text-xl">{t('common:loading.experience_hn')}</p>
+        <div className="h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-yellow-50 via-red-50 to-orange-50 dark:from-yellow-900/20 dark:via-red-900/20 dark:to-orange-900/20 relative overflow-hidden">
+          {/* Animated Hanoi traditional architecture background */}
+          <div className="absolute inset-0">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <motion.div
+                key={i}
+                className={`absolute bg-gradient-to-t ${
+                  i === 0 ? 'from-yellow-400/40 to-transparent' :
+                  i === 1 ? 'from-red-400/35 to-transparent' :
+                  i === 2 ? 'from-orange-400/30 to-transparent' :
+                  i === 3 ? 'from-yellow-500/25 to-transparent' :
+                  i === 4 ? 'from-red-500/20 to-transparent' :
+                  i === 5 ? 'from-orange-500/18 to-transparent' :
+                  i === 6 ? 'from-yellow-600/15 to-transparent' :
+                  'from-red-600/12 to-transparent'
+                }`}
+                animate={{
+                  y: [0, -18, 0],
+                  x: [0, Math.cos(i) * 12, 0],
+                }}
+                transition={{
+                  duration: 12 + i * 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: i * 0.6,
+                }}
+                style={{
+                  left: 6 + i * 11 + '%',
+                  bottom: 0,
+                  width: 100 + i * 18 + 'px',
+                  height: 160 + i * 25 + 'px',
+                  clipPath: `polygon(${20 + i * 2}% 0%, ${80 - i * 2}% 0%, 85% 100%, 15% 100%)`,
+                }}
+              />
+            ))}
           </div>
+          
+          {/* Traditional Vietnamese patterns */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <motion.div
+              animate={{ 
+                scale: [0.7, 1.3, 0.7],
+                rotate: [0, 8, -8, 0],
+              }}
+              transition={{ 
+                duration: 8, 
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="text-9xl opacity-8"
+            >
+              🏛️
+            </motion.div>
+          </div>
+          
+          {/* Floating traditional elements */}
+          <div className="absolute inset-0">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute text-6xl opacity-15"
+                animate={{
+                  y: [0, -35, 0],
+                  x: [0, Math.sin(i * 1.5) * 25, 0],
+                  rotate: [0, 15, -15, 0],
+                  scale: [0.8, 1.2, 0.8],
+                }}
+                transition={{
+                  duration: 10 + i * 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: i * 2,
+                }}
+                style={{
+                  left: `${15 + i * 15}%`,
+                  top: `${20 + Math.cos(i) * 30}%`,
+                }}
+              >
+                {['🏮', '🐉', '🏯', '⛩️', '🎋', '🌸'][i]}
+              </motion.div>
+            ))}
+          </div>
+          
+          <div className="relative z-10">
+            <motion.div
+              animate={{ 
+                scale: [1, 1.15, 1],
+                rotate: [0, 360],
+                y: [0, -25, 0]
+              }}
+              transition={{ 
+                duration: 6, 
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="w-32 h-32 bg-gradient-to-r from-yellow-500 via-red-500 to-orange-600 rounded-full mx-auto mb-8 flex items-center justify-center shadow-2xl relative overflow-hidden"
+            >
+              <motion.div
+                animate={{ rotate: [0, -360] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                className="text-5xl"
+              >
+                🏛️
+              </motion.div>
+              
+              {/* Traditional Vietnamese cultural rings */}
+              <motion.div
+                className="absolute inset-0 border-4 border-white/50 rounded-full"
+                animate={{
+                  scale: [1, 2.8, 3.2],
+                  opacity: [0.9, 0.3, 0]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeOut"
+                }}
+              />
+              <motion.div
+                className="absolute inset-0 border-3 border-yellow-300/70 rounded-full"
+                animate={{
+                  scale: [1, 2.3, 2.8],
+                  opacity: [0.7, 0.2, 0]
+                }}
+                transition={{
+                  duration: 3.5,
+                  repeat: Infinity,
+                  ease: "easeOut",
+                  delay: 0.8
+                }}
+              />
+              <motion.div
+                className="absolute inset-0 border-2 border-red-300/60 rounded-full"
+                animate={{
+                  scale: [1, 1.8, 2.3],
+                  opacity: [0.5, 0.15, 0]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeOut",
+                  delay: 1.5
+                }}
+              />
+            </motion.div>
+            <motion.p 
+              className="mt-6 text-xl bg-gradient-to-r from-yellow-800 via-red-800 to-orange-900 bg-clip-text text-transparent font-bold"
+              animate={{ opacity: [0.4, 1, 0.4] }}
+              transition={{ duration: 3, repeat: Infinity }}
+            >
+              Exploring Hanoi heritage...
+            </motion.p>
+          </div>
+          
+          {/* Floating cultural particles */}
+          {Array.from({ length: 22 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-3 h-3 bg-gradient-to-r from-yellow-400 via-red-400 to-orange-500 rounded-full opacity-75"
+              animate={{
+                y: [window.innerHeight, -100],
+                x: [Math.random() * window.innerWidth, Math.random() * window.innerWidth],
+                scale: [0, 1.8, 0],
+                opacity: [0, 0.95, 0],
+                rotate: [0, 360]
+              }}
+              transition={{
+                duration: Math.random() * 12 + 10,
+                repeat: Infinity,
+                ease: "easeOut",
+                delay: Math.random() * 8,
+              }}
+              style={{
+                left: Math.random() * 100 + '%',
+              }}
+            />
+          ))}
         </div>
       </MainLayout>
     );
@@ -274,39 +513,242 @@ const HanoiGuidePage: React.FC = () => {
         )}
       </AnimatePresence>
       
-      {/* Hero Section with Parallax - Hanoi themed */}
-      <section ref={headerRef} className="relative h-screen bg-cover bg-center" style={{ backgroundImage: `url(${hanoiImages[0]})` }}>
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        
-        <DestinationHeader 
-          title={i18n.language === 'vi' ? 'Hà Nội' : 'Hanoi'}
-          subtitle={t('overview.subtitle')}
-        />
-        
-        {/* Scroll Down Indicator */}
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white text-center">
+      {/* Enhanced Hero Section with Hanoi Cultural Theme */}
+      <section 
+        ref={headerRef} 
+        className="relative h-screen overflow-hidden"
+        onMouseEnter={() => setIsAutoPlay(false)}
+        onMouseLeave={() => setIsAutoPlay(true)}
+      >
+        {/* Enhanced Image Carousel Background */}
+        <AnimatePresence mode="wait">
           <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
+            key={currentImageIndex}
+            initial={{ opacity: 0, scale: 1.15, y: 50 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -50 }}
+            transition={{ duration: 1.4, ease: "easeInOut" }}
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ 
+              backgroundImage: `url(${getCurrentImage()})`,
+              backgroundPosition: 'center center',
+              backgroundSize: 'cover'
+            }}
+          />
+        </AnimatePresence>
+        
+        {/* Dynamic gradient overlay with Hanoi golden-red theme */}
+        <div className="absolute inset-0 bg-gradient-to-br from-yellow-900/85 via-red-800/75 to-orange-700/65"></div>
+        
+        {/* Traditional Vietnamese architectural silhouettes */}
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden z-10">
+          {Array.from({ length: 9 }).map((_, i) => (
+            <motion.div
+              key={i}
+              variants={templeVariants}
+              animate="animate"
+              className={`absolute bottom-0 ${
+                i === 0 ? 'w-44 h-72 bg-gradient-to-t from-yellow-800/75 to-transparent' :
+                i === 1 ? 'w-38 h-84 bg-gradient-to-t from-red-800/65 to-transparent' :
+                i === 2 ? 'w-52 h-64 bg-gradient-to-t from-orange-800/55 to-transparent' :
+                i === 3 ? 'w-34 h-88 bg-gradient-to-t from-yellow-700/45 to-transparent' :
+                i === 4 ? 'w-56 h-60 bg-gradient-to-t from-red-700/40 to-transparent' :
+                i === 5 ? 'w-30 h-96 bg-gradient-to-t from-orange-700/35 to-transparent' :
+                i === 6 ? 'w-60 h-56 bg-gradient-to-t from-yellow-600/30 to-transparent' :
+                i === 7 ? 'w-26 h-100 bg-gradient-to-t from-red-600/25 to-transparent' :
+                'w-64 h-52 bg-gradient-to-t from-orange-600/20 to-transparent'
+              }`}
+              style={{
+                left: i * 10 + 2 + '%',
+                clipPath: `polygon(${15 + i * 3}% 0%, ${85 - i * 3}% 0%, 90% 100%, 10% 100%)`,
+                animationDelay: `${i * 0.9}s`,
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* Enhanced Carousel Navigation with cultural styling */}
+        <div className="absolute top-1/2 left-6 transform -translate-y-1/2 z-20">
+          <motion.div
+            whileHover={{ scale: 1.15 }}
+            whileTap={{ scale: 0.9 }}
           >
-            <ArrowRightOutlined className="transform rotate-90 text-2xl mb-2" />
-            <p className="text-sm">{t('common:actions.scroll_down')}</p>
+            <Button
+              type="primary"
+              shape="circle"
+              icon={<LeftOutlined />}
+              onClick={prevImage}
+              className="bg-gradient-to-r from-yellow-600/80 to-red-600/80 border-none backdrop-blur-sm hover:from-yellow-700/90 hover:to-red-700/90 text-white shadow-2xl"
+              size="large"
+            />
+          </motion.div>
+        </div>
+        
+        <div className="absolute top-1/2 right-6 transform -translate-y-1/2 z-20">
+          <motion.div
+            whileHover={{ scale: 1.15 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <Button
+              type="primary"
+              shape="circle"
+              icon={<RightOutlined />}
+              onClick={nextImage}
+              className="bg-gradient-to-r from-yellow-600/80 to-red-600/80 border-none backdrop-blur-sm hover:from-yellow-700/90 hover:to-red-700/90 text-white shadow-2xl"
+              size="large"
+            />
+          </motion.div>
+        </div>
+        
+        {/* Enhanced cultural image indicators */}
+        <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 flex space-x-4 z-20">
+          {hanoiImages.map((_, index) => (
+            <motion.button
+              key={index}
+              onClick={() => setCurrentImageIndex(index)}
+              whileHover={{ scale: 1.4 }}
+              whileTap={{ scale: 0.9 }}
+              className={`transition-all duration-600 ${
+                index === currentImageIndex 
+                  ? 'w-10 h-4 bg-gradient-to-r from-yellow-400 via-red-400 to-orange-500 rounded-full shadow-lg border-2 border-white/50' 
+                  : 'w-4 h-4 bg-white/70 rounded-full hover:bg-white/90 border border-white/30'
+              }`}
+            />
+          ))}
+        </div>
+        
+        {/* Preload images */}
+        <div className="hidden">
+          {hanoiImages.map((image, index) => (
+            <img 
+              key={index}
+              src={image} 
+              alt={`Preload ${index}`}
+              onError={() => handleImageError(index)}
+            />
+          ))}
+        </div>
+        
+        {/* Traditional Vietnamese lantern-like floating particles */}
+        <div className="absolute inset-0 z-10">
+          {Array.from({ length: 35 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-gradient-to-r from-yellow-300/90 via-red-400/70 to-orange-400/80 rounded-full"
+              animate={{
+                y: [Math.random() * window.innerHeight, -120],
+                x: [Math.random() * window.innerWidth, Math.random() * window.innerWidth],
+                opacity: [0, 1, 0],
+                scale: [0, Math.random() * 4 + 1, 0],
+              }}
+              transition={{
+                duration: Math.random() * 18 + 16,
+                repeat: Infinity,
+                ease: "easeOut",
+                delay: Math.random() * 10,
+              }}
+              style={{
+                left: Math.random() * 100 + '%',
+                top: Math.random() * 100 + '%',
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* Traditional Vietnamese cultural symbols floating */}
+        <div className="absolute inset-0 z-10">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute text-7xl opacity-15"
+              animate={{
+                y: [0, -50, 0],
+                x: [0, Math.cos(i * 2.5) * 25, 0],
+                rotate: [0, 15, -15, 0],
+                scale: [0.7, 1.3, 0.7],
+              }}
+              transition={{
+                duration: 14 + i * 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 4,
+              }}
+              style={{
+                left: `${18 + i * 25}%`,
+                top: `${25 + Math.sin(i) * 25}%`,
+              }}
+            >
+              {['🏮', '🐉', '⛩️', '🎋'][i]}
+            </motion.div>
+          ))}
+        </div>
+        
+        <div className="absolute inset-0 flex items-center justify-center z-20">
+          <DestinationHeader 
+            title={i18n.language === 'vi' ? 'Hà Nội' : 'Hanoi'}
+            subtitle={t('overview.subtitle')}
+            onShare={handleShare}
+            onSave={() => message.info('Save feature coming soon!')}
+            onStartTour={restartTourGuide}
+          />
+        </div>
+        
+        {/* Enhanced scroll indicator with traditional Vietnamese elements */}
+        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 text-white text-center z-20">
+          <motion.div
+            animate={{ y: [0, 25, 0] }}
+            transition={{ duration: 3, repeat: Infinity }}
+            className="flex flex-col items-center"
+          >
+            <div className="w-12 h-20 border-2 border-white/90 rounded-full flex justify-center mb-4 backdrop-blur-sm bg-gradient-to-b from-white/15 to-transparent">
+              <motion.div
+                animate={{ y: [0, 32, 0] }}
+                transition={{ duration: 3, repeat: Infinity }}
+                className="w-3 h-8 bg-gradient-to-b from-yellow-300 via-red-400 to-orange-400 rounded-full mt-4"
+              />
+            </div>
+            <p className="text-sm font-medium mb-3">{t('common:actions.scroll_down')}</p>
+            <motion.div
+              animate={{ 
+                scale: [1, 1.4, 1],
+                rotate: [0, 20, -20, 0]
+              }}
+              transition={{ duration: 2.5, repeat: Infinity }}
+              className="mt-2 text-3xl"
+            >
+              🏛️
+            </motion.div>
           </motion.div>
         </div>
       </section>
       
-      <section className="py-16 bg-white dark:bg-gray-800">
-        <div className="container mx-auto px-4">
-          {/* Destination Tabs */}
+      {/* Enhanced Content Section */}
+      <section className="py-8 md:py-16 bg-gradient-to-br from-white via-yellow-50/40 to-red-50/30 dark:from-gray-800 dark:via-yellow-900/15 dark:to-red-900/15 relative overflow-hidden">
+        {/* Traditional Vietnamese pattern background */}
+        <div className="absolute inset-0 opacity-5">
+          <svg viewBox="0 0 1200 120" className="w-full h-full">
+            <path d="M0,60 C200,25 400,95 600,60 C800,25 1000,95 1200,60 L1200,120 L0,120 Z" fill="currentColor" className="text-yellow-600"/>
+            <path d="M0,80 C150,45 350,115 600,80 C850,45 1050,115 1200,80 L1200,120 L0,120 Z" fill="currentColor" className="text-red-600"/>
+            <path d="M0,100 C100,65 300,135 600,100 C900,65 1100,135 1200,100 L1200,120 L0,120 Z" fill="currentColor" className="text-orange-600"/>
+          </svg>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          {/* Enhanced Tab Design with Hanoi Cultural Golden-Red Theme */}
           <Tabs 
             activeKey={activeTab} 
             onChange={setActiveTab}
-            className="destination-tabs"
+            className="hanoi-tabs"
             centered
             size={isMobile ? "small" : "large"}
           >
             <TabPane 
-              tab={<span className="tab-item"><InfoCircleOutlined />{t('tabs.overview')}</span>} 
+              tab={
+                <span className="tab-item flex items-center">
+                  <InfoCircleOutlined className="mr-2" />
+                  {t('tabs.overview')}
+                </span>
+              } 
               key="overview"
             >
               <motion.div
@@ -314,45 +756,50 @@ const HanoiGuidePage: React.FC = () => {
                 variants={containerVariants}
                 initial="hidden"
                 animate={overviewInView ? "visible" : "hidden"}
-                className="py-8"
+                className="py-4 md:py-8"
               >
-                <motion.div variants={itemVariants} className="mb-8">
-                  <div className="flex items-center mb-4">
-                    <Title level={2} className="mb-0 dark:text-white">
+                <motion.div variants={itemVariants} className="mb-6 md:mb-8">
+                  <div className="flex flex-col md:flex-row md:items-center mb-4">
+                    <Title level={2} className="mb-2 md:mb-0 dark:text-white bg-gradient-to-r from-yellow-700 via-red-700 to-orange-800 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
                       {t('overview.title')}
                     </Title>
-                    <Tag color="gold" className="ml-4">
-                      <EnvironmentOutlined /> {t('overview.region')}
+                    <Tag color="gold" className="ml-0 md:ml-4 text-sm md:text-lg px-3 py-1 w-fit">
+                      <EnvironmentOutlined className="mr-1" /> {t('overview.region')}
                     </Tag>
                   </div>
                   
-                  <Paragraph className="text-lg dark:text-gray-300">
+                  <Paragraph className="text-base md:text-lg dark:text-gray-300">
                     {t('overview.intro')}
                   </Paragraph>
                 </motion.div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-12">
                   <motion.div variants={itemVariants}>
-                    <Card className="h-full">
-                      <Title level={4} className="mb-4 dark:text-white">
+                    <Card className="h-full hanoi-gradient-card">
+                      <Title level={4} className="mb-4 dark:text-white text-lg md:text-xl">
                         {t('overview.why_visit.title')}
                       </Title>
-                      <ul className="list-disc pl-5 space-y-2">
+                      <ul className="list-disc pl-5 space-y-2 md:space-y-3">
                         {Array.from({ length: 5 }).map((_, index) => (
-                          <li key={index} className="dark:text-gray-300">
+                          <motion.li 
+                            key={index} 
+                            className="dark:text-gray-300 text-sm md:text-base"
+                            whileHover={{ x: 5, color: '#d97706' }}
+                            transition={{ duration: 0.2 }}
+                          >
                             {t(`overview.why_visit.reasons.${index}`)}
-                          </li>
+                          </motion.li>
                         ))}
                       </ul>
                     </Card>
                   </motion.div>
                   
                   <motion.div variants={itemVariants}>
-                    <Card className="h-full">
-                      <Title level={4} className="mb-4 dark:text-white">
+                    <Card className="h-full hanoi-gradient-card">
+                      <Title level={4} className="mb-4 dark:text-white text-lg md:text-xl">
                         {t('overview.best_time.title')}
                       </Title>
-                      <Paragraph className="dark:text-gray-300">
+                      <Paragraph className="dark:text-gray-300 text-sm md:text-base">
                         {t('overview.best_time.description')}
                       </Paragraph>
                       <div className="mt-4">
@@ -362,55 +809,66 @@ const HanoiGuidePage: React.FC = () => {
                   </motion.div>
                 </div>
                 
-                <motion.div variants={itemVariants} className="mb-12">
-                  <Card>
-                    <Title level={4} className="mb-4 dark:text-white">
+                <motion.div variants={itemVariants} className="mb-8 md:mb-12">
+                  <Card className="hanoi-gradient-card">
+                    <Title level={4} className="mb-4 dark:text-white text-lg md:text-xl">
                       {t('overview.cultural_significance.title')}
                     </Title>
-                    <Paragraph className="dark:text-gray-300">
+                    <Paragraph className="dark:text-gray-300 text-sm md:text-base">
                       {t('overview.cultural_significance.description')}
                     </Paragraph>
                   </Card>
                 </motion.div>
                 
                 <motion.div variants={itemVariants}>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <Card className="text-center">
-                      <CompassOutlined className="text-4xl text-primary mb-4" />
-                      <Title level={5} className="dark:text-white">
-                        {t('overview.quick_facts.location')}
-                      </Title>
-                      <Text className="dark:text-gray-300">
-                        {t('overview.quick_facts.location_value')}
-                      </Text>
-                    </Card>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                    <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
+                      <Card className="text-center hanoi-gradient-card h-full">
+                        <CompassOutlined className="text-3xl md:text-4xl text-yellow-600 mb-4" />
+                        <Title level={5} className="dark:text-white text-base md:text-lg">
+                          {t('overview.quick_facts.location')}
+                        </Title>
+                        <Text className="dark:text-gray-300 text-sm md:text-base">
+                          {t('overview.quick_facts.location_value')}
+                        </Text>
+                      </Card>
+                    </motion.div>
                     
-                    <Card className="text-center">
-                      <ClockCircleOutlined className="text-4xl text-primary mb-4" />
-                      <Title level={5} className="dark:text-white">
-                        {t('overview.quick_facts.time_zone')}
-                      </Title>
-                      <Text className="dark:text-gray-300">
-                        {t('overview.quick_facts.time_zone_value')}
-                      </Text>
-                    </Card>
+                    <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
+                      <Card className="text-center hanoi-gradient-card h-full">
+                        <ClockCircleOutlined className="text-3xl md:text-4xl text-red-600 mb-4" />
+                        <Title level={5} className="dark:text-white text-base md:text-lg">
+                          {t('overview.quick_facts.time_zone')}
+                        </Title>
+                        <Text className="dark:text-gray-300 text-sm md:text-base">
+                          {t('overview.quick_facts.time_zone_value')}
+                        </Text>
+                      </Card>
+                    </motion.div>
                     
-                    <Card className="text-center">
-                      <EnvironmentOutlined className="text-4xl text-primary mb-4" />
-                      <Title level={5} className="dark:text-white">
-                        {t('overview.quick_facts.population')}
-                      </Title>
-                      <Text className="dark:text-gray-300">
-                        {t('overview.quick_facts.population_value')}
-                      </Text>
-                    </Card>
+                    <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
+                      <Card className="text-center hanoi-gradient-card h-full">
+                        <EnvironmentOutlined className="text-3xl md:text-4xl text-orange-600 mb-4" />
+                        <Title level={5} className="dark:text-white text-base md:text-lg">
+                          {t('overview.quick_facts.population')}
+                        </Title>
+                        <Text className="dark:text-gray-300 text-sm md:text-base">
+                          {t('overview.quick_facts.population_value')}
+                        </Text>
+                      </Card>
+                    </motion.div>
                   </div>
                 </motion.div>
               </motion.div>
             </TabPane>
             
             <TabPane 
-              tab={<span className="tab-item"><PictureOutlined />{t('tabs.attractions')}</span>} 
+              tab={
+                <span className="tab-item flex items-center">
+                  <PictureOutlined className="mr-2" />
+                  {t('tabs.attractions')}
+                </span>
+              } 
               key="attractions"
             >
               <motion.div
@@ -418,20 +876,20 @@ const HanoiGuidePage: React.FC = () => {
                 variants={containerVariants}
                 initial="hidden"
                 animate={attractionsInView ? "visible" : "hidden"}
-                className="py-8"
+                className="py-4 md:py-8"
               >
-                <motion.div variants={itemVariants} className="mb-8">
-                  <Title level={2} className="mb-4 dark:text-white">
+                <motion.div variants={itemVariants} className="mb-6 md:mb-8">
+                  <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-yellow-700 via-red-700 to-orange-800 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
                     {t('attractions.title')}
                   </Title>
-                  <Paragraph className="text-lg dark:text-gray-300">
+                  <Paragraph className="text-base md:text-lg dark:text-gray-300">
                     {t('attractions.intro')}
                   </Paragraph>
                 </motion.div>
                 
                 <motion.div
                   variants={containerVariants}
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                  className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8"
                 >
                   {attractionsData.map((attraction) => (
                     <motion.div key={attraction.id} variants={itemVariants}>
@@ -445,196 +903,133 @@ const HanoiGuidePage: React.FC = () => {
               </motion.div>
             </TabPane>
             
+            {/* Food Tab with cultural enhancements */}
             <TabPane 
-              tab={<span className="tab-item"><CoffeeOutlined />{t('tabs.food_and_drink')}</span>} 
+              tab={
+                <span className="tab-item flex items-center">
+                  <CoffeeOutlined className="mr-2" />
+                  {t('tabs.food_and_drink')}
+                </span>
+              } 
               key="food"
             >
-              <div className="py-8">
-                <Title level={2} className="mb-4 dark:text-white">
+              <div className="py-4 md:py-8">
+                <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-yellow-700 via-red-700 to-orange-800 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
                   {t('food.title')}
                 </Title>
-                <Paragraph className="text-lg dark:text-gray-300 mb-8">
+                <Paragraph className="text-base md:text-lg dark:text-gray-300 mb-6 md:mb-8">
                   {t('food.intro')}
                 </Paragraph>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-12">
                   {Array.from({ length: 4 }).map((_, index) => (
-                    <Card key={index}>
-                      <div className="flex items-start">
-                        <div className="w-24 h-24 bg-gray-200 rounded-lg mr-4 overflow-hidden">
-                          <img 
-                            src={`/assets/destinations/hanoi/food-${index + 1}.jpg`} 
-                            alt={t(`food.dishes.${index}.name`)}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <Title level={5} className="mb-1 dark:text-white">
-                            {t(`food.dishes.${index}.name`)}
-                          </Title>
-                          <Paragraph className="dark:text-gray-300 mb-2">
-                            {t(`food.dishes.${index}.description`)}
-                          </Paragraph>
-                          <Tag color="green">
-                            {t(`food.dishes.${index}.where_to_try`)}
-                          </Tag>
-                        </div>
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-                
-                <Title level={3} className="mb-4 dark:text-white">
-                  {t('food.restaurants.title')}
-                </Title>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {Array.from({ length: 3 }).map((_, index) => (
-                    <Card key={index} className="h-full">
-                      <Title level={5} className="mb-2 dark:text-white">
-                        {t(`food.restaurants.list.${index}.name`)}
-                      </Title>
-                      <div className="flex items-center mb-2">
-                        <StarFilled className="text-yellow-500 mr-1" />
-                        <Text className="dark:text-gray-300">
-                          {t(`food.restaurants.list.${index}.rating`)}
-                        </Text>
-                      </div>
-                      <Paragraph className="dark:text-gray-300 mb-2">
-                        {t(`food.restaurants.list.${index}.description`)}
-                      </Paragraph>
-                      <div className="flex items-center">
-                        <EnvironmentOutlined className="mr-1 text-gray-500" />
-                        <Text className="text-gray-500 dark:text-gray-400">
-                          {t(`food.restaurants.list.${index}.address`)}
-                        </Text>
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-            </TabPane>
-            
-            <TabPane 
-              tab={<span className="tab-item"><ShopOutlined />{t('tabs.shopping')}</span>} 
-              key="shopping"
-            >
-              <div className="py-8">
-                <Title level={2} className="mb-4 dark:text-white">
-                  {t('shopping.title')}
-                </Title>
-                <Paragraph className="text-lg dark:text-gray-300 mb-8">
-                  {t('shopping.intro')}
-                </Paragraph>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                  {Array.from({ length: 4 }).map((_, index) => (
-                    <Card key={index} className="h-full">
-                      <Title level={4} className="mb-2 dark:text-white">
-                        {t(`shopping.places.${index}.name`)}
-                      </Title>
-                      <Paragraph className="dark:text-gray-300 mb-3">
-                        {t(`shopping.places.${index}.description`)}
-                      </Paragraph>
-                      <div className="flex items-center mb-2">
-                        <EnvironmentOutlined className="mr-2 text-gray-500" />
-                        <Text className="text-gray-500 dark:text-gray-400">
-                          {t(`shopping.places.${index}.location`)}
-                        </Text>
-                      </div>
-                      <div className="flex items-center">
-                        <ClockCircleOutlined className="mr-2 text-gray-500" />
-                        <Text className="text-gray-500 dark:text-gray-400">
-                          {t(`shopping.places.${index}.hours`)}
-                        </Text>
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-                
-                <Title level={3} className="mb-4 dark:text-white">
-                  {t('shopping.souvenirs.title')}
-                </Title>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {Array.from({ length: 3 }).map((_, index) => (
-                    <Card key={index} className="text-center h-full">
-                      <div className="w-20 h-20 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <img 
-                          src={`/assets/destinations/hanoi/souvenir-${index + 1}.svg`} 
-                          alt="Souvenir"
-                          className="w-12 h-12"
-                        />
-                      </div>
-                      <Title level={5} className="mb-2 dark:text-white">
-                        {t(`shopping.souvenirs.items.${index}.name`)}
-                      </Title>
-                      <Paragraph className="dark:text-gray-300">
-                        {t(`shopping.souvenirs.items.${index}.description`)}
-                      </Paragraph>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-            </TabPane>
-            
-            <TabPane 
-              tab={<span className="tab-item"><CarOutlined />{t('tabs.getting_around')}</span>} 
-              key="transport"
-            >
-              <div className="py-8">
-                <Title level={2} className="mb-4 dark:text-white">
-                  {t('transport.title')}
-                </Title>
-                <Paragraph className="text-lg dark:text-gray-300 mb-8">
-                  {t('transport.intro')}
-                </Paragraph>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                  {Array.from({ length: 4 }).map((_, index) => (
-                    <Card key={index} className="h-full">
-                      <div className="flex items-start">
-                        <div className="w-12 h-12 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mr-4">
-                          <img 
-                            src={`/assets/destinations/hanoi/transport-${index + 1}.svg`} 
-                            alt="Transport"
-                            className="w-6 h-6"
-                          />
-                        </div>
-                        <div>
-                          <Title level={5} className="mb-2 dark:text-white">
-                            {t(`transport.options.${index}.name`)}
-                          </Title>
-                          <Paragraph className="dark:text-gray-300 mb-2">
-                            {t(`transport.options.${index}.description`)}
-                          </Paragraph>
-                          <div className="flex items-center">
-                            <Tag color="blue">
-                              {t(`transport.options.${index}.cost`)}
-                            </Tag>
-                            <Tag color="green" className="ml-2">
-                              {t(`transport.options.${index}.convenience`)}
+                    <motion.div
+                      key={index}
+                      whileHover={{ scale: 1.02, y: -5 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Card className="hanoi-gradient-card h-full">
+                        <div className="flex flex-col md:flex-row md:items-start">
+                          <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-yellow-100 to-red-100 rounded-lg mb-4 md:mb-0 md:mr-4 overflow-hidden flex items-center justify-center mx-auto md:mx-0 flex-shrink-0">
+                            <motion.div
+                              animate={{ rotate: [0, 5, -5, 0] }}
+                              transition={{ duration: 4, repeat: Infinity }}
+                              className="text-2xl md:text-3xl"
+                            >
+                              {index === 0 ? '🍜' : index === 1 ? '🥘' : index === 2 ? '☕' : '🥢'}
+                            </motion.div>
+                          </div>
+                          <div className="text-center md:text-left flex-grow">
+                            <Title level={5} className="mb-1 dark:text-white text-yellow-700 text-base md:text-lg">
+                              {t(`food.dishes.${index}.name`)}
+                            </Title>
+                            <Paragraph className="dark:text-gray-300 mb-2 text-sm md:text-base">
+                              {t(`food.dishes.${index}.description`)}
+                            </Paragraph>
+                            <Tag color="gold" className="text-xs md:text-sm">
+                              {t(`food.dishes.${index}.where_to_try`)}
                             </Tag>
                           </div>
                         </div>
-                      </div>
-                    </Card>
+                      </Card>
+                    </motion.div>
                   ))}
                 </div>
+              </div>
+            </TabPane>
+            
+            <TabPane 
+              tab={
+                <span className="tab-item flex items-center">
+                  <ShopOutlined className="mr-2" />
+                  {t('tabs.shopping')}
+                </span>
+              } 
+              key="shopping"
+            >
+              <div className="py-4 md:py-8">
+                <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-yellow-700 via-red-700 to-orange-800 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
+                  {t('shopping.title')}
+                </Title>
+                <Paragraph className="text-base md:text-lg dark:text-gray-300 mb-6 md:mb-8">
+                  {t('shopping.intro')}
+                </Paragraph>
                 
-                <Card className="mb-8">
-                  <Title level={4} className="mb-4 dark:text-white">
-                    {t('transport.tips.title')}
-                  </Title>
-                  <ul className="list-disc pl-5 space-y-2">
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <li key={index} className="dark:text-gray-300">
-                        {t(`transport.tips.list.${index}`)}
-                      </li>
-                    ))}
-                  </ul>
-                </Card>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <motion.div
+                      key={index}
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Card className="h-full hanoi-gradient-card">
+                        <Title level={4} className="mb-2 dark:text-white text-yellow-700 text-base md:text-lg">
+                          {t(`shopping.places.${index}.name`)}
+                        </Title>
+                        <Paragraph className="dark:text-gray-300 mb-3 text-sm md:text-base">
+                          {t(`shopping.places.${index}.description`)}
+                        </Paragraph>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </TabPane>
+            
+            <TabPane 
+              tab={
+                <span className="tab-item flex items-center">
+                  <CarOutlined className="mr-2" />
+                  {t('tabs.getting_around')}
+                </span>
+              } 
+              key="transport"
+            >
+              <div className="py-4 md:py-8">
+                <Title level={2} className="mb-4 dark:text-white bg-gradient-to-r from-yellow-700 via-red-700 to-orange-800 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
+                  {t('transport.title')}
+                </Title>
+                <Paragraph className="text-base md:text-lg dark:text-gray-300 mb-6 md:mb-8">
+                  {t('transport.intro')}
+                </Paragraph>
                 
-                <div ref={mapRef}>
-                  <DestinationMap city="hanoi" inView={mapInView} />
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <motion.div
+                      key={index}
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Card className="h-full hanoi-gradient-card">
+                        <Title level={5} className="mb-2 dark:text-white text-yellow-700 text-base md:text-lg">
+                          {t(`transport.options.${index}.name`)}
+                        </Title>
+                        <Paragraph className="dark:text-gray-300 text-sm md:text-base">
+                          {t(`transport.options.${index}.description`)}
+                        </Paragraph>
+                      </Card>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
             </TabPane>
@@ -642,14 +1037,14 @@ const HanoiGuidePage: React.FC = () => {
         </div>
       </section>
       
-      {/* Photo Gallery Section */}
-      <section ref={galleryRef} className="py-16 bg-gray-100 dark:bg-gray-900">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <Title level={2} className="mb-3 dark:text-white">
+      {/* Enhanced Photo Gallery */}
+      <section ref={galleryRef} className="py-8 md:py-16 bg-gradient-to-br from-yellow-50 via-red-50 to-orange-100 dark:from-yellow-900/20 dark:via-red-900/20 dark:to-orange-900/20 relative overflow-hidden">
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-6 md:mb-8">
+            <Title level={2} className="mb-3 dark:text-white bg-gradient-to-r from-yellow-700 via-red-700 to-orange-800 bg-clip-text text-transparent text-xl md:text-2xl lg:text-3xl">
               {t('photo_gallery.title')}
             </Title>
-            <Paragraph className="text-lg dark:text-gray-300 max-w-3xl mx-auto">
+            <Paragraph className="text-base md:text-lg dark:text-gray-300 max-w-3xl mx-auto">
               {t('photo_gallery.description')}
             </Paragraph>
           </div>
@@ -658,39 +1053,101 @@ const HanoiGuidePage: React.FC = () => {
         </div>
       </section>
       
-      {/* Recommendations Section */}
-      <section className="py-16 bg-white dark:bg-gray-800">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <Title level={2} className="mb-3 dark:text-white">
-              {t('recommendations.title')}
-            </Title>
-            <Paragraph className="text-lg dark:text-gray-300 max-w-3xl mx-auto">
-              {t('recommendations.description')}
-            </Paragraph>
-          </div>
-          
-          <Recommendations city="hanoi" />
+      {/* Enhanced CTA Section with Traditional Vietnamese Theme */}
+      <section className="py-8 md:py-16 bg-gradient-to-r from-yellow-600 via-red-600 to-orange-600 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/15"></div>
+        
+        {/* Animated Hanoi cultural background */}
+        <motion.div 
+          className="absolute inset-0"
+          animate={{
+            background: [
+              'linear-gradient(45deg, rgba(234,179,8,0.8) 0%, rgba(220,38,38,0.8) 50%, rgba(234,179,8,0.8) 100%)',
+              'linear-gradient(225deg, rgba(220,38,38,0.8) 0%, rgba(234,179,8,0.8) 50%, rgba(220,38,38,0.8) 100%)',
+              'linear-gradient(45deg, rgba(234,179,8,0.8) 0%, rgba(220,38,38,0.8) 50%, rgba(234,179,8,0.8) 100%)'
+            ]
+          }}
+          transition={{ duration: 15, repeat: Infinity }}
+        />
+        
+        {/* Traditional Vietnamese pattern overlay */}
+        <div className="absolute inset-0">
+          <svg viewBox="0 0 1200 200" className="absolute bottom-0 w-full h-24 md:h-32">
+            <motion.path 
+              d="M0,100 C200,60 400,140 600,100 C800,60 1000,140 1200,100 L1200,200 L0,200 Z" 
+              fill="rgba(255,255,255,0.1)"
+              animate={{
+                d: [
+                  "M0,100 C200,60 400,140 600,100 C800,60 1000,140 1200,100 L1200,200 L0,200 Z",
+                  "M0,120 C200,80 400,160 600,120 C800,80 1000,160 1200,120 L1200,200 L0,200 Z",
+                  "M0,100 C200,60 400,140 600,100 C800,60 1000,140 1200,100 L1200,200 L0,200 Z"
+                ]
+              }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </svg>
         </div>
-      </section>
-      
-      {/* Call to Action - Hanoi themed with golden colors */}
-      <section className="py-16 bg-gradient-to-r from-yellow-600 to-orange-600 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <Title level={2} className="text-white mb-4">
-            {t('cta.title')}
-          </Title>
-          <Paragraph className="text-lg text-white mb-8 max-w-3xl mx-auto">
-            {t('cta.description')}
-          </Paragraph>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button size="large" type="default" onClick={restartTourGuide} className="bg-white text-yellow-600 h-12 font-bold hover:bg-gray-100">
-              {t('cta.restart_tour')}
-            </Button>
-            <Button size="large" type="default" onClick={handleShare} className="bg-transparent text-white border-white h-12 font-bold hover:bg-white hover:text-yellow-600">
-              <ShareAltOutlined /> {t('common:actions.share')}
-            </Button>
-          </div>
+        
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Title level={2} className="text-white mb-4 text-xl md:text-2xl lg:text-3xl">
+              {t('cta.title')}
+            </Title>
+            <Paragraph className="text-base md:text-lg text-white mb-6 md:mb-8 max-w-3xl mx-auto">
+              {t('cta.description')}
+            </Paragraph>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button 
+                  size="large" 
+                  onClick={restartTourGuide} 
+                  className="bg-white text-yellow-700 h-12 font-bold hover:bg-gray-100 border-none shadow-lg w-full sm:w-auto"
+                >
+                  <HeartOutlined className="mr-2" />
+                  {t('cta.restart_tour')}
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button 
+                  size="large" 
+                  onClick={handleShare} 
+                  className="bg-transparent text-white border-white h-12 font-bold hover:bg-white hover:text-yellow-700 shadow-lg w-full sm:w-auto"
+                >
+                  <ShareAltOutlined className="mr-2" /> {t('common:actions.share')}
+                </Button>
+              </motion.div>
+            </div>
+          </motion.div>
+          
+          {/* Floating Hanoi cultural elements */}
+          {Array.from({ length: 15 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute text-white/25 text-2xl md:text-4xl"
+              animate={{
+                y: [0, -50, 0],
+                x: [0, Math.sin(i) * 35, 0],
+                rotate: [0, 360],
+                scale: [1, 1.4, 1],
+              }}
+              transition={{
+                duration: 12 + i * 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 1.2,
+              }}
+              style={{
+                left: `${6 + i * 6.5}%`,
+                top: `${10 + Math.sin(i) * 45}%`,
+              }}
+            >
+              {['🏮', '🐉', '🏛️', '⛩️', '🎋', '🌸', '🍜', '☕', '🥢', '🏯', '🎭', '🎨', '📿', '🛕', '🎪'][i]}
+            </motion.div>
+          ))}
         </div>
       </section>
     </MainLayout>
