@@ -16,7 +16,12 @@ import {
   Spin, 
   Badge, 
   Empty, 
-  message 
+  message,
+  Card,
+  Space,
+  Checkbox,
+  Statistic,
+  Affix
 } from 'antd';
 import { 
   FilterOutlined, 
@@ -24,6 +29,11 @@ import {
   CloseCircleOutlined, 
   SortAscendingOutlined,
   EnvironmentOutlined,
+  ClearOutlined,
+  AppstoreOutlined,
+  BarChartOutlined,
+  StarOutlined,
+  ShoppingOutlined
 } from '@ant-design/icons';
 import { motion, AnimatePresence } from 'framer-motion';
 import MainLayout from '@/components/layout/MainLayout';
@@ -34,19 +44,15 @@ import type { ProductResponse } from '@/types/product.types';
 import { useCart } from '@/contexts/CartContext';
 import type { UUID } from 'crypto';
 import { formatVND } from '@/utils/formatters';
+import { 
+  RegionQuickFilter, 
+  RegionListFilter,
+  getRegionById 
+} from '@/components/filters/RegionFilter';
 
 const { Title, Text } = Typography;
 const { Panel } = Collapse;
 const { Option } = Select;
-
-// Available regions for filtering
-const regions = [
-  { id: 'b9f6eb71-6e9b-41a4-af6f-0dd59543afa6', name: 'Hà Nội', nameEn: 'Hanoi' },
-  { id: 'fb6aade5-1e65-49b0-8f3a-3ea10f8022d3', name: 'Hồ Chí Minh', nameEn: 'Ho Chi Minh City' },
-  { id: 'b3287fef-5ef1-48c1-85d9-bce90fc0111f', name: 'Đà Nẵng', nameEn: 'Da Nang' },
-  { id: 'dc7bfe72-0d2d-4e96-8f22-4f1454b633bf', name: 'Khánh Hòa', nameEn: 'Khanh Hoa' },
-  { id: '6fd8f36c-1a6e-4f60-b1a0-d8769303ddfd', name: 'Quảng Ninh', nameEn: 'Quang Ninh' },
-];
 
 interface ProductFilters {
   page: number;
@@ -70,6 +76,7 @@ const ProductsPage: React.FC = () => {
   
   // Local UI state
   const [showFilters, setShowFilters] = useState(false);
+  useState(false);
   const [localFilters, setLocalFilters] = useState<ProductFilters>({
     page: 0,
     size: 12,
@@ -169,42 +176,17 @@ const ProductsPage: React.FC = () => {
     setLocalFilters(prev => ({ ...prev, [key]: value, page: 0 }));
   };
   
-  // Add/remove region filter
-  const toggleRegionFilter = (regionId: string) => {
-    const updatedFilters = { 
-      ...filters, 
-      regionId: filters.regionId === regionId ? undefined : regionId,
-      page: 0 
-    };
-    dispatch(setFilters(updatedFilters));
-    updateURLParams(updatedFilters);
-  };
-  
-  // Add/remove active filter
-  const toggleActiveFilter = (active: boolean) => {
-    const updatedFilters = { 
-      ...filters, 
-      active: filters.active === active ? undefined : active,
-      page: 0 
-    };
-    dispatch(setFilters(updatedFilters));
-    updateURLParams(updatedFilters);
-  };
-  
-  // Add/remove featured filter
-  const toggleFeaturedFilter = (featured: boolean) => {
-    const updatedFilters = { 
-      ...filters, 
-      featured: filters.featured === featured ? undefined : featured,
-      page: 0 
-    };
+  // Quick apply single filter
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const quickApplyFilter = (key: string, value: any) => {
+    const updatedFilters = { ...filters, [key]: value, page: 0 };
     dispatch(setFilters(updatedFilters));
     updateURLParams(updatedFilters);
   };
   
   const { addToCart } = useCart();
   
-  // Enhanced add to cart với price formatting
+  // Enhanced add to cart
   const handleAddToCart = async (product: ProductResponse) => {
     try {
       await addToCart({
@@ -214,11 +196,15 @@ const ProductsPage: React.FC = () => {
       
       message.success({
         content: (
-          <span>
-            <strong>{product.name}</strong> đã được thêm vào giỏ hàng! 
-            <br />
-            <small>Giá: {formatVND(product.price)}</small>
-          </span>
+          <div className="flex items-center space-x-2">
+            <span className="text-green-500">✓</span>
+            <div>
+              <div className="font-medium">{product.name}</div>
+              <div className="text-sm text-gray-500">
+                Đã thêm vào giỏ hàng - {formatVND(product.price)}
+              </div>
+            </div>
+          </div>
         ),
         duration: 3,
       });
@@ -228,15 +214,19 @@ const ProductsPage: React.FC = () => {
     }
   };
   
-  // Enhanced add to wishlist với price formatting
+  // Enhanced add to wishlist
   const handleAddToWishlist = (product: ProductResponse) => {
     message.success({
       content: (
-        <span>
-          <strong>{product.name}</strong> đã được thêm vào danh sách yêu thích!
-          <br />
-          <small>Giá: {formatVND(product.price)}</small>
-        </span>
+        <div className="flex items-center space-x-2">
+          <span className="text-red-500">♥</span>
+          <div>
+            <div className="font-medium">{product.name}</div>
+            <div className="text-sm text-gray-500">
+              Đã thêm vào danh sách yêu thích
+            </div>
+          </div>
+        </div>
       ),
       duration: 3,
     });
@@ -252,11 +242,30 @@ const ProductsPage: React.FC = () => {
     return count;
   };
 
-  // Get region name by ID
-  const getRegionNameById = (regionId: string) => {
-    const region = regions.find(r => r.id === regionId);
-    return region ? (i18n.language === 'vi' ? region.name : region.nameEn) : regionId;
+  // Get current region
+  const getCurrentRegion = () => {
+    return filters.regionId ? getRegionById(filters.regionId) : null;
   };
+
+  // Generate mock statistics for current filter
+  const getFilterStats = () => {
+    const totalProducts = pagination.totalElements;
+    const currentRegion = getCurrentRegion();
+    
+    return {
+      total: totalProducts,
+      inStock: Math.floor(totalProducts * 0.85),
+      featured: Math.floor(totalProducts * 0.3),
+      averagePrice: products.length > 0 
+        ? Math.floor(products.reduce((sum, p) => sum + p.price, 0) / products.length)
+        : 0,
+      regionName: currentRegion ? 
+        (i18n.language === 'vi' ? currentRegion.name : currentRegion.nameEn) : 
+        null
+    };
+  };
+
+  const stats = getFilterStats();
   
   return (
     <MainLayout>
@@ -267,119 +276,226 @@ const ProductsPage: React.FC = () => {
           items={[
             { title: t('common:nav.home'), href: '/' },
             { title: t('common:nav.products') },
+            ...(getCurrentRegion() ? [{ title: getCurrentRegion()!.name }] : [])
           ]}
         />
+        
+        {/* Hero Section with Quick Stats */}
+        <div className="mb-8">
+          <Card 
+            className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-0 shadow-lg"
+          >
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center">
+              <div>
+                <Title level={2} className="mb-2 dark:text-white">
+                  {filters.keyword ? 
+                    t('product:search_results_for', { keyword: filters.keyword }) : 
+                    getCurrentRegion() ? 
+                      `${t('product:products_in')} ${getCurrentRegion()!.name}` :
+                      t('product:all_products')
+                  }
+                </Title>
+                <Text className="text-gray-600 dark:text-gray-300 text-lg">
+                  {t('product:discover_unique_products')}
+                </Text>
+              </div>
+              
+              {/* Quick Stats */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4 lg:mt-0">
+                <Statistic
+                  title={t('product:total_products')}
+                  value={stats.total}
+                  prefix={<AppstoreOutlined />}
+                  valueStyle={{ fontSize: '18px', color: '#1890ff' }}
+                />
+                <Statistic
+                  title={t('product:in_stock')}
+                  value={stats.inStock}
+                  prefix={<ShoppingOutlined />}
+                  valueStyle={{ fontSize: '18px', color: '#52c41a' }}
+                />
+                <Statistic
+                  title={t('product:featured')}
+                  value={stats.featured}
+                  prefix={<StarOutlined />}
+                  valueStyle={{ fontSize: '18px', color: '#faad14' }}
+                />
+                <Statistic
+                  title={t('product:avg_price')}
+                  value={formatVND(stats.averagePrice)}
+                  prefix={<BarChartOutlined />}
+                  valueStyle={{ fontSize: '16px', color: '#722ed1' }}
+                />
+              </div>
+            </div>
+          </Card>
+        </div>
+        
+        {/* Quick Region Filter */}
+        <div className="mb-6">
+          <RegionQuickFilter
+            selectedRegionId={filters.regionId}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onRegionChange={(regionId: any) => quickApplyFilter('regionId', regionId)}
+            showTitle={true}
+            cardSize="medium"
+            columns={5}
+          />
+        </div>
         
         <Row gutter={[24, 24]}>
           {/* Desktop Filters - Left Sidebar */}
           <Col xs={0} lg={6} className="hidden lg:block">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-              <Title level={4} className="mb-4 dark:text-white">
-                {t('product:filters.filter')}
-              </Title>
-              
-              {/* Search */}
-              <div className="mb-6">
-                <Text strong className="block mb-2 dark:text-white">
-                  {t('common:search.title')}
-                </Text>
-                <Input 
-                  placeholder={t('common:search.placeholder')}
-                  prefix={<SearchOutlined />}
-                  value={localFilters.keyword}
-                  onChange={(e) => handleFilterChange('keyword', e.target.value)}
-                  onPressEnter={() => applyFilters()}
-                />
-              </div>
+            <Affix offsetTop={20}>
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <Title level={4} className="mb-0 dark:text-white">
+                    <FilterOutlined className="mr-2" />
+                    {t('product:filters.filter')}
+                  </Title>
+                  <Badge count={getActiveFiltersCount()} offset={[0, 0]} />
+                </div>
+                
+                {/* Search */}
+                <div className="mb-6">
+                  <Text strong className="block mb-2 dark:text-white">
+                    <SearchOutlined className="mr-2" />
+                    {t('common:search.title')}
+                  </Text>
+                  <Input 
+                    placeholder={t('common:search.placeholder')}
+                    prefix={<SearchOutlined />}
+                    value={localFilters.keyword}
+                    onChange={(e) => handleFilterChange('keyword', e.target.value)}
+                    onPressEnter={() => applyFilters()}
+                    allowClear
+                  />
+                </div>
 
-              {/* Region Filter */}
-              <div className="mb-6">
-                <Text strong className="block mb-3 dark:text-white">
-                  <EnvironmentOutlined className="mr-2" />
-                  {t('product:filters.region')}
-                </Text>
-                <Select
-                  placeholder={t('product:filters.select_region')}
-                  value={localFilters.regionId}
-                  onChange={(value) => handleFilterChange('regionId', value)}
-                  style={{ width: '100%' }}
-                  allowClear
-                >
-                  {regions.map(region => (
-                    <Option key={region.id} value={region.id}>
-                      {i18n.language === 'vi' ? region.name : region.nameEn}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
-              
-              {/* Quick Filters */}
-              <div className="mb-6">
-                <Text strong className="block mb-2 dark:text-white">
-                  {t('product:filters.filter')}
-                </Text>
-                <div className="flex flex-col space-y-2">
-                  <div className="flex items-center">
-                    <input 
-                      type="checkbox" 
-                      id="featured" 
-                      className="mr-2" 
+                {/* Region Filter */}
+                <div className="mb-6">
+                  <Text strong className="block mb-3 dark:text-white">
+                    <EnvironmentOutlined className="mr-2" />
+                    {t('product:filters.region')}
+                  </Text>
+                  <RegionListFilter
+                    selectedRegionId={localFilters.regionId}
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    onRegionChange={(regionId: any) => handleFilterChange('regionId', regionId)}
+                    showAllOption={true}
+                  />
+                </div>
+                
+                {/* Quick Filters */}
+                <div className="mb-6">
+                  <Text strong className="block mb-3 dark:text-white">
+                    {t('product:filters.quick_filters')}
+                  </Text>
+                  <div className="space-y-3">
+                    <Checkbox 
                       checked={localFilters.featured === true}
                       onChange={(e) => handleFilterChange('featured', e.target.checked ? true : undefined)}
-                    />
-                    <label htmlFor="featured" className="dark:text-gray-300">
-                      {t('product:filters.featured_only')}
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input 
-                      type="checkbox" 
-                      id="in-stock" 
-                      className="mr-2" 
+                    >
+                      <span className="dark:text-gray-300">
+                        ⭐ {t('product:filters.featured_only')}
+                      </span>
+                    </Checkbox>
+                    <Checkbox 
                       checked={localFilters.active === true}
                       onChange={(e) => handleFilterChange('active', e.target.checked ? true : undefined)}
-                    />
-                    <label htmlFor="in-stock" className="dark:text-gray-300">
-                      {t('product:filters.in_stock_only')}
-                    </label>
+                    >
+                      <span className="dark:text-gray-300">
+                        ✅ {t('product:filters.in_stock_only')}
+                      </span>
+                    </Checkbox>
                   </div>
                 </div>
+                
+                {/* Action Buttons */}
+                <div className="space-y-2">
+                  <Button 
+                    type="primary" 
+                    onClick={applyFilters} 
+                    block
+                    loading={loading}
+                    size="large"
+                  >
+                    {t('product:filters.apply')}
+                    {getActiveFiltersCount() > 0 && ` (${getActiveFiltersCount()})`}
+                  </Button>
+                  <Button 
+                    onClick={handleResetFilters} 
+                    block
+                    icon={<ClearOutlined />}
+                    size="large"
+                  >
+                    {t('product:filters.clear')}
+                  </Button>
+                </div>
+
+                {/* Current Region Info */}
+                {getCurrentRegion() && (
+                  <div className="mt-6 p-4 rounded-lg bg-gray-50 dark:bg-gray-700">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <span className="text-2xl">{getCurrentRegion()!.icon}</span>
+                      <div>
+                        <div className="font-medium dark:text-white">
+                          {getCurrentRegion()!.name}
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">
+                          {getCurrentRegion()!.description}
+                        </div>
+                      </div>
+                    </div>
+                    <Button 
+                      size="small" 
+                      type="link" 
+                      onClick={() => quickApplyFilter('regionId', undefined)}
+                      className="p-0 h-auto text-red-500"
+                    >
+                      {t('product:filters.clear_region')}
+                    </Button>
+                  </div>
+                )}
               </div>
-              
-              {/* Action Buttons */}
-              <div className="flex space-x-2">
-                <Button type="primary" onClick={applyFilters} className="flex-1">
-                  {t('product:filters.apply')}
-                </Button>
-                <Button onClick={handleResetFilters} className="flex-1">
-                  {t('product:filters.clear')}
-                </Button>
-              </div>
-            </div>
+            </Affix>
           </Col>
           
           {/* Main Content */}
           <Col xs={24} lg={18}>
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6">
               <div className="flex flex-wrap justify-between items-center mb-6">
-                <div>
-                  <Title level={3} className="mb-1 dark:text-white">
-                    {filters.keyword ? 
-                      t('product:search_results_for', { keyword: filters.keyword }) : 
-                      t('product:all_products')}
-                  </Title>
-                  <Text className="text-gray-500 dark:text-gray-400">
-                    {pagination.totalElements} {t('product:products_found')}
-                  </Text>
+                <div className="flex-1">
+                  <div className="flex items-center space-x-4 mb-2">
+                    <Title level={3} className="mb-0 dark:text-white">
+                      {pagination.totalElements} {t('product:products_found')}
+                    </Title>
+                    {getCurrentRegion() && (
+                      <Tag 
+                        color="geekblue" 
+                        icon={<EnvironmentOutlined />}
+                        className="text-sm px-3 py-1"
+                      >
+                        {getCurrentRegion()!.icon} {getCurrentRegion()!.name}
+                      </Tag>
+                    )}
+                  </div>
+                  
+                  {filters.keyword && (
+                    <Text className="text-gray-500 dark:text-gray-400">
+                      {t('product:search_results_for', { keyword: filters.keyword })}
+                    </Text>
+                  )}
                 </div>
                 
-                <div className="flex space-x-3 mt-4 sm:mt-0">
+                <div className="flex items-center space-x-3 mt-4 lg:mt-0">
                   {/* Mobile Filter Button */}
                   <div className="lg:hidden">
                     <Badge count={getActiveFiltersCount()} offset={[-5, 5]}>
                       <Button 
                         icon={<FilterOutlined />} 
                         onClick={() => setShowFilters(true)}
+                        size="large"
                       >
                         {t('product:filters.filter')}
                       </Button>
@@ -392,12 +508,24 @@ const ProductsPage: React.FC = () => {
                     <Select
                       value={filters.sort}
                       onChange={handleSortChange}
-                      style={{ width: 180 }}
+                      style={{ width: 200 }}
+                      size="large"
                     >
-                      <Option value="createdAt,desc">{t('product:filters.newest')}</Option>
-                      <Option value="price,asc">{t('product:filters.price_low_high')}</Option>
-                      <Option value="price,desc">{t('product:filters.price_high_low')}</Option>
-                      <Option value="viewCount,desc">{t('product:filters.popularity')}</Option>
+                      <Option value="createdAt,desc">
+                        🆕 {t('product:filters.newest')}
+                      </Option>
+                      <Option value="price,asc">
+                        💰 {t('product:filters.price_low_high')}
+                      </Option>
+                      <Option value="price,desc">
+                        💎 {t('product:filters.price_high_low')}
+                      </Option>
+                      <Option value="viewCount,desc">
+                        🔥 {t('product:filters.popularity')}
+                      </Option>
+                      <Option value="name,asc">
+                        🔤 {t('product:sort.name_asc')}
+                      </Option>
                     </Select>
                   </div>
                 </div>
@@ -405,8 +533,13 @@ const ProductsPage: React.FC = () => {
               
               {/* Active Filters */}
               {getActiveFiltersCount() > 0 && (
-                <div className="mb-6">
-                  <div className="flex flex-wrap items-center gap-2">
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mb-6"
+                >
+                  <div className="flex flex-wrap items-center gap-2 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                     <Text strong className="dark:text-white">
                       {t('product:applied_filters')}:
                     </Text>
@@ -414,24 +547,22 @@ const ProductsPage: React.FC = () => {
                     {filters.keyword && (
                       <Tag 
                         closable 
-                        onClose={() => {
-                          const updatedFilters = { ...filters, keyword: undefined, page: 0 };
-                          dispatch(setFilters(updatedFilters));
-                          updateURLParams(updatedFilters);
-                        }}
+                        onClose={() => quickApplyFilter('keyword', undefined)}
+                        icon={<SearchOutlined />}
+                        color="blue"
                       >
-                        {t('product:search')}: {filters.keyword}
+                        "{filters.keyword}"
                       </Tag>
                     )}
 
-                    {filters.regionId && (
+                    {filters.regionId && getCurrentRegion() && (
                       <Tag 
                         color="geekblue" 
                         closable 
-                        onClose={() => toggleRegionFilter(filters.regionId!)}
+                        onClose={() => quickApplyFilter('regionId', undefined)}
                         icon={<EnvironmentOutlined />}
                       >
-                        {getRegionNameById(filters.regionId)}
+                        {getCurrentRegion()!.icon} {getCurrentRegion()!.name}
                       </Tag>
                     )}
                     
@@ -439,19 +570,19 @@ const ProductsPage: React.FC = () => {
                       <Tag 
                         color="purple" 
                         closable 
-                        onClose={() => toggleFeaturedFilter(true)}
+                        onClose={() => quickApplyFilter('featured', undefined)}
                       >
-                        {t('product:featured')}
+                        ⭐ {t('product:featured')}
                       </Tag>
                     )}
                     
                     {filters.active !== undefined && (
                       <Tag 
-                        color="cyan" 
+                        color="green" 
                         closable 
-                        onClose={() => toggleActiveFilter(true)}
+                        onClose={() => quickApplyFilter('active', undefined)}
                       >
-                        {t('product:in_stock')}
+                        ✅ {t('product:in_stock')}
                       </Tag>
                     )}
                     
@@ -459,36 +590,94 @@ const ProductsPage: React.FC = () => {
                       type="link" 
                       icon={<CloseCircleOutlined />} 
                       onClick={handleResetFilters}
-                      className="text-red-500"
+                      className="text-red-500 hover:text-red-700"
+                      size="small"
                     >
                       {t('product:filters.clear_all')}
                     </Button>
                   </div>
-                </div>
+                </motion.div>
               )}
               
               {/* Product Grid */}
-              {loading ? (
-                <div className="py-12 flex justify-center">
-                  <Spin size="large" />
-                </div>
-              ) : products.length > 0 ? (
-                <ProductsGrid 
-                  products={products} 
-                  cols={3}
-                  onAddToCart={handleAddToCart}
-                  onAddToWishlist={handleAddToWishlist}
-                />
-              ) : (
-                <Empty
-                  description={t('product:no_products_found')}
-                  className="py-12"
-                />
-              )}
+              <AnimatePresence mode="wait">
+                {loading ? (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="py-12 flex justify-center"
+                  >
+                    <Spin size="large" tip={t('product:loading_products')} />
+                  </motion.div>
+                ) : products.length > 0 ? (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <ProductsGrid 
+                      products={products} 
+                      cols={3}
+                      onAddToCart={handleAddToCart}
+                      onAddToWishlist={handleAddToWishlist}
+                    />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Empty
+                      image={Empty.PRESENTED_IMAGE_SIMPLE}
+                      description={
+                        <div className="text-center">
+                          <div className="text-lg mb-2 dark:text-white">
+                            {getCurrentRegion() ? 
+                              t('product:no_products_in_region', { region: getCurrentRegion()!.name }) :
+                              t('product:no_products_found')
+                            }
+                          </div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                            {t('product:try_adjusting_filters')}
+                          </div>
+                          {getActiveFiltersCount() > 0 && (
+                            <Space>
+                              <Button 
+                                type="primary" 
+                                onClick={handleResetFilters}
+                                icon={<ClearOutlined />}
+                              >
+                                {t('product:filters.clear_all_and_retry')}
+                              </Button>
+                              {getCurrentRegion() && (
+                                <Button 
+                                  onClick={() => quickApplyFilter('regionId', undefined)}
+                                >
+                                  {t('product:view_all_regions')}
+                                </Button>
+                              )}
+                            </Space>
+                          )}
+                        </div>
+                      }
+                      className="py-12"
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
               
               {/* Pagination */}
               {pagination.totalPages > 1 && (
-                <div className="mt-8 flex justify-center">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                  className="mt-8 flex justify-center"
+                >
                   <Pagination
                     current={pagination.currentPage + 1}
                     total={pagination.totalElements}
@@ -496,8 +685,12 @@ const ProductsPage: React.FC = () => {
                     onChange={handlePageChange}
                     showSizeChanger={false}
                     showQuickJumper
+                    showTotal={(total, range) => 
+                      `${range[0]}-${range[1]} ${t('product:of')} ${total} ${t('product:products')}`
+                    }
+                    size="default"
                   />
-                </div>
+                </motion.div>
               )}
             </div>
           </Col>
@@ -518,110 +711,110 @@ const ProductsPage: React.FC = () => {
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'tween' }}
-              className="absolute right-0 top-0 h-full w-full max-w-md bg-white dark:bg-gray-800 p-6 overflow-y-auto"
+              transition={{ type: 'tween', duration: 0.3 }}
+              className="absolute right-0 top-0 h-full w-full max-w-md bg-white dark:bg-gray-800 overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex justify-between items-center mb-6">
-                <Title level={4} className="m-0 dark:text-white">
-                  {t('product:filters.filter')}
-                </Title>
-                <Button 
-                  type="text" 
-                  icon={<CloseCircleOutlined />} 
-                  onClick={() => setShowFilters(false)}
-                />
-              </div>
-              
-              <Divider />
-              
-              {/* Mobile Filters Content */}
-              <Collapse defaultActiveKey={['1', '2', '3']} className="bg-transparent border-0">
-                {/* Search */}
-                <Panel 
-                  header={<Text strong className="dark:text-white">{t('common:search.title')}</Text>} 
-                  key="1" 
-                  className="mb-2"
-                >
-                  <Input 
-                    placeholder={t('common:search.placeholder')}
-                    prefix={<SearchOutlined />}
-                    value={localFilters.keyword}
-                    onChange={(e) => handleFilterChange('keyword', e.target.value)}
-                    className="mb-4"
-                  />
-                </Panel>
-
-                {/* Region Filter */}
-                <Panel 
-                  header={
-                    <Text strong className="dark:text-white">
-                      <EnvironmentOutlined className="mr-2" />
-                      {t('product:filters.region')}
-                    </Text>
-                  } 
-                  key="2" 
-                  className="mb-2"
-                >
-                  <Select
-                    placeholder={t('product:filters.select_region')}
-                    value={localFilters.regionId}
-                    onChange={(value) => handleFilterChange('regionId', value)}
-                    style={{ width: '100%' }}
-                    allowClear
-                    className="mb-4"
-                  >
-                    {regions.map(region => (
-                      <Option key={region.id} value={region.id}>
-                        {i18n.language === 'vi' ? region.name : region.nameEn}
-                      </Option>
-                    ))}
-                  </Select>
-                </Panel>
+              {/* Mobile filter content - similar to desktop but adapted for mobile */}
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-6">
+                  <Title level={4} className="m-0 dark:text-white">
+                    <FilterOutlined className="mr-2" />
+                    {t('product:filters.filter')}
+                  </Title>
+                  <div className="flex items-center space-x-2">
+                    <Badge count={getActiveFiltersCount()} />
+                    <Button 
+                      type="text" 
+                      icon={<CloseCircleOutlined />} 
+                      onClick={() => setShowFilters(false)}
+                      size="large"
+                    />
+                  </div>
+                </div>
                 
-                {/* Quick Filters */}
-                <Panel 
-                  header={<Text strong className="dark:text-white">{t('product:filters.quick_filters')}</Text>} 
-                  key="3" 
-                  className="mb-2"
-                >
-                  <div className="flex flex-col space-y-2 mb-4">
-                    <div className="flex items-center">
-                      <input 
-                        type="checkbox" 
-                        id="m-featured" 
-                        className="mr-2" 
+                <Divider />
+                
+                <Collapse defaultActiveKey={['1', '2', '3']} className="bg-transparent border-0">
+                  <Panel 
+                    header={<Text strong className="dark:text-white">{t('common:search.title')}</Text>} 
+                    key="1" 
+                  >
+                    <Input 
+                      placeholder={t('common:search.placeholder')}
+                      prefix={<SearchOutlined />}
+                      value={localFilters.keyword}
+                      onChange={(e) => handleFilterChange('keyword', e.target.value)}
+                      size="large"
+                      allowClear
+                    />
+                  </Panel>
+
+                  <Panel 
+                    header={
+                      <Text strong className="dark:text-white">
+                        <EnvironmentOutlined className="mr-2" />
+                        {t('product:filters.region')}
+                      </Text>
+                    } 
+                    key="2"
+                  >
+                    <RegionListFilter
+                      selectedRegionId={localFilters.regionId}
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      onRegionChange={(regionId: any) => handleFilterChange('regionId', regionId)}
+                      showAllOption={true}
+                    />
+                  </Panel>
+                  
+                  <Panel 
+                    header={<Text strong className="dark:text-white">{t('product:filters.quick_filters')}</Text>} 
+                    key="3"
+                  >
+                    <div className="space-y-4">
+                      <Checkbox 
                         checked={localFilters.featured === true}
                         onChange={(e) => handleFilterChange('featured', e.target.checked ? true : undefined)}
-                      />
-                      <label htmlFor="m-featured" className="dark:text-gray-300">
-                        {t('product:filters.featured_only')}
-                      </label>
-                    </div>
-                    <div className="flex items-center">
-                      <input 
-                        type="checkbox" 
-                        id="m-in-stock" 
-                        className="mr-2" 
+                        className="text-lg"
+                      >
+                        <span className="dark:text-gray-300">
+                          ⭐ {t('product:filters.featured_only')}
+                        </span>
+                      </Checkbox>
+                      <Checkbox 
                         checked={localFilters.active === true}
                         onChange={(e) => handleFilterChange('active', e.target.checked ? true : undefined)}
-                      />
-                      <label htmlFor="m-in-stock" className="dark:text-gray-300">
-                        {t('product:filters.in_stock_only')}
-                      </label>
+                        className="text-lg"
+                      >
+                        <span className="dark:text-gray-300">
+                          ✅ {t('product:filters.in_stock_only')}
+                        </span>
+                      </Checkbox>
                     </div>
-                  </div>
-                </Panel>
-              </Collapse>
-              
-              <div className="mt-6 sticky bottom-0 bg-white dark:bg-gray-800 pt-4 pb-2">
-                <div className="flex space-x-3">
-                  <Button onClick={handleResetFilters} className="flex-1">
-                    {t('product:filters.clear')}
-                  </Button>
-                  <Button type="primary" onClick={applyFilters} className="flex-1">
-                    {t('product:filters.apply')}
-                  </Button>
+                  </Panel>
+                </Collapse>
+                
+                <div className="mt-6 sticky bottom-0 bg-white dark:bg-gray-800 pt-4 pb-safe">
+                  <Space className="w-full" direction="vertical" size="large">
+                    <Button 
+                      type="primary" 
+                      onClick={applyFilters} 
+                      block
+                      loading={loading}
+                      size="large"
+                    >
+                      {t('product:filters.apply')}
+                      {getActiveFiltersCount() > 0 && ` (${getActiveFiltersCount()})`}
+                    </Button>
+                    <Button 
+                      onClick={handleResetFilters} 
+                      block
+                      icon={<ClearOutlined />}
+                      size="large"
+                    >
+                      {t('product:filters.clear')}
+                    </Button>
+                  </Space>
                 </div>
               </div>
             </motion.div>
