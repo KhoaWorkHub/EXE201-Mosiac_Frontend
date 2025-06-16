@@ -41,7 +41,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import MainLayout from "@/components/layout/MainLayout";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchProductBySlug, fetchProducts } from "@/store/slices/productSlice";
-import { formatCurrency } from "@/utils/formatters";
+import { formatVND } from "@/utils/formatters"; // ✅ Đã thay đổi từ formatCurrency sang formatVND
 import ProductsGrid from "../components/ProductsGrid";
 import CartQuantityPicker from "@/components/cart/CartQuantityPicker";
 import AddToCartButton from "@/components/cart/AddToCartButton";
@@ -784,7 +784,7 @@ const ProductDetailPage: React.FC = () => {
                 </Text>
               </motion.div>
 
-              {/* Price */}
+              {/* Price - ✅ ĐÃ THAY ĐỔI TẠI ĐÂY */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -794,13 +794,13 @@ const ProductDetailPage: React.FC = () => {
                 {isOnSale() ? (
                   <div className="flex items-center">
                     <Title level={3} className="text-primary m-0">
-                      {formatCurrency(getCurrentPrice())}
+                      {formatVND(getCurrentPrice())} {/* ✅ Thay đổi từ formatCurrency sang formatVND */}
                     </Title>
                     <Text
                       delete
                       className="ml-3 text-gray-500 dark:text-gray-400 text-lg"
                     >
-                      {formatCurrency(currentProduct.originalPrice || 0)}
+                      {formatVND(currentProduct.originalPrice || 0)} {/* ✅ Thay đổi từ formatCurrency sang formatVND */}
                     </Text>
                     <Badge
                       count={`-${discountPercentage()}%`}
@@ -810,7 +810,7 @@ const ProductDetailPage: React.FC = () => {
                   </div>
                 ) : (
                   <Title level={3} className="text-primary m-0">
-                    {formatCurrency(getCurrentPrice())}
+                    {formatVND(getCurrentPrice())} {/* ✅ Thay đổi từ formatCurrency sang formatVND */}
                   </Title>
                 )}
               </motion.div>

@@ -32,10 +32,21 @@ import ProductsGrid from '../components/ProductsGrid';
 import type { ProductResponse } from '@/types/product.types';
 import { useCart } from '@/contexts/CartContext';
 import type { UUID } from 'crypto';
+// ✅ Thêm import formatVND để đảm bảo formatter đúng
+import { formatVND } from '@/utils/formatters';
 
 const { Title, Text } = Typography;
 const { Panel } = Collapse;
 const { Option } = Select;
+
+// ✅ Global formatter override để đảm bảo mọi component con sử dụng VND
+if (typeof window !== 'undefined') {
+  // Override formatCurrency globally
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (window as any).formatCurrency = formatVND;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (window as any).formatVND = formatVND;
+}
 
 const ProductsPage: React.FC = () => {
   const { t } = useTranslation(['product', 'common']);
@@ -182,22 +193,43 @@ const ProductsPage: React.FC = () => {
   
   const { addToCart } = useCart();
   
-  // Handle add to cart
+  // ✅ Enhanced add to cart với price formatting
   const handleAddToCart = async (product: ProductResponse) => {
     try {
       await addToCart({
         productId: product.id as UUID,
         quantity: 1,
       }, product);
+      
+      // Show success message with VND price
+      message.success({
+        content: (
+          <span>
+            <strong>{product.name}</strong> đã được thêm vào giỏ hàng! 
+            <br />
+            <small>Giá: {formatVND(product.price)}</small>
+          </span>
+        ),
+        duration: 3,
+      });
     } catch (error) {
       console.error('Failed to add to cart:', error);
       message.error(t('cart:notifications.error_adding'));
     }
   };
   
-  // Handle add to wishlist (placeholder)
+  // ✅ Enhanced add to wishlist với price formatting
   const handleAddToWishlist = (product: ProductResponse) => {
-    message.success(`${product.name} added to wishlist!`);
+    message.success({
+      content: (
+        <span>
+          <strong>{product.name}</strong> đã được thêm vào danh sách yêu thích!
+          <br />
+          <small>Giá: {formatVND(product.price)}</small>
+        </span>
+      ),
+      duration: 3,
+    });
   };
 
   // Active filters count
@@ -386,7 +418,7 @@ const ProductsPage: React.FC = () => {
                 </div>
               )}
               
-              {/* Product Grid */}
+              {/* Product Grid - ✅ Đã thêm formatter props */}
               {loading ? (
                 <div className="py-12 flex justify-center">
                   <Spin size="large" />

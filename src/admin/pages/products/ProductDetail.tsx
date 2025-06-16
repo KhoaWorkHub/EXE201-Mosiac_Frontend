@@ -57,7 +57,7 @@ import {
   ProductImageResponse,
 } from "@/admin/types";
 import { motion } from "framer-motion";
-import { formatCurrency } from "@/utils/formatters";
+import { formatVND } from "@/utils/formatters"; // Thay đổi import
 import dayjs from "dayjs";
 import QRCodeManager from "../qrcodes/QRCodeManager";
 
@@ -100,7 +100,7 @@ const ProductDetail: React.FC = () => {
     if (id) {
       fetchProduct(id);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const fetchProduct = async (productId: string) => {
@@ -264,7 +264,9 @@ const ProductDetail: React.FC = () => {
       key: "priceAdjustment",
       render: (value: number) => (
         <span className={value >= 0 ? "text-green-600" : "text-red-600"}>
-          {value >= 0 ? `+${formatCurrency(value)}` : formatCurrency(value)}
+          {value >= 0
+            ? `+${formatVND(value)}` // Thay đổi tại đây
+            : formatVND(value)} // Thay đổi tại đây
         </span>
       ),
     },
@@ -570,15 +572,13 @@ const ProductDetail: React.FC = () => {
                           <div className="flex items-center">
                             <DollarOutlined className="mr-1 text-primary" />
                             <Text strong className="text-primary">
-                              {formatCurrency(Number(product.price))}
+                              {formatVND(product.price)} {/* Thay đổi tại đây */}
                             </Text>
                             {product.originalPrice &&
                               Number(product.originalPrice) >
                                 Number(product.price) && (
                                 <Text delete className="text-gray-400 ml-2">
-                                  {formatCurrency(
-                                    Number(product.originalPrice)
-                                  )}
+                                  {formatVND(product.originalPrice)} {/* Thay đổi tại đây */}
                                 </Text>
                               )}
                           </div>
@@ -910,9 +910,9 @@ const ProductDetail: React.FC = () => {
                       onSuccess={() => fetchProduct(id)}
                     />
                   ) : (
-                    <Alert 
-                      type="warning" 
-                      message={t("admin:products.no_product_id")} 
+                    <Alert
+                      type="warning"
+                      message={t("admin:products.no_product_id")}
                       showIcon
                     />
                   )}

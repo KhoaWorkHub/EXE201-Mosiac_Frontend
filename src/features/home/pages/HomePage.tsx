@@ -7,7 +7,6 @@ import MainLayout from '@/components/layout/MainLayout';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchFeaturedProducts, fetchLatestProducts } from '@/store/slices/productSlice';
-import ProductCarousel from '@/features/products/components/ProductCarousel';
 import ProductsGrid from '@/features/products/components/ProductsGrid';
 import type { ProductResponse } from '@/types/product.types';
 import { useCart } from '@/contexts/CartContext';
@@ -567,33 +566,6 @@ const EnhancedHeroSection: React.FC = () => {
   );
 };
 
-// Categories data (keeping existing)
-const categories = [
-  {
-    id: 'womens',
-    image: 'https://images.unsplash.com/photo-1590548784585-643d2b9f2925?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dmlldG5hbWVzZSUyMGFvJTIwZGFpfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60',
-    count: 152,
-    url: '/products?category=womens'
-  },
-  {
-    id: 'mens',
-    image: 'https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dmlldG5hbWVzZSUyMG1hbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60',
-    count: 98,
-    url: '/products?category=mens'
-  },
-  {
-    id: 'accessories',
-    image: 'https://images.unsplash.com/photo-1621164078873-a944ea50a9a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dmlldG5hbWVzZSUyMGFjY2Vzc29yaWVzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60',
-    count: 64,
-    url: '/products?category=accessories'
-  },
-  {
-    id: 'home',
-    image: 'https://images.unsplash.com/photo-1616486395688-b8d1438bd3bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHZpZXRuYW1lc2UlMjBkZWNvcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60',
-    count: 47,
-    url: '/products?category=home'
-  }
-];
 
 // Region sections (keeping existing)
 const regions = [
@@ -659,41 +631,6 @@ const staggerContainer = {
   }
 };
 
-// Category Card Component (keeping existing)
-interface CategoryCardProps {
-  category: {
-    id: string;
-    image: string;
-    count: number;
-    url: string;
-  };
-}
-
-const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
-  const { t } = useTranslation(['common']);
-  
-  return (
-    <motion.div variants={fadeInUp}>
-      <Link to={category.url}>
-        <div className="relative overflow-hidden rounded-lg group cursor-pointer">
-          <div className="h-64 overflow-hidden">
-            <img 
-              src={category.image} 
-              alt={t(`common:categories.${category.id}.name`)} 
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-80"></div>
-          <div className="absolute bottom-0 left-0 p-5 text-white">
-            <h3 className="text-xl font-bold mb-1">{t(`common:categories.${category.id}.name`)}</h3>
-            <p className="text-sm text-gray-200">{category.count} {t('common:categories.items')}</p>
-          </div>
-        </div>
-      </Link>
-    </motion.div>
-  );
-};
-
 // Testimonial Card Component (keeping existing)
 interface TestimonialCardProps {
   testimonial: {
@@ -735,7 +672,6 @@ const HomePage: React.FC = () => {
   const { t } = useTranslation(['common', 'product']);
   const dispatch = useAppDispatch();
   const { 
-    latestProducts, 
     featuredProducts, 
     loading 
   } = useAppSelector(state => state.products);
@@ -829,56 +765,6 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Latest Products Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center mb-8">
-            <div>
-              <Title level={2} className="mb-2 dark:text-white">{t('common:nav.new_arrivals')}</Title>
-              <Text className="text-gray-600 dark:text-gray-400">
-                {t('common:sections.featured_products.subtitle')}
-              </Text>
-            </div>
-            <Link to="/products?sort=createdAt,desc">
-              <Button type="link" className="font-semibold">
-                {t('common:actions.view_all')} <ArrowRightOutlined />
-              </Button>
-            </Link>
-          </div>
-          
-          <ProductCarousel 
-            products={latestProducts} 
-            loading={loading}
-            autoplay={true}
-            slidesToShow={4}
-            onAddToCart={handleAddToCart}
-            onAddToWishlist={handleAddToWishlist}
-          />
-        </div>
-      </section>
-
-      {/* Categories Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <Title level={2} className="mb-2 dark:text-white">{t('common:sections.categories.title')}</Title>
-            <Text className="text-gray-600 dark:text-gray-400">{t('common:sections.categories.subtitle')}</Text>
-          </div>
-          
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-          >
-            {categories.map((category, index) => (
-              <CategoryCard key={index} category={category} />
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
       {/* Featured Products Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
@@ -936,7 +822,7 @@ const HomePage: React.FC = () => {
                   <div className="grid grid-cols-4 gap-4 mb-8">
                     <div className="text-center">
                       <div className="bg-white bg-opacity-20 rounded-lg p-3">
-                        <span className="text-2xl font-bold">00</span>
+                        <span className="text-2xl font-bold">05</span>
                         <p className="text-xs">{t('common:special_offer.countdown.days')}</p>
                       </div>
                     </div>

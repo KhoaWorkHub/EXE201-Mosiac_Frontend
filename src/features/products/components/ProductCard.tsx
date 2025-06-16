@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ShoppingCartOutlined, HeartOutlined, EyeOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { formatCurrency } from '@/utils/formatters';
+import { formatVND } from '@/utils/formatters'; // ✅ Thay đổi từ formatCurrency sang formatVND
 import type { ProductResponse } from '@/types/product.types';
 
 const { Title, Text } = Typography;
@@ -13,12 +13,14 @@ interface ProductCardProps {
   product: ProductResponse;
   onAddToCart?: (product: ProductResponse) => void;
   onAddToWishlist?: (product: ProductResponse) => void;
+  priceFormatter?: (amount: number) => string; // ✅ Thêm optional formatter prop
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ 
   product, 
   onAddToCart, 
-  onAddToWishlist 
+  onAddToWishlist,
+  priceFormatter = formatVND // ✅ Default sử dụng formatVND
 }) => {
   const { t } = useTranslation(['product', 'common']);
   
@@ -152,13 +154,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <div>
               {isOnSale() ? (
                 <div className="flex items-center">
-                  <Text className="text-primary font-bold">{formatCurrency(product.price)}</Text>
+                  <Text className="text-primary font-bold">
+                    {priceFormatter(product.price)} {/* ✅ Thay đổi từ formatCurrency sang priceFormatter */}
+                  </Text>
                   <Text className="text-gray-400 line-through text-sm ml-2">
-                    {formatCurrency(product.originalPrice || 0)}
+                    {priceFormatter(product.originalPrice || 0)} {/* ✅ Thay đổi từ formatCurrency sang priceFormatter */}
                   </Text>
                 </div>
               ) : (
-                <Text className="text-primary font-bold">{formatCurrency(product.price)}</Text>
+                <Text className="text-primary font-bold">
+                  {priceFormatter(product.price)} {/* ✅ Thay đổi từ formatCurrency sang priceFormatter */}
+                </Text>
               )}
             </div>
             <div className="text-xs">
