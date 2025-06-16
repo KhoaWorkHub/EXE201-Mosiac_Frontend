@@ -47,7 +47,7 @@ const AboutUsPage: React.FC = () => {
   // Team members data
   const teamMembers = [
     {
-      name: 'Nguyễn Văn A',
+      name: 'Bảo Trân',
       role: 'CEO & Founder',
       major: 'Business Administration',
       avatar: '/team/member1.jpg',
@@ -56,7 +56,7 @@ const AboutUsPage: React.FC = () => {
       color: 'from-orange-500 to-red-500'
     },
     {
-      name: 'Trần Thị B',
+      name: 'Minh Quân | Đức Lương | Khoa',
       role: 'CTO & Co-Founder', 
       major: 'Software Engineering',
       avatar: '/team/member2.jpg',
@@ -65,7 +65,7 @@ const AboutUsPage: React.FC = () => {
       color: 'from-blue-500 to-cyan-500'
     },
     {
-      name: 'Lê Văn C',
+      name: 'Cường',
       role: 'Head of Design',
       major: 'Digital Arts & Design',
       avatar: '/team/member3.jpg', 
@@ -74,7 +74,7 @@ const AboutUsPage: React.FC = () => {
       color: 'from-purple-500 to-pink-500'
     },
     {
-      name: 'Phạm Thị D',
+      name: 'Duy Thịnh',
       role: 'Marketing Director',
       major: 'Digital Marketing',
       avatar: '/team/member4.jpg',
@@ -89,7 +89,7 @@ const AboutUsPage: React.FC = () => {
     {
       title: 'Inception',
       date: '2024 Q1',
-      description: 'MOSAIC was born from a class project in EXE202 - Entrepreneurship course at FPU',
+      description: 'MOSAIC was born from a class project in EXE101 - Entrepreneurship course at FPTU',
       icon: <BulbOutlined />,
       color: '#faad14'
     },

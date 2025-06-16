@@ -30,10 +30,10 @@ const { TabPane } = Tabs;
 
 // Da Nang images
 const daNangImages = [
-  '/assets/destinations/danang/banner-1.jpg',
-  '/assets/destinations/danang/banner-2.jpg',
-  '/assets/destinations/danang/banner-3.jpg',
-  '/assets/destinations/danang/banner-4.jpg',
+  '/assets/destinations/danang/golden-bridge.jpg',
+  '/assets/destinations/danang/marble-mountains.jpg',
+  '/assets/destinations/danang/my-khe-beach.jpg',
+  '/assets/destinations/danang/son-tra.jpg',
 ];
 
 // Attractions data

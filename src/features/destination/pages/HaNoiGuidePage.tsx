@@ -30,10 +30,10 @@ const { TabPane } = Tabs;
 
 // Hanoi images with more diverse and authentic representations
 const hanoiImages = [
-  '/assets/destinations/hanoi/banner-1.jpg', // Hoan Kiem Lake with red bridge
-  '/assets/destinations/hanoi/banner-2.jpg', // Old Quarter street scene
-  '/assets/destinations/hanoi/banner-3.jpg', // Temple of Literature
-  '/assets/destinations/hanoi/banner-4.jpg', // Ho Chi Minh Mausoleum
+  '/assets/destinations/hanoi/ho-chi-minh-mausoleum.jpg', // Hoan Kiem Lake with red bridge
+  '/assets/destinations/hanoi/opera-house.jpg', // Old Quarter street scene
+  '/assets/destinations/hanoi/temple-literature.jpg', // Temple of Literature
+  '/assets/destinations/hanoi/old-quarter.jpg', // Ho Chi Minh Mausoleum
 ];
 
 // Hanoi attractions data with authentic local information
