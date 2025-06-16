@@ -23,6 +23,7 @@ import {
   SearchOutlined, 
   CloseCircleOutlined, 
   SortAscendingOutlined,
+  EnvironmentOutlined,
 } from '@ant-design/icons';
 import { motion, AnimatePresence } from 'framer-motion';
 import MainLayout from '@/components/layout/MainLayout';
@@ -32,24 +33,35 @@ import ProductsGrid from '../components/ProductsGrid';
 import type { ProductResponse } from '@/types/product.types';
 import { useCart } from '@/contexts/CartContext';
 import type { UUID } from 'crypto';
-// ✅ Thêm import formatVND để đảm bảo formatter đúng
 import { formatVND } from '@/utils/formatters';
 
 const { Title, Text } = Typography;
 const { Panel } = Collapse;
 const { Option } = Select;
 
-// ✅ Global formatter override để đảm bảo mọi component con sử dụng VND
-if (typeof window !== 'undefined') {
-  // Override formatCurrency globally
+// Available regions for filtering
+const regions = [
+  { id: 'b9f6eb71-6e9b-41a4-af6f-0dd59543afa6', name: 'Hà Nội', nameEn: 'Hanoi' },
+  { id: 'fb6aade5-1e65-49b0-8f3a-3ea10f8022d3', name: 'Hồ Chí Minh', nameEn: 'Ho Chi Minh City' },
+  { id: 'b3287fef-5ef1-48c1-85d9-bce90fc0111f', name: 'Đà Nẵng', nameEn: 'Da Nang' },
+  { id: 'dc7bfe72-0d2d-4e96-8f22-4f1454b633bf', name: 'Khánh Hòa', nameEn: 'Khanh Hoa' },
+  { id: '6fd8f36c-1a6e-4f60-b1a0-d8769303ddfd', name: 'Quảng Ninh', nameEn: 'Quang Ninh' },
+];
+
+interface ProductFilters {
+  page: number;
+  size: number;
+  sort: string;
+  keyword?: string;
+  regionId?: string;
+  featured?: boolean;
+  active?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (window as any).formatCurrency = formatVND;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (window as any).formatVND = formatVND;
+  [key: string]: any;
 }
 
 const ProductsPage: React.FC = () => {
-  const { t } = useTranslation(['product', 'common']);
+  const { t, i18n } = useTranslation(['product', 'common']);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -64,18 +76,6 @@ const ProductsPage: React.FC = () => {
     sort: 'createdAt,desc',
     ...filters
   });
-  
-  // Define type for filters (simplified - no regionId)
-  interface ProductFilters {
-    page: number;
-    size: number;
-    sort: string;
-    keyword?: string;
-    featured?: boolean;
-    active?: boolean;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [key: string]: any;
-  }
   
   // Parse query parameters on mount
   useEffect(() => {
@@ -169,6 +169,17 @@ const ProductsPage: React.FC = () => {
     setLocalFilters(prev => ({ ...prev, [key]: value, page: 0 }));
   };
   
+  // Add/remove region filter
+  const toggleRegionFilter = (regionId: string) => {
+    const updatedFilters = { 
+      ...filters, 
+      regionId: filters.regionId === regionId ? undefined : regionId,
+      page: 0 
+    };
+    dispatch(setFilters(updatedFilters));
+    updateURLParams(updatedFilters);
+  };
+  
   // Add/remove active filter
   const toggleActiveFilter = (active: boolean) => {
     const updatedFilters = { 
@@ -193,7 +204,7 @@ const ProductsPage: React.FC = () => {
   
   const { addToCart } = useCart();
   
-  // ✅ Enhanced add to cart với price formatting
+  // Enhanced add to cart với price formatting
   const handleAddToCart = async (product: ProductResponse) => {
     try {
       await addToCart({
@@ -201,7 +212,6 @@ const ProductsPage: React.FC = () => {
         quantity: 1,
       }, product);
       
-      // Show success message with VND price
       message.success({
         content: (
           <span>
@@ -218,7 +228,7 @@ const ProductsPage: React.FC = () => {
     }
   };
   
-  // ✅ Enhanced add to wishlist với price formatting
+  // Enhanced add to wishlist với price formatting
   const handleAddToWishlist = (product: ProductResponse) => {
     message.success({
       content: (
@@ -236,9 +246,16 @@ const ProductsPage: React.FC = () => {
   const getActiveFiltersCount = () => {
     let count = 0;
     if (filters.keyword) count++;
+    if (filters.regionId) count++;
     if (filters.featured !== undefined) count++;
     if (filters.active !== undefined) count++;
     return count;
+  };
+
+  // Get region name by ID
+  const getRegionNameById = (regionId: string) => {
+    const region = regions.find(r => r.id === regionId);
+    return region ? (i18n.language === 'vi' ? region.name : region.nameEn) : regionId;
   };
   
   return (
@@ -254,7 +271,7 @@ const ProductsPage: React.FC = () => {
         />
         
         <Row gutter={[24, 24]}>
-          {/* Desktop Filters - Left Sidebar (Ultra Simplified) */}
+          {/* Desktop Filters - Left Sidebar */}
           <Col xs={0} lg={6} className="hidden lg:block">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
               <Title level={4} className="mb-4 dark:text-white">
@@ -273,6 +290,27 @@ const ProductsPage: React.FC = () => {
                   onChange={(e) => handleFilterChange('keyword', e.target.value)}
                   onPressEnter={() => applyFilters()}
                 />
+              </div>
+
+              {/* Region Filter */}
+              <div className="mb-6">
+                <Text strong className="block mb-3 dark:text-white">
+                  <EnvironmentOutlined className="mr-2" />
+                  {t('product:filters.region')}
+                </Text>
+                <Select
+                  placeholder={t('product:filters.select_region')}
+                  value={localFilters.regionId}
+                  onChange={(value) => handleFilterChange('regionId', value)}
+                  style={{ width: '100%' }}
+                  allowClear
+                >
+                  {regions.map(region => (
+                    <Option key={region.id} value={region.id}>
+                      {i18n.language === 'vi' ? region.name : region.nameEn}
+                    </Option>
+                  ))}
+                </Select>
               </div>
               
               {/* Quick Filters */}
@@ -385,6 +423,17 @@ const ProductsPage: React.FC = () => {
                         {t('product:search')}: {filters.keyword}
                       </Tag>
                     )}
+
+                    {filters.regionId && (
+                      <Tag 
+                        color="geekblue" 
+                        closable 
+                        onClose={() => toggleRegionFilter(filters.regionId!)}
+                        icon={<EnvironmentOutlined />}
+                      >
+                        {getRegionNameById(filters.regionId)}
+                      </Tag>
+                    )}
                     
                     {filters.featured !== undefined && (
                       <Tag 
@@ -418,7 +467,7 @@ const ProductsPage: React.FC = () => {
                 </div>
               )}
               
-              {/* Product Grid - ✅ Đã thêm formatter props */}
+              {/* Product Grid */}
               {loading ? (
                 <div className="py-12 flex justify-center">
                   <Spin size="large" />
@@ -455,7 +504,7 @@ const ProductsPage: React.FC = () => {
         </Row>
       </div>
       
-      {/* Mobile Filters Drawer (Ultra Simplified) */}
+      {/* Mobile Filters Drawer */}
       <AnimatePresence>
         {showFilters && (
           <motion.div
@@ -487,7 +536,7 @@ const ProductsPage: React.FC = () => {
               <Divider />
               
               {/* Mobile Filters Content */}
-              <Collapse defaultActiveKey={['1', '2']} className="bg-transparent border-0">
+              <Collapse defaultActiveKey={['1', '2', '3']} className="bg-transparent border-0">
                 {/* Search */}
                 <Panel 
                   header={<Text strong className="dark:text-white">{t('common:search.title')}</Text>} 
@@ -502,11 +551,38 @@ const ProductsPage: React.FC = () => {
                     className="mb-4"
                   />
                 </Panel>
+
+                {/* Region Filter */}
+                <Panel 
+                  header={
+                    <Text strong className="dark:text-white">
+                      <EnvironmentOutlined className="mr-2" />
+                      {t('product:filters.region')}
+                    </Text>
+                  } 
+                  key="2" 
+                  className="mb-2"
+                >
+                  <Select
+                    placeholder={t('product:filters.select_region')}
+                    value={localFilters.regionId}
+                    onChange={(value) => handleFilterChange('regionId', value)}
+                    style={{ width: '100%' }}
+                    allowClear
+                    className="mb-4"
+                  >
+                    {regions.map(region => (
+                      <Option key={region.id} value={region.id}>
+                        {i18n.language === 'vi' ? region.name : region.nameEn}
+                      </Option>
+                    ))}
+                  </Select>
+                </Panel>
                 
                 {/* Quick Filters */}
                 <Panel 
                   header={<Text strong className="dark:text-white">{t('product:filters.quick_filters')}</Text>} 
-                  key="2" 
+                  key="3" 
                   className="mb-2"
                 >
                   <div className="flex flex-col space-y-2 mb-4">

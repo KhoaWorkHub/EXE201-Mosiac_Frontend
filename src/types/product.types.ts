@@ -55,7 +55,7 @@ export interface ProductResponse {
   export interface ProductQueryParams {
     keyword?: string;
     categoryId?: string;
-    regionId?: string;
+    regionId?: string; // ✅ Added regionId filter
     minPrice?: number;
     maxPrice?: number;
     featured?: boolean;
