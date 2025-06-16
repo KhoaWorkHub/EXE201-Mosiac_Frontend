@@ -6,8 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import MainLayout from '@/components/layout/MainLayout';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { fetchFeaturedProducts, fetchLatestProducts } from '@/store/slices/productSlice';
-import ProductsGrid from '@/features/products/components/ProductsGrid';
+import { fetchLatestProducts } from '@/store/slices/productSlice';
+import ProductCarousel from '@/features/products/components/ProductCarousel';
 import type { ProductResponse } from '@/types/product.types';
 import { useCart } from '@/contexts/CartContext';
 import type { UUID } from 'crypto';
@@ -566,8 +566,7 @@ const EnhancedHeroSection: React.FC = () => {
   );
 };
 
-
-// Region sections (keeping existing)
+// Region sections
 const regions = [
   {
     id: 'north',
@@ -586,7 +585,7 @@ const regions = [
   }
 ];
 
-// Testimonials (keeping existing)
+// Testimonials
 const testimonials = [
   {
     id: 1,
@@ -611,7 +610,7 @@ const testimonials = [
   }
 ];
 
-// Animation variants (keeping existing)
+// Animation variants
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
   visible: { 
@@ -631,7 +630,7 @@ const staggerContainer = {
   }
 };
 
-// Testimonial Card Component (keeping existing)
+// Testimonial Card Component
 interface TestimonialCardProps {
   testimonial: {
     id: number;
@@ -672,16 +671,13 @@ const HomePage: React.FC = () => {
   const { t } = useTranslation(['common', 'product']);
   const dispatch = useAppDispatch();
   const { 
-    featuredProducts, 
+    latestProducts, 
     loading 
   } = useAppSelector(state => state.products);
   
   useEffect(() => {
     // Fetch latest products (6 products)
     dispatch(fetchLatestProducts({ size: 6 }));
-    
-    // Fetch featured products (6 products)
-    dispatch(fetchFeaturedProducts({ size: 6 }));
   }, [dispatch]);
   
   // Handle add to cart
@@ -765,25 +761,28 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured Products Section */}
+      {/* Latest Products Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
             <div>
-              <Title level={2} className="mb-2 dark:text-white">{t('common:sections.featured_products.title')}</Title>
-              <Text className="text-gray-600 dark:text-gray-400">{t('common:sections.featured_products.subtitle')}</Text>
+              <Title level={2} className="mb-2 dark:text-white">{t('common:nav.new_arrivals')}</Title>
+              <Text className="text-gray-600 dark:text-gray-400">
+                {t('common:sections.featured_products.subtitle')}
+              </Text>
             </div>
-            <Link to="/products?featured=true">
+            <Link to="/products?sort=createdAt,desc">
               <Button type="link" className="font-semibold">
                 {t('common:actions.view_all')} <ArrowRightOutlined />
               </Button>
             </Link>
           </div>
           
-          <ProductsGrid 
-            products={featuredProducts} 
+          <ProductCarousel 
+            products={latestProducts} 
             loading={loading}
-            cols={4}
+            autoplay={true}
+            slidesToShow={4}
             onAddToCart={handleAddToCart}
             onAddToWishlist={handleAddToWishlist}
           />
