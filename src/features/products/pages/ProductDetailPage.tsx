@@ -41,7 +41,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import MainLayout from "@/components/layout/MainLayout";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchProductBySlug, fetchProducts } from "@/store/slices/productSlice";
-import { formatVND } from "@/utils/formatters"; // ✅ Đã thay đổi từ formatCurrency sang formatVND
+import { formatVND } from "@/utils/formatters";
 import ProductsGrid from "../components/ProductsGrid";
 import CartQuantityPicker from "@/components/cart/CartQuantityPicker";
 import AddToCartButton from "@/components/cart/AddToCartButton";
@@ -70,7 +70,7 @@ const ProductImageGallery: React.FC<{
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Auto-play functionalitys
+  // Auto-play functionality
   useEffect(() => {
     if (isAutoPlay && images.length > 1) {
       intervalRef.current = setInterval(() => {
@@ -527,7 +527,7 @@ const ProductDetailPage: React.FC = () => {
   // Get the current price (either variant price or product price)
   const getCurrentPrice = () => {
     if (selectedVariant) {
-      return selectedVariant.price;
+      return (currentProduct?.price || 0) + selectedVariant.priceAdjustment;
     }
     return currentProduct?.price || 0;
   };
@@ -671,8 +671,6 @@ const ProductDetailPage: React.FC = () => {
     );
   }
 
-  // Determine if the product is new (within 7 days)
-
   // Determine if the product is on sale
   const isOnSale = () => {
     return (
@@ -689,6 +687,19 @@ const ProductDetailPage: React.FC = () => {
       );
     }
     return 0;
+  };
+
+  // Color indicator helper
+  const getColorClass = (colorName: string) => {
+    const colorMap: Record<string, string> = {
+      'Đen': 'bg-black',
+      'Trắng': 'bg-white border-2 border-gray-300',
+      'Đỏ': 'bg-red-500',
+      'Xanh': 'bg-blue-500',
+      'Vàng': 'bg-yellow-500',
+      'Xanh lá': 'bg-green-500',
+    };
+    return colorMap[colorName] || 'bg-gray-400';
   };
 
   return (
@@ -748,7 +759,7 @@ const ProductDetailPage: React.FC = () => {
               >
                 {currentProduct.sku && (
                   <Text className="text-gray-500 dark:text-gray-400 text-sm">
-                    SKU: {selectedVariant?.sku || currentProduct.sku}
+                    SKU: {selectedVariant?.skuVariant || currentProduct.sku}
                   </Text>
                 )}
 
@@ -784,7 +795,7 @@ const ProductDetailPage: React.FC = () => {
                 </Text>
               </motion.div>
 
-              {/* Price - ✅ ĐÃ THAY ĐỔI TẠI ĐÂY */}
+              {/* Price */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -794,13 +805,13 @@ const ProductDetailPage: React.FC = () => {
                 {isOnSale() ? (
                   <div className="flex items-center">
                     <Title level={3} className="text-primary m-0">
-                      {formatVND(getCurrentPrice())} {/* ✅ Thay đổi từ formatCurrency sang formatVND */}
+                      {formatVND(getCurrentPrice())}
                     </Title>
                     <Text
                       delete
                       className="ml-3 text-gray-500 dark:text-gray-400 text-lg"
                     >
-                      {formatVND(currentProduct.originalPrice || 0)} {/* ✅ Thay đổi từ formatCurrency sang formatVND */}
+                      {formatVND(currentProduct.originalPrice || 0)}
                     </Text>
                     <Badge
                       count={`-${discountPercentage()}%`}
@@ -810,7 +821,7 @@ const ProductDetailPage: React.FC = () => {
                   </div>
                 ) : (
                   <Title level={3} className="text-primary m-0">
-                    {formatVND(getCurrentPrice())} {/* ✅ Thay đổi từ formatCurrency sang formatVND */}
+                    {formatVND(getCurrentPrice())}
                   </Title>
                 )}
               </motion.div>
@@ -831,7 +842,7 @@ const ProductDetailPage: React.FC = () => {
 
               <Divider className="my-6" />
 
-              {/* Variants */}
+              {/* Enhanced Variants Section */}
               {currentProduct.variants &&
                 currentProduct.variants.length > 0 && (
                   <motion.div
@@ -840,51 +851,146 @@ const ProductDetailPage: React.FC = () => {
                     transition={{ duration: 0.5, delay: 0.5 }}
                     className="mb-6"
                   >
-                    <Text strong className="block mb-3 dark:text-white">
-                      {t("product:product_details.variants")}:
-                    </Text>
-                    <div className="flex flex-wrap gap-2">
-                      {currentProduct.variants.map((variant) => (
-                        <Badge.Ribbon
-                          key={variant.id}
-                          text={
-                            !variant.active
-                              ? t("product:product_card.sold_out")
-                              : ""
-                          }
-                          color="red"
-                          style={{
-                            display: !variant.active ? "block" : "none",
-                          }}
-                        >
-                          <Button
-                            type={
-                              selectedVariant?.id === variant.id
-                                ? "primary"
-                                : "default"
-                            }
-                            className={`min-w-[80px] ${
-                              !variant.active && "opacity-60"
-                            }`}
-                            onClick={() => handleVariantSelect(variant)}
-                            disabled={!variant.active}
-                          >
-                            {variant.name}
-                          </Button>
-                        </Badge.Ribbon>
-                      ))}
-                      {selectedVariant && (
-                        <Button
-                          type="text"
-                          icon={<SwapOutlined />}
-                          onClick={() => setSelectedVariant(null)}
-                        >
-                          {t("product:product_details.reset_variant")}
-                        </Button>
-                      )}
-                    </div>
+                    {(() => {
+                      const groupedVariants = currentProduct.variants.reduce((acc, variant) => {
+                        if (!acc[variant.size]) {
+                          acc[variant.size] = {};
+                        }
+                        if (!acc[variant.size][variant.color]) {
+                          acc[variant.size][variant.color] = [];
+                        }
+                        acc[variant.size][variant.color].push(variant);
+                        return acc;
+                      }, {} as Record<string, Record<string, ProductVariantResponse[]>>);
+
+                      const sizes = Object.keys(groupedVariants).sort();
+                      const allColors = [...new Set(currentProduct.variants.map(v => v.color))];
+
+                      return (
+                        <div className="space-y-4">
+                          {/* Size Selection */}
+                          <div>
+                            <Text strong className="block mb-3 dark:text-white">
+                              {t("product:product_details.size")}:
+                            </Text>
+                            <div className="flex flex-wrap gap-2">
+                              {sizes.map((size) => {
+                                const sizeVariants = Object.values(groupedVariants[size]).flat();
+                                const hasStock = sizeVariants.some(v => v.active && v.stockQuantity > 0);
+                                const isSelected = selectedVariant && selectedVariant.size === size;
+                                
+                                return (
+                                  <Button
+                                    key={size}
+                                    type={isSelected ? "primary" : "default"}
+                                    className={`min-w-[60px] ${!hasStock ? "opacity-60" : ""}`}
+                                    disabled={!hasStock}
+                                    onClick={() => {
+                                      // Select first available variant for this size
+                                      const availableVariant = sizeVariants.find(v => v.active && v.stockQuantity > 0);
+                                      if (availableVariant) {
+                                        handleVariantSelect(availableVariant);
+                                      }
+                                    }}
+                                  >
+                                    {size}
+                                    {!hasStock && (
+                                      <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
+                                    )}
+                                  </Button>
+                                );
+                              })}
+                            </div>
+                          </div>
+
+                          {/* Color Selection */}
+                          <div>
+                            <Text strong className="block mb-3 dark:text-white">
+                              {t("product:product_details.color")}:
+                            </Text>
+                            <div className="flex flex-wrap gap-2">
+                              {allColors.map((color) => {
+                                const colorVariants = currentProduct.variants.filter(v => v.color === color);
+                                const hasStock = colorVariants.some(v => v.active && v.stockQuantity > 0);
+                                const isSelected = selectedVariant && selectedVariant.color === color;
+
+                                return (
+                                  <Button
+                                    key={color}
+                                    type={isSelected ? "primary" : "default"}
+                                    className={`min-w-[80px] flex items-center gap-2 ${!hasStock ? "opacity-60" : ""}`}
+                                    disabled={!hasStock}
+                                    onClick={() => {
+                                      // If we have a selected size, find variant with that size and this color
+                                      let targetVariant;
+                                      if (selectedVariant) {
+                                        targetVariant = currentProduct.variants.find(v => 
+                                          v.color === color && 
+                                          v.size === selectedVariant.size && 
+                                          v.active && 
+                                          v.stockQuantity > 0
+                                        );
+                                      }
+                                      
+                                      // If no target variant found, find any available variant with this color
+                                      if (!targetVariant) {
+                                        targetVariant = colorVariants.find(v => v.active && v.stockQuantity > 0);
+                                      }
+                                      
+                                      if (targetVariant) {
+                                        handleVariantSelect(targetVariant);
+                                      }
+                                    }}
+                                  >
+                                    <div className={`w-4 h-4 rounded-full ${getColorClass(color)}`}></div>
+                                    {color}
+                                    {!hasStock && (
+                                      <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
+                                    )}
+                                  </Button>
+                                );
+                              })}
+                            </div>
+                          </div>
+
+                          {/* Selected Variant Info */}
+                          {selectedVariant && (
+                            <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                              <div className="flex justify-between items-center">
+                                <div>
+                                  <Text strong className="dark:text-white">
+                                    {t("product:product_details.selected_variant")}: {selectedVariant.size} - {selectedVariant.color}
+                                  </Text>
+                                  <br />
+                                  <Text className="text-sm text-gray-600 dark:text-gray-300">
+                                    SKU: {selectedVariant.skuVariant}
+                                  </Text>
+                                  <br />
+                                  <Text className="text-sm">
+                                    <span className={selectedVariant.stockQuantity > 0 ? "text-green-600" : "text-red-600"}>
+                                      {selectedVariant.stockQuantity > 0 
+                                        ? `${selectedVariant.stockQuantity} ${t("product:product_details.in_stock")}`
+                                        : t("product:product_details.out_of_stock")
+                                      }
+                                    </span>
+                                  </Text>
+                                </div>
+                                <Button
+                                  type="text"
+                                  icon={<SwapOutlined />}
+                                  onClick={() => setSelectedVariant(null)}
+                                  className="flex items-center"
+                                >
+                                  {t("product:product_details.reset_variant")}
+                                </Button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })()}
                   </motion.div>
-                )}
+              )}
 
               {/* Quantity & Add to Cart */}
               <motion.div

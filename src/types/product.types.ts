@@ -30,15 +30,17 @@ export interface ProductResponse {
       qrImageUrl: string;
       qrData: string;
       redirectUrl: string;
-    };
+    } | null;
   }
   
   export interface ProductVariantResponse {
     id: string;
     name: string;
-    price: number;
+    size: string;
+    color: string;
+    priceAdjustment: number;
     stockQuantity: number;
-    sku: string;
+    skuVariant: string;
     active: boolean;
   }
   
@@ -46,6 +48,7 @@ export interface ProductResponse {
     id: string;
     imageUrl: string;
     altText: string;
+    displayOrder: number;
     isPrimary: boolean;
   }
   
