@@ -11,13 +11,450 @@ import {
   EyeOutlined,
   HeartOutlined,
   ShareAltOutlined,
-  RocketOutlined,
-  CrownOutlined
 } from '@ant-design/icons';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import MainLayout from '@/components/layout/MainLayout';
 
 const { Title, Text, Paragraph } = Typography;
+
+// Hero Section Component
+const HeroSection: React.FC = () => {
+  const { t, i18n } = useTranslation(['destinationdanang', 'destinationhanoi', 'destinationhcm', 'destinationkhanhhoa', 'destinationquangninh', 'common']);
+  const [currentSlide, setCurrentSlide] = React.useState(0);
+  const [isPlaying, setIsPlaying] = React.useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  React.useRef<any>(null);
+
+  // Enhanced destinations data with product associations
+  const destinations = [
+    {
+      id: 'quangninh',
+      title: 'Quảng Ninh',
+      titleVi: 'Quảng Ninh',
+      description: 'destinationquangninh:overview.intro',
+      image: '/assets/destinations/quangninh/daotiptop.png',
+      url: '/destinations/quangninh',
+      productUrl: '/products?region=quangninh',
+      date: '2025-06-14',
+      region: 'Northeast Vietnam',
+      regionVi: 'Đông Bắc Việt Nam',
+      color: '#64748b',
+      gradient: 'from-slate-700 via-stone-700 to-slate-800',
+      overlayGradient: 'from-slate-900/80 via-stone-900/60 to-transparent',
+      featured: true,
+      rating: 4.9,
+      icon: '🗿',
+      views: '2.5K',
+      likes: '1.2K',
+      specialty: 'Limestone Karsts',
+      aoMauSac: 'Xanh Thiên Thanh',
+      aoMauSacEn: 'Sky Blue',
+      aoStyle: 'Elegant Traditional',
+      aoPrice: '$299'
+    },
+    {
+      id: 'khanhhoa',
+      title: 'Khánh Hòa',
+      titleVi: 'Khánh Hòa',
+      description: 'destinationkhanhhoa:overview.intro',
+      image: '/assets/destinations/khanhhoa/biennhatrang.png',
+      url: '/destinations/khanhhoa',
+      productUrl: '/products?region=khanhhoa',
+      date: '2025-06-14',
+      region: 'South Central Coast',
+      regionVi: 'Duyên Hải Nam Trung Bộ',
+      color: '#0891b2',
+      gradient: 'from-cyan-600 via-blue-600 to-teal-700',
+      overlayGradient: 'from-cyan-900/80 via-blue-900/60 to-transparent',
+      featured: false,
+      rating: 4.9,
+      icon: '🌊',
+      views: '3.1K',
+      likes: '1.8K',
+      specialty: 'Coastal Paradise',
+      aoMauSac: 'Xanh Biển',
+      aoMauSacEn: 'Ocean Blue',
+      aoStyle: 'Flowing Coastal',
+      aoPrice: '$269'
+    },
+    {
+      id: 'hcm',
+      title: 'Ho Chi Minh City',
+      titleVi: 'TP. Hồ Chí Minh',
+      description: 'destinationhcm:overview.intro',
+      image: '/assets/destinations/hcm/landmark-81.jpg',
+      url: '/destinations/hcm',
+      productUrl: '/products?region=hcm',
+      date: '2025-02-10',
+      region: 'Southern Vietnam',
+      regionVi: 'Miền Nam Việt Nam',
+      color: '#dc2626',
+      gradient: 'from-red-600 via-orange-600 to-pink-600',
+      overlayGradient: 'from-red-900/80 via-orange-900/60 to-transparent',
+      featured: false,
+      rating: 4.9,
+      icon: '🏙️',
+      views: '4.7K',
+      likes: '2.3K',
+      specialty: 'Urban Energy',
+      aoMauSac: 'Đỏ Rực',
+      aoMauSacEn: 'Vibrant Red',
+      aoStyle: 'Modern Chic',
+      aoPrice: '$329'
+    },
+    {
+      id: 'danang',
+      title: 'Da Nang',
+      titleVi: 'Đà Nẵng',
+      description: 'destinationdanang:overview.intro',
+      image: '/assets/destinations/danang/danangcity.jpg',
+      url: '/destinations/danang',
+      productUrl: '/products?region=danang',
+      date: '2025-02-15',
+      region: 'Central Vietnam',
+      regionVi: 'Miền Trung Việt Nam',
+      color: '#0ea5e9',
+      gradient: 'from-sky-600 via-blue-600 to-indigo-600',
+      overlayGradient: 'from-sky-900/80 via-blue-900/60 to-transparent',
+      featured: false,
+      rating: 4.7,
+      icon: '🏖️',
+      views: '3.8K',
+      likes: '1.9K',
+      specialty: 'Beach Culture',
+      aoMauSac: 'Xanh Dương',
+      aoMauSacEn: 'Azure Blue',
+      aoStyle: 'Breezy Coastal',
+      aoPrice: '$289'
+    },
+    {
+      id: 'hanoi',
+      title: 'Hanoi',
+      titleVi: 'Hà Nội',
+      description: 'destinationhanoi:overview.intro',
+      image: '/assets/destinations/hanoi/ho-chi-minh-mausoleum.jpg',
+      url: '/destinations/hanoi',
+      productUrl: '/products?region=hanoi',
+      date: '2025-02-20',
+      region: 'Northern Vietnam',
+      regionVi: 'Miền Bắc Việt Nam',
+      color: '#d97706',
+      gradient: 'from-amber-600 via-yellow-600 to-orange-600',
+      overlayGradient: 'from-amber-900/80 via-yellow-900/60 to-transparent',
+      featured: false,
+      rating: 4.8,
+      icon: '🏛️',
+      views: '4.2K',
+      likes: '2.1K',
+      specialty: 'Cultural Heritage',
+      aoMauSac: 'Vàng Hoàng Gia',
+      aoMauSacEn: 'Royal Gold',
+      aoStyle: 'Regal Traditional',
+      aoPrice: '$349'
+    }
+  ];
+
+  // Auto-play functionality
+  React.useEffect(() => {
+    if (!isPlaying) return;
+    
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => {
+        const nextSlide = (prev + 1) % destinations.length;
+        return nextSlide;
+      });
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isPlaying, destinations.length]);
+
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
+
+  // Get current destination
+  const currentDestination = destinations[currentSlide];
+
+  // Floating elements animation
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const FloatingElements = ({ destination }: { destination: any }) => (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {Array.from({ length: 15 }).map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute text-white/20 text-2xl md:text-4xl"
+          animate={{
+            y: [0, -30, 0],
+            x: [0, Math.sin(i * 0.5) * 20, 0],
+            rotate: [0, 10, 0],
+            scale: [1, 1.2, 1],
+            opacity: [0.1, 0.3, 0.1]
+          }}
+          transition={{
+            duration: Math.random() * 8 + 6,
+            repeat: Infinity,
+            delay: Math.random() * 4,
+            ease: "easeInOut"
+          }}
+          style={{
+            left: Math.random() * 100 + '%',
+            top: Math.random() * 100 + '%'
+          }}
+        >
+          {destination.icon}
+        </motion.div>
+      ))}
+    </div>
+  );
+
+  return (
+    <section className="relative overflow-hidden">
+      <div className="relative h-[85vh] md:h-[90vh]">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentSlide}
+            className="absolute inset-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          >
+            {/* Background Image with Parallax Effect */}
+            <motion.div
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{ 
+                backgroundImage: `url(${currentDestination.image})`,
+              }}
+              animate={{
+                scale: [1, 1.1],
+              }}
+              transition={{ duration: 4, ease: "linear" }}
+            />
+
+            {/* Dynamic Gradient Overlay */}
+            <div className={`absolute inset-0 bg-gradient-to-r ${currentDestination.overlayGradient}`} />
+            
+            {/* Floating Elements */}
+            <FloatingElements destination={currentDestination} />
+
+            {/* Content */}
+            <div className="relative z-10 h-full flex items-center">
+              <div className="container mx-auto px-4 md:px-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                  
+                  {/* Left Column - Destination Info */}
+                  <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className="text-white"
+                  >
+                    {/* Destination Badge */}
+                    <motion.div
+                      className="inline-flex items-center mb-4 md:mb-6"
+                      animate={{
+                        scale: [1, 1.05, 1],
+                        rotate: [0, 2, 0]
+                      }}
+                      transition={{ duration: 3, repeat: Infinity }}
+                    >
+                      <div className={`bg-gradient-to-r ${currentDestination.gradient} px-4 py-2 rounded-full flex items-center shadow-2xl backdrop-blur-sm border border-white/20`}>
+                        <span className="text-2xl mr-2">{currentDestination.icon}</span>
+                        <span className="font-bold text-sm md:text-base">
+                          {currentDestination.specialty}
+                        </span>
+                      </div>
+                    </motion.div>
+
+                    {/* Title */}
+                    <Title 
+                      level={1} 
+                      className="text-white mb-4 md:mb-6 text-4xl md:text-6xl lg:text-7xl font-bold leading-tight"
+                      style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}
+                    >
+                      {i18n.language === 'vi' ? currentDestination.titleVi : currentDestination.title}
+                    </Title>
+
+                    {/* Description */}
+                    <Paragraph 
+                      className="text-gray-200 text-lg md:text-xl mb-6 md:mb-8 leading-relaxed max-w-2xl"
+                      style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.6)' }}
+                    >
+                      {t(currentDestination.description)}
+                    </Paragraph>
+
+                    {/* Stats */}
+                    <div className="flex flex-wrap gap-4 mb-6 md:mb-8">
+                      <div className="bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 flex items-center border border-white/20">
+                        <StarFilled className="text-yellow-400 mr-2" />
+                        <span className="font-bold">{currentDestination.rating}</span>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 flex items-center border border-white/20">
+                        <EyeOutlined className="text-blue-400 mr-2" />
+                        <span className="font-bold">{currentDestination.views}</span>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 flex items-center border border-white/20">
+                        <EnvironmentOutlined className="text-green-400 mr-2" />
+                        <span className="text-sm">
+                          {i18n.language === 'vi' ? currentDestination.regionVi : currentDestination.region}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* CTA Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <Link to={currentDestination.url}>
+                        <Button
+                          type="primary"
+                          size="large"
+                          className={`bg-gradient-to-r ${currentDestination.gradient} border-none hover:shadow-2xl transition-all duration-300 h-12 px-8`}
+                          icon={<CompassOutlined className="text-lg" />}
+                        >
+                          <span className="ml-2 font-semibold">
+                            {t('common:actions.explore')} {i18n.language === 'vi' ? currentDestination.titleVi : currentDestination.title}
+                          </span>
+                        </Button>
+                      </Link>
+                      
+                      <Link to={currentDestination.productUrl}>
+                        <Button
+                          size="large"
+                          className="bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/30 backdrop-blur-sm transition-all duration-300 h-12 px-8"
+                          icon={<FireOutlined className="text-lg" />}
+                        >
+                          <span className="ml-2 font-semibold">
+                            {t('common:actions.shop_now')}
+                          </span>
+                        </Button>
+                      </Link>
+                    </div>
+                  </motion.div>
+
+                  {/* Right Column - Áo Dài Showcase */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                    className="flex justify-center lg:justify-end"
+                  >
+                    <Card
+                      className="bg-white/10 backdrop-blur-lg border-white/20 shadow-2xl max-w-sm w-full"
+                      bodyStyle={{ padding: '24px' }}
+                    >
+                      {/* Áo Dài Preview */}
+                      <div className="text-center mb-6">
+                        <motion.div
+                          className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-white/20 to-white/5 flex items-center justify-center shadow-2xl"
+                          animate={{
+                            rotate: [0, 360],
+                            scale: [1, 1.05, 1]
+                          }}
+                          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                        >
+                          <span className="text-6xl">👘</span>
+                        </motion.div>
+                        
+                        <Title level={4} className="text-white mb-2">
+                          Áo Dài {i18n.language === 'vi' ? currentDestination.titleVi : currentDestination.title}
+                        </Title>
+                        
+                        <Text className="text-gray-300 block mb-4">
+                          {i18n.language === 'vi' ? currentDestination.aoMauSac : currentDestination.aoMauSacEn}
+                        </Text>
+                        
+                        <div className="flex justify-center gap-2 mb-4">
+                          <Tag color="processing" className="border-white/20">
+                            {currentDestination.aoStyle}
+                          </Tag>
+                          <Tag color="success" className="border-white/20">
+                            Premium Silk
+                          </Tag>
+                        </div>
+                        
+                        <div className="flex justify-between items-center">
+                          <Text className="text-white/80">
+                            Starting from
+                          </Text>
+                          <Title level={3} className="text-white m-0">
+                            {currentDestination.aoPrice}
+                          </Title>
+                        </div>
+                      </div>
+
+                      {/* Quick Preview Button */}
+                      <Link to={currentDestination.productUrl}>
+                        <Button
+                          type="primary"
+                          block
+                          size="large"
+                          className="bg-white/20 border-white/30 text-white hover:bg-white/30 hover:border-white/40 backdrop-blur-sm"
+                          icon={<FireOutlined />}
+                        >
+                          {t('common:actions.view_collection')}
+                        </Button>
+                      </Link>
+                    </Card>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Custom Navigation */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+          <div className="flex items-center gap-4 bg-black/20 backdrop-blur-lg rounded-full px-6 py-3 border border-white/20">
+            {/* Play/Pause Button */}
+            <Button
+              type="text"
+              size="large"
+              className="text-white hover:text-white/80 hover:bg-white/10 rounded-full p-2"
+              icon={<CompassOutlined className={`text-xl ${isPlaying ? 'opacity-100' : 'opacity-50'}`} />}
+              onClick={togglePlayPause}
+            />
+
+            {/* Dots Navigation */}
+            <div className="flex gap-2">
+              {destinations.map((_, index) => (
+                <motion.button
+                  key={index}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    currentSlide === index
+                      ? 'bg-white shadow-lg'
+                      : 'bg-white/40 hover:bg-white/60'
+                  }`}
+                  onClick={() => setCurrentSlide(index)}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                />
+              ))}
+            </div>
+
+            {/* Slide Counter */}
+            <div className="text-white/80 text-sm font-medium">
+              {currentSlide + 1} / {destinations.length}
+            </div>
+          </div>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20 z-20">
+          <motion.div
+            className="h-full bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500"
+            animate={{
+              width: isPlaying ? ['0%', '100%'] : '0%'
+            }}
+            transition={{
+              duration: 4,
+              ease: "linear",
+              repeat: Infinity
+            }}
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
 
 // Enhanced tour guides list with Quảng Ninh featured
 const tourGuides = [
@@ -146,16 +583,6 @@ const BlogPage: React.FC = () => {
     }
   };
 
-  const featuredVariants = {
-    hidden: { scale: 0.9, opacity: 0, y: 50 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
-    }
-  };
-
   const cardHoverVariants = {
     rest: { y: 0, scale: 1 },
     hover: { 
@@ -165,249 +592,16 @@ const BlogPage: React.FC = () => {
     }
   };
 
-  // Get the featured destination (Quảng Ninh)
-  const featuredDestination = tourGuides.find(guide => guide.featured);
+  // Get the other destinations (excluding featured)
   const otherDestinations = tourGuides.filter(guide => !guide.featured);
   
   return (
     <MainLayout>
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         {/* Enhanced Hero Section */}
-        <section className="relative py-20 md:py-28 px-4 overflow-hidden">
-          {/* Animated background elements */}
-          <div className="absolute inset-0">
-            {Array.from({ length: 20 }).map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-2 h-2 bg-blue-400/20 rounded-full"
-                animate={{
-                  y: [0, -100, 0],
-                  x: [0, Math.sin(i) * 50, 0],
-                  scale: [0, 1, 0],
-                  opacity: [0, 0.6, 0]
-                }}
-                transition={{
-                  duration: Math.random() * 8 + 6,
-                  repeat: Infinity,
-                  delay: Math.random() * 5,
-                  ease: "easeInOut"
-                }}
-                style={{
-                  left: Math.random() * 100 + '%',
-                  top: Math.random() * 100 + '%'
-                }}
-              />
-            ))}
-          </div>
-
-          <div className="container mx-auto text-center relative z-10">
-            <motion.div 
-              initial={{ opacity: 0, y: -30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="mb-8"
-            >
-              <div className="flex items-center justify-center mb-6">
-                <motion.div
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="w-20 h-20 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-2xl mr-4"
-                >
-                  <CompassOutlined className="text-white text-3xl" />
-                </motion.div>
-                <div className="text-left">
-                  <Title level={1} className="dark:text-white mb-2 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent text-4xl md:text-6xl font-bold">
-                    {t('common:nav.blog')}
-                  </Title>
-                  <Text className="text-xl md:text-2xl text-gray-600 dark:text-gray-300">
-                    Vietnam Travel Guides
-                  </Text>
-                </div>
-              </div>
-              
-              <Paragraph className="text-lg md:text-xl dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                Explore our comprehensive travel guides and discover the beauty of Vietnam's most captivating destinations. 
-                From limestone karsts to pristine beaches, cultural heritage to urban energy.
-              </Paragraph>
-            </motion.div>
-            
-            {/* Stats Section */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-12"
-            >
-              {[
-                { number: '5+', label: 'Destinations', icon: '🌍' },
-                { number: '15K+', label: 'Travelers', icon: '👥' },
-                { number: '4.8', label: 'Avg Rating', icon: '⭐' },
-                { number: '50+', label: 'Attractions', icon: '🎯' }
-              ].map((stat, i) => (
-                <motion.div
-                  key={i}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-4 md:p-6 shadow-lg"
-                >
-                  <div className="text-2xl md:text-3xl mb-2">{stat.icon}</div>
-                  <div className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">{stat.number}</div>
-                  <div className="text-sm md:text-base text-gray-600 dark:text-gray-300">{stat.label}</div>
-                </motion.div>
-              ))}
-            </motion.div>
-        </div>
-        </section>
+        <HeroSection />
         
         <Divider className="my-8 md:my-12" />
-
-        {/* Featured Destination - Quảng Ninh with Limestone Theme */}
-        {featuredDestination && (
-          <section className="px-4 mb-16 md:mb-24">
-            <div className="container mx-auto">
-              <motion.div
-                variants={featuredVariants}
-                initial="hidden"
-                animate="visible"
-                className="mb-8 md:mb-12"
-              >
-                <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8">
-                  <div className="flex items-center mb-4 md:mb-0">
-                    <motion.div
-                      animate={{ 
-                        rotate: [0, 5, -5, 0],
-                        scale: [1, 1.1, 1]
-                      }}
-                      transition={{ duration: 4, repeat: Infinity }}
-                      className="text-4xl md:text-5xl mr-4"
-                    >
-                      🗿
-                    </motion.div>
-                    <div>
-                      <Title level={2} className="dark:text-white m-0 text-2xl md:text-3xl">
-                        Featured Limestone Wonder
-                      </Title>
-                      <Text className="text-base md:text-lg text-gray-600 dark:text-gray-300">
-                        UNESCO World Heritage Site
-                      </Text>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-2 md:gap-3">
-                    <Tag color="volcano" className="text-sm md:text-base px-3 py-1 rounded-full">
-                      <CrownOutlined className="mr-1" />
-                      FEATURED
-                    </Tag>
-                    {featuredDestination.isNew && (
-                      <Tag color="green" className="text-sm md:text-base px-3 py-1 rounded-full">
-                        <RocketOutlined className="mr-1" />
-                        NEW
-                      </Tag>
-                    )}
-                  </div>
-                </div>
-                
-                <Link to={featuredDestination.url}>
-                  <motion.div
-                    whileHover={{ scale: 1.01, y: -5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Card 
-                      hoverable 
-                      className="overflow-hidden shadow-2xl border-4 border-slate-200 dark:border-slate-700 relative bg-gradient-to-br from-white to-slate-50 dark:from-gray-800 dark:to-slate-900"
-                      cover={
-                        <div className="h-64 md:h-96 lg:h-[500px] overflow-hidden relative">
-                          <img 
-                            src={featuredDestination.image} 
-                            alt={i18n.language === 'vi' ? featuredDestination.titleVi : featuredDestination.title} 
-                            className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                          />
-                          {/* Limestone gradient overlay */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
-                          
-                          {/* Animated limestone particles */}
-                          <div className="absolute inset-0">
-                            {Array.from({ length: 12 }).map((_, i) => (
-                              <motion.div
-                                key={i}
-                                className="absolute w-1 h-1 bg-white rounded-full opacity-60"
-                                animate={{
-                                  y: [100, -20],
-                                  x: [Math.random() * 100, Math.random() * 100],
-                                  scale: [0, 1, 0],
-                                  opacity: [0, 0.8, 0]
-                                }}
-                                transition={{
-                                  duration: Math.random() * 6 + 4,
-                                  repeat: Infinity,
-                                  delay: Math.random() * 3,
-                                  ease: "easeOut"
-                                }}
-                                style={{
-                                  left: Math.random() * 100 + '%',
-                                  top: Math.random() * 100 + '%'
-                                }}
-                              />
-                            ))}
-                          </div>
-                          
-                          {/* Featured badge */}
-                          <div className="absolute top-4 md:top-6 left-4 md:left-6">
-                            <motion.div 
-                              className={`bg-gradient-to-r ${featuredDestination.gradient} text-white px-4 py-2 rounded-full flex items-center font-bold shadow-lg backdrop-blur-sm`}
-                              animate={{ 
-                                boxShadow: [
-                                  '0 0 0 0 rgba(71, 85, 105, 0.4)',
-                                  '0 0 0 20px rgba(71, 85, 105, 0)',
-                                  '0 0 0 0 rgba(71, 85, 105, 0)'
-                                ]
-                              }}
-                              transition={{ duration: 2, repeat: Infinity }}
-                            >
-                              {featuredDestination.icon}
-                              <span className="ml-2 text-sm md:text-base">Featured</span>
-                            </motion.div>
-                          </div>
-
-                          {/* Stats badges */}
-                          <div className="absolute top-4 md:top-6 right-4 md:right-6 flex flex-col gap-2">
-                            <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-2 flex items-center text-sm md:text-base">
-                              <StarFilled className="text-yellow-500 mr-1" />
-                              <span className="font-bold text-gray-800">{featuredDestination.rating}</span>
-                            </div>
-                            <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-2 flex items-center text-sm">
-                              <EyeOutlined className="text-blue-500 mr-1" />
-                              <span className="font-bold text-gray-800">{featuredDestination.views}</span>
-                            </div>
-                          </div>
-
-                          {/* Content overlay */}
-                          <div className="absolute bottom-4 md:bottom-6 left-4 md:left-6 right-4 md:right-6 text-white">
-                            <Title level={2} className="text-white mb-2 text-xl md:text-3xl">
-                              {i18n.language === 'vi' ? featuredDestination.titleVi : featuredDestination.title}
-                            </Title>
-                            <Paragraph className="text-gray-200 text-base md:text-lg mb-4 line-clamp-2 md:line-clamp-3">
-                              {t(featuredDestination.description)}
-                            </Paragraph>
-                            <div className="flex flex-wrap gap-2 md:gap-3">
-                              <Tag color={featuredDestination.color} icon={<EnvironmentOutlined />} className="text-sm md:text-base px-3 py-1">
-                                {i18n.language === 'vi' ? featuredDestination.regionVi : featuredDestination.region}
-                              </Tag>
-                              <Tag color="green" icon={<CalendarOutlined />} className="text-sm md:text-base px-3 py-1">
-                                {new Date(featuredDestination.date).toLocaleDateString()}
-                              </Tag>
-                              <Tag color="blue" className="text-sm md:text-base px-3 py-1">
-                                {featuredDestination.specialty}
-                              </Tag>
-                            </div>
-                          </div>
-                        </div>
-                      }
-                    />
-                  </motion.div>
-                </Link>
-              </motion.div>
-            </div>
-          </section>
-        )}
 
         {/* Other Destinations Grid */}
         <section className="px-4 mb-16 md:mb-24">

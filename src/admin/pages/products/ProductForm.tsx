@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { 
   Form, Input, InputNumber, Select, Switch, Button, Upload, Card, message, 
   notification, Tabs, Space, Table, Popconfirm, Modal, Typography,
-  Row, Col, Tooltip 
+  Row, Col, Tooltip, Progress, Tag, Empty, Alert
 } from 'antd';
 import { 
   ArrowLeftOutlined, SaveOutlined, DeleteOutlined, 
   EditOutlined, LoadingOutlined, CloudUploadOutlined, EyeOutlined,
-  StarOutlined, StarFilled
+  StarOutlined, StarFilled, PlusOutlined, DragOutlined, CompressOutlined
 } from '@ant-design/icons';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -22,12 +22,13 @@ import {
   ProductVariantRequest,
   ProductVariantResponse,
 } from '@/admin/types';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Reorder } from 'framer-motion';
 import { RcFile, UploadFile } from 'antd/es/upload';
 import type { UploadFileStatus } from 'antd/es/upload/interface';
 
 const { Option } = Select;
 const { Title } = Typography;
+const { Dragger } = Upload;
 
 // Define available sizes for the UI (matches backend enum)
 const SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
@@ -41,6 +42,8 @@ const fadeInUp = {
 type CustomUploadFile = UploadFile & {
   imageId?: string;
   isPrimary?: boolean;
+  uploading?: boolean;
+  compressed?: boolean;
 };
 
 const ProductForm: React.FC = () => {
@@ -56,6 +59,7 @@ const ProductForm: React.FC = () => {
   const [regions, setRegions] = useState<RegionResponse[]>([]);
   const [imageFileList, setImageFileList] = useState<CustomUploadFile[]>([]);
   const [uploadLoading, setUploadLoading] = useState<boolean>(false);
+  const [batchUploadProgress, setBatchUploadProgress] = useState<number>(0);
   const [product, setProduct] = useState<ProductResponse | null>(null);
   const [variants, setVariants] = useState<ProductVariantResponse[]>([]);
   const [editingVariant, setEditingVariant] = useState<ProductVariantResponse | null>(null);
@@ -63,8 +67,11 @@ const ProductForm: React.FC = () => {
   const [previewVisible, setPreviewVisible] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState<string>('');
   const [previewTitle, setPreviewTitle] = useState<string>('');
+  const [dragOver, setDragOver] = useState<boolean>(false);
   
   const isEditing = !!id;
+  const maxImages = 10;
+  const maxFileSize = 5; // MB
   
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -106,6 +113,7 @@ const ProductForm: React.FC = () => {
               url: image.imageUrl,
               imageId: image.id,
               isPrimary: image.isPrimary,
+              thumbUrl: image.imageUrl,
             }));
             setImageFileList(fileList);
           }
@@ -123,17 +131,72 @@ const ProductForm: React.FC = () => {
     fetchInitialData();
   }, [id, form, isEditing, t]);
   
+  // Image compression function
+  const compressImage = async (file: RcFile): Promise<File> => {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      
+      img.onload = () => {
+        const maxSize = 1920;
+        let { width, height } = img;
+        
+        if (width > height) {
+          if (width > maxSize) {
+            height = (height * maxSize) / width;
+            width = maxSize;
+          }
+        } else {
+          if (height > maxSize) {
+            width = (width * maxSize) / height;
+            height = maxSize;
+          }
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        ctx?.drawImage(img, 0, 0, width, height);
+        
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              const compressedFile = new File([blob], file.name, {
+                type: file.type,
+                lastModified: Date.now(),
+              });
+              resolve(compressedFile);
+            } else {
+              resolve(file);
+            }
+          },
+          file.type,
+          0.8
+        );
+      };
+      
+      img.src = URL.createObjectURL(file);
+    });
+  };
+  
   const beforeUpload = (file: RcFile) => {
     const isImage = file.type.startsWith('image/');
     if (!isImage) {
       message.error(t('admin:validation.image_only'));
       return false;
     }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error(t('admin:validation.image_size'));
+    
+    const isLt5M = file.size / 1024 / 1024 < maxFileSize;
+    if (!isLt5M) {
+      message.error(`${t('admin:validation.image_size')} ${maxFileSize}MB`);
       return false;
     }
+    
+    if (imageFileList.length >= maxImages) {
+      message.error(`Maximum ${maxImages} images allowed`);
+      return false;
+    }
+    
     return true;
   };
   
@@ -143,7 +206,7 @@ const ProductForm: React.FC = () => {
     
     try {
       setUploadLoading(true);
-      onProgress({ percent: 30 });
+      onProgress({ percent: 20 });
       
       if (!isEditing || !id) {
         message.warning(t('admin:products.save_product_first'));
@@ -151,12 +214,16 @@ const ProductForm: React.FC = () => {
         return;
       }
       
+      onProgress({ percent: 40 });
+      
+      // Compress image
+      const compressedFile = await compressImage(file);
       onProgress({ percent: 60 });
       
       const uploadedImages = await AdminProductService.uploadProductImages(
         id,
-        [file],
-        'Product Image',
+        [compressedFile],
+        file.name.replace(/\.[^/.]+$/, ''),
         imageFileList.length === 0
       );
       
@@ -170,12 +237,77 @@ const ProductForm: React.FC = () => {
         url: uploadedImages[0].imageUrl,
         imageId: uploadedImages[0].id,
         isPrimary: uploadedImages[0].isPrimary,
+        thumbUrl: uploadedImages[0].imageUrl,
+        compressed: compressedFile.size < file.size,
       };
-      setImageFileList([...imageFileList, newImage]);
       
+      setImageFileList(prev => [...prev, newImage]);
       message.success(t('admin:products.image_upload_success'));
+      
     } catch (error) {
+      console.error('Image upload error:', error);
       onError(error);
+      message.error(t('admin:products.image_upload_error'));
+    } finally {
+      setUploadLoading(false);
+    }
+  };
+  
+  // Batch upload handler
+  const handleBatchUpload = async (files: File[]) => {
+    if (!isEditing || !id) {
+      message.warning(t('admin:products.save_product_first'));
+      return;
+    }
+    
+    if (imageFileList.length + files.length > maxImages) {
+      message.error(`Maximum ${maxImages} images allowed`);
+      return;
+    }
+    
+    setUploadLoading(true);
+    setBatchUploadProgress(0);
+    
+    try {
+      const processedFiles: File[] = [];
+      
+      // Compress all files
+      for (let i = 0; i < files.length; i++) {
+        setBatchUploadProgress((i / files.length) * 50);
+        const compressedFile = await compressImage(files[i] as RcFile);
+        processedFiles.push(compressedFile);
+      }
+      
+      setBatchUploadProgress(50);
+      
+      // Upload all files
+      const uploadedImages = await AdminProductService.uploadProductImages(
+        id,
+        processedFiles,
+        'Product Image',
+        imageFileList.length === 0
+      );
+      
+      setBatchUploadProgress(100);
+      
+      // Add to file list
+      const newImages: CustomUploadFile[] = uploadedImages.map((image, index) => ({
+        uid: image.id,
+        name: files[index].name,
+        status: 'done' as UploadFileStatus,
+        url: image.imageUrl,
+        imageId: image.id,
+        isPrimary: image.isPrimary,
+        thumbUrl: image.imageUrl,
+        compressed: processedFiles[index].size < files[index].size,
+      }));
+      
+      setImageFileList(prev => [...prev, ...newImages]);
+      message.success(`Successfully uploaded ${files.length} image(s)`);
+      
+      setTimeout(() => setBatchUploadProgress(0), 1000);
+      
+    } catch {
       message.error(t('admin:products.image_upload_error'));
     } finally {
       setUploadLoading(false);
@@ -204,7 +336,7 @@ const ProductForm: React.FC = () => {
   const handleDeleteImage = async (imageId: string) => {
     try {
       await AdminProductService.deleteProductImage(imageId);
-      setImageFileList(imageFileList.filter(image => image.imageId !== imageId));
+      setImageFileList(prev => prev.filter(image => image.imageId !== imageId));
       message.success(t('admin:products.image_delete_success'));
       
       if (id) {
@@ -228,14 +360,47 @@ const ProductForm: React.FC = () => {
       
       const updatedProduct = await AdminProductService.getProductById(id);
       setProduct(updatedProduct);
+      
       const updatedFileList = imageFileList.map(img => ({
         ...img,
         isPrimary: img.imageId === imageId
       }));
       setImageFileList(updatedFileList);
-    } catch (error) {
+    } catch {
       message.error(t('admin:products.primary_image_error'));
     }
+  };
+  
+  // Drag and drop handlers
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOver(false);
+    
+    const files = Array.from(e.dataTransfer.files);
+    const validFiles = files.filter(file => {
+      if (!file.type.startsWith('image/')) return false;
+      if (file.size > maxFileSize * 1024 * 1024) return false;
+      return true;
+    });
+    
+    if (validFiles.length > 0) {
+      handleBatchUpload(validFiles);
+    }
+  };
+  
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOver(true);
+  };
+  
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOver(false);
+  };
+  
+  // Reorder images
+  const handleReorderImages = (newOrder: CustomUploadFile[]) => {
+    setImageFileList(newOrder);
   };
   
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -287,7 +452,7 @@ const ProductForm: React.FC = () => {
     try {
       const values = await variantForm.validateFields();
       const variantData: ProductVariantRequest = {
-        size: values.size, // Send as-is, matching backend enum
+        size: values.size,
         color: values.color,
         priceAdjustment: values.priceAdjustment,
         stockQuantity: values.stockQuantity,
@@ -375,7 +540,7 @@ const ProductForm: React.FC = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       render: (_: any, record: ProductVariantResponse) => (
         <span>
-          {record.size} / {record.color}
+          {record.size} {record.color ? `/ ${record.color}` : ""}
         </span>
       ),
     },
@@ -443,10 +608,20 @@ const ProductForm: React.FC = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex flex-col items-center justify-center p-4"
+      className="flex flex-col items-center justify-center p-8"
     >
-      {uploadLoading ? <LoadingOutlined /> : <CloudUploadOutlined className="text-3xl" />}
-      <div className="mt-2 text-sm">{t('admin:actions.upload')}</div>
+      {uploadLoading ? <LoadingOutlined /> : <CloudUploadOutlined className="text-4xl mb-4" />}
+      <div className="text-lg font-medium mb-2">
+        {dragOver ? 'Drop images here' : 'Upload Product Images'}
+      </div>
+      <div className="text-sm text-gray-500 mb-4">
+        Drag & drop or click to select multiple images
+      </div>
+      <div className="flex gap-2 text-xs">
+        <Tag>Max {maxImages} images</Tag>
+        <Tag>Max {maxFileSize}MB each</Tag>
+        <Tag color="green">Auto-compress</Tag>
+      </div>
     </motion.div>
   );
   
@@ -679,114 +854,251 @@ const ProductForm: React.FC = () => {
                 <Space>
                   <CloudUploadOutlined />
                   {t('admin:products.images')}
-                  {product?.images?.length ? (
+                  {imageFileList.length > 0 && (
                     <span className="ml-2 px-2 py-1 bg-primary text-white rounded-full text-xs">
-                      {product.images.length}
+                      {imageFileList.length}
                     </span>
-                  ) : null}
+                  )}
                 </Space>
               ),
               children: (
                 <div className="space-y-6">
-                  <Typography.Paragraph className="text-gray-600 dark:text-gray-300">
-                    {t('admin:products.image_hint')}
-                  </Typography.Paragraph>
-                  
-                  <Upload
-                    listType="picture-card"
-                    fileList={imageFileList}
-                    onPreview={handlePreview}
-                    beforeUpload={beforeUpload}
-                    customRequest={handleImageUpload}
-                    multiple
-                    className="upload-list-inline"
+                  {/* Upload Progress */}
+                  {batchUploadProgress > 0 && (
+                    <div className="mb-4">
+                      <Progress
+                        percent={batchUploadProgress}
+                        status={batchUploadProgress === 100 ? 'success' : 'active'}
+                        format={percent => `${percent}% Uploaded`}
+                      />
+                    </div>
+                  )}
+
+                  {/* Enhanced Upload Area */}
+                  <div
+                    className={`transition-all duration-300 ${
+                      dragOver ? 'bg-blue-50 dark:bg-blue-900/20' : ''
+                    }`}
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
                   >
-                    {imageFileList.length >= 8 ? null : uploadButton}
-                  </Upload>
+                    <Dragger
+                      multiple
+                      accept="image/*"
+                      beforeUpload={beforeUpload}
+                      customRequest={handleImageUpload}
+                      showUploadList={false}
+                      disabled={uploadLoading || imageFileList.length >= maxImages}
+                      className="border-2 border-dashed hover:border-primary"
+                    >
+                      {uploadButton}
+                    </Dragger>
+                  </div>
                   
-                  {product?.images && product.images.length > 0 && (
-                    <div className="mt-8">
-                      <Title level={4} className="mb-4">
-                        {t('admin:products.manage_images')}
-                      </Title>
-                      
-                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {/* Upload Stats */}
+                  <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
+                    <span>{imageFileList.length} / {maxImages} images uploaded</span>
+                    <div className="flex gap-4">
+                      <span>
+                        {imageFileList.filter(img => img.isPrimary).length > 0 ? '✓' : '⚠'} Primary image set
+                      </span>
+                      <span>
+                        {imageFileList.filter(img => img.compressed).length} compressed
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Image Gallery */}
+                  {imageFileList.length > 0 ? (
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center">
+                        <Title level={4} className="mb-0">
+                          {t('admin:products.manage_images')} ({imageFileList.length})
+                        </Title>
+                        <Button
+                          type="primary"
+                          icon={<PlusOutlined />}
+                          disabled={imageFileList.length >= maxImages}
+                          onClick={() => {
+                            const input = document.createElement('input');
+                            input.type = 'file';
+                            input.multiple = true;
+                            input.accept = 'image/*';
+                            input.onchange = (e) => {
+                              const files = Array.from((e.target as HTMLInputElement).files || []);
+                              handleBatchUpload(files);
+                            };
+                            input.click();
+                          }}
+                        >
+                          Add More Images
+                        </Button>
+                      </div>
+
+                      <Reorder.Group
+                        values={imageFileList}
+                        onReorder={handleReorderImages}
+                        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+                      >
                         <AnimatePresence>
-                          {product.images.map((image) => (
-                            <motion.div
-                              key={image.id}
-                              initial={{ opacity: 0, scale: 0.8 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              exit={{ opacity: 0, scale: 0.8 }}
-                              className="relative group"
+                          {imageFileList.map((image) => (
+                            <Reorder.Item
+                              key={image.uid}
+                              value={image}
+                              dragListener={!image.uploading}
                             >
-                              <Card
-                                hoverable
-                                cover={
-                                  <div className="h-48 overflow-hidden">
-                                    <img
-                                      alt={image.altText || product.name}
-                                      src={image.imageUrl}
-                                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                                    />
-                                  </div>
-                                }
-                                className={`${image.isPrimary ? 'ring-2 ring-primary ring-offset-2' : ''}`}
+                              <motion.div
+                                layout
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                transition={{ duration: 0.3 }}
+                                className={`relative group bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 ${
+                                  image.uploading ? 'opacity-70' : ''
+                                } ${
+                                  image.isPrimary ? 'ring-2 ring-primary ring-offset-2' : ''
+                                }`}
                               >
-                                <div className="absolute top-2 right-2 flex gap-2">
+                                {/* Image */}
+                                <div className="aspect-square relative">
+                                  <img
+                                    src={image.url || image.thumbUrl}
+                                    alt={image.name}
+                                    className="w-full h-full object-cover"
+                                  />
+                                  
+                                  {/* Upload Progress Overlay */}
+                                  {image.uploading && (
+                                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                                      <div className="text-center text-white">
+                                        <LoadingOutlined className="text-2xl mb-2" />
+                                        <div className="text-sm">Uploading...</div>
+                                      </div>
+                                    </div>
+                                  )}
+                                  
+                                  {/* Primary Badge */}
                                   {image.isPrimary && (
-                                    <Tooltip title={t('admin:products.primary_image')}>
-                                      <StarFilled className="text-yellow-400 text-xl" />
-                                    </Tooltip>
+                                    <div className="absolute top-2 left-2">
+                                      <div className="bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                                        <StarFilled className="mr-1" />
+                                        Primary
+                                      </div>
+                                    </div>
+                                  )}
+                                  
+                                  {/* Compression Badge */}
+                                  {image.compressed && (
+                                    <div className="absolute top-2 right-2">
+                                      <Tooltip title="Compressed for optimization">
+                                        <div className="bg-green-500 text-white p-1 rounded-full">
+                                          <CompressOutlined className="text-xs" />
+                                        </div>
+                                      </Tooltip>
+                                    </div>
+                                  )}
+                                  
+                                  {/* Actions Overlay */}
+                                  {!image.uploading && (
+                                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                      <div className="flex gap-2">
+                                        <Tooltip title="Preview">
+                                          <Button
+                                            type="primary"
+                                            shape="circle"
+                                            size="small"
+                                            icon={<EyeOutlined />}
+                                            onClick={() => handlePreview(image)}
+                                          />
+                                        </Tooltip>
+                                        
+                                        <Tooltip title={image.isPrimary ? "Primary image" : "Set as primary"}>
+                                          <Button
+                                            type={image.isPrimary ? "primary" : "default"}
+                                            shape="circle"
+                                            size="small"
+                                            icon={image.isPrimary ? <StarFilled /> : <StarOutlined />}
+                                            onClick={() => !image.isPrimary && image.imageId && handleSetPrimaryImage(image.imageId)}
+                                            disabled={image.isPrimary}
+                                          />
+                                        </Tooltip>
+                                        
+                                        <Tooltip title="Delete">
+                                          <Button
+                                            type="primary"
+                                            danger
+                                            shape="circle"
+                                            size="small"
+                                            icon={<DeleteOutlined />}
+                                            onClick={() => {
+                                              Modal.confirm({
+                                                title: 'Delete Image',
+                                                content: 'Are you sure you want to delete this image?',
+                                                onOk: () => image.imageId && handleDeleteImage(image.imageId),
+                                              });
+                                            }}
+                                          />
+                                        </Tooltip>
+                                      </div>
+                                    </div>
+                                  )}
+                                  
+                                  {/* Drag Handle */}
+                                  {!image.uploading && (
+                                    <div className="absolute bottom-2 right-2 cursor-grab active:cursor-grabbing opacity-0 group-hover:opacity-100 transition-opacity">
+                                      <div className="bg-white/80 dark:bg-black/80 p-1 rounded">
+                                        <DragOutlined className="text-gray-600 dark:text-gray-400" />
+                                      </div>
+                                    </div>
                                   )}
                                 </div>
                                 
-                                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity duration-300 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100">
-                                  <Tooltip title={t('admin:actions.view')}>
-                                    <Button
-                                      type="primary"
-                                      shape="circle"
-                                      icon={<EyeOutlined />}
-                                      onClick={() => {
-                                        setPreviewImage(image.imageUrl);
-                                        setPreviewVisible(true);
-                                      }}
-                                    />
-                                  </Tooltip>
-                                  
-                                  {!image.isPrimary && (
-                                    <Tooltip title={t('admin:products.set_as_primary')}>
-                                      <Button
-                                        type="primary"
-                                        shape="circle"
-                                        icon={<StarOutlined />}
-                                        onClick={() => handleSetPrimaryImage(image.id)}
-                                      />
-                                    </Tooltip>
-                                  )}
-                                  
-                                  <Popconfirm
-                                    title={t('admin:products.image_delete_confirm')}
-                                    onConfirm={() => handleDeleteImage(image.id)}
-                                    okText={t('admin:actions.yes')}
-                                    cancelText={t('admin:actions.no')}
-                                  >
-                                    <Tooltip title={t('admin:actions.delete')}>
-                                      <Button
-                                        danger
-                                        shape="circle"
-                                        icon={<DeleteOutlined />}
-                                      />
-                                    </Tooltip>
-                                  </Popconfirm>
+                                {/* Image Info */}
+                                <div className="p-3">
+                                  <div className="flex justify-between items-center">
+                                    <div className="flex-1 min-w-0">
+                                      <p className="text-sm font-medium truncate">
+                                        {image.name}
+                                      </p>
+                                      <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                                        <span>{((image.size || 0) / 1024 / 1024).toFixed(1)} MB</span>
+                                        {image.compressed && (
+                                          <Tag color="green">Optimized</Tag>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
-                              </Card>
-                            </motion.div>
+                              </motion.div>
+                            </Reorder.Item>
                           ))}
                         </AnimatePresence>
-                      </div>
+                      </Reorder.Group>
                     </div>
+                  ) : (
+                    <Empty
+                      description="No images uploaded yet"
+                      className="py-12"
+                    />
                   )}
+
+                  {/* Upload Tips */}
+                  <Alert
+                    type="info"
+                    showIcon
+                    message="Image Upload Tips"
+                    description={
+                      <ul className="list-disc list-inside text-sm space-y-1">
+                        <li>Use high-quality images (at least 800x800px) for best results</li>
+                        <li>The first image will be set as primary automatically</li>
+                        <li>Drag images to reorder them</li>
+                        <li>Images will be automatically compressed to optimize loading speed</li>
+                        <li>Supported formats: JPEG, PNG, WebP</li>
+                      </ul>
+                    }
+                    className="border-blue-200 dark:border-blue-800"
+                  />
                 </div>
               ),
             }] : []),
@@ -917,22 +1229,6 @@ const ProductForm: React.FC = () => {
       >
         <img alt="preview" style={{ width: '100%' }} src={previewImage} />
       </Modal>
-      
-      <style>{`
-        .upload-list-inline .ant-upload-list-item {
-          float: left;
-          width: 200px;
-          margin-right: 8px;
-        }
-        
-        .upload-list-inline .ant-upload-animate-enter {
-          animation-name: uploadAnimateInlineIn;
-        }
-        
-        .upload-list-inline .ant-upload-animate-leave {
-          animation-name: uploadAnimateInlineOut;
-        }
-      `}</style>
     </motion.div>
   );
 };

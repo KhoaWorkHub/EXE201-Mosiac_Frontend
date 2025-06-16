@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
@@ -14,6 +15,8 @@ import {
   message,
   Spin,
   Tag,
+  Modal,
+  Tooltip,
 } from "antd";
 import {
   HeartOutlined,
@@ -27,6 +30,12 @@ import {
   SafetyOutlined,
   ReloadOutlined,
   SwapOutlined,
+  ZoomInOutlined,
+  ExpandOutlined,
+  PlayCircleOutlined,
+  PauseCircleOutlined,
+  FullscreenOutlined,
+  StarFilled,
 } from "@ant-design/icons";
 import { motion, AnimatePresence } from "framer-motion";
 import MainLayout from "@/components/layout/MainLayout";
@@ -40,8 +49,457 @@ import AddToCartAnimation from "@/components/cart/AddToCartAnimation";
 import { useCart } from "@/contexts/CartContext";
 import type { ProductVariantResponse } from "@/types/product.types";
 import type { UUID } from "crypto";
+
 const { Title, Text, Paragraph } = Typography;
 const { TabPane } = Tabs;
+
+// Enhanced Image Gallery Component
+const ProductImageGallery: React.FC<{
+  images: any[];
+  productName: string;
+  onImageClick?: () => void;
+}> = ({ images = [], productName, }) => {
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState(0);
+  const [isAutoPlay, setIsAutoPlay] = useState(false);
+  const [isImageLoading, setIsImageLoading] = useState(true);
+  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+  const [isZoomed, setIsZoomed] = useState(false);
+  
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Auto-play functionalitys
+  useEffect(() => {
+    if (isAutoPlay && images.length > 1) {
+      intervalRef.current = setInterval(() => {
+        setSelectedImage(prev => (prev + 1) % images.length);
+      }, 3000);
+    } else {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isAutoPlay, images.length]);
+
+  // Navigation functions
+  const goToPrevious = useCallback(() => {
+    setSelectedImage(prev => prev === 0 ? images.length - 1 : prev - 1);
+    setIsImageLoading(true);
+  }, [images.length]);
+
+  const goToNext = useCallback(() => {
+    setSelectedImage(prev => (prev + 1) % images.length);
+    setIsImageLoading(true);
+  }, [images.length]);
+
+  // Lightbox navigation
+  const lightboxPrevious = useCallback(() => {
+    setLightboxImage(prev => prev === 0 ? images.length - 1 : prev - 1);
+  }, [images.length]);
+
+  const lightboxNext = useCallback(() => {
+    setLightboxImage(prev => (prev + 1) % images.length);
+  }, [images.length]);
+
+  // Mouse zoom functionality
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isZoomed || !containerRef.current) return;
+    
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    setZoomPosition({ x, y });
+  }, [isZoomed]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (isLightboxOpen) {
+        switch (e.key) {
+          case 'ArrowLeft':
+            lightboxPrevious();
+            break;
+          case 'ArrowRight':
+            lightboxNext();
+            break;
+          case 'Escape':
+            setIsLightboxOpen(false);
+            break;
+        }
+      } else {
+        switch (e.key) {
+          case 'ArrowLeft':
+            goToPrevious();
+            break;
+          case 'ArrowRight':
+            goToNext();
+            break;
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyPress);
+    return () => document.removeEventListener('keydown', handleKeyPress);
+  }, [isLightboxOpen, lightboxPrevious, lightboxNext, goToPrevious, goToNext]);
+
+  const openLightbox = useCallback((index: number) => {
+    setLightboxImage(index);
+    setIsLightboxOpen(true);
+  }, []);
+
+  if (!images || images.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-96 bg-gray-100 dark:bg-gray-800 rounded-lg">
+        <Text>No images available</Text>
+      </div>
+    );
+  }
+
+  const currentImage = images[selectedImage];
+
+  return (
+    <div className="space-y-4">
+      {/* Main Image Display */}
+      <div className="relative group">
+        <div 
+          ref={containerRef}
+          className="relative aspect-square bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 cursor-zoom-in group rounded-lg overflow-hidden shadow-lg"
+          onClick={() => setIsZoomed(!isZoomed)}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={() => setIsZoomed(false)}
+        >
+          {/* Loading Spinner */}
+          <AnimatePresence>
+            {isImageLoading && (
+              <motion.div
+                initial={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 flex items-center justify-center z-10 bg-white/80 dark:bg-gray-800/80"
+              >
+                <Spin size="large" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Main Image */}
+          <motion.img
+            key={selectedImage}
+            src={currentImage.imageUrl}
+            alt={currentImage.altText || productName}
+            className={`w-full h-full object-cover transition-all duration-500 ${
+              isZoomed ? 'scale-150 cursor-zoom-out' : 'cursor-zoom-in'
+            }`}
+            style={
+              isZoomed
+                ? {
+                    transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
+                  }
+                : {}
+            }
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: isZoomed ? 1.5 : 1 }}
+            transition={{ duration: 0.3 }}
+            onLoad={() => setIsImageLoading(false)}
+            onError={() => setIsImageLoading(false)}
+          />
+
+          {/* Primary Badge */}
+          {currentImage.isPrimary && (
+            <div className="absolute top-4 left-4 z-20">
+              <Badge
+                count={<StarFilled className="text-yellow-400" />}
+                style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}
+              />
+            </div>
+          )}
+
+          {/* Navigation Arrows */}
+          {images.length > 1 && (
+            <>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToPrevious();
+                }}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20"
+              >
+                <LeftOutlined className="text-lg" />
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToNext();
+                }}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20"
+              >
+                <RightOutlined className="text-lg" />
+              </motion.button>
+            </>
+          )}
+
+          {/* Action Buttons */}
+          <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+            <Tooltip title={isZoomed ? "Zoom Out" : "Zoom In"}>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsZoomed(!isZoomed);
+                }}
+                className="w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center"
+              >
+                <ZoomInOutlined />
+              </motion.button>
+            </Tooltip>
+
+            <Tooltip title="View Fullscreen">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openLightbox(selectedImage);
+                }}
+                className="w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center"
+              >
+                <ExpandOutlined />
+              </motion.button>
+            </Tooltip>
+          </div>
+
+          {/* Auto-play Controls */}
+          {images.length > 1 && (
+            <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+              <Tooltip title={isAutoPlay ? "Pause Slideshow" : "Start Slideshow"}>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsAutoPlay(!isAutoPlay);
+                  }}
+                  className="w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center"
+                >
+                  {isAutoPlay ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
+                </motion.button>
+              </Tooltip>
+            </div>
+          )}
+
+          {/* Progress Indicator */}
+          {images.length > 1 && (
+            <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+              <div className="bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+                {selectedImage + 1} / {images.length}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Thumbnail Gallery */}
+      {images.length > 1 && (
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Gallery ({images.length} images)
+            </h4>
+            {images.length > 6 && (
+              <Button
+                type="link"
+                size="small"
+                onClick={() => openLightbox(0)}
+                className="p-0 h-auto"
+              >
+                View All
+              </Button>
+            )}
+          </div>
+
+          <div className="grid grid-cols-6 gap-2 max-h-32 overflow-y-auto">
+            {images.map((image: any, index: number) => (
+              <motion.div
+                key={image.id}
+                layoutId={`thumbnail-${image.id}`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`relative cursor-pointer rounded-md overflow-hidden group ${
+                  selectedImage === index
+                    ? 'ring-2 ring-primary ring-offset-2'
+                    : 'ring-1 ring-gray-200 dark:ring-gray-700'
+                }`}
+                onClick={() => {
+                  setSelectedImage(index);
+                  setIsImageLoading(true);
+                }}
+              >
+                <div className="aspect-square">
+                  <img
+                    src={image.imageUrl}
+                    alt={image.altText || `${productName} ${index + 1}`}
+                    className="w-full h-full object-cover transition-all duration-300 group-hover:brightness-110"
+                    loading="lazy"
+                  />
+                </div>
+
+                {/* Primary indicator on thumbnail */}
+                {image.isPrimary && (
+                  <div className="absolute top-1 right-1">
+                    <StarFilled className="text-yellow-400 text-xs drop-shadow-md" />
+                  </div>
+                )}
+
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                
+                {/* Active indicator */}
+                {selectedImage === index && (
+                  <motion.div
+                    layoutId="active-thumbnail"
+                    className="absolute inset-0 bg-primary/20"
+                    initial={false}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Lightbox Modal */}
+      <Modal
+        open={isLightboxOpen}
+        onCancel={() => setIsLightboxOpen(false)}
+        footer={null}
+        width="90vw"
+        style={{ maxWidth: '1200px', top: 20 }}
+        className="lightbox-modal"
+        maskStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.9)' }}
+      >
+        <div className="relative">
+          {/* Lightbox Image */}
+          <div className="relative max-h-[80vh] flex items-center justify-center">
+            <motion.img
+              key={lightboxImage}
+              src={images[lightboxImage]?.imageUrl}
+              alt={images[lightboxImage]?.altText || productName}
+              className="max-w-full max-h-full object-contain"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+            />
+          </div>
+
+          {/* Lightbox Navigation */}
+          {images.length > 1 && (
+            <>
+              <Button
+                type="text"
+                size="large"
+                icon={<LeftOutlined />}
+                onClick={lightboxPrevious}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white border-0 rounded-full"
+              />
+              <Button
+                type="text"
+                size="large"
+                icon={<RightOutlined />}
+                onClick={lightboxNext}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white border-0 rounded-full"
+              />
+            </>
+          )}
+
+          {/* Lightbox Info */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full">
+            {lightboxImage + 1} / {images.length}
+          </div>
+
+          {/* Lightbox Controls */}
+          <div className="absolute top-4 right-4 flex gap-2">
+            <Tooltip title="Fullscreen">
+              <Button
+                type="text"
+                icon={<FullscreenOutlined />}
+                onClick={() => {
+                  if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                  } else {
+                    document.documentElement.requestFullscreen();
+                  }
+                }}
+                className="w-10 h-10 bg-black/50 hover:bg-black/70 text-white border-0 rounded-full"
+              />
+            </Tooltip>
+          </div>
+        </div>
+
+        {/* Lightbox Thumbnail Strip */}
+        {images.length > 1 && (
+          <div className="mt-4 flex justify-center">
+            <div className="flex gap-2 max-w-full overflow-x-auto p-2">
+              {images.map((image: any, index: number) => (
+                <motion.div
+                  key={image.id}
+                  whileHover={{ scale: 1.1 }}
+                  className={`flex-shrink-0 w-16 h-16 rounded cursor-pointer overflow-hidden ${
+                    lightboxImage === index
+                      ? 'ring-2 ring-primary'
+                      : 'ring-1 ring-gray-300'
+                  }`}
+                  onClick={() => setLightboxImage(index)}
+                >
+                  <img
+                    src={image.imageUrl}
+                    alt={image.altText || `${productName} ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        )}
+      </Modal>
+
+      <style>{`
+        .lightbox-modal .ant-modal-content {
+          background: transparent;
+          box-shadow: none;
+        }
+        
+        .lightbox-modal .ant-modal-body {
+          padding: 0;
+        }
+        
+        .lightbox-modal .ant-modal-close {
+          color: white;
+          top: 16px;
+          right: 16px;
+        }
+        
+        .lightbox-modal .ant-modal-close:hover {
+          color: #f0f0f0;
+        }
+      `}</style>
+    </div>
+  );
+};
 
 const ProductDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -61,7 +519,6 @@ const ProductDetailPage: React.FC = () => {
   // Component state
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("description");
-  const [selectedImage, setSelectedImage] = useState(0);
   const [wishListed, setWishListed] = useState(false);
   const [selectedVariant, setSelectedVariant] =
     useState<ProductVariantResponse | null>(null);
@@ -105,26 +562,26 @@ const ProductDetailPage: React.FC = () => {
   };
 
   // Handle buy now
-const handleBuyNow = async () => {
-  if (!currentProduct) return;
-  
-  if (!isInStock()) {
-    message.error(t("product:product_details.out_of_stock"));
-    return;
-  }
-  
-  try {
-    await addToCart({
-      productId: currentProduct.id as UUID,
-      variantId: selectedVariant?.id as UUID | undefined,
-      quantity,
-    });
-    navigate("/checkout");
-  } catch (error) {
-    console.error("Error adding to cart:", error);
-    message.error(t('cart:notifications.error_adding'));
-  }
-};
+  const handleBuyNow = async () => {
+    if (!currentProduct) return;
+    
+    if (!isInStock()) {
+      message.error(t("product:product_details.out_of_stock"));
+      return;
+    }
+    
+    try {
+      await addToCart({
+        productId: currentProduct.id as UUID,
+        variantId: selectedVariant?.id as UUID | undefined,
+        quantity,
+      });
+      navigate("/checkout");
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      message.error(t('cart:notifications.error_adding'));
+    }
+  };
 
   // Handle wishlist toggle
   const handleWishlistToggle = () => {
@@ -186,7 +643,6 @@ const handleBuyNow = async () => {
   useEffect(() => {
     setSelectedVariant(null);
     setQuantity(1);
-    setSelectedImage(0);
   }, [currentProduct]);
 
   // If product is loading or not found
@@ -216,14 +672,6 @@ const handleBuyNow = async () => {
   }
 
   // Determine if the product is new (within 7 days)
-  const isNew = () => {
-    if (!currentProduct.createdAt) return false;
-    const createdDate = new Date(currentProduct.createdAt);
-    const today = new Date();
-    const diffTime = Math.abs(today.getTime() - createdDate.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays <= 7;
-  };
 
   // Determine if the product is on sale
   const isOnSale = () => {
@@ -269,99 +717,13 @@ const handleBuyNow = async () => {
           <Row gutter={[0, 0]}>
             {/* Product Images Section */}
             <Col xs={24} lg={12} className="p-0">
-              <div className="relative" ref={productImageRef}>
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={selectedImage}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="aspect-square"
-                  >
-                    {/* Main Product Image */}
-                    <img
-                      src={
-                        currentProduct.images?.[selectedImage]?.imageUrl ||
-                        "/placeholder-product.jpg"
-                      }
-                      alt={
-                        currentProduct.images?.[selectedImage]?.altText ||
-                        currentProduct.name
-                      }
-                      className="w-full h-full object-cover"
-                    />
-
-                    {/* Overlays for Sale or New */}
-                    {isNew() && (
-                      <div className="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full z-10">
-                        {t("product:product_card.new")}
-                      </div>
-                    )}
-
-                    {isOnSale() && (
-                      <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full z-10">
-                        -{discountPercentage()}% {t("product:product_card.off")}
-                      </div>
-                    )}
-                  </motion.div>
-                </AnimatePresence>
-
-                {/* Image Navigation Buttons */}
-                {currentProduct.images && currentProduct.images.length > 1 && (
-                  <>
-                    <Button
-                      type="primary"
-                      shape="circle"
-                      icon={<LeftOutlined />}
-                      className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 opacity-70 hover:opacity-100"
-                      onClick={() =>
-                        setSelectedImage((prev) =>
-                          prev === 0
-                            ? currentProduct.images!.length - 1
-                            : prev - 1
-                        )
-                      }
-                    />
-                    <Button
-                      type="primary"
-                      shape="circle"
-                      icon={<RightOutlined />}
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 opacity-70 hover:opacity-100"
-                      onClick={() =>
-                        setSelectedImage((prev) =>
-                          prev === currentProduct.images!.length - 1
-                            ? 0
-                            : prev + 1
-                        )
-                      }
-                    />
-                  </>
-                )}
+              <div ref={productImageRef} className="p-6">
+                <ProductImageGallery
+                  images={currentProduct.images || []}
+                  productName={currentProduct.name}
+                  onImageClick={handleAddToCart}
+                />
               </div>
-
-              {/* Thumbnail Images */}
-              {currentProduct.images && currentProduct.images.length > 1 && (
-                <div className="px-4 py-3 flex space-x-2 overflow-x-auto">
-                  {currentProduct.images.map((image, index) => (
-                    <div
-                      key={image.id}
-                      className={`w-16 h-16 flex-shrink-0 cursor-pointer rounded-md overflow-hidden border-2 transition-all ${
-                        selectedImage === index
-                          ? "border-primary"
-                          : "border-transparent hover:border-gray-300"
-                      }`}
-                      onClick={() => setSelectedImage(index)}
-                    >
-                      <img
-                        src={image.imageUrl}
-                        alt={image.altText || currentProduct.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
             </Col>
 
             {/* Product Info Section */}
@@ -418,7 +780,6 @@ const handleBuyNow = async () => {
               >
                 <Rate disabled defaultValue={4.5} className="text-primary" />
                 <Text className="ml-2 text-gray-500 dark:text-gray-400">
-                  {/* Placeholder rating count - would come from API */}
                   (24 {t("product:product_details.reviews")})
                 </Text>
               </motion.div>
@@ -721,7 +1082,6 @@ const handleBuyNow = async () => {
             </TabPane>
             <TabPane tab={t("product:product_details.reviews")} key="reviews">
               <div className="p-6">
-                {/* Placeholder for reviews - would come from API */}
                 <Text className="text-gray-500 dark:text-gray-400 italic">
                   {t("product:product_details.no_reviews")}
                 </Text>
