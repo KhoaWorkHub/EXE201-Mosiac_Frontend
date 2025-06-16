@@ -633,7 +633,7 @@ const ProductDetailPage: React.FC = () => {
       dispatch(
         fetchProducts({
           categoryId: currentProduct.category.id,
-          size: 4,
+          size: 5,
         })
       );
     }
