@@ -22,6 +22,7 @@ import { logout } from '@/store/slices/authSlice';
 import ThemeToggle from '../common/ThemeToggle';
 import LanguageSelector from '../common/LanguageSelector';
 import CartButton from  '@/components/cart/CardButton';
+import ContactInfo from '@/components/common/ContactInfo'; // Import ContactInfo
 import { MenuProps } from 'antd';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UserRole } from '@/types/auth.types';
@@ -64,7 +65,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     { key: '/regions', label: t('nav.regions'), icon: <EnvironmentOutlined /> },
     { key: '/about', label: t('nav.about'), icon: <InfoCircleOutlined /> },
     { key: '/blog', label: t('nav.blog'), icon: <ReadOutlined /> },
-    { key: '/contact', label: t('nav.contact'), icon: <PhoneOutlined /> },
+    // Removed contact from navItems since we're using ContactInfo component
   ];
 
   const userMenuItems: MenuProps['items'] = [
@@ -186,6 +187,28 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <div className="hidden md:block">
               <LanguageSelector />
             </div>
+
+            {/* Contact Info Component */}
+            <div className={`hidden lg:block transition-colors duration-300 ${
+              scrolled 
+                ? 'text-gray-800 dark:text-white' 
+                : 'text-white dark:text-white'
+            }`}>
+              <ContactInfo 
+                trigger={
+                  <Button
+                    type="text"
+                    className={`transition-colors duration-300 ${
+                      scrolled 
+                        ? 'text-gray-800 dark:text-white hover:text-primary dark:hover:text-primary' 
+                        : 'text-white dark:text-white hover:text-gray-300 dark:hover:text-primary'
+                    }`}
+                  >
+                    {t('nav.contact')}
+                  </Button>
+                }
+              />
+            </div>
             
             {/* Cart Button */}
             <CartButton 
@@ -260,15 +283,31 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               mode="vertical"
               selectedKeys={[location.pathname]}
               className="border-none"
-              items={navItems.map(item => ({
-                key: item.key,
-                icon: item.icon,
-                label: (
-                  <Link to={item.key} onClick={() => setMobileMenuOpen(false)}>
-                    {item.label}
-                  </Link>
-                ),
-              }))}
+              items={[
+                ...navItems.map(item => ({
+                  key: item.key,
+                  icon: item.icon,
+                  label: (
+                    <Link to={item.key} onClick={() => setMobileMenuOpen(false)}>
+                      {item.label}
+                    </Link>
+                  ),
+                })),
+                // Add Contact to mobile menu
+                {
+                  key: 'contact',
+                  icon: <PhoneOutlined />,
+                  label: (
+                    <ContactInfo 
+                      trigger={
+                        <div className="w-full text-left" onClick={() => setMobileMenuOpen(false)}>
+                          {t('nav.contact')}
+                        </div>
+                      }
+                    />
+                  ),
+                }
+              ]}
             />
           </div>
           
@@ -397,7 +436,15 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 <li><Link to="/our-story" className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary">{t('nav.our_story')}</Link></li>
                 <li><Link to="/artisans" className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary">{t('nav.artisans')}</Link></li>
                 <li><Link to="/sustainability" className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary">{t('nav.sustainability')}</Link></li>
-                <li><Link to="/contact" className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary">{t('nav.contact')}</Link></li>
+                <li>
+                  <ContactInfo 
+                    trigger={
+                      <span className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary cursor-pointer">
+                        {t('nav.contact')}
+                      </span>
+                    }
+                  />
+                </li>
               </ul>
             </div>
             <div>

@@ -98,7 +98,7 @@ const HanoiTourGuideSteps: React.FC<HanoiTourGuideStepsProps> = ({ onClose }) =>
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div className="space-y-2">
               <img 
-                src="/assets/destinations/hanoi/food-1.jpg" 
+                src="/assets/destinations/hanoi/phobohanoi.png" 
                 alt="Pho Bo" 
                 className="w-full h-32 object-cover rounded-lg shadow-sm"
               />
@@ -106,7 +106,7 @@ const HanoiTourGuideSteps: React.FC<HanoiTourGuideStepsProps> = ({ onClose }) =>
             </div>
             <div className="space-y-2">
               <img 
-                src="/assets/destinations/hanoi/food-2.jpg" 
+                src="/assets/destinations/hanoi/bunchahanoi.png" 
                 alt="Bun Cha" 
                 className="w-full h-32 object-cover rounded-lg shadow-sm"
               />

@@ -97,7 +97,7 @@ const TourGuideSteps: React.FC<TourGuideStepsProps> = ({ onClose }) => {
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div className="space-y-2">
               <img 
-                src="/assets/destinations/danang/food-1.jpg" 
+                src="/assets/destinations/danang/miquang.png" 
                 alt="Mi Quang" 
                 className="w-full h-32 object-cover rounded-lg"
               />
@@ -105,7 +105,7 @@ const TourGuideSteps: React.FC<TourGuideStepsProps> = ({ onClose }) => {
             </div>
             <div className="space-y-2">
               <img 
-                src="/assets/destinations/danang/food-2.jpg" 
+                src="/assets/destinations/danang/banhxeo.png" 
                 alt="Banh Xeo" 
                 className="w-full h-32 object-cover rounded-lg"
               />
