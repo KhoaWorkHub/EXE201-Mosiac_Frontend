@@ -572,7 +572,7 @@ const ProductsPage: React.FC = () => {
                         closable 
                         onClose={() => quickApplyFilter('featured', undefined)}
                       >
-                        ⭐ {t('product:featured')}
+                        {t('product:featured')}
                       </Tag>
                     )}
                     
@@ -582,7 +582,7 @@ const ProductsPage: React.FC = () => {
                         closable 
                         onClose={() => quickApplyFilter('active', undefined)}
                       >
-                        ✅ {t('product:in_stock')}
+                        {t('product:in_stock')}
                       </Tag>
                     )}
                     

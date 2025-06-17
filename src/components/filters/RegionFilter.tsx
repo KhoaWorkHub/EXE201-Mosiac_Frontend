@@ -22,7 +22,7 @@ export const regions = [
     name: 'Hồ Chí Minh', 
     nameEn: 'Ho Chi Minh City',
     slug: 'ho-chi-minh',
-    description: 'Thành phố không ngủ',
+    description: 'Đô thị sôi động',
     color: '#ff9800',
     icon: '🌆',
     gradient: 'from-orange-500 to-red-500'
@@ -52,7 +52,7 @@ export const regions = [
     name: 'Quảng Ninh', 
     nameEn: 'Quang Ninh',
     slug: 'quang-ninh',
-    description: 'Vịnh Hạ Long kỳ quan',
+    description: 'Vịnh rồng huyền thoại',
     color: '#4caf50',
     icon: '🗻',
     gradient: 'from-green-500 to-emerald-600'

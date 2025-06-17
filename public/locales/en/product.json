@@ -7,6 +7,7 @@
     "popularity": "Popularity",
     "rating": "Rating",
     "filter": "Filter",
+    "filter_by_region": "Filter by Region",
     "price_range": "Price Range",
     "categories": "Categories",
     "regions": "Regions",
@@ -15,9 +16,17 @@
     "apply": "Apply",
     "clear": "Clear",
     "clear_all": "Clear All",
+    "clear_region": "Clear Region",
+    "clear_all_and_retry": "Clear All & Retry",
     "featured_only": "Featured Only",
     "in_stock_only": "In Stock Only",
-    "special": "Special Filters"
+    "special": "Special Filters",
+    "region": "Region",
+    "all_regions": "All Regions",
+    "quick_filters": "Quick Filters"
+  },
+  "sort": {
+    "name_asc": "Name A-Z"
   },
   "product_card": {
     "new": "New",
@@ -67,14 +76,26 @@
     "highlands": "Central Highlands"
   },
   "active_filters": "Active Filters",
+  "applied_filters": "Applied Filters",
   "search": "Search",
   "category": "Category",
   "region": "Region",
   "price": "Price",
   "featured": "Featured",
   "in_stock": "In Stock",
-  "search_results_for": "Search Results for \"{keyword}\"",
+  "all_products": "All Products",
+  "products_in": "Products in",
+  "discover_unique_products": "Discover unique products from Vietnam's finest regions",
+  "total_products": "Total Products",
+  "avg_price": "Avg. Price",
+  "loading_products": "Loading products...",
+  "no_products_in_region": "No products found in {{region}}",
+  "try_adjusting_filters": "Try adjusting your search filters or browse other regions",
+  "view_all_regions": "View All Regions",
+  "search_results_for": "Search Results for \"{{keyword}}\"",
   "products_found": "products found",
   "no_products_found": "No products found. Try adjusting your filters.",
-  "product_not_found": "Product Not Found"
+  "product_not_found": "Product Not Found",
+  "of": "of",
+  "products": "products"
 }

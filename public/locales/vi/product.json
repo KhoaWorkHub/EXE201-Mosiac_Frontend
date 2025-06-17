@@ -7,6 +7,7 @@
     "popularity": "Phổ biến",
     "rating": "Đánh giá",
     "filter": "Lọc",
+    "filter_by_region": "Lọc theo vùng miền",
     "price_range": "Khoảng giá",
     "categories": "Danh mục",
     "regions": "Vùng miền",
@@ -15,9 +16,17 @@
     "apply": "Áp dụng",
     "clear": "Xóa bộ lọc",
     "clear_all": "Xóa tất cả",
+    "clear_region": "Xóa vùng miền",
+    "clear_all_and_retry": "Xóa tất cả & Thử lại",
     "featured_only": "Chỉ sản phẩm nổi bật",
     "in_stock_only": "Chỉ còn hàng",
-    "special": "Bộ lọc đặc biệt"
+    "special": "Bộ lọc đặc biệt",
+    "region": "Vùng miền",
+    "all_regions": "Tất cả vùng miền",
+    "quick_filters": "Bộ lọc nhanh"
+  },
+  "sort": {
+    "name_asc": "Tên A-Z"
   },
   "product_card": {
     "new": "Mới",
@@ -67,14 +76,26 @@
     "highlands": "Tây Nguyên"
   },
   "active_filters": "Bộ lọc đang kích hoạt",
+  "applied_filters": "Bộ lọc đã áp dụng",
   "search": "Tìm kiếm",
   "category": "Danh mục",
   "region": "Vùng miền",
   "price": "Giá",
   "featured": "Nổi bật",
   "in_stock": "Còn hàng",
-  "search_results_for": "Kết quả tìm kiếm cho \"{keyword}\"",
+  "all_products": "Tất cả sản phẩm",
+  "products_in": "Sản phẩm tại",
+  "discover_unique_products": "Khám phá những sản phẩm độc đáo từ các vùng miền tuyệt vời của Việt Nam",
+  "total_products": "Tổng sản phẩm",
+  "avg_price": "Giá TB",
+  "loading_products": "Đang tải sản phẩm...",
+  "no_products_in_region": "Không tìm thấy sản phẩm nào tại {{region}}",
+  "try_adjusting_filters": "Hãy thử điều chỉnh bộ lọc tìm kiếm hoặc duyệt các vùng miền khác",
+  "view_all_regions": "Xem tất cả vùng miền",
+  "search_results_for": "Kết quả tìm kiếm cho \"{{keyword}}\"",
   "products_found": "sản phẩm được tìm thấy",
   "no_products_found": "Không tìm thấy sản phẩm nào. Hãy thử điều chỉnh bộ lọc của bạn.",
-  "product_not_found": "Không Tìm Thấy Sản Phẩm"
+  "product_not_found": "Không Tìm Thấy Sản Phẩm",
+  "of": "trong số",
+  "products": "sản phẩm"
 }
