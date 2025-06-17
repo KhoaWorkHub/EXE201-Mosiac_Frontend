@@ -11,7 +11,7 @@ import {
   GlobalOutlined,
   StarOutlined,
   ThunderboltOutlined,
-  CrownOutlined,
+  CompassOutlined,
   
 } from '@ant-design/icons';
 import MainLayout from '@/components/layout/MainLayout';
@@ -47,40 +47,58 @@ const AboutUsPage: React.FC = () => {
   // Team members data
   const teamMembers = [
     {
-      name: 'Bảo Trân',
-      role: 'CEO & Founder',
+      name: 'Trần Ngọc Bảo Trân',
+      role: 'Founder & Head of Content',
       major: 'Business Administration',
-      avatar: '/team/member1.jpg',
-      description: 'Passionate about travel technology and sustainable tourism',
-      skills: ['Leadership', 'Strategy', 'Vision'],
+      avatar: '/assets/about-us/tran.png',
+      description: 'Passionate leader driving the vision of making travel more accessible through technology',
+      skills: ['Leadership', 'Content Strategy', 'Vision'],
       color: 'from-orange-500 to-red-500'
     },
     {
-      name: 'Minh Quân | Đức Lương | Khoa',
-      role: 'CTO & Co-Founder', 
+      name: 'Nguyễn Minh Quân',
+      role: 'Co-founder & Web Developer', 
       major: 'Software Engineering',
-      avatar: '/team/member2.jpg',
-      description: 'Full-stack developer with expertise in modern web technologies',
-      skills: ['React', 'Node.js', 'AI/ML'],
+      avatar: '/assets/about-us/quan.png',
+      description: 'Full-stack developer specializing in modern web technologies and system architecture',
+      skills: ['React', 'JavaScript', 'System Design'],
       color: 'from-blue-500 to-cyan-500'
     },
     {
-      name: 'Cường',
-      role: 'Head of Design',
-      major: 'Digital Arts & Design',
-      avatar: '/team/member3.jpg', 
-      description: 'Creative designer focused on user experience and visual storytelling',
-      skills: ['UI/UX', 'Branding', 'Motion Design'],
-      color: 'from-purple-500 to-pink-500'
+      name: 'Lê Vũ Đức Lương',
+      role: 'Web Developer',
+      major: 'Software Engineering',
+      avatar: '/assets/about-us/luong.png', 
+      description: 'Backend developer focused on building robust applications using Spring Java framework',
+      skills: ['Backend', 'Spring Java', 'API Development'],
+      color: 'from-indigo-500 to-purple-500'
     },
     {
-      name: 'Duy Thịnh',
-      role: 'Marketing Director',
+      name: 'Trần Đăng Khoa',
+      role: 'Web Developer',
+      major: 'Software Engineering',
+      avatar: '/assets/about-us/khoa2.png',
+      description: 'Frontend developer passionate about creating beautiful interfaces with ReactJS',
+      skills: ['Frontend', 'ReactJS', 'TypeScript'],
+      color: 'from-cyan-500 to-teal-500'
+    },
+    {
+      name: 'Hà Duy Thịnh',
+      role: 'Media Strategist',
       major: 'Digital Marketing',
-      avatar: '/team/member4.jpg',
-      description: 'Digital marketing expert specializing in travel industry growth',
-      skills: ['SEO', 'Social Media', 'Analytics'],
+      avatar: '/assets/about-us/thinh.png',
+      description: 'Media strategist expert in building brand awareness and engagement strategies',
+      skills: ['Media Strategy', 'Brand Building', 'Social Media'],
       color: 'from-green-500 to-emerald-500'
+    },
+    {
+      name: 'Cường',
+      role: 'UI/UX Designer',
+      major: 'Digital Arts & Design',
+      avatar: '🎨', 
+      description: 'Creative designer focused on user experience and developing MOSAIC product merchandise',
+      skills: ['UI/UX', 'Web Design', 'Product Design'],
+      color: 'from-purple-500 to-pink-500'
     }
   ];
 
@@ -146,16 +164,37 @@ const AboutUsPage: React.FC = () => {
     }
   };
 
+  // Mascot animation variants
+  const mascotVariants = {
+    idle: {
+      rotate: [0, -5, 5, 0],
+      scale: [1, 1.05, 1],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    },
+    bounce: {
+      y: [0, -10, 0],
+      transition: {
+        duration: 1.5,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
+
   return (
     <MainLayout>
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-orange-50 via-red-50 to-pink-50 dark:from-orange-900/20 dark:via-red-900/20 dark:to-pink-900/20">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 dark:from-emerald-900/20 dark:via-teal-900/20 dark:to-cyan-900/20">
         {/* Animated background elements */}
         <div className="absolute inset-0">
           {Array.from({ length: 50 }).map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-2 h-2 bg-gradient-to-r from-orange-400 to-red-500 rounded-full opacity-30"
+              className="absolute w-2 h-2 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full opacity-30"
               animate={{
                 y: [0, -100, 0],
                 x: [0, Math.sin(i) * 100, 0],
@@ -182,94 +221,180 @@ const AboutUsPage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            {/* Logo Animation */}
+            {/* Enhanced Mascot Logo Animation */}
             <motion.div
               className="mb-8"
-              animate={{ 
-                rotate: [0, 5, -5, 0],
-                scale: [1, 1.1, 1]
-              }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              variants={mascotVariants}
+              animate="bounce"
             >
-              <div className="w-32 h-32 mx-auto bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 rounded-full flex items-center justify-center shadow-2xl relative overflow-hidden">
+              <div className="w-48 h-48 mx-auto bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-500 rounded-full flex items-center justify-center shadow-2xl relative overflow-hidden">
+                {/* Real Mascot Image */}
                 <motion.div
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="text-5xl text-white"
+                  variants={mascotVariants}
+                  animate="idle"
+                  className="relative w-40 h-40 flex items-center justify-center"
                 >
-                  🧩
-                </motion.div>
-                
-                {/* Pulse rings */}
-                {Array.from({ length: 3 }).map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute inset-0 border-4 border-white/30 rounded-full"
+                  <motion.img
+                    src="/assets/about-us/mascot.png"
+                    alt="MOSAIC Mascot"
+                    className="w-36 h-36 object-contain drop-shadow-lg"
                     animate={{
-                      scale: [1, 2 + i * 0.5, 3 + i * 0.5],
-                      opacity: [0.8, 0.4, 0]
+                      rotate: [0, -3, 3, 0],
+                      scale: [1, 1.05, 1],
                     }}
                     transition={{
-                      duration: 3,
+                      duration: 2.5,
                       repeat: Infinity,
-                      delay: i * 0.5,
+                      ease: "easeInOut"
+                    }}
+                  />
+                  
+                  {/* Floating hearts around mascot */}
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <motion.div
+                      key={`heart-${i}`}
+                      className="absolute text-red-400 text-lg"
+                      style={{
+                        top: `${30 + Math.sin(i * 60 * Math.PI / 180) * 60 + 50}%`,
+                        left: `${30 + Math.cos(i * 60 * Math.PI / 180) * 60 + 50}%`,
+                      }}
+                      animate={{
+                        scale: [0, 1.2, 0],
+                        opacity: [0, 0.8, 0],
+                        y: [0, -20, -40]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        delay: i * 0.5,
+                        ease: "easeOut"
+                      }}
+                    >
+                      ❤️
+                    </motion.div>
+                  ))}
+                </motion.div>
+                
+                {/* Enhanced pulse rings */}
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute inset-0 border-4 border-emerald-300/40 rounded-full"
+                    animate={{
+                      scale: [1, 2.5 + i * 0.3, 4 + i * 0.3],
+                      opacity: [0.8, 0.3, 0]
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      delay: i * 0.8,
                       ease: "easeOut"
+                    }}
+                  />
+                ))}
+                
+                {/* Sparkle effects */}
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <motion.div
+                    key={`sparkle-${i}`}
+                    className="absolute w-2 h-2 bg-yellow-400 rounded-full"
+                    style={{
+                      top: `${20 + Math.sin(i * 45 * Math.PI / 180) * 50 + 50}%`,
+                      left: `${20 + Math.cos(i * 45 * Math.PI / 180) * 50 + 50}%`,
+                    }}
+                    animate={{
+                      scale: [0, 1, 0],
+                      opacity: [0, 1, 0],
+                      rotate: [0, 180, 360]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: i * 0.2,
+                      ease: "easeInOut"
                     }}
                   />
                 ))}
               </div>
             </motion.div>
 
-            <Title level={1} className="mb-6 bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 bg-clip-text text-transparent text-5xl md:text-7xl font-bold">
-              MOSAIC
-            </Title>
-            
+            {/* Enhanced MOSAIC Title with better typography */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
             >
-              <Paragraph className="text-xl md:text-2xl dark:text-gray-300 mb-6 leading-relaxed">
-                Crafting extraordinary travel experiences through innovative technology
-              </Paragraph>
+              <Title 
+                level={1} 
+                className="mb-6 text-5xl md:text-8xl font-black tracking-wider"
+                style={{
+                  background: 'linear-gradient(135deg, #059669 0%, #0d9488 25%, #0891b2 50%, #0284c7 75%, #2563eb 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  textShadow: '0 4px 20px rgba(5, 150, 105, 0.3)',
+                  letterSpacing: '0.1em',
+                  fontFamily: '"Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif'
+                }}
+              >
+                MOSAIC
+              </Title>
               
-              <div className="flex flex-wrap justify-center gap-4 mb-8">
-                <Tag color="orange" className="px-4 py-2 text-lg font-medium rounded-full">
-                  <RocketOutlined className="mr-2" />
-                  FPT University Startup
-                </Tag>
-                <Tag color="red" className="px-4 py-2 text-lg font-medium rounded-full">
-                  <HeartOutlined className="mr-2" />
-                  EXE202 Project
-                </Tag>
-                <Tag color="pink" className="px-4 py-2 text-lg font-medium rounded-full">
-                  <CrownOutlined className="mr-2" />
-                  Award Winner
-                </Tag>
-              </div>
+              {/* Subtitle with enhanced animation */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8, duration: 0.6 }}
+              >
+                <Paragraph className="text-xl md:text-2xl dark:text-gray-300 mb-8 leading-relaxed font-medium">
+                  Crafting extraordinary travel experiences through innovative technology
+                </Paragraph>
+              </motion.div>
+            </motion.div>
+            
+            {/* Updated Tags with travel spirit */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1, duration: 0.8 }}
+              className="flex flex-wrap justify-center gap-4 mb-8"
+            >
+              <Tag color="cyan" className="px-6 py-3 text-lg font-bold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                <CompassOutlined className="mr-2" />
+                Travel Innovation
+              </Tag>
+              <Tag color="green" className="px-6 py-3 text-lg font-bold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                <GlobalOutlined className="mr-2" />
+                Explore Vietnam
+              </Tag>
+              <Tag color="blue" className="px-6 py-3 text-lg font-bold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                <HeartOutlined className="mr-2" />
+                Adventure Awaits
+              </Tag>
             </motion.div>
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
+        {/* Enhanced scroll indicator */}
         <motion.div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          animate={{ y: [0, 15, 0] }}
+          transition={{ duration: 2.5, repeat: Infinity }}
         >
-          <div className="w-6 h-10 border-2 border-orange-500 rounded-full flex justify-center">
+          <div className="w-8 h-12 border-3 border-emerald-500 rounded-full flex justify-center relative">
             <motion.div
-              className="w-1 h-3 bg-orange-500 rounded-full mt-2"
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              className="w-2 h-4 bg-emerald-500 rounded-full mt-3"
+              animate={{ y: [0, 16, 0], opacity: [1, 0.3, 1] }}
+              transition={{ duration: 2.5, repeat: Infinity }}
             />
+            <div className="absolute -bottom-6 text-emerald-600 text-sm font-medium">Scroll</div>
           </div>
         </motion.div>
       </section>
 
       {/* Mission & Vision Section */}
       <section ref={missionRef} className="py-20 bg-white dark:bg-gray-800 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-50/50 to-red-50/50 dark:from-orange-900/10 dark:to-red-900/10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 to-teal-50/50 dark:from-emerald-900/10 dark:to-teal-900/10" />
         
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
@@ -278,7 +403,7 @@ const AboutUsPage: React.FC = () => {
             animate={missionInView ? "visible" : "hidden"}
           >
             <motion.div variants={itemVariants} className="text-center mb-16">
-              <Title level={2} className="mb-4 bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+              <Title level={2} className="mb-4 bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
                 Our Mission & Vision
               </Title>
               <Paragraph className="text-lg dark:text-gray-300 max-w-3xl mx-auto">
@@ -289,16 +414,16 @@ const AboutUsPage: React.FC = () => {
             <Row gutter={[32, 32]}>
               <Col xs={24} lg={12}>
                 <motion.div variants={cardVariants}>
-                  <Card className="h-full bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 border-orange-200 dark:border-orange-700 hover:shadow-2xl transition-all duration-500">
+                  <Card className="h-full bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border-emerald-200 dark:border-emerald-700 hover:shadow-2xl transition-all duration-500">
                     <div className="text-center">
                       <motion.div
-                        className="w-20 h-20 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6"
+                        className="w-20 h-20 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-6"
                         whileHover={{ scale: 1.1, rotate: 10 }}
                         transition={{ duration: 0.3 }}
                       >
                         <BulbOutlined className="text-3xl text-white" />
                       </motion.div>
-                      <Title level={3} className="mb-4 text-orange-600">Our Mission</Title>
+                      <Title level={3} className="mb-4 text-emerald-600">Our Mission</Title>
                       <Paragraph className="dark:text-gray-300 leading-relaxed">
                         To democratize travel planning by providing immersive, interactive destination guides 
                         that showcase the authentic beauty and culture of Vietnam. We believe every traveler 
@@ -354,47 +479,73 @@ const AboutUsPage: React.FC = () => {
 
             <Row gutter={[32, 32]}>
               {teamMembers.map((member, index) => (
-                <Col xs={24} sm={12} lg={6} key={index}>
+                <Col xs={24} sm={12} md={8} lg={4} key={index}>
                   <motion.div
                     variants={itemVariants}
                     custom={index}
                     whileHover={{ y: -10, scale: 1.02 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <Card className="h-full text-center hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+                    <Card className="text-center hover:shadow-2xl transition-all duration-500 relative overflow-hidden" style={{ height: '500px' }}>
                       {/* Background gradient */}
                       <div className={`absolute inset-0 bg-gradient-to-br ${member.color} opacity-5`} />
                       
-                      <div className="relative z-10">
-                        <motion.div
-                          whileHover={{ scale: 1.1, rotate: 5 }}
-                          transition={{ duration: 0.3 }}
-                          className="mb-4"
-                        >
-                          <Avatar 
-                            size={100} 
-                            src={member.avatar}
-                            className={`mx-auto bg-gradient-to-r ${member.color} shadow-lg`}
-                          />
-                        </motion.div>
+                      <div className="relative z-10 h-full flex flex-col p-4">
+                        {/* Avatar Section - Fixed Height */}
+                        <div className="h-32 flex items-center justify-center mb-2">
+                          <motion.div
+                            whileHover={{ scale: 1.1, rotate: 5 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            {member.avatar.startsWith('/') ? (
+                              <Avatar 
+                                size={100} 
+                                src={member.avatar}
+                                className={`bg-gradient-to-r ${member.color} shadow-lg`}
+                              />
+                            ) : (
+                              <div className={`w-24 h-24 bg-gradient-to-r ${member.color} rounded-full flex items-center justify-center shadow-lg text-4xl`}>
+                                {member.avatar}
+                              </div>
+                            )}
+                          </motion.div>
+                        </div>
                         
-                        <Title level={4} className="mb-2">{member.name}</Title>
-                        <Text className={`text-transparent bg-gradient-to-r ${member.color} bg-clip-text font-semibold`}>
-                          {member.role}
-                        </Text>
-                        <Paragraph className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                          {member.major}
-                        </Paragraph>
-                        <Paragraph className="dark:text-gray-300 text-sm leading-relaxed mt-3">
-                          {member.description}
-                        </Paragraph>
+                        {/* Name Section - Fixed Height */}
+                        <div className="h-16 flex items-center justify-center mb-2">
+                          <Title level={4} className="text-base leading-tight text-center mb-0">{member.name}</Title>
+                        </div>
                         
-                        <div className="flex flex-wrap justify-center gap-2 mt-4">
-                          {member.skills.map((skill, idx) => (
-                            <Tag key={idx} color="processing" className="text-xs">
-                              {skill}
-                            </Tag>
-                          ))}
+                        {/* Role Section - Fixed Height */}
+                        <div className="h-8 flex items-center justify-center mb-1">
+                          <Text className={`text-transparent bg-gradient-to-r ${member.color} bg-clip-text font-semibold text-sm`}>
+                            {member.role}
+                          </Text>
+                        </div>
+                        
+                        {/* Major Section - Fixed Height */}
+                        <div className="h-6 flex items-center justify-center mb-3">
+                          <Paragraph className="text-xs text-gray-500 dark:text-gray-400 mb-0">
+                            {member.major}
+                          </Paragraph>
+                        </div>
+                        
+                        {/* Description Section - Fixed Height with Overflow */}
+                        <div className="h-20 flex items-center justify-center mb-4">
+                          <Paragraph className="dark:text-gray-300 text-xs leading-relaxed text-center mb-0 line-clamp-4 overflow-hidden">
+                            {member.description}
+                          </Paragraph>
+                        </div>
+                        
+                        {/* Skills Section - Fixed Height */}
+                        <div className="h-16 flex items-start justify-center">
+                          <div className="flex flex-wrap justify-center gap-1">
+                            {member.skills.map((skill, idx) => (
+                              <Tag key={idx} color="processing" className="text-xs mb-1">
+                                {skill}
+                              </Tag>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </Card>
@@ -465,7 +616,7 @@ const AboutUsPage: React.FC = () => {
       </section>
 
       {/* Statistics Section */}
-      <section ref={statsRef} className="py-20 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white relative overflow-hidden">
+      <section ref={statsRef} className="py-20 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20" />
         
         {/* Floating elements */}
@@ -491,7 +642,7 @@ const AboutUsPage: React.FC = () => {
                 top: `${10 + Math.sin(i) * 80}%`
               }}
             >
-              {['🚀', '💡', '🏆', '🌟', '🎯', '⭐', '🔥', '💎'][i % 8]}
+              {['🌏', '✈️', '🗺️', '🌟', '🎯', '⭐', '🔥', '💎'][i % 8]}
             </motion.div>
           ))}
         </div>
