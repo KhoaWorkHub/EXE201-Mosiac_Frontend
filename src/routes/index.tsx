@@ -1,3 +1,4 @@
+// src/routes/index.tsx
 import React, { lazy, Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAppSelector } from "@/store/hooks";
@@ -42,9 +43,25 @@ const BlogPage = lazy(() => import("../features/blog/pages/BlogPage"));
 // Profile Page
 const ProfilePage = lazy(() => import("../features/profile/pages/ProfilePage"));
 
-// NEW: About Us and Regions Pages
+// Main About Pages
 const AboutUsPage = lazy(() => import("../features/about/pages/AboutUsPage"));
 const RegionsPage = lazy(() => import("../features/regions/pages/RegionsPage"));
+
+// Support Pages
+const FAQPage = lazy(() => import("../features/support/pages/FAQPage"));
+const ShippingPage = lazy(() => import("../features/support/pages/ShippingPage"));
+const ReturnsPage = lazy(() => import("../features/support/pages/ReturnsPage"));
+const SizeGuidePage = lazy(() => import("../features/support/pages/SizeGuidePage"));
+
+// Legal Pages
+const PrivacyPolicyPage = lazy(() => import("../features/legal/pages/PrivacyPolicyPage"));
+const TermsPage = lazy(() => import("../features/legal/pages/TermsPage"));
+const CookiesPage = lazy(() => import("../features/legal/pages/CookiesPage"));
+
+// Additional About Pages
+const OurStoryPage = lazy(() => import("../features/about/pages/OurStoryPage"));
+const ArtisansPage = lazy(() => import("../features/artisans/pages/ArtisansPage"));
+const SustainabilityPage = lazy(() => import("../features/sustainability/pages/SustainabilityPage"));
 
 // Custom loader for luxury pages
 const LuxuryLoadingFallback = () => (
@@ -352,7 +369,7 @@ const QuangNinhLoadingFallback = () => (
   </div>
 );
 
-// NEW: About Us loading component with startup theme
+// About Us loading component with startup theme
 const AboutUsLoadingFallback = () => (
   <div className="h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 dark:from-purple-900/20 dark:via-indigo-900/20 dark:to-blue-900/20 relative overflow-hidden">
     {/* Animated startup elements background */}
@@ -410,7 +427,7 @@ const AboutUsLoadingFallback = () => (
   </div>
 );
 
-// NEW: Regions loading component with Vietnam map theme
+// Regions loading component with Vietnam map theme
 const RegionsLoadingFallback = () => (
   <div className="h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-green-50 via-blue-50 to-orange-50 dark:from-green-900/20 dark:via-blue-900/20 dark:to-orange-900/20 relative overflow-hidden">
     {/* Animated map elements background */}
@@ -559,7 +576,7 @@ const AppRoutes: React.FC = () => {
         }
       />
 
-      {/* NEW: About Us Route with startup-themed loading */}
+      {/* About Us Route with startup-themed loading */}
       <Route
         path="/about"
         element={
@@ -569,7 +586,7 @@ const AppRoutes: React.FC = () => {
         }
       />
 
-      {/* NEW: Regions Route with Vietnam map-themed loading */}
+      {/* Regions Route with Vietnam map-themed loading */}
       <Route
         path="/regions"
         element={
@@ -628,6 +645,101 @@ const AppRoutes: React.FC = () => {
         }
       />
 
+      {/* Support Pages */}
+      <Route
+        path="/faq"
+        element={
+          <Suspense fallback={<LoadingFallback />}>
+            <FAQPage />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/shipping"
+        element={
+          <Suspense fallback={<LoadingFallback />}>
+            <ShippingPage />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/returns"
+        element={
+          <Suspense fallback={<LoadingFallback />}>
+            <ReturnsPage />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/size-guide"
+        element={
+          <Suspense fallback={<LoadingFallback />}>
+            <SizeGuidePage />
+          </Suspense>
+        }
+      />
+
+      {/* Legal Pages */}
+      <Route
+        path="/privacy-policy"
+        element={
+          <Suspense fallback={<LoadingFallback />}>
+            <PrivacyPolicyPage />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/privacy"
+        element={
+          <Suspense fallback={<LoadingFallback />}>
+            <PrivacyPolicyPage />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/terms"
+        element={
+          <Suspense fallback={<LoadingFallback />}>
+            <TermsPage />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/cookies"
+        element={
+          <Suspense fallback={<LoadingFallback />}>
+            <CookiesPage />
+          </Suspense>
+        }
+      />
+
+      {/* Additional About Pages */}
+      <Route
+        path="/our-story"
+        element={
+          <Suspense fallback={<AboutUsLoadingFallback />}>
+            <OurStoryPage />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/artisans"
+        element={
+          <Suspense fallback={<LoadingFallback />}>
+            <ArtisansPage />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/sustainability"
+        element={
+          <Suspense fallback={<LoadingFallback />}>
+            <SustainabilityPage />
+          </Suspense>
+        }
+      />
+
+      {/* Admin Routes */}
       <Route
         path="/admin/*"
         element={
