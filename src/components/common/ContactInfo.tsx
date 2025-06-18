@@ -220,7 +220,20 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ trigger }) => {
                     ease: "easeInOut"
                   }}
                 >
-                  <span className="text-3xl text-white">🧩</span>
+                                    <motion.img
+                                      src="/assets/about-us/mascot.png"
+                                      alt="MOSAIC Mascot"
+                                      className="w-36 h-36 object-contain drop-shadow-lg"
+                                      animate={{
+                                        rotate: [0, -3, 3, 0],
+                                        scale: [1, 1.05, 1],
+                                      }}
+                                      transition={{
+                                        duration: 2.5,
+                                        repeat: Infinity,
+                                        ease: "easeInOut"
+                                      }}
+                                    />
                 </motion.div>
                 
                 <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent mb-2">
