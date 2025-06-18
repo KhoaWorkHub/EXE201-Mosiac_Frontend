@@ -13,6 +13,9 @@ import {
   EnvironmentOutlined,
   PlayCircleOutlined,
   PauseCircleOutlined,
+  ThunderboltOutlined,
+  CrownOutlined,
+  StarOutlined,
 } from "@ant-design/icons";
 import { motion, AnimatePresence } from "framer-motion";
 import MainLayout from "@/components/layout/MainLayout";
@@ -99,144 +102,145 @@ const EnhancedHeroSection: React.FC = () => {
     return null;
   };
 
-// Hero destinations with Mosaic T-Shirt collection integration
-const heroDestinations = [
-  {
-    id: "hanoi",
-    title: "Hanoi Heritage Tee",
-    titleVi: "Áo Thun Di Sản Hà Nội",
-    subtitle: "Temple of Literature & Hoan Kiem Lake Design",
-    subtitleVi: "Thiết Kế Văn Miếu & Hồ Hoàn Kiếm",
-    description:
-      "Premium cotton tee featuring artistic prints of Temple of Literature and Hoan Kiem Lake with traditional Vietnamese motifs",
-    descriptionVi:
-      "Áo thun cotton cao cấp với bản in nghệ thuật Văn Miếu và Hồ Hoàn Kiếm cùng họa tiết truyền thống Việt Nam",
-    image: "/assets/destinations/hanoi/ho-chi-minh-mausoleum.jpg",
-    productImage: getProductImage(0),
-    productData: getProductData(0),
-    url: "/destinations/hanoi",
-    productUrl: "/products?regionId=hanoi",
-    gradient: "from-amber-600 via-yellow-600 to-orange-600",
-    overlayGradient: "from-amber-900/80 via-yellow-900/60 to-transparent",
-    aoColor: "Vàng Hoàng Gia",
-    aoColorEn: "Royal Gold",
-    aoStyle: "Heritage Print",
-    icon: "🏛️",
-    specialty: "Cultural Heritage Tee",
-    rating: 4.8,
-    views: "12.5K",
-    region: "Northern Vietnam",
-    regionVi: "Miền Bắc Việt Nam",
-  },
-  {
-    id: "hcm",
-    title: "Saigon Skyline Tee",
-    titleVi: "Áo Thun Skyline Sài Gòn",
-    subtitle: "Landmark 81 & Notre Dame Cathedral Design",
-    subtitleVi: "Thiết Kế Landmark 81 & Nhà Thờ Đức Bà",
-    description:
-      "Urban-style t-shirt showcasing Ho Chi Minh City's iconic skyline with Landmark 81 and Notre Dame Cathedral silhouettes",
-    descriptionVi:
-      "Áo thun phong cách đô thị thể hiện đường chân trời biểu tượng TP.HCM với hình bóng Landmark 81 và Nhà Thờ Đức Bà",
-    image: "/assets/destinations/hcm/landmark-81.jpg",
-    productImage: getProductImage(1),
-    productData: getProductData(1),
-    url: "/destinations/hcm",
-    productUrl: "/products?regionId=hcm",
-    gradient: "from-red-600 via-orange-600 to-pink-600",
-    overlayGradient: "from-red-900/80 via-orange-900/60 to-transparent",
-    aoColor: "Đỏ Rực",
-    aoColorEn: "Vibrant Red",
-    aoStyle: "Urban Skyline",
-    icon: "🏙️",
-    specialty: "Metropolitan Print",
-    rating: 4.9,
-    views: "18.2K",
-    region: "Southern Vietnam",
-    regionVi: "Miền Nam Việt Nam",
-  },
-  {
-    id: "danang",
-    title: "Da Nang Dragon Tee",
-    titleVi: "Áo Thun Rồng Đà Nẵng",
-    subtitle: "Dragon Bridge & Marble Mountains Design",
-    subtitleVi: "Thiết Kế Cầu Rồng & Ngũ Hành Sơn",
-    description:
-      "Striking graphic tee featuring the famous Dragon Bridge breathing fire and the mystical Marble Mountains landscape",
-    descriptionVi:
-      "Áo thun graphic ấn tượng với hình ảnh Cầu Rồng phun lửa nổi tiếng và phong cảnh huyền bí Ngũ Hành Sơn",
-    image: "/assets/destinations/danang/danangcity.jpg",
-    productImage: getProductImage(2),
-    productData: getProductData(2),
-    url: "/destinations/danang",
-    productUrl: "/products?regionId=danang",
-    gradient: "from-sky-600 via-blue-600 to-indigo-600",
-    overlayGradient: "from-sky-900/80 via-blue-900/60 to-transparent",
-    aoColor: "Xanh Dương",
-    aoColorEn: "Azure Blue",
-    aoStyle: "Dragon Print",
-    icon: "🏖️",
-    specialty: "Coastal Landmark Tee",
-    rating: 4.7,
-    views: "15.8K",
-    region: "Central Vietnam",
-    regionVi: "Miền Trung Việt Nam",
-  },
-  {
-    id: "khanhhoa",
-    title: "Nha Trang Paradise Tee",
-    titleVi: "Áo Thun Thiên Đường Nha Trang",
-    subtitle: "Po Nagar Towers & Vinpearl Design",
-    subtitleVi: "Thiết Kế Tháp Po Nagar & Vinpearl",
-    description:
-      "Beach-inspired t-shirt combining ancient Cham towers with modern Vinpearl resort in tropical color palette",
-    descriptionVi:
-      "Áo thun cảm hứng biển kết hợp tháp Chăm cổ kính với resort Vinpearl hiện đại trong bảng màu nhiệt đới",
-    image: "/assets/destinations/khanhhoa/biennhatrang.png",
-    productImage: getProductImage(3),
-    productData: getProductData(3),
-    url: "/destinations/khanhhoa",
-    productUrl: "/products?regionId=khanhhoa",
-    gradient: "from-cyan-600 via-blue-600 to-teal-700",
-    overlayGradient: "from-cyan-900/80 via-blue-900/60 to-transparent",
-    aoColor: "Xanh Biển",
-    aoColorEn: "Ocean Blue",
-    aoStyle: "Tropical Print",
-    icon: "🌊",
-    specialty: "Beach Resort Tee",
-    rating: 4.9,
-    views: "16.3K",
-    region: "South Central Coast",
-    regionVi: "Duyên Hải Nam Trung Bộ",
-  },
-  {
-    id: "quangninh",
-    title: "Ha Long Bay Wonder Tee",
-    titleVi: "Áo Thun Kỳ Quan Vịnh Hạ Long",
-    subtitle: "Limestone Karsts & Floating Villages Design",
-    subtitleVi: "Thiết Kế Núi Đá Vôi & Làng Chài",
-    description:
-      "UNESCO World Heritage inspired tee showcasing Ha Long Bay's majestic limestone formations and traditional fishing villages",
-    descriptionVi:
-      "Áo thun cảm hứng di sản thế giới UNESCO thể hiện tảng đá vôi hùng vĩ Vịnh Hạ Long và làng chài truyền thống",
-    image: "/assets/destinations/quangninh/daotiptop.png",
-    productImage: getProductImage(4),
-    productData: getProductData(4),
-    url: "/destinations/quangninh",
-    productUrl: "/products?regionId=quangninh",
-    gradient: "from-slate-600 via-stone-600 to-slate-700",
-    overlayGradient: "from-slate-900/80 via-stone-900/60 to-transparent",
-    aoColor: "Xanh Thiên Thanh",
-    aoColorEn: "Sky Blue",
-    aoStyle: "Heritage Print",
-    icon: "🗿",
-    specialty: "UNESCO Heritage Tee",
-    rating: 4.9,
-    views: "14.7K",
-    region: "Northeast Vietnam",
-    regionVi: "Đông Bắc Việt Nam",
-  },
-];
+  // Hero destinations with Mosaic T-Shirt collection integration
+  const heroDestinations = [
+    {
+      id: "hcm",
+      title: "Saigon Skyline Tee",
+      titleVi: "Áo Thun Skyline Sài Gòn",
+      subtitle: "Landmark 81 & Notre Dame Cathedral Design",
+      subtitleVi: "Thiết Kế Landmark 81 & Nhà Thờ Đức Bà",
+      description:
+        "Urban-style t-shirt showcasing Ho Chi Minh City's iconic skyline with Landmark 81 and Notre Dame Cathedral silhouettes",
+      descriptionVi:
+        "Áo thun phong cách đô thị thể hiện đường chân trời biểu tượng TP.HCM với hình bóng Landmark 81 và Nhà Thờ Đức Bà",
+      image: "/assets/destinations/hcm/landmark-81.jpg",
+      productImage: getProductImage(1),
+      productData: getProductData(1),
+      url: "/destinations/hcm",
+      productUrl: "/products?regionId=hcm",
+      gradient: "from-red-600 via-orange-600 to-pink-600",
+      overlayGradient: "from-red-900/80 via-orange-900/60 to-transparent",
+      aoColor: "Đỏ Rực",
+      aoColorEn: "Vibrant Red",
+      aoStyle: "Urban Skyline",
+      icon: "🏙️",
+      specialty: "Metropolitan Print",
+      rating: 4.9,
+      views: "18.2K",
+      region: "Southern Vietnam",
+      regionVi: "Miền Nam Việt Nam",
+    },
+    {
+      id: "khanhhoa",
+      title: "Nha Trang Paradise Tee",
+      titleVi: "Áo Thun Thiên Đường Nha Trang",
+      subtitle: "Po Nagar Towers & Vinpearl Design",
+      subtitleVi: "Thiết Kế Tháp Po Nagar & Vinpearl",
+      description:
+        "Beach-inspired t-shirt combining ancient Cham towers with modern Vinpearl resort in tropical color palette",
+      descriptionVi:
+        "Áo thun cảm hứng biển kết hợp tháp Chăm cổ kính với resort Vinpearl hiện đại trong bảng màu nhiệt đới",
+      image: "/assets/destinations/khanhhoa/biennhatrang.png",
+      productImage: getProductImage(0),
+      productData: getProductData(0),
+      url: "/destinations/khanhhoa",
+      productUrl: "/products?regionId=khanhhoa",
+      gradient: "from-cyan-600 via-blue-600 to-teal-700",
+      overlayGradient: "from-cyan-900/80 via-blue-900/60 to-transparent",
+      aoColor: "Xanh Biển",
+      aoColorEn: "Ocean Blue",
+      aoStyle: "Tropical Print",
+      icon: "🌊",
+      specialty: "Beach Resort Tee",
+      rating: 4.9,
+      views: "16.3K",
+      region: "South Central Coast",
+      regionVi: "Duyên Hải Nam Trung Bộ",
+    },
+    {
+      id: "danang",
+      title: "Da Nang Dragon Tee",
+      titleVi: "Áo Thun Rồng Đà Nẵng",
+      subtitle: "Dragon Bridge & Marble Mountains Design",
+      subtitleVi: "Thiết Kế Cầu Rồng & Ngũ Hành Sơn",
+      description:
+        "Striking graphic tee featuring the famous Dragon Bridge breathing fire and the mystical Marble Mountains landscape",
+      descriptionVi:
+        "Áo thun graphic ấn tượng với hình ảnh Cầu Rồng phun lửa nổi tiếng và phong cảnh huyền bí Ngũ Hành Sơn",
+      image: "/assets/destinations/danang/danangcity.jpg",
+      productImage: getProductImage(4),
+      productData: getProductData(4),
+      url: "/destinations/danang",
+      productUrl: "/products?regionId=danang",
+      gradient: "from-sky-600 via-blue-600 to-indigo-600",
+      overlayGradient: "from-sky-900/80 via-blue-900/60 to-transparent",
+      aoColor: "Xanh Dương",
+      aoColorEn: "Azure Blue",
+      aoStyle: "Dragon Print",
+      icon: "🏖️",
+      specialty: "Coastal Landmark Tee",
+      rating: 4.7,
+      views: "15.8K",
+      region: "Central Vietnam",
+      regionVi: "Miền Trung Việt Nam",
+    },
+    {
+      id: "quangninh",
+      title: "Ha Long Bay Wonder Tee",
+      titleVi: "Áo Thun Kỳ Quan Vịnh Hạ Long",
+      subtitle: "Limestone Karsts & Floating Villages Design",
+      subtitleVi: "Thiết Kế Núi Đá Vôi & Làng Chài",
+      description:
+        "UNESCO World Heritage inspired tee showcasing Ha Long Bay's majestic limestone formations and traditional fishing villages",
+      descriptionVi:
+        "Áo thun cảm hứng di sản thế giới UNESCO thể hiện tảng đá vôi hùng vĩ Vịnh Hạ Long và làng chài truyền thống",
+      image: "/assets/destinations/quangninh/daotiptop.png",
+      productImage: getProductImage(2),
+      productData: getProductData(2),
+      url: "/destinations/quangninh",
+      productUrl: "/products?regionId=quangninh",
+      gradient: "from-slate-600 via-stone-600 to-slate-700",
+      overlayGradient: "from-slate-900/80 via-stone-900/60 to-transparent",
+      aoColor: "Xanh Thiên Thanh",
+      aoColorEn: "Sky Blue",
+      aoStyle: "Heritage Print",
+      icon: "🗿",
+      specialty: "UNESCO Heritage Tee",
+      rating: 4.9,
+      views: "14.7K",
+      region: "Northeast Vietnam",
+      regionVi: "Đông Bắc Việt Nam",
+    },
+    {
+      id: "hanoi",
+      title: "Hanoi Heritage Tee",
+      titleVi: "Áo Thun Di Sản Hà Nội",
+      subtitle: "Temple of Literature & Hoan Kiem Lake Design",
+      subtitleVi: "Thiết Kế Văn Miếu & Hồ Hoàn Kiếm",
+      description:
+        "Premium cotton tee featuring artistic prints of Temple of Literature and Hoan Kiem Lake with traditional Vietnamese motifs",
+      descriptionVi:
+        "Áo thun cotton cao cấp với bản in nghệ thuật Văn Miếu và Hồ Hoàn Kiếm cùng họa tiết truyền thống Việt Nam",
+      image: "/assets/destinations/hanoi/ho-chi-minh-mausoleum.jpg",
+      productImage: getProductImage(3),
+      productData: getProductData(3),
+      url: "/destinations/hanoi",
+      productUrl: "/products?regionId=hanoi",
+      gradient: "from-amber-600 via-yellow-600 to-orange-600",
+      overlayGradient: "from-amber-900/80 via-yellow-900/60 to-transparent",
+      aoColor: "Vàng Hoàng Gia",
+      aoColorEn: "Royal Gold",
+      aoStyle: "Heritage Print",
+      icon: "🏛️",
+      specialty: "Cultural Heritage Tee",
+      rating: 4.8,
+      views: "12.5K",
+      region: "Northern Vietnam",
+      regionVi: "Miền Bắc Việt Nam",
+    },
+  ];
+
   // Auto-play functionality
   useEffect(() => {
     if (!isPlaying || loading) return;
@@ -791,6 +795,486 @@ const heroDestinations = [
   );
 };
 
+// Enhanced Special Offer Section with Real Product Images
+const EnhancedSpecialOfferSection: React.FC = () => {
+  const { t } = useTranslation(["common"]);
+  const { products, latestProducts } = useAppSelector(
+    (state) => state.products
+  );
+  const [countdownTime, setCountdownTime] = useState({
+    days: 5,
+    hours: 12,
+    minutes: 45,
+    seconds: 30,
+  });
+
+  // Get multiple product images for the showcase
+  const getSpecialOfferProducts = () => {
+    const allProducts = [...latestProducts, ...products];
+    return Array.from({ length: 5 }, (_, index) => {
+      const product = allProducts[index % allProducts.length];
+
+      if (product?.images?.length > 0) {
+        const primaryImage = product.images.find((img) => img.isPrimary);
+        return {
+          image: primaryImage?.imageUrl || product.images[0]?.imageUrl,
+          name: product.name,
+          price: formatVND(product.price),
+          originalPrice: product.originalPrice
+            ? formatVND(product.originalPrice)
+            : null,
+          slug: product.slug,
+        };
+      }
+
+      // Fallback products
+      const fallbackProducts = [
+        {
+          image:
+            "https://images.unsplash.com/photo-1590548784585-643d2b9f2925?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+          name: "Traditional Áo Dài",
+          price: "$289",
+          originalPrice: "$389",
+          slug: "traditional-ao-dai",
+        },
+        {
+          image:
+            "https://images.unsplash.com/photo-1624371711241-e15e6d554040?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+          name: "Modern Silk Áo Dài",
+          price: "$359",
+          originalPrice: "$459",
+          slug: "modern-silk-ao-dai",
+        },
+        {
+          image:
+            "https://images.unsplash.com/photo-1557750255-c76072a7fdf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+          name: "Royal Collection Áo Dài",
+          price: "$489",
+          originalPrice: "$589",
+          slug: "royal-collection-ao-dai",
+        },
+        {
+          image:
+            "https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+          name: "Elegant Evening Áo Dài",
+          price: "$399",
+          originalPrice: "$499",
+          slug: "elegant-evening-ao-dai",
+        },
+      ];
+
+      return fallbackProducts[index % fallbackProducts.length];
+    });
+  };
+
+  const specialProducts = getSpecialOfferProducts();
+
+  // Countdown timer
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCountdownTime((prev) => {
+        let { days, hours, minutes, seconds } = prev;
+
+        if (seconds > 0) {
+          seconds--;
+        } else if (minutes > 0) {
+          minutes--;
+          seconds = 59;
+        } else if (hours > 0) {
+          hours--;
+          minutes = 59;
+          seconds = 59;
+        } else if (days > 0) {
+          days--;
+          hours = 23;
+          minutes = 59;
+          seconds = 59;
+        }
+
+        return { days, hours, minutes, seconds };
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  // Floating elements for special offer
+  const FloatingOfferElements = () => (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {Array.from({ length: 15 }).map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute text-white/20 text-2xl"
+          animate={{
+            y: [0, -80, 0],
+            x: [0, Math.sin(i * 1.2) * 40, 0],
+            rotate: [0, 360],
+            scale: [0.5, 1.5, 0.5],
+            opacity: [0.1, 0.7, 0.1],
+          }}
+          transition={{
+            duration: Math.random() * 12 + 8,
+            repeat: Infinity,
+            delay: Math.random() * 5,
+            ease: "easeInOut",
+          }}
+          style={{
+            left: Math.random() * 100 + "%",
+            top: Math.random() * 100 + "%",
+          }}
+        >
+          {["🔥", "💎", "⚡", "🌟", "💫", "✨"][i % 6]}
+        </motion.div>
+      ))}
+    </div>
+  );
+
+  return (
+    <section className="py-16 relative overflow-hidden">
+      <div className="container mx-auto px-4">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-red-600 via-pink-600 to-purple-700 text-white shadow-2xl">
+          {/* Animated Background Pattern */}
+          <div className="absolute inset-0">
+            <motion.div
+              className="absolute inset-0 opacity-30"
+              animate={{
+                backgroundPosition: ["0% 0%", "100% 100%"],
+              }}
+              transition={{
+                duration: 20,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              style={{
+                backgroundImage: `
+                  radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 40%, rgba(255,255,255,0.05) 0%, transparent 50%)
+                `,
+              }}
+            />
+          </div>
+
+          {/* Floating Elements */}
+          <FloatingOfferElements />
+
+          {/* Content Grid */}
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Left Column - Offer Details */}
+            <div className="lg:col-span-7 p-10 md:p-16">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                {/* Mega Sale Badge */}
+                <motion.div
+                  className="inline-flex items-center mb-6"
+                  animate={{
+                    scale: [1, 1.1, 1],
+                    rotate: [0, 5, -5, 0],
+                  }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
+                  <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-8 py-4 rounded-full flex items-center shadow-2xl border-4 border-white/30">
+                    <motion.div
+                      animate={{
+                        rotate: [0, 360],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
+                    >
+                      <FireOutlined className="text-3xl mr-4" />
+                    </motion.div>
+                    <div className="flex flex-col">
+                      <span className="font-black text-lg uppercase tracking-wider">
+                        {t("common:special_offer.label")}
+                      </span>
+                      <span className="text-sm font-semibold opacity-80">
+                        Limited Time Only
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Main Title with Gradient Text */}
+                <div className="mb-8">
+                  <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                  >
+                    <Title
+                      level={1}
+                      className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight mb-4"
+                      style={{
+                        background:
+                          "linear-gradient(45deg, #ffffff, #f0f0f0, #ffffff)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        textShadow: "0 0 30px rgba(255,255,255,0.5)",
+                      }}
+                    >
+                      {t("common:special_offer.title")}
+                    </Title>
+                  </motion.div>
+
+                  {/* Discount Badge */}
+                  <motion.div
+                    className="inline-flex items-center mb-6"
+                    animate={{
+                      scale: [1, 1.15, 1],
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <div className="bg-gradient-to-r from-green-400 to-emerald-500 text-black px-8 py-3 rounded-full flex items-center shadow-xl">
+                      <ThunderboltOutlined className="text-2xl mr-3" />
+                      <span className="font-black text-2xl">UP TO 30% OFF</span>
+                    </div>
+                  </motion.div>
+                </div>
+
+                {/* Description */}
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                >
+                  <Paragraph className="text-gray-100 mb-8 text-xl leading-relaxed max-w-2xl">
+                    {t("common:special_offer.description")}
+                  </Paragraph>
+                </motion.div>
+
+                {/* Enhanced Countdown */}
+                <motion.div
+                  className="mb-10"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                >
+                  <div className="flex items-center mb-4">
+                    <CrownOutlined className="text-yellow-400 text-2xl mr-3" />
+                    <span className="text-xl font-bold uppercase tracking-wider">
+                      Hurry Up! Offer Ends In:
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-4 gap-4">
+                    {[
+                      {
+                        value: countdownTime.days,
+                        label: t("common:special_offer.countdown.days"),
+                      },
+                      {
+                        value: countdownTime.hours,
+                        label: t("common:special_offer.countdown.hours"),
+                      },
+                      {
+                        value: countdownTime.minutes,
+                        label: t("common:special_offer.countdown.mins"),
+                      },
+                      {
+                        value: countdownTime.seconds,
+                        label: t("common:special_offer.countdown.secs"),
+                      },
+                    ].map((item, index) => (
+                      <motion.div
+                        key={index}
+                        className="text-center"
+                        animate={{
+                          scale: index === 3 ? [1, 1.1, 1] : 1,
+                        }}
+                        transition={{ duration: 1, repeat: Infinity }}
+                      >
+                        <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-4 border border-white/30 shadow-xl">
+                          <motion.span
+                            className="text-4xl md:text-5xl font-black block mb-2"
+                            animate={{
+                              color:
+                                index === 3
+                                  ? ["#ffffff", "#ffff00", "#ffffff"]
+                                  : "#ffffff",
+                            }}
+                            transition={{ duration: 1, repeat: Infinity }}
+                          >
+                            {String(item.value).padStart(2, "0")}
+                          </motion.span>
+                          <p className="text-sm font-bold uppercase tracking-wider opacity-80">
+                            {item.label}
+                          </p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* CTA Buttons */}
+                <motion.div
+                  className="flex flex-col sm:flex-row gap-4"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.8 }}
+                >
+                  <Link to="/products?category">
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Button
+                        size="large"
+                        className="bg-white text-red-600 hover:bg-gray-100 border-none h-16 px-12 text-xl font-bold rounded-2xl shadow-2xl"
+                        icon={<ShoppingOutlined className="text-2xl" />}
+                      >
+                        <span className="ml-3">
+                          {t("common:special_offer.button")}
+                        </span>
+                        <ArrowRightOutlined className="ml-3 text-xl" />
+                      </Button>
+                    </motion.div>
+                  </Link>
+
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Link to="/products?category">
+                      <Button
+                        size="large"
+                        className="bg-transparent border-white/40 text-white hover:bg-white/10 hover:border-white/60 h-16 px-12 text-xl font-bold rounded-2xl backdrop-blur-sm"
+                        icon={<GiftOutlined className="text-2xl" />}
+                      >
+                        <span className="ml-3">View All Deals</span>
+                      </Button>
+                    </Link>
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+            </div>
+
+            {/* Right Column - Product Showcase Grid */}
+            <div className="lg:col-span-5 p-6 lg:p-8">
+              <motion.div
+                className="grid grid-cols-2 gap-4 h-full"
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              >
+                {specialProducts.map((product, index) => (
+                  <motion.div
+                    key={index}
+                    className={`relative overflow-hidden rounded-2xl group ${
+                      index === 0 ? "col-span-2 h-64" : "h-48"
+                    }`}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.1 * index }}
+                    whileHover={{ scale: 1.02, y: -5 }}
+                  >
+                    {/* Product Image */}
+                    <div className="absolute inset-0">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                    </div>
+
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+
+                    {/* Sale Badge */}
+                    <div className="absolute top-3 left-3">
+                      <motion.div
+                        className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold"
+                        animate={{
+                          scale: [1, 1.1, 1],
+                        }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      >
+                        30% OFF
+                      </motion.div>
+                    </div>
+
+                    {/* Product Info */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <h4 className="text-white font-bold text-sm mb-2 line-clamp-1">
+                        {product.name}
+                      </h4>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="text-white font-bold text-lg">
+                            {product.price}
+                          </span>
+                          {product.originalPrice && (
+                            <span className="text-gray-300 line-through text-sm">
+                              {product.originalPrice}
+                            </span>
+                          )}
+                        </div>
+                        <motion.div
+                          whileHover={{ scale: 1.2 }}
+                          whileTap={{ scale: 0.9 }}
+                        >
+                          <Link to={`/products/${product.slug}`}>
+                            <Button
+                              type="text"
+                              size="small"
+                              className="text-white hover:text-yellow-400 p-1"
+                              icon={<StarOutlined />}
+                            />
+                          </Link>
+                        </motion.div>
+                      </div>
+                    </div>
+
+                    {/* Hover Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-red-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </motion.div>
+                ))}
+              </motion.div>
+
+              {/* Special Offer Features */}
+              <motion.div
+                className="mt-6 grid grid-cols-1 gap-3"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+              >
+                {[
+                  { icon: "🚚", text: "Free Worldwide Shipping" },
+                  { icon: "🎁", text: "Free Gift Wrapping" },
+                  { icon: "⚡", text: "24h Express Delivery" },
+                ].map((feature, index) => (
+                  <motion.div
+                    key={index}
+                    className="bg-white/15 backdrop-blur-md rounded-xl p-3 flex items-center border border-white/20"
+                    whileHover={{
+                      scale: 1.02,
+                      backgroundColor: "rgba(255,255,255,0.2)",
+                    }}
+                  >
+                    <span className="text-2xl mr-3">{feature.icon}</span>
+                    <span className="text-white font-semibold text-sm">
+                      {feature.text}
+                    </span>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Bottom Decoration */}
+          <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500" />
+        </div>
+      </div>
+    </section>
+  );
+};
+
 // Rest of the component remains the same...
 const regions = [
   {
@@ -1071,88 +1555,8 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Special Offer */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="relative overflow-hidden rounded-xl bg-primary text-white">
-            <div className="absolute top-0 right-0 w-1/2 h-full hidden lg:block">
-              <img
-                src="https://images.unsplash.com/photo-1590548784585-643d2b9f2925?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dmlldG5hbWVzZSUyMGFvJTIwZGFpfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60"
-                alt={t("common:special_offer.image_alt")}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2">
-              <div className="p-10 md:p-16">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="flex items-center mb-4">
-                    <FireOutlined className="text-2xl mr-3" />
-                    <span className="text-xl font-bold">
-                      {t("common:special_offer.label")}
-                    </span>
-                  </div>
-                  <Title
-                    level={2}
-                    className="text-white text-3xl md:text-4xl mb-4"
-                  >
-                    {t("common:special_offer.title")}
-                  </Title>
-                  <Paragraph className="text-gray-100 mb-8 text-lg">
-                    {t("common:special_offer.description")}
-                  </Paragraph>
-                  <div className="grid grid-cols-4 gap-4 mb-8">
-                    <div className="text-center">
-                      <div className="bg-white bg-opacity-20 rounded-lg p-3">
-                        <span className="text-2xl font-bold">05</span>
-                        <p className="text-xs">
-                          {t("common:special_offer.countdown.days")}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-center">
-                      <div className="bg-white bg-opacity-20 rounded-lg p-3">
-                        <span className="text-2xl font-bold">12</span>
-                        <p className="text-xs">
-                          {t("common:special_offer.countdown.hours")}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-center">
-                      <div className="bg-white bg-opacity-20 rounded-lg p-3">
-                        <span className="text-2xl font-bold">45</span>
-                        <p className="text-xs">
-                          {t("common:special_offer.countdown.mins")}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-center">
-                      <div className="bg-white bg-opacity-20 rounded-lg p-3">
-                        <span className="text-2xl font-bold">30</span>
-                        <p className="text-xs">
-                          {t("common:special_offer.countdown.secs")}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <Link to="/products?category=aodai">
-                    <Button
-                      size="large"
-                      className="bg-white text-primary hover:bg-gray-100 border-white"
-                    >
-                      {t("common:special_offer.button")} <ArrowRightOutlined />
-                    </Button>
-                  </Link>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Enhanced Special Offer Section */}
+      <EnhancedSpecialOfferSection />
 
       {/* Regional Collections */}
       <section className="py-16 bg-gray-50 dark:bg-gray-800">
