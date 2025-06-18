@@ -90,6 +90,15 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ trigger }) => {
     message.success(`Đã copy ${label}!`);
   };
 
+  // Fixed close handler with proper event handling
+  const handleCloseModal = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    setIsModalVisible(false);
+  };
+
   const modalVariants = {
     hidden: { 
       opacity: 0, 
@@ -133,7 +142,7 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ trigger }) => {
   const floatingParticles = Array.from({ length: 15 }).map((_, i) => (
     <motion.div
       key={i}
-      className="absolute text-2xl opacity-10"
+      className="absolute text-2xl opacity-10 pointer-events-none"
       style={{
         left: Math.random() * 100 + '%',
         top: Math.random() * 100 + '%',
@@ -173,13 +182,15 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ trigger }) => {
 
       <Modal
         open={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
+        onCancel={handleCloseModal}
         footer={null}
         closable={false}
         width={680}
         className="contact-modal"
         style={{ top: 20 }}
         maskStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.7)', backdropFilter: 'blur(8px)' }}
+        destroyOnClose={true}
+        maskClosable={true}
       >
         <AnimatePresence>
           {isModalVisible && (
@@ -189,23 +200,34 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ trigger }) => {
               animate="visible"
               exit="exit"
               className="relative overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
             >
               {/* Background particles */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 {floatingParticles}
               </div>
 
-              {/* Close button */}
-              <Button
-                type="text"
-                icon={<CloseOutlined />}
-                onClick={() => setIsModalVisible(false)}
-                className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/80 hover:bg-white shadow-lg flex items-center justify-center"
-              />
+              {/* Enhanced Close button with better z-index and event handling */}
+              <div className="absolute top-4 right-4 z-50">
+                <Button
+                  type="text"
+                  icon={<CloseOutlined />}
+                  onClick={handleCloseModal}
+                  className="w-10 h-10 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center border-0 hover:shadow-xl transition-all duration-300"
+                  style={{ 
+                    zIndex: 9999,
+                    position: 'relative',
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    backdropFilter: 'blur(10px)'
+                  }}
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onMouseUp={(e) => e.stopPropagation()}
+                />
+              </div>
 
               {/* Header */}
               <motion.div 
-                className="text-center mb-8 relative z-10"
+                className="text-center mb-8 relative z-10 pt-6"
                 variants={itemVariants}
               >
                 <motion.div
@@ -220,20 +242,20 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ trigger }) => {
                     ease: "easeInOut"
                   }}
                 >
-                                    <motion.img
-                                      src="/assets/about-us/mascot.png"
-                                      alt="MOSAIC Mascot"
-                                      className="w-36 h-36 object-contain drop-shadow-lg"
-                                      animate={{
-                                        rotate: [0, -3, 3, 0],
-                                        scale: [1, 1.05, 1],
-                                      }}
-                                      transition={{
-                                        duration: 2.5,
-                                        repeat: Infinity,
-                                        ease: "easeInOut"
-                                      }}
-                                    />
+                  <motion.img
+                    src="/assets/about-us/mascot.png"
+                    alt="MOSAIC Mascot"
+                    className="w-36 h-36 object-contain drop-shadow-lg"
+                    animate={{
+                      rotate: [0, -3, 3, 0],
+                      scale: [1, 1.05, 1],
+                    }}
+                    transition={{
+                      duration: 2.5,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
                 </motion.div>
                 
                 <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent mb-2">
@@ -372,6 +394,7 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ trigger }) => {
           border-radius: 20px;
           overflow: hidden;
           box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+          position: relative;
         }
         
         .dark .contact-modal .ant-modal-content {
@@ -380,6 +403,7 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ trigger }) => {
 
         .contact-modal .ant-modal-body {
           padding: 2rem;
+          position: relative;
         }
 
         @media (max-width: 768px) {

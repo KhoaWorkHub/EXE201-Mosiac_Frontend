@@ -417,11 +417,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <div>
               <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">{t('footer.shop')}</h3>
               <ul className="space-y-2">
-                <li><Link to="/products/new" className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary">{t('nav.new_arrivals')}</Link></li>
-                <li><Link to="/products/bestsellers" className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary">{t('nav.bestsellers')}</Link></li>
-                <li><Link to="/products/sale" className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary">{t('nav.sale')}</Link></li>
-                <li><Link to="/products/womens" className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary">{t('product:categories.womens')}</Link></li>
-                <li><Link to="/products/mens" className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary">{t('product:categories.mens')}</Link></li>
+                <li><Link to="/products?category" className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary">{t('nav.new_arrivals')}</Link></li>
+                <li><Link to="/products?category" className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary">{t('nav.bestsellers')}</Link></li>
+                <li><Link to="/products?category" className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary">{t('nav.sale')}</Link></li>
               </ul>
             </div>
             <div>
