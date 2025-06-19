@@ -1300,23 +1300,23 @@ const regions = [
 const testimonials = [
   {
     id: 1,
-    name: "Sarah Johnson",
-    location: "New York, USA",
-    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+    name: "Lộc Trần",
+    location: "Bình Thạnh, Viet Nam",
+    avatar: "/assets/about-us/loctran.png",
     rating: 5,
   },
   {
     id: 2,
-    name: "Michael Chen",
-    location: "Toronto, Canada",
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+    name: "Vũ Nguyễn",
+    location: "Thủ Đức, Viet Nam",
+    avatar: "/assets/about-us/vunguyen.png",
     rating: 4,
   },
   {
     id: 3,
-    name: "Emma Nguyen",
-    location: "Sydney, Australia",
-    avatar: "https://randomuser.me/api/portraits/women/63.jpg",
+    name: "Thế Hoàng Nguyễn",
+    location: "Đa Kao, Viet Nam",
+    avatar: "/assets/about-us/thehoang.png",
     rating: 5,
   },
 ];
