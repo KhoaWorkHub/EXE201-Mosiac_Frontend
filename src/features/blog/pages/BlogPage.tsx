@@ -57,7 +57,7 @@ const destinations = [
     aoMauSac: "Đỏ Rực",
     aoMauSacEn: "Vibrant Red",
     aoStyle: "Modern Chic",
-    aoPrice: "199999 VND",
+    aoPrice: "199000 VND",
   },
   {
     id: "khanhhoa",
@@ -82,7 +82,7 @@ const destinations = [
     aoMauSac: "Xanh Biển",
     aoMauSacEn: "Ocean Blue",
     aoStyle: "Flowing Coastal",
-    aoPrice: "199999 VND",
+    aoPrice: "199000 VND",
   },
   {
     id: "danang",
@@ -107,7 +107,7 @@ const destinations = [
     aoMauSac: "Xanh Dương",
     aoMauSacEn: "Azure Blue",
     aoStyle: "Breezy Coastal",
-    aoPrice: "199999 VND",
+    aoPrice: "199000 VND",
   },
     {
     id: "quangninh",
@@ -132,7 +132,7 @@ const destinations = [
     aoMauSac: "Xanh Thiên Thanh",
     aoMauSacEn: "Sky Blue",
     aoStyle: "Elegant Traditional",
-    aoPrice: "199999 VND",
+    aoPrice: "199000 VND",
   },
   {
     id: "hanoi",
@@ -157,7 +157,7 @@ const destinations = [
     aoMauSac: "Vàng Hoàng Gia",
     aoMauSacEn: "Royal Gold",
     aoStyle: "Regal Traditional",
-    aoPrice: "199999 VND",
+    aoPrice: "199000 VND",
   }
 ];
 
