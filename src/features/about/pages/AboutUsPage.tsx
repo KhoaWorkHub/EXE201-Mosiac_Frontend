@@ -107,10 +107,10 @@ const AboutUsPage: React.FC = () => {
       color: "from-green-500 to-emerald-500",
     },
     {
-      name: "Cường",
+      name: "Nguyễn Hùng Cường",
       role: "UI/UX Designer",
       major: "Digital Arts & Design",
-      avatar: "🎨",
+      avatar: "/assets/about-us/nguyencuong.jpg",
       description:
         "Creative designer focused on user experience and developing MOSAIC product merchandise",
       skills: ["UI/UX", "Web Design", "Product Design"],
