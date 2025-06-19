@@ -24,10 +24,11 @@ const LuxuryLoginPage: React.FC = () => {
   
   // Collection of luxury Vietnamese fashion images for background
   const luxuryImages = [
-    '/assets/auth/luxury-ao-dai-1.jpg',
-    '/assets/auth/luxury-vietnamese-fashion-2.png',
-    '/assets/auth/luxury-craft-3.jpg',
-    '/assets/auth/luxury-silks-4.jpg',
+    '/assets/auth/saigon.png',
+    '/assets/auth/khanhhoa.png',
+    '/assets/auth/danang.png',
+    '/assets/auth/quangninh.png',
+    '/assets/auth/hanoi.png',
   ];
   
   // Brand values to display in rotating fashion
@@ -36,6 +37,7 @@ const LuxuryLoginPage: React.FC = () => {
     { value: t('auth:brand_values.heritage'), description: t('auth:brand_values.heritage_desc') },
     { value: t('auth:brand_values.sustainability'), description: t('auth:brand_values.sustainability_desc') },
     { value: t('auth:brand_values.exclusivity'), description: t('auth:brand_values.exclusivity_desc') },
+    { value: t('auth:brand_values.craftsmanship'), description: t('auth:brand_values.craftsmanship_desc') },
   ];
   
   // Redirect if already authenticated
