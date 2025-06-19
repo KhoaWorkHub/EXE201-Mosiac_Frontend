@@ -1551,6 +1551,8 @@ const HomePage: React.FC = () => {
             slidesToShow={4}
             onAddToCart={handleAddToCart}
             onAddToWishlist={handleAddToWishlist}
+            showOnlyBlackVariants={true}
+            showBlackImageOnly={true}
           />
         </div>
       </section>

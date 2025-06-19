@@ -58,7 +58,7 @@ const ProductImageGallery: React.FC<{
   images: any[];
   productName: string;
   onImageClick?: () => void;
-}> = ({ images = [], productName, }) => {
+}> = ({ images = [], productName }) => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState(0);
@@ -66,7 +66,7 @@ const ProductImageGallery: React.FC<{
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
   const [isZoomed, setIsZoomed] = useState(false);
-  
+
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -74,7 +74,7 @@ const ProductImageGallery: React.FC<{
   useEffect(() => {
     if (isAutoPlay && images.length > 1) {
       intervalRef.current = setInterval(() => {
-        setSelectedImage(prev => (prev + 1) % images.length);
+        setSelectedImage((prev) => (prev + 1) % images.length);
       }, 3000);
     } else {
       if (intervalRef.current) {
@@ -91,64 +91,67 @@ const ProductImageGallery: React.FC<{
 
   // Navigation functions
   const goToPrevious = useCallback(() => {
-    setSelectedImage(prev => prev === 0 ? images.length - 1 : prev - 1);
+    setSelectedImage((prev) => (prev === 0 ? images.length - 1 : prev - 1));
     setIsImageLoading(true);
   }, [images.length]);
 
   const goToNext = useCallback(() => {
-    setSelectedImage(prev => (prev + 1) % images.length);
+    setSelectedImage((prev) => (prev + 1) % images.length);
     setIsImageLoading(true);
   }, [images.length]);
 
   // Lightbox navigation
   const lightboxPrevious = useCallback(() => {
-    setLightboxImage(prev => prev === 0 ? images.length - 1 : prev - 1);
+    setLightboxImage((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   }, [images.length]);
 
   const lightboxNext = useCallback(() => {
-    setLightboxImage(prev => (prev + 1) % images.length);
+    setLightboxImage((prev) => (prev + 1) % images.length);
   }, [images.length]);
 
   // Mouse zoom functionality
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isZoomed || !containerRef.current) return;
-    
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    
-    setZoomPosition({ x, y });
-  }, [isZoomed]);
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (!isZoomed || !containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+      setZoomPosition({ x, y });
+    },
+    [isZoomed]
+  );
 
   // Keyboard navigation
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (isLightboxOpen) {
         switch (e.key) {
-          case 'ArrowLeft':
+          case "ArrowLeft":
             lightboxPrevious();
             break;
-          case 'ArrowRight':
+          case "ArrowRight":
             lightboxNext();
             break;
-          case 'Escape':
+          case "Escape":
             setIsLightboxOpen(false);
             break;
         }
       } else {
         switch (e.key) {
-          case 'ArrowLeft':
+          case "ArrowLeft":
             goToPrevious();
             break;
-          case 'ArrowRight':
+          case "ArrowRight":
             goToNext();
             break;
         }
       }
     };
 
-    document.addEventListener('keydown', handleKeyPress);
-    return () => document.removeEventListener('keydown', handleKeyPress);
+    document.addEventListener("keydown", handleKeyPress);
+    return () => document.removeEventListener("keydown", handleKeyPress);
   }, [isLightboxOpen, lightboxPrevious, lightboxNext, goToPrevious, goToNext]);
 
   const openLightbox = useCallback((index: number) => {
@@ -170,7 +173,7 @@ const ProductImageGallery: React.FC<{
     <div className="space-y-4">
       {/* Main Image Display */}
       <div className="relative group">
-        <div 
+        <div
           ref={containerRef}
           className="relative aspect-square bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 cursor-zoom-in group rounded-lg overflow-hidden shadow-lg"
           onClick={() => setIsZoomed(!isZoomed)}
@@ -196,7 +199,7 @@ const ProductImageGallery: React.FC<{
             src={currentImage.imageUrl}
             alt={currentImage.altText || productName}
             className={`w-full h-full object-cover transition-all duration-500 ${
-              isZoomed ? 'scale-150 cursor-zoom-out' : 'cursor-zoom-in'
+              isZoomed ? "scale-150 cursor-zoom-out" : "cursor-zoom-in"
             }`}
             style={
               isZoomed
@@ -217,7 +220,7 @@ const ProductImageGallery: React.FC<{
             <div className="absolute top-4 left-4 z-20">
               <Badge
                 count={<StarFilled className="text-yellow-400" />}
-                style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}
+                style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
               />
             </div>
           )}
@@ -285,7 +288,9 @@ const ProductImageGallery: React.FC<{
           {/* Auto-play Controls */}
           {images.length > 1 && (
             <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-              <Tooltip title={isAutoPlay ? "Pause Slideshow" : "Start Slideshow"}>
+              <Tooltip
+                title={isAutoPlay ? "Pause Slideshow" : "Start Slideshow"}
+              >
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
@@ -295,7 +300,11 @@ const ProductImageGallery: React.FC<{
                   }}
                   className="w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center"
                 >
-                  {isAutoPlay ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
+                  {isAutoPlay ? (
+                    <PauseCircleOutlined />
+                  ) : (
+                    <PlayCircleOutlined />
+                  )}
                 </motion.button>
               </Tooltip>
             </div>
@@ -340,8 +349,8 @@ const ProductImageGallery: React.FC<{
                 whileTap={{ scale: 0.95 }}
                 className={`relative cursor-pointer rounded-md overflow-hidden group ${
                   selectedImage === index
-                    ? 'ring-2 ring-primary ring-offset-2'
-                    : 'ring-1 ring-gray-200 dark:ring-gray-700'
+                    ? "ring-2 ring-primary ring-offset-2"
+                    : "ring-1 ring-gray-200 dark:ring-gray-700"
                 }`}
                 onClick={() => {
                   setSelectedImage(index);
@@ -366,7 +375,7 @@ const ProductImageGallery: React.FC<{
 
                 {/* Hover overlay */}
                 <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                
+
                 {/* Active indicator */}
                 {selectedImage === index && (
                   <motion.div
@@ -388,9 +397,9 @@ const ProductImageGallery: React.FC<{
         onCancel={() => setIsLightboxOpen(false)}
         footer={null}
         width="90vw"
-        style={{ maxWidth: '1200px', top: 20 }}
+        style={{ maxWidth: "1200px", top: 20 }}
         className="lightbox-modal"
-        maskStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.9)' }}
+        maskStyle={{ backgroundColor: "rgba(0, 0, 0, 0.9)" }}
       >
         <div className="relative">
           {/* Lightbox Image */}
@@ -460,8 +469,8 @@ const ProductImageGallery: React.FC<{
                   whileHover={{ scale: 1.1 }}
                   className={`flex-shrink-0 w-16 h-16 rounded cursor-pointer overflow-hidden ${
                     lightboxImage === index
-                      ? 'ring-2 ring-primary'
-                      : 'ring-1 ring-gray-300'
+                      ? "ring-2 ring-primary"
+                      : "ring-1 ring-gray-300"
                   }`}
                   onClick={() => setLightboxImage(index)}
                 >
@@ -564,12 +573,12 @@ const ProductDetailPage: React.FC = () => {
   // Handle buy now
   const handleBuyNow = async () => {
     if (!currentProduct) return;
-    
+
     if (!isInStock()) {
       message.error(t("product:product_details.out_of_stock"));
       return;
     }
-    
+
     try {
       await addToCart({
         productId: currentProduct.id as UUID,
@@ -579,7 +588,7 @@ const ProductDetailPage: React.FC = () => {
       navigate("/checkout");
     } catch (error) {
       console.error("Error adding to cart:", error);
-      message.error(t('cart:notifications.error_adding'));
+      message.error(t("cart:notifications.error_adding"));
     }
   };
 
@@ -692,14 +701,14 @@ const ProductDetailPage: React.FC = () => {
   // Color indicator helper
   const getColorClass = (colorName: string) => {
     const colorMap: Record<string, string> = {
-      'Đen': 'bg-black',
-      'Trắng': 'bg-white border-2 border-gray-300',
-      'Đỏ': 'bg-red-500',
-      'Xanh': 'bg-blue-500',
-      'Vàng': 'bg-yellow-500',
-      'Xanh lá': 'bg-green-500',
+      Đen: "bg-black",
+      Trắng: "bg-white border-2 border-gray-300",
+      Đỏ: "bg-red-500",
+      Xanh: "bg-blue-500",
+      Vàng: "bg-yellow-500",
+      "Xanh lá": "bg-green-500",
     };
-    return colorMap[colorName] || 'bg-gray-400';
+    return colorMap[colorName] || "bg-gray-400";
   };
 
   return (
@@ -852,19 +861,27 @@ const ProductDetailPage: React.FC = () => {
                     className="mb-6"
                   >
                     {(() => {
-                      const groupedVariants = currentProduct.variants.reduce((acc, variant) => {
-                        if (!acc[variant.size]) {
-                          acc[variant.size] = {};
-                        }
-                        if (!acc[variant.size][variant.color]) {
-                          acc[variant.size][variant.color] = [];
-                        }
-                        acc[variant.size][variant.color].push(variant);
-                        return acc;
-                      }, {} as Record<string, Record<string, ProductVariantResponse[]>>);
+                      const groupedVariants = currentProduct.variants.reduce(
+                        (acc, variant) => {
+                          if (!acc[variant.size]) {
+                            acc[variant.size] = {};
+                          }
+                          if (!acc[variant.size][variant.color]) {
+                            acc[variant.size][variant.color] = [];
+                          }
+                          acc[variant.size][variant.color].push(variant);
+                          return acc;
+                        },
+                        {} as Record<
+                          string,
+                          Record<string, ProductVariantResponse[]>
+                        >
+                      );
 
                       const sizes = Object.keys(groupedVariants).sort();
-                      const allColors = [...new Set(currentProduct.variants.map(v => v.color))];
+                      const allColors = [
+                        ...new Set(currentProduct.variants.map((v) => v.color)),
+                      ];
 
                       return (
                         <div className="space-y-4">
@@ -875,19 +892,30 @@ const ProductDetailPage: React.FC = () => {
                             </Text>
                             <div className="flex flex-wrap gap-2">
                               {sizes.map((size) => {
-                                const sizeVariants = Object.values(groupedVariants[size]).flat();
-                                const hasStock = sizeVariants.some(v => v.active && v.stockQuantity > 0);
-                                const isSelected = selectedVariant && selectedVariant.size === size;
-                                
+                                const sizeVariants = Object.values(
+                                  groupedVariants[size]
+                                ).flat();
+                                const hasStock = sizeVariants.some(
+                                  (v) => v.active && v.stockQuantity > 0
+                                );
+                                const isSelected =
+                                  selectedVariant &&
+                                  selectedVariant.size === size;
+
                                 return (
                                   <Button
                                     key={size}
                                     type={isSelected ? "primary" : "default"}
-                                    className={`min-w-[60px] ${!hasStock ? "opacity-60" : ""}`}
+                                    className={`min-w-[60px] ${
+                                      !hasStock ? "opacity-60" : ""
+                                    }`}
                                     disabled={!hasStock}
                                     onClick={() => {
                                       // Select first available variant for this size
-                                      const availableVariant = sizeVariants.find(v => v.active && v.stockQuantity > 0);
+                                      const availableVariant =
+                                        sizeVariants.find(
+                                          (v) => v.active && v.stockQuantity > 0
+                                        );
                                       if (availableVariant) {
                                         handleVariantSelect(availableVariant);
                                       }
@@ -910,39 +938,56 @@ const ProductDetailPage: React.FC = () => {
                             </Text>
                             <div className="flex flex-wrap gap-2">
                               {allColors.map((color) => {
-                                const colorVariants = currentProduct.variants.filter(v => v.color === color);
-                                const hasStock = colorVariants.some(v => v.active && v.stockQuantity > 0);
-                                const isSelected = selectedVariant && selectedVariant.color === color;
+                                const colorVariants =
+                                  currentProduct.variants.filter(
+                                    (v) => v.color === color
+                                  );
+                                const hasStock = colorVariants.some(
+                                  (v) => v.active && v.stockQuantity > 0
+                                );
+                                const isSelected =
+                                  selectedVariant &&
+                                  selectedVariant.color === color;
 
                                 return (
                                   <Button
                                     key={color}
                                     type={isSelected ? "primary" : "default"}
-                                    className={`min-w-[80px] flex items-center gap-2 ${!hasStock ? "opacity-60" : ""}`}
+                                    className={`min-w-[80px] flex items-center gap-2 ${
+                                      !hasStock ? "opacity-60" : ""
+                                    }`}
                                     disabled={!hasStock}
                                     onClick={() => {
                                       // If we have a selected size, find variant with that size and this color
                                       let targetVariant;
                                       if (selectedVariant) {
-                                        targetVariant = currentProduct.variants.find(v => 
-                                          v.color === color && 
-                                          v.size === selectedVariant.size && 
-                                          v.active && 
-                                          v.stockQuantity > 0
-                                        );
+                                        targetVariant =
+                                          currentProduct.variants.find(
+                                            (v) =>
+                                              v.color === color &&
+                                              v.size === selectedVariant.size &&
+                                              v.active &&
+                                              v.stockQuantity > 0
+                                          );
                                       }
-                                      
+
                                       // If no target variant found, find any available variant with this color
                                       if (!targetVariant) {
-                                        targetVariant = colorVariants.find(v => v.active && v.stockQuantity > 0);
+                                        targetVariant = colorVariants.find(
+                                          (v) => v.active && v.stockQuantity > 0
+                                        );
                                       }
-                                      
+
                                       if (targetVariant) {
                                         handleVariantSelect(targetVariant);
                                       }
                                     }}
                                   >
-                                    <div className={`w-4 h-4 rounded-full ${getColorClass(color)}`}></div>
+                                    <div
+                                      className={`w-4 h-4 rounded-full ${getColorClass(
+                                        color
+                                      )}`}
+                                    ></div>
                                     {color}
                                     {!hasStock && (
                                       <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
@@ -959,7 +1004,11 @@ const ProductDetailPage: React.FC = () => {
                               <div className="flex justify-between items-center">
                                 <div>
                                   <Text strong className="dark:text-white">
-                                    {t("product:product_details.selected_variant")}: {selectedVariant.size} - {selectedVariant.color}
+                                    {t(
+                                      "product:product_details.selected_variant"
+                                    )}
+                                    : {selectedVariant.size} -{" "}
+                                    {selectedVariant.color}
                                   </Text>
                                   <br />
                                   <Text className="text-sm text-gray-600 dark:text-gray-300">
@@ -967,11 +1016,20 @@ const ProductDetailPage: React.FC = () => {
                                   </Text>
                                   <br />
                                   <Text className="text-sm">
-                                    <span className={selectedVariant.stockQuantity > 0 ? "text-green-600" : "text-red-600"}>
-                                      {selectedVariant.stockQuantity > 0 
-                                        ? `${selectedVariant.stockQuantity} ${t("product:product_details.in_stock")}`
-                                        : t("product:product_details.out_of_stock")
+                                    <span
+                                      className={
+                                        selectedVariant.stockQuantity > 0
+                                          ? "text-green-600"
+                                          : "text-red-600"
                                       }
+                                    >
+                                      {selectedVariant.stockQuantity > 0
+                                        ? `${selectedVariant.stockQuantity} ${t(
+                                            "product:product_details.in_stock"
+                                          )}`
+                                        : t(
+                                            "product:product_details.out_of_stock"
+                                          )}
                                     </span>
                                   </Text>
                                 </div>
@@ -990,7 +1048,7 @@ const ProductDetailPage: React.FC = () => {
                       );
                     })()}
                   </motion.div>
-              )}
+                )}
 
               {/* Quantity & Add to Cart */}
               <motion.div
@@ -1229,6 +1287,8 @@ const ProductDetailPage: React.FC = () => {
             cols={4}
             onAddToCart={handleAddToCart}
             onAddToWishlist={(_product) => setWishListed(!wishListed)}
+            showOnlyBlackVariants={true}
+            showBlackImageOnly={true}
           />
         </div>
       </div>

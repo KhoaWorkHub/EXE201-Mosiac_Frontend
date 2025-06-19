@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, Empty, Spin } from 'antd';
 import { motion } from 'framer-motion';
 import ProductCard from './ProductCard';
+import { filterProductsWithBlackVariants } from '@/utils/productFilters';
 import type { ProductResponse } from '@/types/product.types';
 
 interface ProductsGridProps {
@@ -11,6 +12,9 @@ interface ProductsGridProps {
   gutter?: [number, number];
   onAddToCart?: (product: ProductResponse) => void;
   onAddToWishlist?: (product: ProductResponse) => void;
+  showOnlyBlackVariants?: boolean; // New prop to filter black variants only
+  showOnlyPrimaryImage?: boolean; // New prop to show only primary image
+  showBlackImageOnly?: boolean; // New prop to show only black color image
 }
 
 const ProductsGrid: React.FC<ProductsGridProps> = ({
@@ -19,7 +23,10 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({
   cols = 4, // Default to 4 columns
   gutter = [16, 24], // Default gutter
   onAddToCart,
-  onAddToWishlist
+  onAddToWishlist,
+  showOnlyBlackVariants = false, // Default to false for backward compatibility
+  showOnlyPrimaryImage = false, // Default to false for backward compatibility
+  showBlackImageOnly = false // Default to false for backward compatibility
 }) => {
   // Calculate responsive columns
   const getResponsiveCols = () => {
@@ -50,6 +57,11 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({
   
   const responsiveCols = getResponsiveCols();
 
+  // Filter products if showOnlyBlackVariants is true
+  const displayProducts = showOnlyBlackVariants 
+    ? filterProductsWithBlackVariants(products)
+    : products;
+
   // Animation variants for staggered children
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -69,10 +81,10 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({
     );
   }
   
-  if (!products || products.length === 0) {
+  if (!displayProducts || displayProducts.length === 0) {
     return (
       <div className="py-12">
-        <Empty description="No products found" />
+        <Empty description={showOnlyBlackVariants ? "No black variant products found" : "No products found"} />
       </div>
     );
   }
@@ -84,7 +96,7 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({
       animate="visible"
     >
       <Row gutter={gutter}>
-        {products.map(product => (
+        {displayProducts.map(product => (
           <Col
             key={product.id}
             xs={24 / responsiveCols.xs}
@@ -97,6 +109,8 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({
               product={product}
               onAddToCart={onAddToCart}
               onAddToWishlist={onAddToWishlist}
+              showOnlyPrimaryImage={showOnlyPrimaryImage}
+              showBlackImageOnly={showBlackImageOnly}
             />
           </Col>
         ))}

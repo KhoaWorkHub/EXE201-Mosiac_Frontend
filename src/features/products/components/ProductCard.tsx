@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { ShoppingCartOutlined, HeartOutlined, EyeOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { formatVND } from '@/utils/formatters'; // ✅ Thay đổi từ formatCurrency sang formatVND
+import { formatVND } from '@/utils/formatters';
+import { getProductPrimaryImage, getProductBlackImage } from '@/utils/productFilters';
 import type { ProductResponse } from '@/types/product.types';
 
 const { Title, Text } = Typography;
@@ -13,20 +14,29 @@ interface ProductCardProps {
   product: ProductResponse;
   onAddToCart?: (product: ProductResponse) => void;
   onAddToWishlist?: (product: ProductResponse) => void;
-  priceFormatter?: (amount: number) => string; // ✅ Thêm optional formatter prop
+  priceFormatter?: (amount: number) => string;
+  showOnlyPrimaryImage?: boolean; // New prop to control image display
+  showBlackImageOnly?: boolean; // New prop to show only black color image
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ 
   product, 
   onAddToCart, 
   onAddToWishlist,
-  priceFormatter = formatVND // ✅ Default sử dụng formatVND
+  priceFormatter = formatVND,
+  showOnlyPrimaryImage = false, // Default to false for backward compatibility
+  showBlackImageOnly = false // Default to false for backward compatibility
 }) => {
   const { t } = useTranslation(['product', 'common']);
   
-  const primaryImage = product.images?.find((img) => img.isPrimary)?.imageUrl || 
-                      product.images?.[0]?.imageUrl || 
-                      '/placeholder-product.jpg';
+  // Use different image selection logic based on props
+  const primaryImage = showBlackImageOnly 
+    ? getProductBlackImage(product)
+    : showOnlyPrimaryImage 
+      ? getProductPrimaryImage(product)
+      : (product.images?.find((img) => img.isPrimary)?.imageUrl || 
+         product.images?.[0]?.imageUrl || 
+         '/placeholder-product.jpg');
                      
   const isNew = () => {
     if (!product.createdAt) return false;
@@ -155,15 +165,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
               {isOnSale() ? (
                 <div className="flex items-center">
                   <Text className="text-primary font-bold">
-                    {priceFormatter(product.price)} {/* ✅ Thay đổi từ formatCurrency sang priceFormatter */}
+                    {priceFormatter(product.price)}
                   </Text>
                   <Text className="text-gray-400 line-through text-sm ml-2">
-                    {priceFormatter(product.originalPrice || 0)} {/* ✅ Thay đổi từ formatCurrency sang priceFormatter */}
+                    {priceFormatter(product.originalPrice || 0)}
                   </Text>
                 </div>
               ) : (
                 <Text className="text-primary font-bold">
-                  {priceFormatter(product.price)} {/* ✅ Thay đổi từ formatCurrency sang priceFormatter */}
+                  {priceFormatter(product.price)}
                 </Text>
               )}
             </div>
