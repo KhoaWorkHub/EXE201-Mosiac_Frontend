@@ -37,6 +37,8 @@
   "product_details": {
     "description": "Description",
     "reviews": "Reviews",
+    "size": "Size",
+    "color": "Color",
     "size_guide": "Size Guide",
     "shipping": "Shipping & Returns",
     "quantity": "Quantity",

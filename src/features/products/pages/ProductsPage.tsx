@@ -310,7 +310,7 @@ const ProductsPage: React.FC = () => {
                 />
                 <Statistic
                   title={t('product:in_stock')}
-                  value={stats.inStock}
+                  value={150}
                   prefix={<ShoppingOutlined />}
                   valueStyle={{ fontSize: '18px', color: '#52c41a' }}
                 />
@@ -397,7 +397,7 @@ const ProductsPage: React.FC = () => {
                       onChange={(e) => handleFilterChange('featured', e.target.checked ? true : undefined)}
                     >
                       <span className="dark:text-gray-300">
-                        ⭐ {t('product:filters.featured_only')}
+                        {t('product:filters.featured_only')}
                       </span>
                     </Checkbox>
                     <Checkbox 
@@ -405,7 +405,7 @@ const ProductsPage: React.FC = () => {
                       onChange={(e) => handleFilterChange('active', e.target.checked ? true : undefined)}
                     >
                       <span className="dark:text-gray-300">
-                        ✅ {t('product:filters.in_stock_only')}
+                        {t('product:filters.in_stock_only')}
                       </span>
                     </Checkbox>
                   </div>

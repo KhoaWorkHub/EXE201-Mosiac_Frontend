@@ -37,6 +37,8 @@
   "product_details": {
     "description": "Mô tả",
     "reviews": "Đánh giá",
+    "size": "Size",
+    "color": "Màu sắc",
     "size_guide": "Hướng dẫn kích thước",
     "shipping": "Vận chuyển & Đổi trả",
     "quantity": "Số lượng",

@@ -8,16 +8,6 @@ import { useTranslation } from 'react-i18next';
 // Enhanced regions data
 export const regions = [
   { 
-    id: 'b9f6eb71-6e9b-41a4-af6f-0dd59543afa6', 
-    name: 'Hà Nội', 
-    nameEn: 'Hanoi',
-    slug: 'ha-noi',
-    description: 'Thủ đô nghìn năm văn hiến',
-    color: '#d32f2f',
-    icon: '🏛️',
-    gradient: 'from-red-500 to-red-600'
-  },
-  { 
     id: 'fb6aade5-1e65-49b0-8f3a-3ea10f8022d3', 
     name: 'Hồ Chí Minh', 
     nameEn: 'Ho Chi Minh City',
@@ -26,16 +16,6 @@ export const regions = [
     color: '#ff9800',
     icon: '🌆',
     gradient: 'from-orange-500 to-red-500'
-  },
-  { 
-    id: 'b3287fef-5ef1-48c1-85d9-bce90fc0111f', 
-    name: 'Đà Nẵng', 
-    nameEn: 'Da Nang',
-    slug: 'da-nang',
-    description: 'Thành phố đáng sống',
-    color: '#2196f3',
-    icon: '🌉',
-    gradient: 'from-blue-500 to-blue-600'
   },
   { 
     id: 'dc7bfe72-0d2d-4e96-8f22-4f1454b633bf', 
@@ -48,6 +28,16 @@ export const regions = [
     gradient: 'from-cyan-500 to-blue-500'
   },
   { 
+    id: 'b3287fef-5ef1-48c1-85d9-bce90fc0111f', 
+    name: 'Đà Nẵng', 
+    nameEn: 'Da Nang',
+    slug: 'da-nang',
+    description: 'Thành phố đáng sống',
+    color: '#2196f3',
+    icon: '🌉',
+    gradient: 'from-blue-500 to-blue-600'
+  },
+  { 
     id: '6fd8f36c-1a6e-4f60-b1a0-d8769303ddfd', 
     name: 'Quảng Ninh', 
     nameEn: 'Quang Ninh',
@@ -56,6 +46,16 @@ export const regions = [
     color: '#4caf50',
     icon: '🗻',
     gradient: 'from-green-500 to-emerald-600'
+  },
+  { 
+    id: 'b9f6eb71-6e9b-41a4-af6f-0dd59543afa6', 
+    name: 'Hà Nội', 
+    nameEn: 'Hanoi',
+    slug: 'ha-noi',
+    description: 'Thủ đô nghìn năm văn hiến',
+    color: '#d32f2f',
+    icon: '🏛️',
+    gradient: 'from-red-500 to-red-600'
   },
 ];
 

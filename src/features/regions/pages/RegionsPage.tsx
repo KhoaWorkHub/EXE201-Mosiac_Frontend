@@ -672,77 +672,192 @@ const RegionsPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-20 bg-gradient-to-r from-green-500 via-blue-500 to-orange-500 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/20" />
-        
-        {/* Animated background patterns */}
-        <div className="absolute inset-0">
-          {Array.from({ length: 30 }).map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute text-white/10 text-4xl"
-              animate={{
-                y: [0, -30, 0],
-                x: [0, Math.sin(i) * 30, 0],
-                rotate: [0, 360],
-                scale: [1, 1.2, 1]
-              }}
-              transition={{
-                duration: 8 + i,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: i * 0.3
-              }}
+{/* Call to Action - Improved Version */}
+<section className="py-24 bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 dark:from-slate-900 dark:via-blue-900/30 dark:to-emerald-900/30 relative overflow-hidden">
+  {/* Subtle background pattern */}
+  <div className="absolute inset-0 opacity-5">
+    <svg className="absolute inset-0 h-full w-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+          <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" strokeWidth="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)" />
+    </svg>
+  </div>
+
+  {/* Floating decorative elements */}
+  <div className="absolute inset-0 overflow-hidden">
+    {Array.from({ length: 8 }).map((_, i) => (
+      <motion.div
+        key={i}
+        className="absolute"
+        style={{
+          left: `${10 + i * 12}%`,
+          top: `${20 + Math.sin(i) * 60}%`
+        }}
+        animate={{
+          y: [0, -20, 0],
+          rotate: [0, 360],
+          scale: [1, 1.1, 1]
+        }}
+        transition={{
+          duration: 15 + i * 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: i * 1.5
+        }}
+      >
+        <div className="w-4 h-4 rounded-full bg-gradient-to-r from-blue-400/20 to-emerald-400/20" />
+      </motion.div>
+    ))}
+  </div>
+
+  <div className="container mx-auto px-4 relative z-10">
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="text-center max-w-4xl mx-auto"
+    >
+      {/* Enhanced typography */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.6 }}
+      >
+        <Title 
+          level={2} 
+          className="mb-6 text-slate-800 dark:text-slate-100 font-bold tracking-tight"
+          style={{ 
+            fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+            lineHeight: '1.2',
+            fontWeight: '700'
+          }}
+        >
+          Ready to Start Your{' '}
+          <span className="bg-gradient-to-r from-blue-600 via-emerald-600 to-blue-600 bg-clip-text text-transparent">
+            Vietnam Adventure
+          </span>
+          ?
+        </Title>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.6 }}
+      >
+        <Paragraph 
+          className="text-lg md:text-xl text-slate-600 dark:text-slate-300 mb-10 leading-relaxed font-medium max-w-3xl mx-auto"
+          style={{ lineHeight: '1.7' }}
+        >
+          From the mountainous north to the vibrant south, Vietnam awaits your discovery.{' '}
+          <br className="hidden md:block" />
+          Choose your region and begin an unforgettable journey through culture, cuisine, and breathtaking landscapes.
+        </Paragraph>
+      </motion.div>
+
+      {/* Enhanced CTA buttons */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6, duration: 0.6 }}
+        className="flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-6"
+      >
+        <motion.div 
+          whileHover={{ scale: 1.05, y: -2 }} 
+          whileTap={{ scale: 0.98 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+        >
+          <Button
+            size="large"
+            type="primary"
+            className="h-14 px-8 font-semibold text-lg bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 border-none shadow-xl hover:shadow-2xl transition-all duration-300"
+            icon={<CompassOutlined className="text-xl" />}
+            style={{
+              borderRadius: '12px',
+              minWidth: '180px'
+            }}
+          >
+            Start Exploring
+          </Button>
+        </motion.div>
+
+        <motion.div 
+          whileHover={{ scale: 1.05, y: -2 }} 
+          whileTap={{ scale: 0.98 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+        >
+          <Link to="/blog">
+            <Button
+              size="large"
+              className="h-14 px-8 font-semibold text-lg bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-2 border-slate-300 dark:border-slate-600 hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 shadow-lg hover:shadow-xl transition-all duration-300"
+              icon={<FireOutlined className="text-xl" />}
               style={{
-                left: `${3 + i * 3.2}%`,
-                top: `${10 + Math.sin(i) * 80}%`
+                borderRadius: '12px',
+                minWidth: '180px'
               }}
             >
-              {['🏔️', '🏛️', '🏙️', '🌟', '🗺️', '✨'][i % 6]}
-            </motion.div>
-          ))}
-        </div>
+              View All Guides
+            </Button>
+          </Link>
+        </motion.div>
+      </motion.div>
 
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <Title level={2} className="text-white mb-6">
-              Ready to Start Your Vietnam Adventure?
-            </Title>
-            <Paragraph className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
-              From the mountainous north to the vibrant south, Vietnam awaits your discovery. 
-              Choose your region and begin an unforgettable journey.
-            </Paragraph>
-            
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  size="large"
-                  className="bg-white text-blue-600 h-12 font-bold hover:bg-gray-100 border-none shadow-lg"
-                  icon={<CompassOutlined />}
-                >
-                  Start Exploring
-                </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Link to="/blog">
-                  <Button
-                    size="large"
-                    className="bg-transparent text-white border-white h-12 font-bold hover:bg-white hover:text-blue-600 shadow-lg"
-                    icon={<FireOutlined />}
-                  >
-                    View All Guides
-                  </Button>
-                </Link>
-              </motion.div>
-            </div>
-          </motion.div>
+      {/* Trust indicators */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8, duration: 0.6 }}
+        className="mt-12 pt-8 border-t border-slate-200/50 dark:border-slate-700/50"
+      >
+        <div className="flex flex-wrap justify-center items-center gap-6 md:gap-8">
+          <div className="flex items-center space-x-2 text-slate-600 dark:text-slate-400">
+            <StarOutlined className="text-yellow-500" />
+            <span className="font-medium">Trusted by 50K+ travelers</span>
+          </div>
+          <div className="flex items-center space-x-2 text-slate-600 dark:text-slate-400">
+            <CrownOutlined className="text-blue-500" />
+            <span className="font-medium">Expert local guides</span>
+          </div>
+          <div className="flex items-center space-x-2 text-slate-600 dark:text-slate-400">
+            <ThunderboltOutlined className="text-emerald-500" />
+            <span className="font-medium">Instant booking</span>
+          </div>
         </div>
-      </section>
+      </motion.div>
+    </motion.div>
+  </div>
+
+  {/* Enhanced floating icons */}
+  <div className="absolute inset-0 pointer-events-none">
+    {['🏔️', '🏛️', '🏙️', '🌟', '🗺️', '✨'].map((icon, i) => (
+      <motion.div
+        key={i}
+        className="absolute text-4xl opacity-10 dark:opacity-20"
+        style={{
+          left: `${5 + i * 15}%`,
+          top: `${15 + Math.sin(i * 2) * 70}%`
+        }}
+        animate={{
+          y: [0, -30, 0],
+          x: [0, Math.sin(i) * 20, 0],
+          rotate: [0, 360],
+          scale: [1, 1.2, 1]
+        }}
+        transition={{
+          duration: 12 + i * 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: i * 0.8
+        }}
+      >
+        {icon}
+      </motion.div>
+    ))}
+  </div>
+</section>
     </MainLayout>
   );
 };
