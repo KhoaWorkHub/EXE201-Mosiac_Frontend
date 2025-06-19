@@ -262,7 +262,7 @@ const LuxuryLoginPage: React.FC = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 2 }}
         >
-          &copy; {new Date().getFullYear()} MOSIAC. {t('common:footer.rights')}
+          &copy; {new Date().getFullYear()} MOSAIC. {t('common:footer.rights')}
         </motion.p>
       </div>
     </div>
