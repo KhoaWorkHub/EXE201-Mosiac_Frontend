@@ -872,8 +872,8 @@ const BlogPage: React.FC = () => {
                     { name: "Phu Quoc", color: "blue" },
                     { name: "Dalat", color: "pink" },
                     { name: "Can Tho", color: "cyan" },
-                    { name: "Ha Long Bay", color: "emerald" },
-                    { name: "Mui Ne", color: "amber" },
+                    { name: "Ha Long Bay", color: "yellow" },
+                    { name: "Mui Ne", color: "pink" },
                   ].map((destination, index) => (
                     <motion.div
                       key={destination.name}
