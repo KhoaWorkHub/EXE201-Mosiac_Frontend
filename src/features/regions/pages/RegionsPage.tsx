@@ -770,6 +770,7 @@ const RegionsPage: React.FC = () => {
           whileTap={{ scale: 0.98 }}
           transition={{ type: "spring", stiffness: 400, damping: 17 }}
         >
+          <Link to="/blog">
           <Button
             size="large"
             type="primary"
@@ -782,6 +783,7 @@ const RegionsPage: React.FC = () => {
           >
             Start Exploring
           </Button>
+          </Link>
         </motion.div>
 
         <motion.div 
