@@ -135,7 +135,7 @@ const LuxuryLoginPage: React.FC = () => {
               
               <motion.img 
                 src="/logo.svg" 
-                alt="MOSIAC" 
+                alt="MOSAIC" 
                 className="h-20 relative z-10"
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -149,7 +149,7 @@ const LuxuryLoginPage: React.FC = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.7 }}
             >
-              MOSIAC
+              MOSAIC
             </motion.h1>
             
             <motion.div 

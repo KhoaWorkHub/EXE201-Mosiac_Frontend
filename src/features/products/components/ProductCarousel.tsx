@@ -3,6 +3,7 @@ import { Carousel, Button, Spin, Empty } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProductCard from './ProductCard';
+import { filterProductsWithBlackVariants, createBlackVariantProduct } from '@/utils/productFilters';
 import { isMobile } from 'react-device-detect';
 import type { ProductResponse } from '@/types/product.types';
 
@@ -13,6 +14,9 @@ interface ProductCarouselProps {
   slidesToShow?: number;
   onAddToCart?: (product: ProductResponse) => void;
   onAddToWishlist?: (product: ProductResponse) => void;
+  showOnlyBlackVariants?: boolean; // New prop to filter black variants only
+  showOnlyPrimaryImage?: boolean; // New prop to show only primary image
+  showBlackImageOnly?: boolean; // New prop to show only black color image
 }
 
 const ProductCarousel: React.FC<ProductCarouselProps> = ({
@@ -21,12 +25,20 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
   autoplay = true,
   slidesToShow = 4,
   onAddToCart,
-  onAddToWishlist
+  onAddToWishlist,
+  showOnlyBlackVariants = false, // Default to false for backward compatibility
+  showOnlyPrimaryImage = false, // Default to false for backward compatibility
+  showBlackImageOnly = false // Default to false for backward compatibility
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const carouselRef = useRef<any>(null);
   const [activeSlide, setActiveSlide] = useState(0);
   const [responsiveSlides, setResponsiveSlides] = useState(slidesToShow);
+
+  // Filter and transform products if showOnlyBlackVariants is true
+  const displayProducts = showOnlyBlackVariants 
+    ? filterProductsWithBlackVariants(products).map(product => createBlackVariantProduct(product))
+    : products;
 
   // Update responsive slides based on window size
   useEffect(() => {
@@ -67,7 +79,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
   // Carousel settings
   const settings = {
     dots: true,
-    infinite: products.length > responsiveSlides,
+    infinite: displayProducts.length > responsiveSlides,
     speed: 500,
     slidesToShow: responsiveSlides,
     slidesToScroll: 1,
@@ -108,24 +120,26 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
     );
   }
 
-  if (!products || products.length === 0) {
+  if (!displayProducts || displayProducts.length === 0) {
     return (
       <div className="py-12">
-        <Empty description="No products found" />
+        <Empty description={showOnlyBlackVariants ? "No black variant products found" : "No products found"} />
       </div>
     );
   }
 
   // If we have only one product or the same number as slidesToShow, no need for carousel
-  if (products.length === 1 || products.length <= responsiveSlides) {
+  if (displayProducts.length === 1 || displayProducts.length <= responsiveSlides) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.map(product => (
+        {displayProducts.map(product => (
           <div key={product.id}>
             <ProductCard
               product={product}
               onAddToCart={onAddToCart}
               onAddToWishlist={onAddToWishlist}
+              showOnlyPrimaryImage={showOnlyPrimaryImage}
+              showBlackImageOnly={showBlackImageOnly}
             />
           </div>
         ))}
@@ -171,12 +185,14 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
       {/* Carousel */}
       <div className="px-8">
         <Carousel ref={carouselRef} {...settings}>
-          {products.map(product => (
+          {displayProducts.map(product => (
             <div key={product.id} className="px-2 py-4">
               <ProductCard
                 product={product}
                 onAddToCart={onAddToCart}
                 onAddToWishlist={onAddToWishlist}
+                showOnlyPrimaryImage={showOnlyPrimaryImage}
+                showBlackImageOnly={showBlackImageOnly}
               />
             </div>
           ))}
@@ -186,7 +202,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
       {/* Progress indicator */}
       <div className="flex justify-center mt-4">
         <div className="flex space-x-1">
-          {Array.from({ length: Math.ceil(products.length / responsiveSlides) }).map((_, index) => (
+          {Array.from({ length: Math.ceil(displayProducts.length / responsiveSlides) }).map((_, index) => (
             <motion.div
               key={index}
               className={`h-1 rounded-full ${
