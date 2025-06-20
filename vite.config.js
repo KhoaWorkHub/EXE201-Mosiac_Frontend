@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 export default defineConfig(({ mode }) => {
     // Always use EC2 endpoint for testing
-    const apiEndpoint = 'http://54.255.244.196'; // Remove mode-based switching for now
+    const apiEndpoint = 'http://13.213.38.159'; // Remove mode-based switching for now
     //const apiEndpoint = 'http://localhost:8080'; // For local development
     console.log(`Using API endpoint: ${apiEndpoint} in ${mode} mode`);
     return {
