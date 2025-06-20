@@ -65,8 +65,8 @@ const mockOrders: Order[] = [
       {
         id: '1' as any,
         productId: '1' as any,
-        productName: 'Áo Dài Truyền Thống Đỏ',
-        productImage: 'https://images.unsplash.com/photo-1590548784585-643d2b9f2925?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
+        productName: 'Áo Mosaic Hà Nội',
+        productImage: 'https://khoas3bucket.s3.ap-southeast-1.amazonaws.com/products/5d17a6dc-ff0f-4667-ad5c-c1ce917f62cd.png',
         productSlug: 'ao-dai-truyen-thong-do',
         price: 890000,
         quantity: 1,
@@ -129,8 +129,8 @@ const mockOrders: Order[] = [
       {
         id: '2' as any,
         productId: '2' as any,
-        productName: 'Áo Dài Hiện Đại Xanh',
-        productImage: 'https://images.unsplash.com/photo-1624371711241-e15e6d554040?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
+        productName: 'Áo Mosaic HCM',
+        productImage: 'https://khoas3bucket.s3.ap-southeast-1.amazonaws.com/products/3432704b-8504-4d82-8c94-c5fa05fb6f11.png',
         productSlug: 'ao-dai-hien-dai-xanh',
         price: 1200000,
         quantity: 1,
@@ -187,8 +187,8 @@ const mockOrders: Order[] = [
       {
         id: '3' as any,
         productId: '3' as any,
-        productName: 'Set Áo Dài Cưới Vàng',
-        productImage: 'https://images.unsplash.com/photo-1557750255-c76072a7fdf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
+        productName: 'Set Áo Mosaic Khánh Hoà',
+        productImage: 'https://khoas3bucket.s3.ap-southeast-1.amazonaws.com/products/7bb99bed-1e09-4157-bfd5-86b11966de6b.png',
         productSlug: 'set-ao-dai-cuoi-vang',
         price: 2500000,
         quantity: 1,
