@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/features/checkout/pages/CheckoutPage.tsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -72,7 +73,7 @@ const mockAddresses: CheckoutAddress[] = [
 ];
 
 const CheckoutPage: React.FC = () => {
-useTranslation(['checkout', 'common', 'cart']);
+  useTranslation(['checkout', 'common', 'cart']);
   const navigate = useNavigate();
   const { state } = useCart();
   const { cart, loading } = state;
@@ -143,13 +144,10 @@ useTranslation(['checkout', 'common', 'cart']);
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-
       // Mock order creation
       const newOrder: Order = {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         id: 'order_' + Date.now() as any,
         orderNumber: 'MOSAIC' + Date.now().toString().slice(-6),
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         status: paymentMethod === 'COD' ? 'PAID' as any : 'PENDING_PAYMENT' as any,
         items: cart.items,
         shippingAddress: {
@@ -173,7 +171,6 @@ useTranslation(['checkout', 'common', 'cart']);
         updatedAt: new Date().toISOString(),
         statusHistory: [
           {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             status: paymentMethod === 'COD' ? 'PAID' as any : 'PENDING_PAYMENT' as any,
             timestamp: new Date().toISOString(),
             notes: 'Đơn hàng được tạo thành công'

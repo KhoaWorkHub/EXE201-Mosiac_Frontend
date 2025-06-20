@@ -48,7 +48,7 @@ const PaymentUploadComponent: React.FC<PaymentUploadProps> = ({
   onPaymentProofUpload,
   onComplete,
 }) => {
-   useTranslation(['checkout', 'common']);
+  useTranslation(['checkout', 'common']);
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedMethod, setSelectedMethod] = useState<'MOMO' | 'BANK_TRANSFER' | null>(null);
   const [, setUploadedProofs] = useState<{[key: string]: boolean}>({});

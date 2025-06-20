@@ -5,6 +5,7 @@ import { useAppSelector } from "@/store/hooks";
 import OAuth2RedirectHandler from "@/features/auth/components/OAuth2RedirectHandler";
 import Loading from "@/components/common/Loading";
 import QRCodeLandingPage from "@/features/qrcode/pages/QRCodeLandingPage";
+import ProtectedRoute from "./ProtectedRoute";
 
 // Lazy loading pages
 const LuxuryLoginPage = lazy(
@@ -18,6 +19,12 @@ const ProductsPage = lazy(
   () => import("../features/products/pages/ProductsPage")
 );
 const CartPage = lazy(() => import("../features/cart/pages/CartPage"));
+
+// CHECKOUT AND ORDERS PAGES - NEWLY ADDED
+const CheckoutPage = lazy(() => import("../features/checkout/pages/CheckoutPage"));
+const OrderHistoryPage = lazy(() => import("../features/orders/pages/OrderHistoryPage"));
+const OrderDetailPage = lazy(() => import("../features/orders/pages/OrderDetailPage"));
+
 const AdminRoutes = lazy(() => import("../admin/routes"));
 
 // Destination Guide Pages
@@ -547,6 +554,41 @@ const AppRoutes: React.FC = () => {
           </Suspense>
         }
       />
+      
+      {/* ===== CHECKOUT AND ORDERS ROUTES - NEWLY ADDED ===== */}
+      <Route
+        path="/checkout"
+        element={
+          <ProtectedRoute>
+            <Suspense fallback={<LoadingFallback />}>
+              <CheckoutPage />
+            </Suspense>
+          </ProtectedRoute>
+        }
+      />
+      
+      <Route
+        path="/orders"
+        element={
+          <ProtectedRoute>
+            <Suspense fallback={<LoadingFallback />}>
+              <OrderHistoryPage />
+            </Suspense>
+          </ProtectedRoute>
+        }
+      />
+      
+      <Route
+        path="/orders/:orderId"
+        element={
+          <ProtectedRoute>
+            <Suspense fallback={<LoadingFallback />}>
+              <OrderDetailPage />
+            </Suspense>
+          </ProtectedRoute>
+        }
+      />
+      
       <Route
         path="/qr/:qrId"
         element={
