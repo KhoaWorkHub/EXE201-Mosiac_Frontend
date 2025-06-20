@@ -44,8 +44,10 @@ import { formatVND } from '@/utils/formatters';
 import { Order, OrderStatus } from '@/types/order.types';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 dayjs.extend(isBetween);
+dayjs.extend(relativeTime);
 
 const { Title, Text } = Typography;
 const { RangePicker } = DatePicker;
