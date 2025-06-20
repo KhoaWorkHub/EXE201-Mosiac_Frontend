@@ -95,7 +95,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     userMenuItems.unshift({
       key: 'admin',
       icon: <SettingOutlined />, 
-      label: <Link to="/admin">{t('nav.admin')}</Link>,
+      label: <Link to="/admin">{t('admin')}</Link>,
     });
   }
 
